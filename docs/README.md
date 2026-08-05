@@ -20,17 +20,17 @@ Fill them roughly in this order — later documents depend on decisions made in 
 | # | Document | Purpose | Status |
 |---|---|---|---|
 | 1 | [project-brief.md](project-brief.md) | Why this exists, who it serves, what is in and out of scope | ◐ Draft |
-| 2 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ☐ Not started |
+| 2 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ◐ Draft |
 | 3 | [content-strategy.md](content-strategy.md) | Topic inventory, sourcing rules, voice, disclaimers | ☐ Not started |
 | 4 | [features.md](features.md) | Interactive features, specs, acceptance criteria, priority | ☐ Not started |
-| 5 | [design.md](../design.md) | Visual system, IA, sitemap, components | ☐ Not started |
+| 5 | [DESIGN.md](../DESIGN.md) | Visual system, IA, sitemap, components | ☐ Not started |
 | 6 | [architecture.md](architecture.md) | Stack, hosting, build, deploy, data | ☐ Not started |
 | 7 | [AGENTS.md](../AGENTS.md) | Instructions for AI coding agents working in this repo | ☐ Not started |
 | 8 | [accessibility.md](accessibility.md) | WCAG target, testing plan, known constraints | ☐ Not started |
 | 9 | [measurement.md](measurement.md) | Success metrics, analytics, privacy stance | ☐ Not started |
-| 10 | [research-plan.md](research-plan.md) | Usability testing with student renters | ☐ Not started |
+| 10 | [research-plan.md](research-plan.md) | Usability testing with student renters | ◐ Draft |
 | 11 | [governance.md](governance.md) | Ownership, maintenance, handoff after the project ends | ☐ Not started |
-| 12 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ☐ Not started |
+| 12 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ◐ Draft |
 | 13 | [sources.md](sources.md) | Living bibliography with review dates | ☐ Not started |
 | 14 | [glossary.md](glossary.md) | Plain-language definitions used site-wide | ☐ Not started |
 

@@ -1,6 +1,6 @@
 # Research Plan
 
-> **Status:** ☐ Draft · **Last updated:** [FILL: YYYY-MM-DD]
+> **Status:** ◐ Draft · **Last updated:** [FILL: YYYY-MM-DD]
 
 <!-- GUIDANCE: You have an unusual advantage on this project — your users are your peers and
      are physically nearby. Five conversations will teach you more than any amount of
@@ -10,7 +10,7 @@
 
 | # | Question | Why it matters | Which doc does it settle? |
 |---|---|---|---|
-| Q1 | [FILL: e.g. What do students actually not know about their heating?] | [FILL] | audience.md §3 |
+| Q1 | What do students actually not know about their heating?] | [FILL] | audience.md §3 |
 | Q2 | [FILL: e.g. Do they know who pays for heat in their unit?] | | |
 | Q3 | [FILL: e.g. Would they ever ask a landlord for anything?] | | |
 | Q4 | [FILL: e.g. What would make them act — money, comfort, climate?] | | |

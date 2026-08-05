@@ -11,7 +11,7 @@ efficiency of their rentals. In partnership with **Sustainable Hanover**.
 | File | Purpose |
 |---|---|
 | [docs/](docs/README.md) | Planning & specification documents — **start here** |
-| [design.md](design.md) | Information architecture, visual system, components |
+| [DESIGN.md](DESIGN.md) | Information architecture, visual system, components |
 | [AGENTS.md](AGENTS.md) | Instructions for AI coding agents working in this repo |
 
 ## License

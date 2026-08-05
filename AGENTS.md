@@ -92,7 +92,7 @@ Run [FILL: lint + test + build] before considering any change complete.
 [FILL: fill in once the structure exists]
 .
 ├── AGENTS.md
-├── design.md
+├── DESIGN.md
 ├── docs/            planning & specification documents
 ├── [FILL]
 ```
@@ -104,7 +104,7 @@ Run [FILL: lint + test + build] before considering any change complete.
 - **Naming:** [FILL]
 - **File organization:** [FILL]
 - **Components:** [FILL]
-- **CSS:** use the design tokens defined in [design.md](design.md); no ad-hoc hex values
+- **CSS:** use the design tokens defined in [DESIGN.md](DESIGN.md); no ad-hoc hex values
 - **Comments:** [FILL]
 
 ## Content conventions

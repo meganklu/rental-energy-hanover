@@ -4,7 +4,7 @@
 
 <!-- GUIDANCE: The core insight driving this project is that first-time renters don't know
      what they don't know. This document is where you write down specifically what that is.
-     Everything in features.md and design.md should trace back to something here. -->
+     Everything in features.md and DESIGN.md should trace back to something here. -->
 
 ## 1. Primary audience
 
@@ -115,7 +115,7 @@ with 2–5 roommates, most of whom have never paid a utility bill.
 - **Device:** [FILL: assume mobile-first? Standing in a cold apartment? At a laptop?]
 - **Session length:** [FILL: realistically 2–4 minutes?]
 - **Emotional state:** [FILL: annoyed, cold, worried about money, mildly curious]
-- **Implication for design:** [FILL — carry this into design.md]
+- **Implication for design:** [FILL — carry this into DESIGN.md]
 
 ## 9. Anti-personas
 

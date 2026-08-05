@@ -1,43 +1,40 @@
 # Roadmap
 
-> **Status:** ☐ Draft · **Last updated:** [FILL: YYYY-MM-DD]
-
-<!-- GUIDANCE: Anchor to real dates, including the academic calendar and the heating season.
-     Launching a winter-prep site in April wastes a year. -->
+> **Status:** ◐ Draft · **Last updated:** 2026-08-05
 
 ## 1. Fixed dates
 
 | Date | What | Immovable? |
 |---|---|---|
-| [FILL: YYYY-MM-DD] | [FILL: e.g. Sustainable Hanover meeting / content review] | ☐ |
-| [FILL] | [FILL: e.g. term ends] | ☐ |
-| [FILL] | [FILL: e.g. project presentation] | ☐ |
-| [FILL] | [FILL: e.g. lease-signing season begins] | ☐ |
-| [FILL] | [FILL: e.g. heating season begins] | ☐ |
-
-**Ideal launch window and why:** [FILL]
+| 2026-08-05 | Checkpoint #2 | ☑ |
+| 2026-08-10 | Checkpoint #3 | ☑ |
+| 2026-08-26 | Final project share session | ☑ |
 
 ## 2. Phases
 
-| Phase | Dates | Exit criteria | Status |
-|---|---|---|---|
-| 0. Planning | [FILL] | All Tier-1 docs at ◐ Draft; brief approved by Sustainable Hanover | ☐ |
-| 1. Research | [FILL] | Round 1 interviews done; audience.md rewritten from evidence | ☐ |
-| 2. Content | [FILL] | Topic inventory prioritized; v1 content drafted and sourced | ☐ |
-| 3. Design | [FILL] | IA settled; key screens sketched; tokens contrast-checked | ☐ |
-| 4. Build | [FILL] | Must-have features meet acceptance criteria | ☐ |
-| 5. Test | [FILL] | Usability round 2 done; accessibility passes | ☐ |
-| 6. Review & sign-off | [FILL] | Partner approval on all content | ☐ |
-| 7. Launch | [FILL] | Live; distribution channels notified | ☐ |
-| 8. Handoff | [FILL] | governance.md §5 checklist complete | ☐ |
+| Phase | Primary | Dates | Exit criteria | Status |
+|---|---|---|---|---|
+| 0. Planning | Megan | 2026-08-05 | All Tier-1 docs at ◐ Draft; brief approved by Sustainable Hanover | ☐ |
+| 1. Research | Liam | 2026-08-12 | Round 1 interviews done; audience.md rewritten from evidence | ☐ |
+| 2. Content | Ryan | 2026-08-12 | Topic inventory prioritized; v1 content drafted and sourced | ☐ |
+| 3. Design | Megan | 2026-08-12 | IA settled; key screens sketched; tokens contrast-checked | ☐ |
+| 4. Build | Megan | 2026-08-19 | Must-have features meet acceptance criteria | ☐ |
+| 5. Test | Liam | 2026-08-26 | Usability round 2 done; accessibility passes | ☐ |
+| 6. Review & sign-off | All | 2026-08-26 | Partner approval on all content | ☐ |
+| 7. Launch | All | 2026-08-26 | Live; distribution channels notified | ☐ |
+| 8. Handoff | All | 2026-08-26 | governance.md §5 checklist complete | ☐ |
 
 ## 3. Milestones
 
-| # | Milestone | Target date | Depends on | Done |
-|---|---|---|---|---|
-| M1 | [FILL] | [FILL] | [FILL] | ☐ |
-| M2 | | | | ☐ |
-| M3 | | | | ☐ |
+| # | Milestone | Primary | Target date | Depends on | Done |
+|---|---|---|---|---|---|
+| M1 | Create tier-1 planning documentation drafts | Megan | 2026-08-05 | N/A | ☑ |
+| M2 | Write [user interview guide](research-plan.md#2-round-1--discovery-before-building)| Liam | 2026-08-06 | M1 | ☐ |
+| M3 | Conduct user interviews | Liam | 2026-08-12 | M2 | ☐ |
+| M4 | Update [target audience and user personas](audience.md) | Liam | 2026-08-12 | M3 | ☐ |
+| M5 | Research rental and energy usage statistics in Hanover; compile information for web pages incomplete [glossary.md](glossary.md) and [sources.md](sources.md) | Ryan | 2026-08-12 | M1 | ☐ |
+| M6 | Establish [design and style guide](DESIGN.md) | Megan | 2026-08-12 | M1 | ☐ |
+| M6 | Plan layout and webpages; update [features.md](features.md) and [content-strategy.md](content-strategy.md)  | Megan | 2026-08-12 | M6 | ☐ |
 
 ## 4. What gets cut first
 
@@ -46,11 +43,11 @@
 
 If time runs short, drop in this order:
 
-1. [FILL]
-2. [FILL]
-3. [FILL]
+1. Test (usability round 2)
+2. Launch
+3. Handoff
 
-**Never cut:** [FILL: e.g. accessibility, content review, handoff]
+**Never cut:** accessibility, content review, research
 
 ## 5. Post-v1 backlog
 

@@ -111,7 +111,7 @@ Priority scale: **Must** / **Should** / **Could** / **Won't (this release)**
 ## 6. Content model
 
 <!-- GUIDANCE: Define the repeatable shape of each content type once. This drives your
-     components in design.md and your data structures in architecture.md. -->
+     components in DESIGN.md and your data structures in architecture.md. -->
 
 ### Type: "Improvement" (the core unit)
 
