@@ -1,10 +1,6 @@
 # Project Brief
 
-> **Status:** ☐ Draft · **Last updated:** 2026-08-05 · **Approved by Sustainable Hanover:** ☐ No
-
-<!-- GUIDANCE: This is the document you send to Sustainable Hanover for sign-off. If a
-     conversation later starts with "wait, I thought we were also doing...", this file is
-     what settles it. Keep it to two pages. -->
+> **Status:** ◐ Draft · **Last updated:** 2026-08-05 · **Approved by Sustainable Hanover:** ☐ No
 
 ## 1. One-sentence description
 
@@ -12,66 +8,61 @@ A website that empowers and educates student renters make energy efficiency impr
 
 ## 2. Problem statement
 
-<!-- GUIDANCE: What is true today that shouldn't be? Be concrete. Avoid "there is a lack of
-     awareness" — say who lacks what, and what it costs them. -->
-
-[FILL: 3–5 sentences. Consider: What do student renters in Hanover currently do about
-energy in their units? What does it cost them in money, comfort, or carbon? Why doesn't
-the existing Sustainable Hanover material solve it for this group?]
+Students living in residential rentals in Hanover, New Hampshire represent a group that face limitations in making energy usage and efficiency improvements. They often are first-time renters with limited knowledge about changes they can make to improve energy efficiency, such as what changes are most effective and what is allowed by their landlord. They also may not understand how these investments will benefit them, especially if they are in a shorter term lease. Further discouraging these students, they may have limited time and money to make improvements by applying for community support inititives. These factors result in continued use of outdated or expensive energy systems.
 
 ## 3. Why students, and why now
 
-- **Why this audience:** [FILL: e.g. first-time renters, high turnover, short leases, no prior
-  experience with heating bills, limited ability to make permanent changes]
-- **Why a new site rather than a page on the existing one:** [FILL]
+- **Why this audience:** Students are often first-time renters with no prior experience with heating and electricity bills, along with limited knowledge about how to request for their landlord to make changes. They often have short leases, and there can be high turnover in the rental properties. This further disincentivizes home improvements and permanent change. 
+- **Why a new site rather than a page on the existing one:** Sustainable Hanover's current pages on energy are more directed toward homeowners with greater control over changes made to their property. By creating a new site, we will be able to cater directly toward renters with specific recommendations, provide additional background information, and create interactive features for a better user experience.
 - **Timing:** [FILL: e.g. tied to lease-signing season, the start of heating season, a course
   deadline, a Sustainable Hanover initiative]
 
 ## 4. Relationship to existing Sustainable Hanover content
 
-<!-- GUIDANCE: Be specific and honest here. Duplicating the committee's own content and
-     letting it drift out of sync is the most likely way this project creates a problem
-     instead of solving one. -->
-
 | Existing resource | URL | How this project relates |
 |---|---|---|
-| [FILL: e.g. weatherization guidance page] | [FILL] | ☐ Link out ☐ Adapt & cite ☐ Replace ☐ Ignore |
+| Energy Overview | https://sustainablehanovernh.org/energy | ☑ Link out ☐ Adapt & cite ☐ Replace ☐ Ignore |
+| Community Power | https://sustainablehanovernh.org/communitypower | ☐ Link out ☑ Adapt & cite ☐ Replace ☐ Ignore |
+| Energy Efficiency | https://sustainablehanovernh.org/energy-efficiency-1 | ☐ Link out ☐ Adapt & cite ☑ Replace ☐ Ignore |
+| Solarize | https://sustainablehanovernh.org/solarize | ☐ Link out ☐ Adapt & cite ☑ Replace ☐ Ignore |
+| Weatherize | https://sustainablehanovernh.org/weatherize | ☐ Link out ☑ Adapt & cite ☐ Replace ☐ Ignore |
+| Window Inserts | https://sustainablehanovernh.org/windows | ☐ Link out ☑ Adapt & cite ☐ Replace ☐ Ignore |
 | | | |
 
-**Rule of thumb we're adopting:** [FILL: e.g. "We link to Sustainable Hanover as the source of
-truth for programs and rebates; we only author original content where the student-renter
-framing genuinely differs."]
+**Rule of thumb we're adopting:** We link to Sustainable Hanover as the source of
+truth for programs and rebates. We only author original content where the student-renter
+framing genuinely differs and additional background information is beneficial.
+This website will initially be created as an external site and can be incorperated into the Sustainable Hanover website later.
 
 ## 5. Goals
 
-<!-- GUIDANCE: 3–5 max. Each one should be something you could plausibly show evidence for. -->
+See the [measurement document](measurement.md#1-what-working-means) for information about the goal metrics.
 
 | # | Goal | How we'd know it happened |
 |---|---|---|
-| G1 | [FILL] | [FILL — link to measurement.md] |
-| G2 | [FILL] | [FILL] |
-| G3 | [FILL] | [FILL] |
+| G1 | Promote and lower barriers to existing Sustainable Hanover initivies to college students | Demographic changes in use of existing programs |
+| G2 | Provide engaging educational materials on energy efficiency | Audience retention on the website |
 
 ## 6. Non-goals
 
-<!-- GUIDANCE: The most valuable section in this document. Each line here is a conversation
-     you don't have to have later. -->
-
 This project will **not**:
 
-- [FILL: e.g. provide legal advice about lease disputes]
-- [FILL: e.g. serve homeowners, or renters outside Hanover]
-- [FILL: e.g. maintain a live database of rebate amounts]
-- [FILL: e.g. collect or store personal information about users]
-- [FILL: e.g. rate or review individual landlords or properties]
+- Provide legal advice about lease disputes
+- Serve homeowners, or renters outside Hanover
+- Maintain a live database of rebate amounts
+- Collect or store personal information about users
+- Provide property-specific information about potential improvements
+- Rate or review individual landlords or properties
 
 ## 7. Scope
 
 **In scope (v1):**
-- [FILL]
+- Create an interactive website that adapts information from the existing Sustainable Hanover website to provide useful and realistic information for student renters.
 
 **Deferred (v2 or later):**
-- [FILL]
+- Include contact templates (to communicate with programs, contractors, and landlords), shopping links, etc. to streamline the process of making efficiency improvements.
+- Provide additional information about changes to improve energy efficiency and usage not already included by Sustainable Hanover.
+- Handoff documentation and plans.
 
 **Explicitly out:**
 - See Non-goals above.
@@ -80,24 +71,22 @@ This project will **not**:
 
 | Role | Name | Contact | Decision authority |
 |---|---|---|---|
-| Project lead / developer | [FILL] | [FILL] | Day-to-day build decisions |
-| Sustainable Hanover contact | [FILL] | [FILL] | Content accuracy, partner branding, publication |
-| Faculty / course advisor | [FILL] | [FILL] | [FILL] |
-| Reviewer(s) for energy accuracy | [FILL] | [FILL] | [FILL] |
+| SIP group member | Megan Lu | [megan.k.lu.28@dartmouth.edu](mailto:megan.k.lu.28@dartmouth.edu) | Develop website, write project plans and documentation |
+| SIP group member | Liam Kenny | [liam.m.kenny.28@dartmouth.edu](mailto:liam.m.kenny.28@dartmouth.edu) | Conduct user interviews |
+| SIP group member | Ryan Lee | [ryan.j.lee.28@dartmouth.edu](mailto:ryan.j.lee.28@dartmouth.edu) | Compile and cite energy efficiency information |
+| SIP group member | Katharine Morley | [katharine.r.morley.28@dartmouth.edu](mailto:katharine.r.morley.28@dartmouth.edu) | Research lease and rental standards to limitations and opportunties for renters to improve energy efficiency |
+| Sustainable Hanover contact | Yolanda Baumgartner | [yfoursh@gmail.com](mailto:yfoursh@gmail.com) | Provide project direction guidance, review for content accuracy and partner branding, support publication |
+| Course instructor | Morgan E. Peach | [morgan.edward.peach@dartmouth.edu](mailto:morgan.edward.peach@dartmouth.edu) | Offer project feedback |
 | Site owner after handoff | [FILL] | [FILL] | See [governance.md](governance.md) |
-
-**Who signs off before launch:** [FILL]
 
 ## 9. Constraints
 
 | Constraint | Detail |
 |---|---|
-| Timeline | [FILL: hard dates — term end, presentation, committee meeting] |
-| Budget | [FILL: e.g. $0 — must use free hosting] |
-| Effort available | [FILL: hours/week, solo or team] |
-| Technical | [FILL: e.g. must be maintainable by a non-developer volunteer] |
-| Branding | [FILL: any Sustainable Hanover or Town of Hanover brand requirements] |
-| Legal / institutional | [FILL: e.g. Dartmouth IP or naming rules, town web policies] |
+| Timeline | Final project presentation on 2026-08-26 |
+| Budget | $0 (prototype must use free hosting) |
+| Technical | Must be maintainable by a non-developer volunteer |
+| Branding | Must match Sustainable Hanover branding |
 
 ## 10. Risks
 
@@ -112,10 +101,6 @@ This project will **not**:
 
 ## 11. Definition of done for v1
 
-<!-- GUIDANCE: A checklist you could hand to someone else. If every box is checked, you ship. -->
-
-- [ ] [FILL]
-- [ ] [FILL]
-- [ ] All content reviewed by [FILL]
+- [ ] Functioning interactive site with information on weatherizing, window covers, etc.
+- [ ] All content reviewed by the SIP group
 - [ ] Accessibility checks pass per [accessibility.md](accessibility.md)
-- [ ] Handoff documented per [governance.md](governance.md)

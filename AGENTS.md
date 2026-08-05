@@ -13,8 +13,8 @@ improvements to their rentals. Built in partnership with **Sustainable Hanover**
 Hanover committee.
 
 The audience is first-time renters who have never paid a heating bill. The site's distinctive
-value is being **interactive** and **rental-specific** — Sustainable Hanover already publishes
-static weatherization guidance for homeowners.
+value is being **interactive** and **rental-specific** as Sustainable Hanover already publishes
+static weatherization and energy efficiency guidance for homeowners.
 
 Read [docs/project-brief.md](docs/project-brief.md) and [docs/audience.md](docs/audience.md)
 before making decisions that affect scope or content.

@@ -1,6 +1,6 @@
 # Audience
 
-> **Status:** ☐ Draft · **Last updated:** [FILL: YYYY-MM-DD]
+> **Status:** ◐ Draft · **Last updated:** 2026-08-05
 
 <!-- GUIDANCE: The core insight driving this project is that first-time renters don't know
      what they don't know. This document is where you write down specifically what that is.
@@ -8,21 +8,19 @@
 
 ## 1. Primary audience
 
-[FILL: Who exactly? e.g. "Dartmouth undergraduates and graduate students, ages 19–26, living
-off-campus in Hanover or West Lebanon, typically in 9–12 month leases, usually sharing a unit
-with 2–5 roommates, most of whom have never paid a utility bill."]
+Dartmouth undergraduate students, ages 19–23, living
+off-campus in Hanover, typically in 9–12 month leases, usually sharing a unit
+with 2–5 roommates, most of whom have never paid a utility bill.
 
 **Rough size:** [FILL: number of student renters, if you can find or estimate it — note the source]
 
 ## 2. Secondary audiences
 
-<!-- GUIDANCE: Design for the primary, but know who else lands here. -->
-
 | Audience | What they need | Are we serving them in v1? |
 |---|---|---|
-| [FILL: e.g. landlords of student rentals] | [FILL] | ☐ Yes ☐ Incidentally ☐ No |
-| [FILL: e.g. Sustainable Hanover volunteers] | [FILL] | |
-| [FILL: e.g. non-student renters in Hanover] | [FILL] | |
+| Landlords of student rentals | Potential solutions to split incentives problem that enable them to work with their renters and benefit from upgrades | ☐ Yes ☐ Incidentally ☑ No |
+| Sustainable Hanover volunteers | Increased engagement with Sustainable Hanover programs and initiatives | ☑ Yes ☐ Incidentally ☐ No |
+| Non-student renters in Hanover | Understanding of the changes they can make within their lease agreements and how these will benefit them long-term | ☐ Yes ☑ Incidentally ☐ No |
 
 ## 3. What first-time renters don't know
 

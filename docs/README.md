@@ -19,7 +19,7 @@ Fill them roughly in this order — later documents depend on decisions made in 
 
 | # | Document | Purpose | Status |
 |---|---|---|---|
-| 1 | [project-brief.md](project-brief.md) | Why this exists, who it serves, what is in and out of scope | ☐ Not started |
+| 1 | [project-brief.md](project-brief.md) | Why this exists, who it serves, what is in and out of scope | ◐ Draft |
 | 2 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ☐ Not started |
 | 3 | [content-strategy.md](content-strategy.md) | Topic inventory, sourcing rules, voice, disclaimers | ☐ Not started |
 | 4 | [features.md](features.md) | Interactive features, specs, acceptance criteria, priority | ☐ Not started |
