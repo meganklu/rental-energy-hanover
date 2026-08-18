@@ -57,7 +57,7 @@ to the same information."]
 
 | Method | Tool | When | Owner |
 |---|---|---|---|
-| Automated scan | [FILL: e.g. axe, Lighthouse, pa11y] | [FILL: every build?] | [FILL] |
+| Automated scan | [FILL: e.g. axe DevTools, Lighthouse, pa11y] | [FILL: before each push? the site has no build step, see architecture.md §10] | [FILL] |
 | Keyboard-only pass | manual | [FILL: before each release] | [FILL] |
 | Screen reader pass | [FILL: NVDA / VoiceOver] | [FILL] | [FILL] |
 | Zoom / reflow at 320px | manual | [FILL] | [FILL] |
@@ -75,4 +75,4 @@ to the same information."]
 ## 7. Feedback route
 
 [FILL: how does someone report an accessibility problem? An email address on the accessibility
-statement page. Who receives it after 2026-08-26?]
+statement page.]

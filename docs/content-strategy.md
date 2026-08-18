@@ -156,9 +156,10 @@ Vendor blogs, product marketing, undated listicles, AI-generated summaries
 | Sources | `sources` | ✓ | array of IDs from [sources.md](sources.md) |
 | Last reviewed | `lastReviewed` | ✓ | ISO date |
 
-**Validation rule for the build:** an Improvement with an empty `sources` array, or with a
-number in `impactNote` and no `sources`, fails the build. See
-[architecture.md](architecture.md) §4.
+**Validation rule:** an Improvement with an empty `sources` array, or with a number in
+`impactNote` and no `sources`, fails `tools/check-content.mjs` and does not get merged. The site
+has no build step, so this check is the gate. See [architecture.md](architecture.md) §4 for how
+the fields are stored and validated.
 
 **`appliesToPayer` is the field that earns this project its keep.** If utilities are included in
 rent, a shorter shower saves the student nothing — and telling them otherwise is how the site

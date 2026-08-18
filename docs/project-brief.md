@@ -65,7 +65,6 @@ This project will **not**:
 **Deferred (v2 or later):**
 - Include contact templates (to communicate with programs, contractors, and landlords), shopping links, etc. to streamline the process of making efficiency improvements.
 - Provide additional information about changes to improve energy efficiency and usage not already included by Sustainable Hanover.
-- Handoff documentation and plans.
 
 **Explicitly out:**
 - See Non-goals above.

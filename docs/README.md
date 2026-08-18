@@ -25,9 +25,9 @@ Fill them roughly in this order — later documents depend on decisions made in 
 | 4 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ◐ Draft |
 | 5 | [content-strategy.md](content-strategy.md) | Topic inventory, sourcing rules, voice, disclaimers | ◐ Draft |
 | 6 | [features.md](features.md) | Interactive features, specs, acceptance criteria, priority | ☐ Not started |
-| 7 | [DESIGN.md](../DESIGN.md) | Visual system, IA, sitemap, components | ☐ Not started |
-| 8 | [architecture.md](architecture.md) | Stack, hosting, build, deploy, data | ☐ Not started |
-| 9 | [AGENTS.md](../AGENTS.md) | Instructions for AI coding agents working in this repo | ☐ Not started |
+| 7 | [DESIGN.md](../DESIGN.md) | Visual system, IA, sitemap, components | ◐ Draft |
+| 8 | [architecture.md](architecture.md) | Stack, hosting, build, deploy, data | ◐ Draft |
+| 9 | [AGENTS.md](../AGENTS.md) | Instructions for AI coding agents working in this repo | ◐ Draft |
 | 10 | [accessibility.md](accessibility.md) | WCAG target, testing plan, known constraints | ☐ Not started |
 | 11 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ◐ Draft |
 | 12 | [sources.md](sources.md) | Living bibliography, review cadence, verification log | ☐ Not started |
@@ -42,9 +42,12 @@ Update the Status column as you go: ☐ Not started → ◐ Draft → ● Comple
 
 | Question | Blocks | Owner | Needed by |
 |---|---|---|---|
-| [FILL: e.g. "Will this live on hanovernh.org or a separate domain?"] | architecture | [FILL] | [FILL] |
-| Who maintains and hosts the site after 2026-08-26? | architecture, launch | [FILL] | [FILL] |
-| | | | |
+| Do we launch on the default `github.io` URL, or set up a custom domain? | launch | Megan | 2026-08-26 |
+| Do the planning documents stay in the published repository, where they are served publicly at `/docs/`? | launch | Megan | 2026-08-24 |
+
+**Resolved:** where the site lives. It is hand-written HTML, CSS and JavaScript on GitHub Pages,
+served from `main` at the default `github.io` URL, decided 2026-08-18. See
+[architecture.md](architecture.md) §2.
 
 ## Document conventions
 

@@ -22,7 +22,6 @@
 | 5. Test | Ryan and Katharine | 2026-08-26 | Usability round 2 done; accessibility passes | ☐ |
 | 6. Review & sign-off | All | 2026-08-26 | Partner approval on all content | ☐ |
 | 7. Launch | All | 2026-08-26 | Live; distribution channels notified | ☐ |
-| 8. Handoff | All | 2026-08-26 | Repo + hosting access transferred; successor deploys a test change | ☐ |
 
 ## 3. Milestones
 
@@ -45,7 +44,6 @@ If time runs short, drop in this order:
 
 1. Test (usability round 2)
 2. Launch
-3. Handoff
 
 **Never cut:** accessibility, content review, research
 
@@ -59,4 +57,4 @@ If time runs short, drop in this order:
 
 | Date | Update |
 |---|---|
-| [FILL] | [FILL] |
+| 2026-08-18 | Stack decided: hand-written HTML, CSS and JavaScript, no build step, hosted on GitHub Pages from `main`. [architecture.md](architecture.md) and [AGENTS.md](../AGENTS.md) filled in accordingly |
