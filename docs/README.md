@@ -19,22 +19,21 @@ Fill them roughly in this order — later documents depend on decisions made in 
 
 | # | Document | Purpose | Status |
 |---|---|---|---|
-| 1 | [project-brief.md](project-brief.md) | Why this exists, who it serves, what is in and out of scope | ◐ Draft |
-| 2 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ◐ Draft |
-| 3 | [content-strategy.md](content-strategy.md) | Topic inventory, sourcing rules, voice, disclaimers | ☐ Not started |
-| 4 | [features.md](features.md) | Interactive features, specs, acceptance criteria, priority | ☐ Not started |
-| 5 | [DESIGN.md](../DESIGN.md) | Visual system, IA, sitemap, components | ☐ Not started |
-| 6 | [architecture.md](architecture.md) | Stack, hosting, build, deploy, data | ☐ Not started |
-| 7 | [AGENTS.md](../AGENTS.md) | Instructions for AI coding agents working in this repo | ☐ Not started |
-| 8 | [accessibility.md](accessibility.md) | WCAG target, testing plan, known constraints | ☐ Not started |
-| 9 | [measurement.md](measurement.md) | Success metrics, analytics, privacy stance | ☐ Not started |
-| 10 | [research-plan.md](research-plan.md) | Usability testing with student renters | ◐ Draft |
-| 11 | [governance.md](governance.md) | Ownership, maintenance, handoff after the project ends | ☐ Not started |
-| 12 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ◐ Draft |
-| 13 | [sources.md](sources.md) | Living bibliography with review dates | ☐ Not started |
-| 14 | [glossary.md](glossary.md) | Plain-language definitions used site-wide | ☐ Not started |
+| 1 | [project-brief.md](project-brief.md) | Why this exists, who it serves, what is in and out of scope | ● Complete |
+| 2 | [research-plan.md](research-plan.md) | User interviews and usability testing with student renters | ◐ Draft |
+| 3 | [interviews.md](interviews.md) | Raw notes + synthesis from Round 1 interviews | ◐ Draft |
+| 4 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ◐ Draft |
+| 5 | [content-strategy.md](content-strategy.md) | Topic inventory, sourcing rules, voice, disclaimers | ◐ Draft |
+| 6 | [features.md](features.md) | Interactive features, specs, acceptance criteria, priority | ☐ Not started |
+| 7 | [DESIGN.md](../DESIGN.md) | Visual system, IA, sitemap, components | ☐ Not started |
+| 8 | [architecture.md](architecture.md) | Stack, hosting, build, deploy, data | ☐ Not started |
+| 9 | [AGENTS.md](../AGENTS.md) | Instructions for AI coding agents working in this repo | ☐ Not started |
+| 10 | [accessibility.md](accessibility.md) | WCAG target, testing plan, known constraints | ☐ Not started |
+| 11 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ◐ Draft |
+| 12 | [sources.md](sources.md) | Living bibliography, review cadence, verification log | ☐ Not started |
+| 13 | [glossary.md](glossary.md) | Plain-language definitions used site-wide | ☐ Not started |
 
-Update the Status column as you go: ☐ Not started → ◐ Draft → ● Approved by Sustainable Hanover.
+Update the Status column as you go: ☐ Not started → ◐ Draft → ● Complete.
 
 ## Open questions
 
@@ -43,7 +42,8 @@ Update the Status column as you go: ☐ Not started → ◐ Draft → ● Approv
 
 | Question | Blocks | Owner | Needed by |
 |---|---|---|---|
-| [FILL: e.g. "Will this live on hanovernh.org or a separate domain?"] | architecture, governance | [FILL] | [FILL] |
+| [FILL: e.g. "Will this live on hanovernh.org or a separate domain?"] | architecture | [FILL] | [FILL] |
+| Who maintains and hosts the site after 2026-08-26? | architecture, launch | [FILL] | [FILL] |
 | | | | |
 
 ## Document conventions

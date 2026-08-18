@@ -91,16 +91,16 @@ cross-reference accessibility.md]
 [FILL: decide the fallback]
 
 **Data persistence**
-[FILL: none? localStorage? shareable URL? — must be consistent with the privacy stance in
-measurement.md and the non-goals in project-brief.md]
+[FILL: none? localStorage? shareable URL? — nothing leaves the browser, per the non-goals in
+project-brief.md]
 
 **Acceptance criteria**
 - [ ] [FILL: observable, testable statement]
 - [ ] [FILL]
 - [ ] [FILL]
 
-**Instrumentation**
-[FILL: what event, if any, tells us this feature works — see measurement.md]
+**How we'll know it works**
+[FILL: what we'd observe in usability testing — see research-plan.md §3]
 
 ---
 

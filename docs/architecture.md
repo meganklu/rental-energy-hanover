@@ -32,7 +32,7 @@
 | D6 | Hosting | [FILL] | | |
 | D7 | Domain | [FILL: subdomain of hanovernh.org? separate? GitHub Pages URL?] | | |
 | D8 | Build/CI | [FILL] | | |
-| D9 | Analytics | [FILL — see measurement.md] | | |
+| D9 | Analytics | [FILL: default is none — no cookies, no third-party scripts] | | |
 | D10 | Interactive feature state | [FILL: in-memory? localStorage? URL params?] | | |
 
 ## 3. System overview
@@ -121,7 +121,7 @@ floor and stop worrying about it.]
 | Hosting provider changes terms | [FILL] | [FILL] | [FILL] |
 | Build tooling stops working after N years | [FILL] | [FILL] | [FILL] |
 | External link (utility program page) 404s | [FILL] | [FILL] | [FILL] |
-| Nobody has repo access | [FILL] | — | see [governance.md](governance.md) |
+| Nobody has repo access | [FILL] | — | [FILL: at least two people, one of them not a graduating student, hold access] |
 
 ## 13. Open technical questions
 

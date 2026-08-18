@@ -1,6 +1,8 @@
 # Project Brief
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-05 · **Approved by Sustainable Hanover:** ☐ No
+
+> **Status:** ● Complete · **Last updated:** 2026-08-18 · **Owner:** Megan
+
 
 ## 1. One-sentence description
 
@@ -8,14 +10,16 @@ A website that empowers and educates student renters make energy efficiency impr
 
 ## 2. Problem statement
 
-Students living in residential rentals in Hanover, New Hampshire represent a group that face limitations in making energy usage and efficiency improvements. They often are first-time renters with limited knowledge about changes they can make to improve energy efficiency, such as what changes are most effective and what is allowed by their landlord. They also may not understand how these investments will benefit them, especially if they are in a shorter term lease. Further discouraging these students, they may have limited time and money to make improvements by applying for community support inititives. These factors result in continued use of outdated or expensive energy systems.
 
-## 3. Why students, and why now
+Students living in residential rentals in Hanover, New Hampshire represent a group that face limitations in making energy usage and efficiency improvements. They often are first-time renters with limited knowledge about changes they can make to improve energy efficiency, such as what changes are most effective and what is allowed by their landlord. They also may not understand how these investments will benefit them, especially if they are in a shorter term lease. Further discouraging these students, they may have limited time and money to make improvements by applying for community support initiatives. These factors result in continued use of outdated or expensive energy systems.
 
-- **Why this audience:** Students are often first-time renters with no prior experience with heating and electricity bills, along with limited knowledge about how to request for their landlord to make changes. They often have short leases, and there can be high turnover in the rental properties. This further disincentivizes home improvements and permanent change. 
+
+## 3. Why students
+
+
+- **Why this audience:** Students are often first-time renters with no prior experience with heating and electricity bills, along with limited knowledge about how to request for their landlord to make changes. They often have short leases, and there can be high turnover in the rental properties. This further disincentivizes home improvements and permanent change.
 - **Why a new site rather than a page on the existing one:** Sustainable Hanover's current pages on energy are more directed toward homeowners with greater control over changes made to their property. By creating a new site, we will be able to cater directly toward renters with specific recommendations, provide additional background information, and create interactive features for a better user experience.
-- **Timing:** [FILL: e.g. tied to lease-signing season, the start of heating season, a course
-  deadline, a Sustainable Hanover initiative]
+
 
 ## 4. Relationship to existing Sustainable Hanover content
 
@@ -32,15 +36,14 @@ Students living in residential rentals in Hanover, New Hampshire represent a gro
 **Rule of thumb we're adopting:** We link to Sustainable Hanover as the source of
 truth for programs and rebates. We only author original content where the student-renter
 framing genuinely differs and additional background information is beneficial.
-This website will initially be created as an external site and can be incorperated into the Sustainable Hanover website later.
+This website will initially be created as an external site and can be incorporated into the Sustainable Hanover website later.
+
 
 ## 5. Goals
 
-See the [measurement document](measurement.md#1-what-working-means) for information about the goal metrics.
-
 | # | Goal | How we'd know it happened |
 |---|---|---|
-| G1 | Promote and lower barriers to existing Sustainable Hanover initivies to college students | Demographic changes in use of existing programs |
+| G1 | Promote and lower barriers to existing Sustainable Hanover initiatives to college students | Demographic changes in use of existing programs |
 | G2 | Provide engaging educational materials on energy efficiency | Audience retention on the website |
 
 ## 6. Non-goals
@@ -72,12 +75,11 @@ This project will **not**:
 | Role | Name | Contact | Decision authority |
 |---|---|---|---|
 | SIP group member | Megan Lu | [megan.k.lu.28@dartmouth.edu](mailto:megan.k.lu.28@dartmouth.edu) | Develop website, write project plans and documentation |
-| SIP group member | Liam Kenny | [liam.m.kenny.28@dartmouth.edu](mailto:liam.m.kenny.28@dartmouth.edu) | Conduct user interviews |
-| SIP group member | Ryan Lee | [ryan.j.lee.28@dartmouth.edu](mailto:ryan.j.lee.28@dartmouth.edu) | Compile and cite energy efficiency information |
-| SIP group member | Katharine Morley | [katharine.r.morley.28@dartmouth.edu](mailto:katharine.r.morley.28@dartmouth.edu) | Research lease and rental standards to limitations and opportunties for renters to improve energy efficiency |
+| SIP group member | Ryan Lee | [ryan.j.lee.28@dartmouth.edu](mailto:ryan.j.lee.28@dartmouth.edu) | Conduct user interviews, compile and cite energy efficiency information |
+| SIP group member | Katharine Morley | [katharine.r.morley.28@dartmouth.edu](mailto:katharine.r.morley.28@dartmouth.edu) | Conduct user interviews, research lease and rental standards to limitations and opportunities for renters to improve energy efficiency |
 | Sustainable Hanover contact | Yolanda Baumgartner | [yfoursh@gmail.com](mailto:yfoursh@gmail.com) | Provide project direction guidance, review for content accuracy and partner branding, support publication |
 | Course instructor | Morgan E. Peach | [morgan.edward.peach@dartmouth.edu](mailto:morgan.edward.peach@dartmouth.edu) | Offer project feedback |
-| Site owner after handoff | [FILL] | [FILL] | See [governance.md](governance.md) |
+
 
 ## 9. Constraints
 
@@ -88,18 +90,9 @@ This project will **not**:
 | Technical | Must be maintainable by a non-developer volunteer |
 | Branding | Must match Sustainable Hanover branding |
 
-## 10. Risks
 
-| Risk | Likelihood | Impact | Mitigation |
-|---|---|---|---|
-| Content becomes stale (rebates, utility rates, tenant law) | High | High | [FILL — see governance.md and sources.md] |
-| No maintainer after the project lead leaves | [FILL] | High | [FILL] |
-| Advice is inaccurate or unsafe for a specific unit type | [FILL] | High | [FILL] |
-| Students never find the site | [FILL] | [FILL] | [FILL] |
-| Scope grows past available time | [FILL] | [FILL] | [FILL] |
-| [FILL] | | | |
+## 10. Definition of done for v1
 
-## 11. Definition of done for v1
 
 - [ ] Functioning interactive site with information on weatherizing, window covers, etc.
 - [ ] All content reviewed by the SIP group

@@ -43,7 +43,7 @@ before making decisions that affect scope or content.
    non-color-dependent meaning are required in every component you write.
 
 6. **Do not add third-party scripts, trackers, fonts, or analytics** without explicit
-   approval. See the privacy stance in [docs/measurement.md](docs/measurement.md).
+   approval. The site sets no cookies and uses no third-party analytics.
 
 7. **Do not collect personal information.** See non-goals in
    [docs/project-brief.md](docs/project-brief.md).
@@ -120,9 +120,11 @@ Run [FILL: lint + test + build] before considering any change complete.
 
 - Lead with the action, then the reason.
 - State cost and time in student terms ("$12, 20 minutes").
-- No guilt-based climate framing. Money and comfort first.
-- No em-dash-heavy or listicle-flavored prose. [FILL: adjust to taste]
-- No promises: "typically saves" not "will save".
+- Talk about money and comfort first. Leave out guilt-based climate framing.
+- Write plain declarative sentences. Use commas and periods in place of em dashes.
+- Avoid contrast constructions like "not X, but Y". State the point directly and stop.
+- Skip emoji and warning symbols. Write "Note:" or "Safety:" instead.
+- Use "typically saves" rather than "will save".
 
 ## What to ask a human about
 

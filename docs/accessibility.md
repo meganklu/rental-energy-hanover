@@ -75,4 +75,4 @@ to the same information."]
 ## 7. Feedback route
 
 [FILL: how does someone report an accessibility problem? An email address on the accessibility
-statement page. Who receives it after handoff? — coordinate with governance.md]
+statement page. Who receives it after 2026-08-26?]
