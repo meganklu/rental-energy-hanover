@@ -482,24 +482,28 @@
 }
 
 /* Logo lockup: house icon plus wordmark, one link, one unit. */
+/* One-color lockup: icon and both lines of text share --color-accent. The icon stretches to the
+   full height of the two-line text stack (align-self: stretch, width: auto keeps it square)
+   rather than a fixed pixel size, so it always matches whatever the text block's height is. */
 .brand {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: var(--space-2);
   text-decoration: none;
-  color: var(--color-text);
+  color: var(--color-accent);
 }
 
 .brand__icon {
-  width: 32px;
-  height: 32px;
-  color: var(--color-accent);
+  align-self: stretch;
+  width: auto;
+  height: 100%;
   flex-shrink: 0;
 }
 
 .brand__text {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 2px;
 }
 
@@ -507,12 +511,12 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: var(--text-h4);
-  color: var(--color-text);
+  color: inherit;
 }
 
 .partner-line {
   font-size: var(--text-small);
-  color: var(--color-text-muted);
+  color: inherit;
 }
 
 .primary-nav ul {
@@ -724,27 +728,26 @@
   justify-content: center;
   gap: var(--space-5);
   padding: var(--space-7) var(--space-5);
-  background: var(--color-bg);
+  background: var(--color-surface-brand);
   text-align: center;
 }
 
-/* The tan rectangle. Sized taller than wide, like an actual doormat, with the black border
-   inset from its edges so a strip of tan always shows outside the border. */
+/* The tan rectangle. A fixed aspect-ratio, taller than wide like an actual doormat, so both this
+   and the black border inset inside it share the same shape by construction rather than by
+   coincidence of padding math. Sized larger than the first pass. */
 .hero__mat {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: min(90vw, 26rem);
-  min-height: 28rem;
-  padding: var(--space-5);
+  position: relative;
+  width: min(90vw, 32rem);
+  aspect-ratio: 4 / 5;
   background: var(--color-mat);
 }
 
-/* Only this border and what's inside it is "the mat" proper. */
+/* Only this border and what's inside it is "the mat" proper. Inset by a fixed margin (not
+   padding) from the tan rectangle's edges, so the tan margin is uniform on all four sides and
+   the border keeps close to the outer rectangle's own proportions as the mat scales. */
 .hero__mat-border {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: var(--space-5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -761,12 +764,12 @@
 
 .hero__tagline-lead {
   display: block;
-  font-size: clamp(3rem, 2.4rem + 4vw, 5rem);
+  font-size: clamp(2.25rem, 1.8rem + 2.5vw, 3.25rem);
 }
 
 .hero__tagline-rest {
   display: block;
-  font-size: clamp(1.75rem, 1.4rem + 2vw, 2.5rem);
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
 }
 
 .hero__note {
@@ -861,12 +864,14 @@
 }
 
 /* Rooms alternate white and a light green surface for visual variety, no meaning attached. */
-.room--porch { grid-area: porch; background: var(--color-surface); }
+/* One background for every room, revised 2026-08-19 (was split by floor, before that arbitrary
+   per room). All still --color-bg, so this rule stays a single place to change. */
+.room--porch { grid-area: porch; background: var(--color-bg); }
 .room--bedroom { grid-area: bedroom; background: var(--color-bg); }
 .room--bathroom { grid-area: bathroom; background: var(--color-bg); }
-.room--living { grid-area: living; background: var(--color-surface); }
-.room--kitchen { grid-area: kitchen; background: var(--color-surface); }
-.room--basement { grid-area: basement; background: var(--color-surface); min-height: 100px; }
+.room--living { grid-area: living; background: var(--color-bg); }
+.room--kitchen { grid-area: kitchen; background: var(--color-bg); }
+.room--basement { grid-area: basement; background: var(--color-bg); min-height: 100px; }
 
 .room__heading {
   font-size: var(--text-small);
@@ -1046,9 +1051,9 @@
   position: sticky;
   top: var(--space-3);
   z-index: 10;
-  width: 200px;
+  width: 100%;
   height: 10px;
-  margin: 0 auto var(--space-4);
+  margin: 0 0 var(--space-4);
   background: var(--color-border);
   border-radius: var(--radius-pill);
   cursor: default;
