@@ -186,15 +186,28 @@ the note read as the sentence it is. The heading is read aloud as "Welcome to yo
 note separately, so the joke lands on the screen without turning into "Welcome to your Home
 asterisk" in a screen reader.
 
-**Layout.** Full width, `min-height: 85svh` rather than `100vh`, so the top of the doll house shows
-at the bottom edge and the page reads as continuing. Never a fixed pixel height. The hero
-background is a flat tan (`--color-mat`), no gradient, no texture, no pattern, deliberately plain
-for now — see the open question in §11 about whether a woven texture is added later. Inside it, a
-centered "mat" element: a `--color-mat-border` (near-black) rule-bordered box holding the `<h1>`
-and the `*Rental home` note, the note anchored to the bottom-right corner inside that border,
-mimicking where a mat's fine print actually sits. Everything inside and around the mat box is
-center-aligned. The description sentence and the scroll arrow sit centered below the mat box, on
-the same tan background, outside the border.
+**"Welcome" gets its own line,** revised 2026-08-19, set larger than the rest of the heading, with
+"to your Home\*" wrapping underneath it at the heading's normal size. Still one `<h1>`, one
+accessible name ("Welcome to your Home") — the size and line break are presentational (a `<span>`
+around "Welcome" carrying the larger size), not two separate headings.
+
+**Layout, revised 2026-08-19: what "the mat" actually is.** Only the text and its border are the
+mat — earlier language that called the whole hero band the mat was imprecise. From the outside in:
+
+1. The hero section itself: `min-height: 85svh` rather than `100vh`, so the top of the doll house
+   shows at the bottom edge and the page reads as continuing. Never a fixed pixel height.
+   Background is a flat, solid site color (`--color-bg`), not tan — the tan is the mat's alone.
+2. The mat rectangle: a `--color-mat` (tan) box, centered in the hero, sized taller than it is
+   wide so the proportions read as an actual doormat rather than a banner, deliberately plain for
+   now (no woven texture — see the open question in §11).
+3. The black border: a `--color-mat-border` rule inset from the tan rectangle's edges, so a strip
+   of tan shows *outside* the border all the way around. This border, not the tan field, is what
+   directly frames the heading.
+4. Inside the border: the `<h1>` and, anchored to its bottom-right corner, the `*Rental home` note
+   — mimicking where a mat's fine print actually sits.
+
+The description sentence and the scroll arrow sit centered below the mat rectangle, outside it
+entirely, on the hero's own solid background.
 
 **The scroll arrow.** A real anchor, `<a href="#house">`, carrying the arrow icon and a visible
 text label reading "Take a look inside". It is 44×44px at minimum, sits in the tab order directly
@@ -266,6 +279,12 @@ has been visited, and a student who opens the basement first gets exactly the sa
 order exists so that a student who does not know where to begin is never staring at an
 undifferentiated house.
 
+Added 2026-08-19: whichever hotspot the guided order would take the student to next carries a
+"Next" badge, the same pill style as "Start here" — so the guidance is visible on the drawing
+itself, not only inside whichever info bar happens to be open. Exactly one hotspot carries it at a
+time, recomputed after each spot is opened. It never doubles up with "Start here" on the bill
+hotspot before anything has been visited; that badge already does the same job there.
+
 A visited hotspot is shown at reduced opacity rather than with a flag icon, revised 2026-08-19 —
 simpler, and it reads at a glance without needing a legend. This is one of the three ways a visited
 state is distinguishable (opacity, plus the "Viewed" word added to its accessible name, per
@@ -282,9 +301,30 @@ subset — one sentence, a "Learn more" link to the full improvement, and a "Clo
 Revised 2026-08-19: reversibility is worded identically everywhere it appears (improvement pages,
 cards, and the info bar) — "Comes off at move-out," "Mostly comes off at move-out," or "Permanent,
 check with your landlord" for the three `reversible` values, never a page-specific variant. A
-"Next spot" control also appears, unless every hotspot has already been visited, in which case it
-is dropped rather than relabeled, leaving only "Learn more" and "Close." One info bar is open at a
-time. The bar never covers the drawing. "Back to the house" returns to the full view.
+"Next spot" control also appears, worded "Next: Window" rather than "Next spot: Window" (revised
+2026-08-19, shorter), unless every hotspot has already been visited, in which case it is dropped
+rather than relabeled, leaving only "Learn more" and "Close." One info bar is open at a time. The
+bar never covers the drawing. "Back to the house" returns to the full view.
+
+**Hotspot color, revised 2026-08-19.** Hotspot buttons no longer fill with `--color-brand`
+(#7EDA5D) under their text — that value is 1.74:1 against black and is decorative-only per §4's
+own rule, which text sitting on it was quietly violating. A hotspot is now `--color-bg` (white)
+with a `--color-accent` border and text, the same interactive pattern as every button on the
+site, at the same 7.0:1 contrast. `--color-brand` stays where §4 already scoped it: the roof and
+other purely decorative fills.
+
+**Room background, revised 2026-08-19.** The white/light-green split from the first pass was
+arbitrary per room. It now follows one rule instead: the top floor (bedroom, bathroom) is
+`--color-bg`; the main floor (porch, living room, kitchen) and the basement are `--color-surface`.
+Reads as "the ground floor and below sit on a tinted surface, the floor above is bright," which is
+a reason rather than a checkerboard.
+
+**Explainer hotspots carry a "Renter basics" badge** (added 2026-08-19) in place of a permission
+badge, since find-your-drafts and read-your-bill are not upgrades and have no
+`landlordPermission` to state. Same pill shape as the permission badges, but a neutral grey
+(`--color-surface` on `--color-border-strong`) rather than any of success/warning/info, since
+those three already mean the three permission states and reusing one would misread as a claim
+about permission.
 
 **Without JavaScript.** Rooms are `:target` fragments, so enlarging a room is pure CSS. Every
 hotspot is a real link to its improvement page, so a tap goes straight to the page. With JavaScript
@@ -302,13 +342,18 @@ it and returns focus to the hotspot. Enlarging a room announces the room name an
 are in it. This is the highest accessibility risk in the project, per
 [docs/accessibility.md](docs/accessibility.md) §3, and it gets a screen reader pass of its own.
 
-**Progress.** A bar reads "You have viewed 3 of 10 spots" and fills as the student explores. It
-reflects the guided order without enforcing it. It is encouragement, and it never gates content.
-Without JavaScript it shows the static label "10 spots to view". Revised 2026-08-19: the bar is
-no longer sticky under the header from page load. It is not present at all until the doll house
-section reaches the viewport, then becomes sticky to the top of the screen for as long as that
-section is in view, and scrolls away normally once the student moves past it. It never claims
-header space on a screen the student has not reached the house on yet.
+**Progress.** Revised 2026-08-19, restyled as a small green pill rather than a labeled bar: a
+rounded, `--color-accent`-filled track that fills as the student explores, with no visible text by
+default. "You have viewed 3 of 10 spots." appears as a tooltip on hover or keyboard focus (the
+pill is a real focusable element, `tabindex="0"`), and the same sentence is always present as its
+`aria-label`, so a screen reader announces it regardless of hover — the count is never hidden
+behind hover alone, only its visible spelled-out form is. Without JavaScript it shows a static
+`aria-label` of "10 spots to view" and no fill. It reflects the guided order without enforcing it,
+is encouragement, and never gates content. It is not present at all until the doll house section
+reaches the viewport, then becomes sticky near the top of the screen — with a visible margin, not
+flush against the very top edge — for as long as that section is in view, and scrolls away
+normally once the student moves past it. It never claims header space on a screen the student has
+not reached the house on yet.
 
 **Weight.** The doll house structure is CSS and HTML, not an SVG payload, so its cost is the
 shared component stylesheet rather than a per-page asset. Each hotspot's icon is a small `<use>`
@@ -331,7 +376,23 @@ original spec.
 label, "Personalize your recommendations" — it does not summarize the current setting the way the
 old chip did. 44×44px minimum, sits above page content without covering the skip link or blocking
 a focused element (`scroll-margin-bottom` on the last focusable element of a page, mirroring the
-`scroll-margin-top` pattern already used for the sticky bars).
+`scroll-margin-top` pattern already used for the sticky bars). Its hover state, revised 2026-08-19,
+darkens the fill one step (`--color-accent` to `--color-accent-hover`) and applies the tactile
+scale from §5, with the label staying full-strength white throughout — no opacity fade on the
+button or its text at any point in the hover transition, so the label never dims or disappears.
+
+**The form itself.** Revised 2026-08-19, two fixes: the submit button ("Show what I can do") sits
+further from the last question, `--space-6` rather than the default paragraph spacing, so it does
+not read as part of the fourth fieldset. Every radio input is the same explicit 20×20px box with
+`flex-shrink: 0`, so a long option label can never visually compress the input next to it.
+
+**Heat-type options are glossary terms, not parentheticals** (revised 2026-08-19). "Forced air
+(you feel it blowing)" becomes a dotted-underline term, "Forced air," that shows the same
+definition already in [docs/glossary.md](docs/glossary.md) on hover or keyboard focus, rather than
+printing it inline for every option whether the student needs it or not. The definition is a real
+tooltip element, not a bare `title` attribute, so it can be styled and is reachable by keyboard
+(the term itself is focusable); screen readers get the definition through the tooltip's own text
+in the accessibility tree, not through hover alone.
 
 **What it opens.** The same four-question form as `/start`, in a `<dialog>`. There is exactly one
 copy of this form's markup, on the `/start` page; the dialog is populated from it rather than
@@ -494,9 +555,13 @@ screen readers in ways nobody controls, and does not match a hand-drawn doll hou
 Revised 2026-08-19: the thermostat hotspot icon is drawn as a plain thermometer (a bulb and a
 stem) rather than a dial, and the water heater hotspot icon is drawn as a single water droplet
 rather than a tank, both more immediately legible at hotspot size than the literal-appliance
-versions they replace. The "flag (spot viewed)" icon above is retired — see §3.2, a visited
-hotspot is now shown at reduced opacity instead. The "doll house" object icon doubles as the site
-logo, in the header lockup next to the wordmark and as the browser tab favicon.
+versions they replace. The bill hotspot icon is now the dollar sign (reusing the "dollar" facts
+icon) rather than a sheet-of-paper glyph — the bill hotspot is fundamentally about a dollar figure,
+and the dollar sign reads faster at hotspot size. The "flag (spot viewed)" icon above is retired
+— see §3.2, a visited hotspot is now shown at reduced opacity instead. Two icons added: "close" (an
+X, for the personalize dialog) and "sliders" (three adjustable rows, for the personalize FAB). The
+"doll house" object icon doubles as the site logo, in the header lockup next to the wordmark and
+as the browser tab favicon.
 
 An icon is never the only label, and never the only difference between two states.
 
@@ -548,6 +613,13 @@ loading, error, empty.
 Focus-visible is one token everywhere: a 2px `--color-accent` ring at 2px offset, which holds 3:1
 against white and against `--color-surface`. It is never removed, including on mouse click, and it
 is drawn outside the SVG shape for hotspots so it is not clipped.
+
+**Tactile hover, added 2026-08-19.** Every button-like control (`.btn`, hotspots, the FAB, the
+scroll cue, cards, filter chips, carousel controls, the dialog close button) grows slightly on
+hover, a `transform: scale()` response transition under the same `--motion-duration-base` token
+and reduced-motion gating as everything else in §7 — held still, not merely slowed, when motion is
+reduced. It is additive to whatever color or border change that component already had on hover,
+never a replacement for it, since scale alone is easy to miss for a student skimming quickly.
 
 ### 5.1 Interaction pattern specs
 
