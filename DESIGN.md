@@ -116,19 +116,25 @@ library.
 
 ### Navigation
 
-- **Primary nav items:** The house · What you can change · Learn · Rights and programs · About.
-  `/before-you-sign`, `/where-to-get-it` and `/glossary` are reached from context, not from the
-  top bar. `/checklist` joins them in v2.
-- **Nav layout:** In v1 the five primary items sit inline in the top bar next to the wordmark,
-  which fits comfortably at the widths v1 targets. Below 600px they wrap to a second row and stay
-  visible. The full-screen panel behind a labeled "Menu" button, with the situation summarized at
-  the top, arrives with the mobile layouts in v2. No hamburger icon without the word next to it,
-  whenever it lands.
-- **Persistent elements:** A situation chip in the header showing the current setting, for example
-  "Electric baseboard · I pay heat · 7 months left". Tapping it reopens the selector. When nothing
-  is set it reads "Set your situation" and links to `/start`.
+- **Primary nav items:** Home · Improvements · Rights and programs · About. Revised 2026-08-19:
+  "The house" is renamed "Home" and "What you can change" is renamed "Improvements," matching the
+  shorter, plainer vocabulary a student arriving from a link would use. `/learn` no longer has its
+  own top-bar slot; its two explainers are reached from `/improvements` instead (a short "Learn"
+  section on that page), alongside `/before-you-sign`, `/where-to-get-it` and `/glossary`, which
+  were already reached from context rather than the top bar. `/checklist` joins them in v2.
+- **Nav layout:** In v1 the four primary items sit inline in the top bar next to the logo lockup
+  (house icon plus wordmark), which fits comfortably at the widths v1 targets. Below 600px they
+  wrap to a second row and stay visible. The full-screen panel behind a labeled "Menu" button
+  arrives with the mobile layouts in v2. No hamburger icon without the word next to it, whenever it
+  lands.
+- **Persistent elements:** Revised 2026-08-19 — the header no longer carries a situation
+  indicator. Setting the situation moved to a single floating action button, "Personalize your
+  recommendations," fixed to the bottom-right corner on every page (see §3.3). The button's label
+  is static; it does not summarize the current setting. Tapping it opens the same four-question
+  form as `/start` in a dialog, without navigating away, and works as a plain link to `/start`
+  with JavaScript off.
 - **Breadcrumbs and back behavior:** Breadcrumbs on improvement and explainer detail pages only,
-  one level deep (`What you can change / Seal your windows with film`). Filter state and the
+  one level deep (`Improvements / Seal your windows with film`). Filter state and the
   current room live in the URL, so the browser back button returns the student to the room or the
   filtered list they came from.
 
@@ -143,10 +149,10 @@ student can send a filtered list to a roommate. Rooms serialize as fragments (`/
 
 | Screen | Job to be done | Primary action | Notes |
 |---|---|---|---|
-| Hero `/` | Say what the site is in about twenty-five words, and point down | Scroll, or tap the arrow | Spec in §3.1. "Welcome Home*", the note, one sentence, an arrow |
+| Hero `/` | Say what the site is in about twenty-five words, and point down | Scroll, or tap the arrow | Spec in §3.1. "Welcome to your Home*", the note, one sentence, an arrow |
 | The house `/#house` | Show a doll-house like view of a house with multiple rooms and elements that can be improved for energy efficiency | Tap a room, then tap a thing in it | Spec in §3.2. Under 40 words of copy above the drawing |
 | Room, enlarged `/#room` | Show the three or four things worth knowing about in this room | Tap a hotspot | The room box grows out of the doll house. The same hotspots also render as a plain linked list under the drawing, which is the keyboard, screen reader and no-JavaScript path |
-| Situation selector `/start` | Collect the four inputs that change what we recommend | Answer, then "Show what I can do" | Every question has "I am not sure", which widens results rather than blocking. All four questions on one screen in v1. One question per screen arrives with the mobile layouts in the next version. A plain form, so it submits without JavaScript |
+| Situation selector `/start` | Collect the four inputs that change what we recommend | Answer, then "Show what I can do" | Every question has "I am not sure", which widens results rather than blocking. All four questions on one screen in v1. One question per screen arrives with the mobile layouts in the next version. A plain form, so it submits without JavaScript. Revised 2026-08-19: this is now also the one and only situation form on the site — the improvements library filters against the same four answers rather than keeping a second, separate filter form. Reached directly at `/start`, or as a dialog opened by the "Personalize your recommendations" button (§3.3) from any page, with the same markup either way |
 | Improvements library `/improvements` | Let a student scan everything and narrow it to their situation | Open an improvement | The one screen in the site that is a card grid, because it is the complete index and the direct route for a student who already knows what they want. Default sort: enablers first, then impact, then lowest cost. Empty state never dead-ends |
 | Improvement detail `/improvements/:slug` | Get this done today | Follow the steps | Fixed order: title, summary, badges, safety note if any, what you need, steps, where to get it, sources. Visible prose under 200 words. Depth lives in disclosure bars |
 | Explainer `/learn/:slug` | Correct one wrong idea, fast | Flip the cards, then go do the improvement | Built as flip cards and an animated diagram rather than paragraphs. Every explainer carries one diagram that shows the mechanism, for example where heat leaves a room. See §5.1 |
@@ -161,34 +167,39 @@ ships and why.
 
 The first screen. It says what the site is, then points down.
 
+**Revised 2026-08-19: the welcome mat.** The hero now reads as a classic coir welcome mat rather
+than a parallax scene. This replaces the parallax-layer spec below; §7's parallax rules stay in
+force for the doll house section and any later use, but the hero itself no longer uses parallax.
+
 **Copy, exactly as written:**
 
-> **Welcome Home\***
+> **Welcome to your Home\***
 >
-> \*Rental home.
+> \*Rental home
 >
 > Learn how to improve energy efficiency in your rental to save money and the environment.
 
-**The asterisk.** Marked up as `<h1>Welcome Home<sup aria-hidden="true">*</sup></h1>` with the
-note on its own short line underneath in `--color-text-muted`. The heading is then read aloud as
-"Welcome Home" and the note is read as the sentence it is. The joke lands on the screen without
-turning into "Welcome Home asterisk" in a screen reader.
+Note the note has no trailing period, matching a real mat's lettering.
+
+**The asterisk.** Marked up as `<h1>Welcome to your Home<sup aria-hidden="true">*</sup></h1>` with
+the note read as the sentence it is. The heading is read aloud as "Welcome to your Home" and the
+note separately, so the joke lands on the screen without turning into "Welcome to your Home
+asterisk" in a screen reader.
 
 **Layout.** Full width, `min-height: 85svh` rather than `100vh`, so the top of the doll house shows
-at the bottom edge and the page reads as continuing. Never a fixed pixel height. On a short
-landscape laptop, or a window at 200% zoom, the hero shrinks to fit its content instead of pushing
-everything below the fold. The `svh` unit costs nothing now and is what the mobile work in v2 will
-need.
+at the bottom edge and the page reads as continuing. Never a fixed pixel height. The hero
+background is a flat tan (`--color-mat`), no gradient, no texture, no pattern, deliberately plain
+for now — see the open question in §11 about whether a woven texture is added later. Inside it, a
+centered "mat" element: a `--color-mat-border` (near-black) rule-bordered box holding the `<h1>`
+and the `*Rental home` note, the note anchored to the bottom-right corner inside that border,
+mimicking where a mat's fine print actually sits. Everything inside and around the mat box is
+center-aligned. The description sentence and the scroll arrow sit centered below the mat box, on
+the same tan background, outside the border.
 
 **The scroll arrow.** A real anchor, `<a href="#house">`, carrying the arrow icon and a visible
 text label reading "Take a look inside". It is 44×44px at minimum, sits in the tab order directly
 after the heading, and works with JavaScript off. With JavaScript on it scrolls smoothly, and it
 jumps instantly when motion is reduced. An arrow with no label is not a control anyone can read.
-
-**Parallax.** The hero is the main place parallax is used. Three layers moving at different
-rates as the page scrolls: a background band, a house silhouette, and a foreground edge that the
-doll house section rises behind. Rules and limits are in §7. No text ever sits on a layer that
-moves relative to the text.
 
 **What it must not do.** It must not become the reason a student never finds the house. The 85svh
 cap, the arrow, and the peeking top edge of the next section are all there for that.
@@ -198,10 +209,19 @@ cap, the arrow, and the peeking top edge of the next section are all there for t
 The centerpiece. Everything else on the site can be reached from it.
 
 **What is drawn.** A doll house. The front wall is removed and all six rooms are visible at once,
-each one a box on a two-story frame, with a basement below and an entry porch at the side. Flat
-front-on elevation, no perspective and no isometric view, so a room stays a rectangle and the
-things inside it stay legible at any size. One SVG, drawn for this site, in the illustration style
-set in §4.
+each one a box on a two-story frame, with a basement below. Flat front-on elevation, no
+perspective and no isometric view, so a room stays a rectangle and the things inside it stay
+legible at any size. Built as styled boxes in the markup (CSS Grid), not one monolithic SVG, so
+every room and hotspot is a real, independently focusable element rather than a shape inside a
+graphic — see "Accessibility" below.
+
+Revised 2026-08-19: the entry and porch box is one story tall, in line with the living room and
+kitchen rather than spanning both floors alongside the bedroom and bathroom. The grid reads, top
+to bottom: the roof; the bedroom and bathroom on their own floor; the porch alongside the living
+room and kitchen on the floor below; the basement spanning the full width beneath that. The
+illustration no longer sits on a solid brand-green background band — the rooms sit directly on the
+page background. Room interiors themselves are not uniformly white: some rooms use
+`--color-bg` and some use `--color-surface`, for visual variety rather than a semantic rule.
 
 **It is an example residence.** The house is a teaching object rather than a
 model of anyone's actual unit. This is not specified directly to the user and is assumed
@@ -237,20 +257,34 @@ No tier restates the one above it at greater length. Tier 2 is the answer. Tier 
 A student who reads only tier 2 for all ten hotspots has learned something real, in about 400
 words, without opening a single page.
 
-**Guided, and free to wander.** The bill hotspot is marked "Start here", and every info bar ends
-with a "Next spot" control that follows a fixed order: the bill, then the thermostat, then the
-windows and the door, then the rest. Following that order is never required. Nothing is locked,
-nothing is greyed out until it has been visited, and a student who opens the basement first gets
-exactly the same content. The order exists so that a student who does not know where to begin is
-never staring at an undifferentiated house. The state of the area changes to indicate whether it
-has been visited (different color and a flag to indicate status), but this does not block the user
-from visitng again or not accessing another part of the site.
+**Guided, and free to wander.** The bill hotspot is marked "Start here" until it has been visited;
+revised 2026-08-19, the badge is removed once that happens rather than staying put, since its job
+(telling a lost student where to begin) is done. Every info bar ends with a "Next spot" control
+that follows a fixed order: the bill, then the thermostat, then the windows and the door, then the
+rest. Following that order is never required. Nothing is locked, nothing is greyed out until it
+has been visited, and a student who opens the basement first gets exactly the same content. The
+order exists so that a student who does not know where to begin is never staring at an
+undifferentiated house.
+
+A visited hotspot is shown at reduced opacity rather than with a flag icon, revised 2026-08-19 —
+simpler, and it reads at a glance without needing a legend. This is one of the three ways a visited
+state is distinguishable (opacity, plus the "Viewed" word added to its accessible name, per
+"Accessibility" below); color and opacity together are still not the only signal, since the
+accessible name changes too. None of this blocks the student from visiting again or from reaching
+any other part of the site.
 
 **Interaction.** Tap a room box and it enlarges, filling the drawing area, with the rest of the
 house shown small alongside it. Tap a hotspot in the enlarged room to open an info bar under the
-drawing, holding the title, the permission and reversibility badges, cost and time, one sentence,
-a link to the full improvement, and the "Next spot" control. One info bar is open at a time. The
-bar never covers the drawing. "Back to the house" returns to the full view.
+drawing. The open hotspot itself gets a visible selected state (a highlighted ring), so it is clear
+which spot the info bar belongs to. The info bar holds the title, the permission and reversibility
+badges, cost, time and impact — the same facts shown on the improvement page itself, not a
+subset — one sentence, a "Learn more" link to the full improvement, and a "Close" control.
+Revised 2026-08-19: reversibility is worded identically everywhere it appears (improvement pages,
+cards, and the info bar) — "Comes off at move-out," "Mostly comes off at move-out," or "Permanent,
+check with your landlord" for the three `reversible` values, never a page-specific variant. A
+"Next spot" control also appears, unless every hotspot has already been visited, in which case it
+is dropped rather than relabeled, leaving only "Learn more" and "Close." One info bar is open at a
+time. The bar never covers the drawing. "Back to the house" returns to the full view.
 
 **Without JavaScript.** Rooms are `:target` fragments, so enlarging a room is pure CSS. Every
 hotspot is a real link to its improvement page, so a tap goes straight to the page. With JavaScript
@@ -268,12 +302,18 @@ it and returns focus to the hotspot. Enlarging a room announces the room name an
 are in it. This is the highest accessibility risk in the project, per
 [docs/accessibility.md](docs/accessibility.md) §3, and it gets a screen reader pass of its own.
 
-**Progress.** A sticky bar under the header reads "You have viewed 3 of 10 spots" and fills as
-the student explores. It reflects the guided order without enforcing it. It is encouragement, and
-it never gates content. Without JavaScript it shows the static label "10 spots to view".
+**Progress.** A bar reads "You have viewed 3 of 10 spots" and fills as the student explores. It
+reflects the guided order without enforcing it. It is encouragement, and it never gates content.
+Without JavaScript it shows the static label "10 spots to view". Revised 2026-08-19: the bar is
+no longer sticky under the header from page load. It is not present at all until the doll house
+section reaches the viewport, then becomes sticky to the top of the screen for as long as that
+section is in view, and scrolls away normally once the student moves past it. It never claims
+header space on a screen the student has not reached the house on yet.
 
-**Weight.** The doll house SVG is inline, optimized, and no more than 40 KB, inside the 100 KB
-per-page budget in [docs/architecture.md](docs/architecture.md) §6. No embedded raster images, no
+**Weight.** The doll house structure is CSS and HTML, not an SVG payload, so its cost is the
+shared component stylesheet rather than a per-page asset. Each hotspot's icon is a small `<use>`
+reference into the shared icon sprite (§4), inside the 100 KB per-page budget in
+[docs/architecture.md](docs/architecture.md) §6. No embedded raster images in the illustration, no
 gradients, no filters.
 
 **If it is not ready.** This is the largest single piece of work in building the site. 
@@ -281,6 +321,29 @@ A doll house degrades gracefully as a drawing, which a cutaway would not:
 ship labeled empty room boxes with hotspot dots and no furniture, which is already usable, then
 add the contents of each room as they get drawn. The room list, the info bars and the improvement
 pages are the substance, and they work with no drawing at all.
+
+### 3.3 Personalize your recommendations (added 2026-08-19)
+
+The situation selector's one entry point, site-wide, replacing the header situation chip from the
+original spec.
+
+**Where.** A floating action button, fixed to the bottom-right corner, on every page. Static
+label, "Personalize your recommendations" — it does not summarize the current setting the way the
+old chip did. 44×44px minimum, sits above page content without covering the skip link or blocking
+a focused element (`scroll-margin-bottom` on the last focusable element of a page, mirroring the
+`scroll-margin-top` pattern already used for the sticky bars).
+
+**What it opens.** The same four-question form as `/start`, in a `<dialog>`. There is exactly one
+copy of this form's markup, on the `/start` page; the dialog is populated from it rather than
+duplicating the fieldsets into every page's shell. Submitting the dialog's form saves the answers
+to `localStorage` under `situation` (same key, same shape D10 already specifies), updates
+anywhere on the current page that reads the situation, and closes the dialog without navigating
+away. The library's filtering (F2) reads this same stored situation — see the note in the
+Improvements library row of §3's key-screens table. There is no second, separate filter form.
+
+**Without JavaScript.** The button is a real link to `/start`. Clicking it navigates there, the
+same four-question page as always, which still submits as a plain GET with JavaScript off. The
+dialog is pure enhancement on top of that link, not a replacement for it.
 
 ## 4. Visual system
 
@@ -318,13 +381,16 @@ interactive work.
 | `--color-danger` | `#A32014` on `#FCEDEB` | Safety notes | ☑ 6.7:1 |
 | `--color-border` | `#C9D4C6` | Decorative hairlines and card edges only | ☑ decorative, 1.5:1 |
 | `--color-border-strong` | `#6F8272` | Form control borders, hotspot outlines, anything that must meet 3:1 | ☑ 4.1:1 on bg, 3.8:1 on surface |
+| `--color-mat` | `#D9BE8A` | Added 2026-08-19. The hero's welcome-mat background. Used nowhere else | ☑ 9.3:1 with `--color-text` |
+| `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
 
 - **Dark mode:** ☐ Supported ☑ Not in v1. The token structure supports adding one later
   without touching component code.
 - **Rule:** color never carries meaning alone. Every status color is paired with text and an icon.
-  A visited hotspot differs from an unvisited one three ways at once: it fills with
-  `--color-accent` instead of `--color-brand`, it gains a small flag marker, and its accessible
-  name gains the word "Viewed". Any one of the three is enough on its own.
+  A visited hotspot differs from an unvisited one three ways at once, revised 2026-08-19: it drops
+  to reduced opacity instead of full-strength fill, it no longer carries a flag icon (retired, see
+  §4 Iconography), and its accessible name gains the word "Viewed". Any one of the two remaining
+  visual/textual signals is enough on its own — opacity change plus the accessible name.
 - **Hotspot dots carry a ring.** `--color-brand` at 1.74:1 cannot mark the boundary of a control
   on a white room interior, which WCAG 1.4.11 puts at 3:1. Every hotspot dot therefore carries a
   2px `--color-accent` ring, which holds 7.0:1 whatever the fill inside it is doing.
@@ -425,6 +491,13 @@ screen readers in ways nobody controls, and does not match a hand-drawn doll hou
 - Controls: chevron (disclosure), arrow left and arrow right (carousel and "Next spot"), flip,
   replay (animated diagram), printer, external link, back to the house
 
+Revised 2026-08-19: the thermostat hotspot icon is drawn as a plain thermometer (a bulb and a
+stem) rather than a dial, and the water heater hotspot icon is drawn as a single water droplet
+rather than a tank, both more immediately legible at hotspot size than the literal-appliance
+versions they replace. The "flag (spot viewed)" icon above is retired — see §3.2, a visited
+hotspot is now shown at reduced opacity instead. The "doll house" object icon doubles as the site
+logo, in the header lockup next to the wordmark and as the browser tab favicon.
+
 An icon is never the only label, and never the only difference between two states.
 
 ## 5. Component inventory
@@ -443,9 +516,9 @@ to be better than.
 | Reduce motion toggle | Turns ambient motion off across the site | following the operating system, forced reduce, forced full, focus-visible |
 | Doll house | The home page. Six room boxes seen at once | default, room enlarged, hotspot focused, hotspot visited, reduced motion, no JavaScript |
 | Room box | One room in the house, and the enlarged view of it | small (in the house), enlarged (`:target`), focused, empty (no hotspots apply to this student) |
-| Next spot control | Carries the guided order from one info bar to the next | default, focus-visible, last spot, all spots seen |
+| Next spot control | Carries the guided order from one info bar to the next | default, focus-visible, last spot, removed once all spots are seen (revised 2026-08-19, was a relabeled state) |
 | Back to the house | Returns from an enlarged room to the full view | default, focus-visible |
-| Hotspot | The tappable thing in a room | default, hover, focus-visible, visited (accent fill plus flag marker), dimmed (does not apply to the student's situation, with a text reason), 44px hit area |
+| Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker), dimmed (does not apply to the student's situation, with a text reason), 44px hit area |
 | Info bar | Opens under the drawing with the short answer | closed, opening, open, empty, error, no JavaScript (becomes a link) |
 | Flip card | Flashcards for myths and definitions | front, back, focus-visible, reduced motion. Spec in §5.1 |
 | Carousel | Ordered walkthroughs and before-and-after pairs | first, middle, last, keyboard, no JavaScript. Spec in §5.1 |
@@ -458,7 +531,9 @@ to be better than.
 | Cost and time meter | `cost` and `time` bands as text plus a filled-square indicator | four cost bands, four time bands, unknown |
 | Impact indicator | `impact`, including the `enabler` case that saves nothing on its own | low, medium, high, enabler |
 | Checklist item (v2) | One step in the generated checklist | unchecked, checked, disabled (blocked by a prerequisite), needs-permission, printed |
-| Filter and situation selector | Sets the four situation inputs and the library filters | default, focused, selected, "not sure", cleared, results-count live region |
+| Situation form | The one four-question form, used at `/start` and inside the personalize dialog | default, focused, selected, "not sure", cleared, results-count live region on the library |
+| Floating action button (added 2026-08-19) | "Personalize your recommendations," fixed bottom-right, every page | default, hover, focus-visible, active |
+| Personalize dialog (added 2026-08-19) | `<dialog>` holding the situation form, opened by the FAB | closed, open, focus-trapped, no JavaScript (FAB is a plain link to `/start` instead) |
 | Callout, safety | Renders `safety` above steps, never below, never collapsed | single variant, `--color-danger` |
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
 | Source and last-reviewed block | "How we know this". Links plus an ISO date | open by default on detail pages, collapsed to a count on cards |
@@ -627,10 +702,10 @@ student gets a way to turn that off.
 
 **Rules:**
 
-- **Where motion is used.** Eight places. Parallax on the hero and the section bands, the looping
-  diagram on each explainer, a room box growing and shrinking back, the flip card turning, the
-  carousel scrolling, the info bar opening under the drawing, the disclosure bar expanding, and the
-  scroll-expanding diagram bands.
+- **Where motion is used.** Eight places, revised 2026-08-19 (the hero no longer parallaxes, per
+  §3.1). Parallax on the section bands, the looping diagram on each explainer, a room box growing
+  and shrinking back, the flip card turning, the carousel scrolling, the info bar opening under the
+  drawing, the disclosure bar expanding, and the scroll-expanding diagram bands.
 - **Loops are allowed, and they come with controls.** Content that moves for more than 5 seconds
   needs a mechanism to pause, stop, or hide it under WCAG 2.2.2, and a loop runs indefinitely by
   definition. Every looping animation therefore carries its own visible "Pause" button, and the
@@ -662,7 +737,11 @@ and not here. So the site carries its own control.
   A switch with a visible text label, never an icon alone.
 - **Default:** follows the operating system. A student who has already asked for reduced motion
   gets it without touching anything.
-- **How it works:** the control is a checkbox. Within the page, CSS reads it directly through
+- **How it works:** the control is a checkbox, revised 2026-08-19 to be styled as an actual
+  sliding toggle switch (a pill-shaped track with a thumb) rather than a default checkbox square,
+  since "switch" is the affordance students expect for a single on/off site preference. Still a
+  real `<input type="checkbox">` underneath, so it stays a native, keyboard-operable control with
+  no ARIA needed to fake the switch role. Within the page, CSS reads it directly through
   `:has()`, so it takes effect with no JavaScript at all. JavaScript only carries the choice to the
   next page, writing `motion` to `localStorage` alongside `situation`, with no identifier attached.
   Without JavaScript the toggle still works on the page the student is on.
@@ -759,15 +838,18 @@ Microcopy follows [docs/content-strategy.md](docs/content-strategy.md) §2. Lead
 Money and comfort before climate. Plain declarative sentences, around grade 8. Second person.
 Commas and periods in place of em dashes when appropriate. No emoji and no warning symbols, write "Safety:" instead.
 "Typically saves" rather than "will save". Buttons and hotspots name what happens next, so no
-"Submit", no "Click here", and no "Learn more".
+"Submit" and no "Click here". Revised 2026-08-19: the info bar's link to the full improvement page
+is now a deliberate exception to the general "no 'Learn more'" instinct, specifically because the
+info bar already names the specific thing ("Seal your windows with film") right above the button,
+so "Learn more" reads as "more about the thing just named" rather than as an unlabeled catch-all.
 
 | Situation | Copy |
 |---|---|
-| Hero tagline | "Welcome Home*" |
+| Hero tagline | "Welcome to your Home*" |
 | Hero note | "*Rental home" |
 | Hero description | "Learn how to improve energy efficiency in your rental to save money and the environment." |
 | Scroll cue | "Take a look inside" |
-| Home, above the drawing | "Tour a rental and its potential upgrades" |
+| Home, above the drawing | "Click a room to open it. Click each highlighted spot to see what you can do about it." |
 | Room prompt | "The living room" |
 | Room, enlarged | "The living room" |
 | Guided start | "Start here" on the bill hotspot |
@@ -777,10 +859,11 @@ Commas and periods in place of em dashes when appropriate. No emoji and no warni
 | Hotspot accessible name | "Living room window: Sealing gaps here improves energy efficiency significantly" |
 | Hotspot, does not apply | "Your landlord pays for heat, so this one saves them money and not you." |
 | Progress bar | "You have viewed 3 of 10 spots." |
-| Visited hotspot | "Viewed" on the flag marker, and the same word added to the accessible name |
+| Visited hotspot | Shown at reduced opacity (revised 2026-08-19, no flag icon), and "Viewed" added to the accessible name |
 | Looping diagram controls | "Pause" · "Play" |
 | Reduce motion toggle | "Reduce motion" |
-| Situation chip, unset | "Customize for your situation" |
+| Personalize button (revised 2026-08-19, replaces the header situation chip) | "Personalize your recommendations" |
+| Info bar link to the full page (revised 2026-08-19) | "Learn more" |
 | Flip card front | "True or false: turning the heat down while you are out costs more than leaving it steady." |
 | Flip card back opener | "False. Reheating a cold room costs less than holding it warm all day." |
 | Disclosure bar labels | "Why this works" · "What if my landlord says no" · "Sources" |
@@ -799,8 +882,12 @@ The site is made in partnership with Sustainable Hanover. It launches as an exte
 sustainablehanovernh.org later, per [docs/project-brief.md](docs/project-brief.md) §4, so the
 credit has to survive that move.
 
-- **Header:** Our own wordmark in `--font-display`, with "In partnership with Sustainable Hanover"
-  as a subordinate line linking to sustainablehanovernh.org. 
+- **Header:** Revised 2026-08-19 — the site's own name changed from "Rental Energy Hanover" to
+  "Energy for Student Renters," which describes the audience rather than repeating the town name
+  the partner credit line already carries. The header logo is now a lockup: the house icon from
+  the shared icon set (§4) at a small fixed size, next to the wordmark in `--font-display`, both
+  inside one link to `/`. The same house icon is the browser tab favicon. "In partnership with
+  Sustainable Hanover" stays as a subordinate line linking to sustainablehanovernh.org.
 - **Footer, every page:** "Project created in partnership with Sustainable Hanover, a committee of the Town of Hanover, New
   Hampshire", their logo at a fixed height, a link to their site, and the contact address
   sustainablehanovernh@gmail.com. Also the site-wide last-reviewed date and a link to the
@@ -818,6 +905,7 @@ credit has to survive that move.
 | Question | Options | Decision | Date |
 |---|---|---|---|
 | Who draws the doll house and the 22 icons, and by when? This is the critical path into the 2026-08-19 build week | One person owns illustration / split by room / ship empty labeled room boxes first and add the contents as they are drawn | | |
+| The hero mat is a flat tan with a black border, deliberately undecorated for now. Does it stay this plain, or get a woven coir texture (CSS repeating-gradient crosshatch, no image asset) later? | Keep it flat, as specified 2026-08-19 / add a woven texture pass once the flat version has been reviewed | Flat for now | 2026-08-19 |
 | The doll house is an example residence, and nothing on the page says so. Do students read it as a generic teaching house, or do they expect it to match their own unit? | Leave it implicit, as specified, and watch for the misread in usability round 2 / add a line under the drawing if it confuses anyone / draw a second, apartment-shaped arrangement | Implicit, carried by context and the simplified illustration | 2026-08-19 |
 | Is the guided order advisory or does anything enforce it? | Advisory, as specified. Nothing locks / gate tier 3 until tier 2 is seen | Advisory | 2026-08-18 |
 | Ten hotspots in v1, or fewer done better? | 10 as listed in §3.2 / 6 covering only the Must topics | | |
