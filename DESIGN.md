@@ -1,24 +1,31 @@
 # Design
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-18 · **Owner:** Megan
+> **Status:** ● Complete · **Last updated:** 2026-08-19 · **Owner:** Megan
 
 This document covers information architecture, the visual system, and component behavior. It is
 downstream of [docs/audience.md](docs/audience.md) and [docs/content-strategy.md](docs/content-strategy.md),
 and it is built within the constraints decided in [docs/architecture.md](docs/architecture.md).
-Sections that depend on [docs/features.md](docs/features.md) are marked, because that document is
-still unwritten and this one will need a second pass once it exists.
+It reads alongside [docs/features.md](docs/features.md), which specifies what each interactive
+feature does and which ones ship in v1.
 
-**The shape of the site.** The home page is an interactive cutaway of a house. A student clicks a
+**The shape of the site.** The home page is an interactive doll house. A student clicks a
 room, then clicks the window or the thermostat or the water heater, and gets the improvement for
-that thing. The site teaches by letting someone poke at a drawing of the place they live. Reading
+that thing. The site teaches by letting someone interact with an example residence. Reading
 is the fallback path, not the main one.
 
-**Relationship to Sustainable Hanover's site.** The site should read as a Sustainable Hanover
-project. Colors, section rhythm, and the display typeface are taken from
+**Relationship to Sustainable Hanover's site.** The site is a partnership with Sustainable
+Hanover rather than a Sustainable Hanover publication, and the design should carry that
+distinction. It borrows their visual language so the two read as related, and it credits them as
+a partner rather than an author or an owner. See §10. Content is reformatted from the Sustainable Hanover pages. 
+Colors, section rhythm, and the display typeface are taken from
 [sustainablehanovernh.org](https://sustainablehanovernh.org). Where their choices work against a
-dense instructional site read on a phone, this document says so and states the substitution. All
+dense instructional site, this document says so and states the substitution. All
 brand values below were read out of the published stylesheet
 (`static1.squarespace.com/.../site.css`, retrieved 2026-08-18), not from a style guide. See §10 and §11.
+
+**v1 is a desktop and laptop site.** Mobile layouts are deferred to the next version, per §6. The
+narrow-width behavior that v1 does ship is a readable fallback and the path for a zoomed desktop
+browser, rather than a designed phone experience.
 
 **Everything here is buildable with no build step.** Per [docs/architecture.md](docs/architecture.md)
 §2 there is no framework, no bundler, and no package manager. Every pattern in §5.1 is specified as
@@ -39,15 +46,18 @@ JavaScript, the section says what a student sees without it.
    the carousel are ways of reaching content that also exists as plain linked text. A student
    using a screen reader, a keyboard, or a browser with JavaScript off reaches the same
    recommendations by a route that is as short.
-5. **Legible over clever.** Accessibility is the floor. If a visual treatment fails contrast,
+5. **Legible over clever.** Accessibility is a priority. If a visual treatment fails contrast,
    keyboard use, or 320px reflow, the treatment loses.
 
 ## 2. Information architecture
 
 **Organizing logic: by the thing in front of you, filtered by your situation.**
 
-The primary entry is spatial. A student who is cold looks at the drawing, finds the window, and
-gets the window advice. Navigation names actions for the students who arrive from a link or a
+The primary entry is spatial. A student is guided through the house figure to learn about
+different ways to improve their rental. Information is graduated and provided in an interactive
+and engaging manner. This is the main way to interact with the site from the home page.
+Information can also be accessed through pages and navigation, so students can filter by their specific
+situation and needs. Navigation names actions for the students who arrive from a link or a
 search rather than from the front page. Lifecycle phase from
 [docs/audience.md](docs/audience.md) §6 is a sort and filter dimension rather than a set of nav
 labels. Three reasons:
@@ -60,48 +70,60 @@ labels. Three reasons:
   ordering everywhere without appearing in the nav at all.
 
 The situation a student sets once (heat type, who pays, months left on the lease, phase) persists
-across the site, filters every list, and dims the hotspots in the walkthrough that do not apply to
+across the site, filters every list, and dims the hotspots in the doll house that do not apply to
 them. That is the interactive layer the project exists to provide, and it is what a static
 Sustainable Hanover page cannot do.
 
 ### Sitemap
 
 ```
-/                                The house. Interactive cutaway, six rooms, ten hotspots
-│   /#kitchen /#basement …       Room views. Real fragments, so a room is linkable and works
-│                                with JavaScript off
+/                                Hero, then the doll house
+│   /#house                      The doll house. Front-open view, six rooms, ten hotspots.
+│                                The scroll arrow's target
+│   /#kitchen /#basement …       A room, enlarged. Real fragments, so a room is linkable and
+│                                works with JavaScript off
 ├── /start                       Situation selector. Four questions, filters everything after
-├── /improvements                The library. Every improvement, filterable. Also the complete
-│   │                            text index behind the walkthrough
+├── /improvements                The library. Every improvement, filterable. The direct route
+│   │                            for a student who already knows what they want
 │   └── /improvements/:slug      One improvement: cost, permission, reversibility, steps, sources
-├── /learn                       Explainers, built as flip cards and diagrams
+├── /learn                       Explainers, built as flip cards and animated diagrams
 │   ├── /learn/read-your-bill    Enabler. kWh, rate, what is actually driving the bill
 │   ├── /learn/find-your-drafts  Enabler. Guided walkthrough of where heat escapes
 │   ├── /learn/who-pays-for-what Enabler. Finding it in the lease
 │   └── /learn/:slug             Remaining explainers
-├── /checklist                   Generated checklist for the student's phase and situation
+├── /checklist                   v2. Generated checklist for the student's phase and situation
 ├── /before-you-sign             Hunting and signing. Viewing checklist, what to ask
 ├── /your-rights                 NH heat standard, habitability, who to call. Legal disclaimer
 ├── /programs                    NHSaves and assistance a renter can actually use
 ├── /where-to-get-it             Materials sourcing. Online, or fare-free bus to West Lebanon
 ├── /glossary                    Plain-language definitions, linked from first use
 ├── /about                       Credits Sustainable Hanover, contact, site-wide last-reviewed
-└── /accessibility               Public accessibility statement and how to report a problem
+└── /accessibility               Public accessibility statement
 ```
 
-Rooms are fragments of the home page rather than their own URLs. This keeps the walkthrough in one
-file, makes `/#kitchen` shareable, and lets CSS `:target` switch rooms with no JavaScript at all.
+Rooms are fragments of the home page rather than their own URLs. This keeps the doll house in one
+file, makes `/#kitchen` shareable, and lets CSS `:target` enlarge a room with no JavaScript at all.
 `/where-to-get-it` is a single shared page so the five improvements that involve a purchase link to
 it instead of repeating it. See [docs/content-strategy.md](docs/content-strategy.md) §8.
+
+**Two routes for website navigation.** The doll house is the guided route. It suits a student who does
+not yet know what to ask for, and it hands out information in graduated tiers as they explore. The
+navigation, the situation selector and the library are the direct route. They suit a student who
+arrives from a link, a search, or a second visit, and who wants to filter straight to their heat
+type, their budget, or what they are allowed to change. Neither is a fallback for the other, and
+both reach the same content items. Every improvement is one tap from the house and one tap from the
+library.
 
 ### Navigation
 
 - **Primary nav items:** The house · What you can change · Learn · Rights and programs · About.
-  `/checklist`, `/before-you-sign`, `/where-to-get-it` and `/glossary` are reached from context,
-  not from the top bar.
-- **Mobile nav pattern:** A visible top bar with the wordmark and a labeled menu button reading
-  "Menu". Tapping it opens a full-screen panel listing the five primary items with the current
-  situation summarized at the top. No hamburger icon without the word next to it.
+  `/before-you-sign`, `/where-to-get-it` and `/glossary` are reached from context, not from the
+  top bar. `/checklist` joins them in v2.
+- **Nav layout:** In v1 the five primary items sit inline in the top bar next to the wordmark,
+  which fits comfortably at the widths v1 targets. Below 600px they wrap to a second row and stay
+  visible. The full-screen panel behind a labeled "Menu" button, with the situation summarized at
+  the top, arrives with the mobile layouts in v2. No hamburger icon without the word next to it,
+  whenever it lands.
 - **Persistent elements:** A situation chip in the header showing the current setting, for example
   "Electric baseboard · I pay heat · 7 months left". Tapping it reopens the selector. When nothing
   is set it reads "Set your situation" and links to `/start`.
@@ -121,31 +143,74 @@ student can send a filtered list to a roommate. Rooms serialize as fragments (`/
 
 | Screen | Job to be done | Primary action | Notes |
 |---|---|---|---|
-| The house `/` | Make a cold, annoyed student point at the thing that is bothering them within five seconds | Tap a room, then tap a thing in it | Spec in §3.1. Under 40 words of copy above the drawing |
-| Room view `/#room` | Show the three or four things worth knowing about in this room | Tap a hotspot | Also renders as a plain linked list under the drawing, which is the no-JavaScript and screen reader path |
-| Situation selector `/start` | Collect the four inputs that change what we recommend | Answer, then "Show what I can do" | Every question has "I am not sure", which widens results rather than blocking. One question per screen on mobile. A plain form, so it submits without JavaScript |
-| Improvements library `/improvements` | Let a student scan everything and narrow it | Open an improvement | The one screen in the site that is a card grid, because it is also the complete index and the fallback path. Default sort: enablers first, then impact, then lowest cost. Empty state never dead-ends |
+| Hero `/` | Say what the site is in about twenty-five words, and point down | Scroll, or tap the arrow | Spec in §3.1. "Welcome Home*", the note, one sentence, an arrow |
+| The house `/#house` | Show a doll-house like view of a house with multiple rooms and elements that can be improved for energy efficiency | Tap a room, then tap a thing in it | Spec in §3.2. Under 40 words of copy above the drawing |
+| Room, enlarged `/#room` | Show the three or four things worth knowing about in this room | Tap a hotspot | The room box grows out of the doll house. The same hotspots also render as a plain linked list under the drawing, which is the keyboard, screen reader and no-JavaScript path |
+| Situation selector `/start` | Collect the four inputs that change what we recommend | Answer, then "Show what I can do" | Every question has "I am not sure", which widens results rather than blocking. All four questions on one screen in v1. One question per screen arrives with the mobile layouts in the next version. A plain form, so it submits without JavaScript |
+| Improvements library `/improvements` | Let a student scan everything and narrow it to their situation | Open an improvement | The one screen in the site that is a card grid, because it is the complete index and the direct route for a student who already knows what they want. Default sort: enablers first, then impact, then lowest cost. Empty state never dead-ends |
 | Improvement detail `/improvements/:slug` | Get this done today | Follow the steps | Fixed order: title, summary, badges, safety note if any, what you need, steps, where to get it, sources. Visible prose under 200 words. Depth lives in disclosure bars |
-| Explainer `/learn/:slug` | Correct one wrong idea, fast | Flip the cards, then go do the improvement | Built as flip cards and a diagram rather than paragraphs. See §5.1 |
-| Checklist `/checklist` | Take a list away and act on it over a week | Print, or copy as text to send to roommates | State is local to the browser. Nothing is submitted anywhere |
+| Explainer `/learn/:slug` | Correct one wrong idea, fast | Flip the cards, then go do the improvement | Built as flip cards and an animated diagram rather than paragraphs. Every explainer carries one diagram that shows the mechanism, for example where heat leaves a room. See §5.1 |
+| Checklist `/checklist` | Take a list away and act on it over a week | Print, or copy as text to send to roommates | **v2**, cut from v1 per [docs/features.md](docs/features.md) §3. State is local to the browser. Nothing is submitted anywhere |
 | Rights `/your-rights` | Find out whether 58°F is legal and who to call | Reach a real help resource | Legal disclaimer at the top, never collapsed. No advice on a specific dispute |
 | Programs `/programs` | Find out whether a renter can use this | Go to the program's own page | Any program with `state` other than NH is labeled as another state's program or is not rendered |
 
-The row set will need revisiting once [docs/features.md](docs/features.md) exists.
+Screens for features cut from v1 are marked. See [docs/features.md](docs/features.md) §3 for what
+ships and why.
 
-### 3.1 The home walkthrough
+### 3.1 The hero
+
+The first screen. It says what the site is, then points down.
+
+**Copy, exactly as written:**
+
+> **Welcome Home\***
+>
+> \*Rental home.
+>
+> Learn how to improve energy efficiency in your rental to save money and the environment.
+
+**The asterisk.** Marked up as `<h1>Welcome Home<sup aria-hidden="true">*</sup></h1>` with the
+note on its own short line underneath in `--color-text-muted`. The heading is then read aloud as
+"Welcome Home" and the note is read as the sentence it is. The joke lands on the screen without
+turning into "Welcome Home asterisk" in a screen reader.
+
+**Layout.** Full width, `min-height: 85svh` rather than `100vh`, so the top of the doll house shows
+at the bottom edge and the page reads as continuing. Never a fixed pixel height. On a short
+landscape laptop, or a window at 200% zoom, the hero shrinks to fit its content instead of pushing
+everything below the fold. The `svh` unit costs nothing now and is what the mobile work in v2 will
+need.
+
+**The scroll arrow.** A real anchor, `<a href="#house">`, carrying the arrow icon and a visible
+text label reading "Take a look inside". It is 44×44px at minimum, sits in the tab order directly
+after the heading, and works with JavaScript off. With JavaScript on it scrolls smoothly, and it
+jumps instantly when motion is reduced. An arrow with no label is not a control anyone can read.
+
+**Parallax.** The hero is the main place parallax is used. Three layers moving at different
+rates as the page scrolls: a background band, a house silhouette, and a foreground edge that the
+doll house section rises behind. Rules and limits are in §7. No text ever sits on a layer that
+moves relative to the text.
+
+**What it must not do.** It must not become the reason a student never finds the house. The 85svh
+cap, the arrow, and the peeking top edge of the next section are all there for that.
+
+### 3.2 The doll house
 
 The centerpiece. Everything else on the site can be reached from it.
 
-**What is drawn.** A cutaway of a two-story wood-frame house with a basement and an entry porch,
-which is the common shape of a Hanover student rental. One SVG, drawn for this site, in the
-illustration style set in §4. The archetype needs checking against real units before it is drawn.
-See §11.
+**What is drawn.** A doll house. The front wall is removed and all six rooms are visible at once,
+each one a box on a two-story frame, with a basement below and an entry porch at the side. Flat
+front-on elevation, no perspective and no isometric view, so a room stays a rectangle and the
+things inside it stay legible at any size. One SVG, drawn for this site, in the illustration style
+set in §4.
+
+**It is an example residence.** The house is a teaching object rather than a
+model of anyone's actual unit. This is not specified directly to the user and is assumed
+based on context and the simplified illustration.
 
 **Rooms (6):** Entry and porch · Living room · Bedroom · Kitchen · Bathroom · Basement.
 
-**Hotspots (10 in v1),** each mapping to an existing content item so the walkthrough adds a way in
-rather than a new body of content:
+**Hotspots (10 in v1),** each mapping to an existing content item so the house adds a way in rather
+than a new body of content:
 
 | Hotspot | Room | Goes to |
 |---|---|---|
@@ -160,38 +225,62 @@ rather than a new body of content:
 | Rim joist and attic hatch | Basement | Where the heat actually goes, and the programs page |
 | The bill on the fridge | Kitchen | Read your bill. Marked "Start here" |
 
-**Interaction.** Tap a room to open it. Tap a hotspot to open an info bar under the drawing
-holding the title, the permission and reversibility badges, cost and time, one sentence, and a
-link to the full improvement. One info bar is open at a time. The bar does not cover the drawing.
+**Graduated depth.** Information arrives in three tiers, and a student can stop at any of them.
 
-**How it degrades.** Rooms are `:target` fragments, so room switching is pure CSS. Every hotspot is
-a real link to its improvement page, so with JavaScript off a tap goes straight to the page. With
-JavaScript on, the link opens the info bar instead and updates the fragment. Under the drawing,
-always present in the markup, is "Everything in this house", a list of every room with its
-hotspots as ordinary links. That list is the screen reader path, the no-JavaScript path, and the
-narrow-phone layout, and it is not hidden with `display: none` at any width where the drawing is
-interactive.
+| Tier | Where it lives | How much | Example |
+|---|---|---|---|
+| 1 | The hotspot label, visible without tapping | A few words | "Window" |
+| 2 | The info bar | One sentence, badges, cost and time. Under 40 words | "A $15 film kit over a drafty window can be installed in an hour and removed at move-out." |
+| 3 | The improvement page | Steps, materials, safety, where to get it, sources | The full page |
 
-**Accessibility.** Each hotspot is a `<button>` or `<a>` with a real accessible name ("Living room
-window. Sealing gaps here typically saves the most"), never a bare SVG shape. Tab order runs room
-by room, top to bottom, matching the visual order. The whole-house drawing is
-`role="img"` with a description naming the rooms. Hit areas are at least 44×44px even where the
-drawn dot is 24px. Opening an info bar moves focus to the bar heading. Escape closes it and
-returns focus to the hotspot. This is the highest accessibility risk in the project, per
+No tier restates the one above it at greater length. Tier 2 is the answer. Tier 3 is how to do it.
+A student who reads only tier 2 for all ten hotspots has learned something real, in about 400
+words, without opening a single page.
+
+**Guided, and free to wander.** The bill hotspot is marked "Start here", and every info bar ends
+with a "Next spot" control that follows a fixed order: the bill, then the thermostat, then the
+windows and the door, then the rest. Following that order is never required. Nothing is locked,
+nothing is greyed out until it has been visited, and a student who opens the basement first gets
+exactly the same content. The order exists so that a student who does not know where to begin is
+never staring at an undifferentiated house. The state of the area changes to indicate whether it
+has been visited (different color and a flag to indicate status), but this does not block the user
+from visitng again or not accessing another part of the site.
+
+**Interaction.** Tap a room box and it enlarges, filling the drawing area, with the rest of the
+house shown small alongside it. Tap a hotspot in the enlarged room to open an info bar under the
+drawing, holding the title, the permission and reversibility badges, cost and time, one sentence,
+a link to the full improvement, and the "Next spot" control. One info bar is open at a time. The
+bar never covers the drawing. "Back to the house" returns to the full view.
+
+**Without JavaScript.** Rooms are `:target` fragments, so enlarging a room is pure CSS. Every
+hotspot is a real link to its improvement page, so a tap goes straight to the page. With JavaScript
+on, the same link opens the info bar instead and updates the fragment. Under the drawing, always
+present in the markup, is "Everything in this house", a list of every room with its hotspots as
+ordinary links. That list is the screen reader path, the no-JavaScript path, and the layout below
+600px, which makes it the zoom path too. It is never hidden with `display: none` at any width where the drawing is interactive.
+
+**Accessibility.** The doll house is a list of rooms in the markup, positioned by CSS, so tab order
+runs room by room in visual order and each room carries an accessible name and a hotspot count.
+Each hotspot is a `<button>` or `<a>` with a real accessible name ("Living room window: Sealing
+gaps here improves energy efficiency significantly"), never a bare SVG shape. Hit areas are at least 44×44px even
+where the drawn dot is 24px. Opening an info bar moves focus to the bar heading, and Escape closes
+it and returns focus to the hotspot. Enlarging a room announces the room name and how many spots
+are in it. This is the highest accessibility risk in the project, per
 [docs/accessibility.md](docs/accessibility.md) §3, and it gets a screen reader pass of its own.
 
-**Progress.** A sticky bar under the header reads "You have looked at 3 of 10 spots" and fills as
-the student explores. It is encouragement, and it never gates content. Without JavaScript it shows
-the static label "10 spots to look at".
+**Progress.** A sticky bar under the header reads "You have viewed 3 of 10 spots" and fills as
+the student explores. It reflects the guided order without enforcing it. It is encouragement, and
+it never gates content. Without JavaScript it shows the static label "10 spots to view".
 
-**Weight.** The house SVG is inline, optimized, and no more than 40 KB, inside the 100 KB per-page
-budget in [docs/architecture.md](docs/architecture.md) §6. No embedded raster images, no gradients,
-no filters.
+**Weight.** The doll house SVG is inline, optimized, and no more than 40 KB, inside the 100 KB
+per-page budget in [docs/architecture.md](docs/architecture.md) §6. No embedded raster images, no
+gradients, no filters.
 
-**If it is not ready.** The build window is 2026-08-19 to 2026-08-26 and this is the largest single
-piece of work in it. The room list, the info bars and the improvement pages are the substance, and
-they work with a plain room list and no drawing at all. Build that first and layer the SVG over it,
-so a slipping illustration cannot take the home page with it.
+**If it is not ready.** This is the largest single piece of work in building the site. 
+A doll house degrades gracefully as a drawing, which a cutaway would not:
+ship labeled empty room boxes with hotspot dots and no furniture, which is already usable, then
+add the contents of each room as they get drawn. The room list, the info bars and the improvement
+pages are the substance, and they work with no drawing at all.
 
 ## 4. Visual system
 
@@ -222,7 +311,7 @@ interactive work.
 | `--color-text-muted` | `#4C5A52` | Metadata, last-reviewed stamps, captions | ☑ 7.3:1 on bg, 6.6:1 on surface |
 | `--color-accent` | `#046648` | Links, primary button fill, focus ring, active filter, hotspot ring | ☑ 7.0:1 on bg, white text on it 7.0:1 |
 | `--color-accent-hover` | `#03503A` | Hover and active state of the above | ☑ 9.5:1 on bg |
-| `--color-brand` | `#7EDA5D` | Decorative fills, illustration, unvisited hotspot dot. Never text | ☑ decorative, 9.7:1 with text on it |
+| `--color-brand` | `#7EDA5D` | Decorative fills, illustration, unvisited hotspot dot (always inside an accent ring). Never text | ☑ decorative, 9.7:1 with text on it |
 | `--color-success` | `#046648` on `#E6F3EA` | "No permission needed" | ☑ 6.1:1 |
 | `--color-warning` | `#8A5300` on `#FDF3E0` | "Ask your landlord first" | ☑ 5.8:1 |
 | `--color-info` | `#14527A` on `#EAF2F8` | "Your landlord has to do this" | ☑ 7.4:1 |
@@ -230,12 +319,15 @@ interactive work.
 | `--color-border` | `#C9D4C6` | Decorative hairlines and card edges only | ☑ decorative, 1.5:1 |
 | `--color-border-strong` | `#6F8272` | Form control borders, hotspot outlines, anything that must meet 3:1 | ☑ 4.1:1 on bg, 3.8:1 on surface |
 
-- **Dark mode:** ☐ Supported ☑ Not in v1. The build window is one week and a second
-  contrast-checked palette is not affordable in it. The token structure supports adding one later
+- **Dark mode:** ☐ Supported ☑ Not in v1. The token structure supports adding one later
   without touching component code.
 - **Rule:** color never carries meaning alone. Every status color is paired with text and an icon.
-  In the walkthrough, a visited hotspot differs from an unvisited one by a filled center and a
-  changed accessible name, not by color alone.
+  A visited hotspot differs from an unvisited one three ways at once: it fills with
+  `--color-accent` instead of `--color-brand`, it gains a small flag marker, and its accessible
+  name gains the word "Viewed". Any one of the three is enough on its own.
+- **Hotspot dots carry a ring.** `--color-brand` at 1.74:1 cannot mark the boundary of a control
+  on a white room interior, which WCAG 1.4.11 puts at 3:1. Every hotspot dot therefore carries a
+  2px `--color-accent` ring, which holds 7.0:1 whatever the fill inside it is doing.
 - **Section themes.** Sustainable Hanover alternates white, light, and dark full-width bands down a
   page. We keep that rhythm with three themes: `white` (default), `light` (`--color-surface`), and
   `dark` (`--color-surface-dark`). Content pages use white throughout. The home page alternates. A
@@ -245,19 +337,23 @@ interactive work.
 
 Sustainable Hanover pairs acumin-pro headings at weight 500 with Poppins body at weight 300.
 acumin-pro is served from Adobe Fonts, which is a third-party request and is barred by
-[AGENTS.md](AGENTS.md) rule 6, and Poppins at 300 is thin for instructions read on a phone. We keep
-Poppins for display, which is the recognizable half of their pairing, and set body text in the
-system stack.
+[AGENTS.md](AGENTS.md) rule 6. We use Poppins for display (thicker weight to match acumin-pro) and body text.
 
 | Token | Family | Size | Weight | Line height | Use |
 |---|---|---|---|---|---|
-| `--font-display` | Poppins, self-hosted woff2, weights 500 and 600 | see scale | 500, 600 for h1 | 1.25 | h1 through h4, wordmark, hotspot labels, stat figures |
-| `--font-body` | `system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif` | 1rem | 400, 600 for emphasis | 1.6 | Everything else |
-| Base body size | | 16px, `1rem` | 400 | 1.6 | Never below 16px anywhere, including captions, badges and SVG labels |
+| `--font-display` | Poppins, self-hosted woff2 | see scale | 600 | 1.25 | h1 through h4, wordmark, hotspot labels, stat figures |
+| `--font-body` | Poppins, self-hosted woff2, falling back to `system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif` | 1rem | 400, 600 for emphasis | 1.65 | Everything else |
+| Base body size | | 16px, `1rem` | 400 | 1.65 | Never below 16px anywhere, including captions, badges and SVG labels |
+
+Two weights, 400 and 600, cover the whole site. Display takes 600, which reads closer to
+acumin-pro at 500 than Poppins 500 does. Body takes 400 rather than Sustainable Hanover's 300,
+because 300 is too thin for step-by-step instructions on screen. Line height goes to 1.65, up
+from the 1.6 a UI face would need, because Poppins has short descenders and tight default
+leading.
 
 Type scale, fluid between 360px and 1140px viewports:
 
-| Element | Mobile | Desktop |
+| Element | Narrow | Desktop |
 |---|---|---|
 | h1 | 2rem | 2.75rem |
 | h2 | 1.5rem | 2rem |
@@ -269,13 +365,20 @@ Type scale, fluid between 360px and 1140px viewports:
 Sustainable Hanover sets h1 at 4rem. That works on a page with one heading and a photograph. Our
 pages carry six to ten headings each, so the scale is compressed.
 
-- **Font loading:** Two self-hosted woff2 files, Poppins 500 and 600, subset to Latin, preloaded,
-  with `font-display: swap` and a metric-adjusted fallback so the swap does not shift layout. No
-  Google Fonts request, no Adobe Fonts script, no third-party origin. If the files fail to load the
-  site falls back to the system stack and remains fully legible.
+- **Font loading:** Two self-hosted woff2 files, Poppins 400 and 600, subset to Latin, both
+  preloaded, with `font-display: swap` and a `size-adjust` fallback so the swap does not shift
+  layout. Poppins now sets every word on the site rather than the headings alone, so the fallback
+  carries more weight than it did: the system stack is the second entry in both stacks, and a page
+  whose fonts never arrive stays fully legible. No Google Fonts request, no Adobe Fonts script, no
+  third-party origin. Two files is the ceiling. A third weight would push past the 60 KB font
+  budget in [docs/architecture.md](docs/architecture.md) §6.
+- **Numerals:** `font-variant-numeric: tabular-nums` on costs, times, temperatures and the progress
+  counter, so figures line up in the cost meter and the count does not jitter as it changes.
 - **Text inside SVG** uses `--font-body` at 16px minimum and is real `<text>`, never outlined
   paths, so it scales, reflows at 200% zoom, and is read by a screen reader.
-- **Max line length:** 68 characters. Content column caps at 42rem.
+- **Max line length:** 65 characters, and the content column caps at 40rem. Poppins sets wider
+  than a UI face at the same size, so the measure is tighter than the 70 characters a system stack
+  would take.
 
 ### Spacing, radius, elevation
 
@@ -294,7 +397,7 @@ pages carry six to ten headings each, so the scale is compressed.
 **Custom SVG, drawn for this site. No icon library, and no emoji anywhere in the interface or the
 content.** [AGENTS.md](AGENTS.md) already bars emoji in copy. This extends it to the interface:
 an emoji renders differently on every device, cannot inherit a status color, is read aloud by
-screen readers in ways nobody controls, and does not match a hand-drawn house.
+screen readers in ways nobody controls, and does not match a hand-drawn doll house.
 
 - **Drawing spec:** 24×24 viewBox, 20px optical live area, 2px stroke, round caps and joins, no
   fills except where a shape needs a solid, `stroke="currentColor"` so an icon inherits the status
@@ -302,36 +405,51 @@ screen readers in ways nobody controls, and does not match a hand-drawn house.
 - **Delivery:** one SVG sprite in `assets/icons/`, referenced with `<use>`. One request, cached
   across pages, colors still inherit. Icons are `aria-hidden="true"` and always sit next to a real
   text label.
-- **The illustration uses the same pen.** The house cutaway, the room views and any diagram share
+- **The illustration uses the same pen.** The doll house, the enlarged rooms and any diagram share
   the icon stroke weight, corner rounding and flat fills, so the drawing and the icons read as one
   hand. This is what makes a small custom set look deliberate instead of thin.
+- **Doll house drawing rules.** Flat front-on elevation, no perspective and no isometric view.
+  Room walls and floors are 2px strokes in `--color-border-strong`. Room interiors are
+  `--color-bg` or `--color-surface`, never a photograph and never a texture. Objects inside a room
+  are the icon set at a larger size rather than a separate drawing style. Brand green
+  `--color-brand` fills the roof, the porch and the hotspot dots, which is where the palette's
+  decorative-only rule is spent.
 
-**v1 icon set, 22 icons.** Someone has to draw these before the build week. See §11.
+**v1 icon set, 23 icons.** Someone has to draw these before the build week. See §11.
 
-- Objects, for the walkthrough and the improvements: window, door, thermostat, radiator, space
-  heater, water heater, plug, light bulb, house cutaway, bill
+- Objects, for the doll house and the improvements: window, door, thermostat, radiator, space
+  heater, water heater, plug, light bulb, doll house, bill
 - Status, paired with text: check (no permission needed), speech bubble (ask your landlord), key
-  (landlord has to do it), warning triangle (safety), arrows (reversible)
+  (landlord has to do it), warning triangle (safety), arrows (reversible), flag (spot viewed)
 - Facts: dollar, clock, gauge (impact)
-- Controls: chevron (disclosure), arrow left and arrow right (carousel), flip, printer, external
-  link
+- Controls: chevron (disclosure), arrow left and arrow right (carousel and "Next spot"), flip,
+  replay (animated diagram), printer, external link, back to the house
 
 An icon is never the only label, and never the only difference between two states.
 
 ## 5. Component inventory
 
-Cards appear in one place in this site, the library at `/improvements`, where a scannable index of
-everything is the point and the fallback path. Everywhere else the pattern is one interactive
-element at a time. A page of cards is the thing this site exists to be better than.
+Cards appear in one place in this site, the library at `/improvements`, where a scannable, filterable
+index of everything is the point and where a student who knows what they want should land. Everywhere
+else the pattern is one interactive element at a time. A page of cards is the thing this site exists
+to be better than.
 
 | Component | Purpose | States to design |
 |---|---|---|
-| House cutaway | The home page. Rooms and hotspots | default, room open, hotspot focused, hotspot visited, reduced motion, no JavaScript |
-| Room view | One room, three or four hotspots | inactive, active (`:target`), focused |
-| Hotspot | The tappable thing in a room | default, hover, focus-visible, visited, dimmed (does not apply to the student's situation, with a text reason), 44px hit area |
+| Hero | The first screen. Tagline, note, one sentence, arrow | default, parallax running, parallax held still, short viewport, below 600px |
+| Parallax layer | Depth behind the hero and the section bands | moving, held still (reduced motion or `animation-timeline` unsupported), off below 600px |
+| Scroll cue | The labeled arrow from the hero to the doll house | default, hover, focus-visible |
+| Pause control | Stops one looping animation | playing, paused, focus-visible, works with no JavaScript |
+| Reduce motion toggle | Turns ambient motion off across the site | following the operating system, forced reduce, forced full, focus-visible |
+| Doll house | The home page. Six room boxes seen at once | default, room enlarged, hotspot focused, hotspot visited, reduced motion, no JavaScript |
+| Room box | One room in the house, and the enlarged view of it | small (in the house), enlarged (`:target`), focused, empty (no hotspots apply to this student) |
+| Next spot control | Carries the guided order from one info bar to the next | default, focus-visible, last spot, all spots seen |
+| Back to the house | Returns from an enlarged room to the full view | default, focus-visible |
+| Hotspot | The tappable thing in a room | default, hover, focus-visible, visited (accent fill plus flag marker), dimmed (does not apply to the student's situation, with a text reason), 44px hit area |
 | Info bar | Opens under the drawing with the short answer | closed, opening, open, empty, error, no JavaScript (becomes a link) |
 | Flip card | Flashcards for myths and definitions | front, back, focus-visible, reduced motion. Spec in §5.1 |
 | Carousel | Ordered walkthroughs and before-and-after pairs | first, middle, last, keyboard, no JavaScript. Spec in §5.1 |
+| Animated diagram | Shows a mechanism the student cannot see, for example where heat leaves a room | static (first frame), playing, finished, replay, reduced motion, no JavaScript. Spec in §5.1 |
 | Sticky progress bar | Progress through the house, and position within a long page | at rest, condensed, unstuck on short viewports, no JavaScript |
 | Disclosure bar | "Why this works", "What if my landlord says no", "How we know this" | closed, open, focus-visible, deep-linked open |
 | Improvement card | The unit of the library only | default, hover, focus-visible, visited, filtered-out (removed rather than dimmed) |
@@ -339,12 +457,12 @@ element at a time. A page of cards is the thing this site exists to be better th
 | Reversibility badge | States `reversible` in move-out terms | three variants |
 | Cost and time meter | `cost` and `time` bands as text plus a filled-square indicator | four cost bands, four time bands, unknown |
 | Impact indicator | `impact`, including the `enabler` case that saves nothing on its own | low, medium, high, enabler |
-| Checklist item | One step in the generated checklist | unchecked, checked, disabled (blocked by a prerequisite), needs-permission, printed |
+| Checklist item (v2) | One step in the generated checklist | unchecked, checked, disabled (blocked by a prerequisite), needs-permission, printed |
 | Filter and situation selector | Sets the four situation inputs and the library filters | default, focused, selected, "not sure", cleared, results-count live region |
 | Callout, safety | Renders `safety` above steps, never below, never collapsed | single variant, `--color-danger` |
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
 | Source and last-reviewed block | "How we know this". Links plus an ISO date | open by default on detail pages, collapsed to a count on cards |
-| Glossary term | Inline definition on first use | closed, open, focus-visible |
+| Glossary term | Inline definition on first use. Hover over the underlined term to view the definition. | closed, open, focus-visible |
 | Program card | An NHSaves or assistance program | NH, out-of-state (explicitly labeled), eligibility unknown |
 | Button | Primary, secondary, text | default, hover, focus-visible, active, disabled, loading |
 | Skip link | First focusable element on every page | hidden, focused |
@@ -367,7 +485,7 @@ down and back up costs more than leaving it steady" flips to the correction.
 - Built as `<details>` with a `<summary>`, so open and close are native, keyboard operable and
   announced. CSS does the flip on `[open]`. No JavaScript.
 - The trigger is click, Enter or Space. Never hover alone. Hover adds a small lift and nothing
-  more, so a touch user loses nothing.
+  more, so a keyboard user loses nothing now and a touch user loses nothing in v2.
 - Both faces exist in the DOM at all times. Nothing is injected on flip.
 - Back face is 40 words or fewer, and ends with a link to the improvement it argues for.
 - Never carries safety, permission, cost, or source information. Those are always visible.
@@ -379,7 +497,7 @@ down and back up costs more than leaving it steady" flips to the correction.
 pairs of the same window.
 
 - Built as a scroll-snap row of real, focusable slides. It scrolls and it tabs with no JavaScript.
-- **No auto-advance, ever.** Nothing on this site moves on its own.
+- No auto-advance. Nothing on this site moves on its own.
 - Previous and next are anchor links to slide IDs, so they work without JavaScript. They are
   44×44px and carry text labels, not bare arrows.
 - A counter reads "2 of 5". Dots alone are not a control.
@@ -387,11 +505,53 @@ pairs of the same window.
 - Nothing lives only in a carousel. Every slide's content is also reachable from the library or an
   improvement page.
 
+**Animated diagram.** One per explainer, and the reason an explainer is not a page of paragraphs.
+It shows a mechanism a student cannot see: air moving through a gap under a door, heat leaving
+through a single-pane window, a thermostat setback over a day.
+
+- Inline SVG with CSS or SMIL-free CSS animation on the elements. No video, no GIF, no library.
+- It loops so a student who looks away or arrives mid-cycle still sees the whole mechanism.
+  A cycle runs 4 to 6 seconds and rests for about 1 second at the finished frame before repeating,
+  so the loop has a readable stopping point rather than running as a continuous churn.
+- Every loop carries a visible pause control. Content that moves for more than 5 seconds needs
+  a way to stop it under WCAG 2.2.2, and looping means indefinitely. The control is a real button
+  labeled "Pause", visible without hovering, sitting with the figure. It toggles to "Play". This is
+  what makes looping allowed rather than a violation, so a looping animation without one does not
+  ship.
+- Pausing one diagram pauses that diagram. The global motion toggle in §7 stops every loop on the
+  site at once.
+- It starts when the student scrolls it into view rather than on page load, so a page does not
+  start moving under someone who is reading further up.
+- **The finished frame is the diagram.** Every label and every arrow is present and readable in
+  the final state, so the diagram teaches with the animation never having run. Labels are real
+  SVG `<text>`, and the whole figure carries a `<figcaption>` describing what it showed, which is
+  what a screen reader user gets.
+- Under reduced motion, whether from the operating system or the site's own toggle, it renders in
+  the finished state, does not loop, and offers "Play" for anyone who wants to watch it once.
+
+**Parallax.** Layered backgrounds that move at different rates as the page scrolls. Used on the
+hero, on the section bands between major blocks of a page, and behind the doll house as a room
+enlarges. Parallax is used elsewhere when appropriate to add visual interaction without detracting
+from the messaging.
+
+- Built with CSS scroll-linked animation inside the same `@supports (animation-timeline: scroll())`
+  guard as the scroll-expanding bands, or with layered `position: sticky`. No scroll listener, no
+  library, no `background-attachment: fixed`, which is unreliable on iOS.
+- The travel is capped at 20% of the scroll distance of the element it sits behind. Beyond
+  that, scroll-linked movement stops reading as depth and starts causing motion sickness.
+- Layers never overlap text in a way that changes contrast as they move. A parallax layer that
+  passes behind text carries a solid band, so the text keeps one background and one measured
+  contrast ratio.
+- It is decoration and it is skippable. Every layer renders in a fixed position when motion is
+  reduced or when `animation-timeline` is unsupported, and the page loses nothing but depth.
+- Off below 600px. See §6.
+
 **Sticky and scroll-expanding bars.** Two distinct things.
 
 - *Sticky progress bar.* `position: sticky` under the header. 56px tall at rest, condensing to
   40px as the page scrolls. Header and bar together never exceed 25% of viewport height, and the
-  bar unsticks entirely below 480px of viewport height so a landscape phone keeps its content.
+  bar unsticks entirely below 480px of viewport height, which is what a zoomed window or a
+  landscape laptop reports, so the content keeps the screen.
 - *Scroll-expanding band.* A diagram that fills in as it enters the viewport, for example heat-loss
   arrows appearing one at a time. Built with CSS `animation-timeline: scroll()` inside an
   `@supports` guard, so browsers without it show the finished state. No scroll listener, no
@@ -414,41 +574,110 @@ pairs of the same window.
 
 ## 6. Responsive behavior
 
-| Breakpoint | Width | Layout change |
+**v1 is designed for laptop and desktop. The mobile experience is the next version.** The build
+window does not hold both, and the doll house, the hero and the library each need real mobile
+design work rather than a shrunken copy of the desktop layout. Half-designed phone screens would
+cost more credibility than no phone screens.
+
+**One piece does not defer.** A desktop browser at 400% zoom reports a viewport about 320px wide,
+so the narrow layout is the zoom path before it is ever the phone path. WCAG 1.4.10 puts reflow
+without horizontal scrolling at AA, [docs/accessibility.md](docs/accessibility.md) §2 commits to
+it, and the pieces it needs already exist for other reasons: one column, and the room-by-room link
+list that the doll house carries for screen readers. So v1 reflows. It just does not pretend the
+result is a phone design.
+
+| Width | v1 status | Layout |
 |---|---|---|
-| Mobile | base, 320px and up | Single column. The house shows one room at a time, chosen from a segmented room list above the drawing. No pan, no zoom, no whole-house view. Content column full width minus 16px gutters. Filters collapse into a sheet opened by a labeled button showing the active count |
-| Tablet | 600px and up | Whole-house cutaway appears, with the room list beside it. Content column caps at 42rem and centers. Library cards go to two columns |
-| Desktop | 900px and up | House and info bar sit side by side, so opening a hotspot does not push the drawing. Library gets a persistent left filter rail. Detail pages keep the 42rem measure. Page shell caps at 1140px |
+| 900px and up | **Designed.** This is the target | House and info bar side by side, so opening a hotspot does not push the drawing. An enlarged room keeps the rest of the house visible beside it. Library gets a persistent left filter rail. Parallax layers run. The hero holds 85svh. Detail pages keep the 40rem measure. Page shell caps at 1140px |
+| 600 to 900px | **Works.** Falls out of the same CSS | Single column. The whole house stays visible, with the info bar below it. Content column caps at 40rem and centers. Library cards go to two columns. Filters become a horizontal chip row |
+| Below 600px | **Reflow floor, not a designed experience** | One column, no horizontal scrolling down to 320px. Parallax holds still. The hero shrinks to its content. The doll house gives way to "Everything in this house", the room-by-room link list, which carries every hotspot as an ordinary link. Filters become a plain stacked form. Everything is reachable and readable. Nothing is tuned |
 
-**Touch targets:** minimum 44×44px, including hotspots, carousel controls, disclosure bars, filter
-chips and the situation chip. Adjacent targets keep 8px between them.
+**Pointer targets:** 44×44px minimum stays in v1, on hotspots, carousel controls, disclosure bars
+and filter chips, with 8px between adjacent targets. Dense hit areas on a drawing are hard to hit
+with a mouse as well as a thumb, and WCAG 2.5.8 sets a 24×24 floor regardless of input. The
+touch-specific work, thumb reach and gesture affordances, is what moves to v2.
 
-The house drawing scales with the viewport and never requires horizontal scrolling or pinch-zoom
-to use. Verified at 320px width and at 200% zoom, per
-[docs/accessibility.md](docs/accessibility.md) §2. At 400% zoom the drawing gives way to the room
-list, which carries the same links.
+**What the next version adds:**
+
+- The doll house as a phone experience: two-column room grid, one room at a time, enlarged to full
+  width with the other five as a small row above
+- A filter sheet opened by a labeled button showing the active count, in place of the stacked form
+- The full-screen nav panel described in §2, which currently has no v1 surface to open on
+- The hero tuned for short and landscape viewports rather than only capped
+- Touch target spacing, thumb reach, and a pass over every hover affordance for tap equivalence
+- Testing on real devices, not only on a narrowed desktop window
+
+**Zoom, which v1 does support:** the layout is built to reflow at 200% and 400% and down to 320px,
+and it gets one spot check before launch. The full zoom matrix is deferred with the rest of the
+testing, per [docs/accessibility.md](docs/accessibility.md) §5. This is the same code path the
+mobile work in v2 will build on, so nothing here is thrown away.
 
 ## 7. Motion
 
-Motion earns its place here, because the interaction patterns in §5.1 depend on it to feel like
-objects rather than page loads. It stays small, fast, and optional.
+Motion is part of how this site teaches. It moves more than most content sites do, and every
+student gets a way to turn that off.
 
-- **Where motion is used.** Five places. The flip card turning, the carousel scrolling, the info
-  bar opening under the drawing, the disclosure bar expanding, and the scroll-expanding diagram
-  bands. Nothing moves on page load. Nothing moves on its own. There is no auto-advance and no
-  parallax.
-- **Duration and easing tokens:** `--motion-fast` 120ms, `--motion-base` 200ms, `--motion-flip`
-  260ms, `--motion-ease` `cubic-bezier(0.2, 0, 0, 1)`. Nothing exceeds 260ms.
+**Two kinds of motion, two sets of rules.**
+
+- *Response.* A transition that answers something the student just did: a room enlarging, a card
+  flipping, an info bar opening, a disclosure expanding, the carousel scrolling. Under 260ms, plays
+  once, never loops.
+- *Ambient.* Parallax layers and the looping diagrams. Driven by scrolling or by a loop rather than
+  by a press. Decorative or explanatory, and always stoppable.
+
+**Rules:**
+
+- **Where motion is used.** Eight places. Parallax on the hero and the section bands, the looping
+  diagram on each explainer, a room box growing and shrinking back, the flip card turning, the
+  carousel scrolling, the info bar opening under the drawing, the disclosure bar expanding, and the
+  scroll-expanding diagram bands.
+- **Loops are allowed, and they come with controls.** Content that moves for more than 5 seconds
+  needs a mechanism to pause, stop, or hide it under WCAG 2.2.2, and a loop runs indefinitely by
+  definition. Every looping animation therefore carries its own visible "Pause" button, and the
+  site-wide toggle below stops all of them at once. A loop with no pause control does not ship.
+- **Nothing starts moving on page load.** Parallax responds to scrolling, so the hero is still
+  until the student moves. Diagrams start when they are scrolled into view, so a page does not
+  begin animating under someone who is reading further up.
+- **No auto-advancing carousel.** Looping applies to the diagrams and the decorative layers.
+  A carousel that advances on its own takes control of reading pace away from the student, which is
+  a different thing from a diagram that repeats in place.
 - **Motion never carries information.** Every state a motion communicates is also visible in a
-  static frame, through a label, an icon, a border, or `--shadow-raised`. Freeze any animation on
-  this site at any point and the screen still makes sense.
-- **`prefers-reduced-motion: reduce` behavior.** Required, and specified per pattern rather than as
-  a blanket rule: flip cards swap without rotating, disclosure bars open without sliding, info bars
-  appear without animating, scroll-expanding bands render finished, the sticky bar stops
-  condensing, and carousel scrolling becomes instant (`scroll-behavior: auto`). Every transition
-  duration resolves to 1ms. No component loses a state or a control.
-- Sustainable Hanover ships their site with global animations turned off. Ours is a more
-  interactive site, so it moves more, and it moves only in response to something the student did.
+  static frame, through a label, an icon, a border, or `--shadow-raised`. Freeze anything on this
+  site at any point and the screen still makes sense. This is what lets the reduced-motion path be
+  equal rather than lesser.
+- **Duration and easing tokens:** `--motion-fast` 120ms, `--motion-base` 200ms, `--motion-flip`
+  260ms, `--motion-room` 240ms, `--motion-loop` 5s, `--motion-ease` `cubic-bezier(0.2, 0, 0, 1)`.
+  No response transition exceeds 260ms. A diagram cycle runs 4 to 6 seconds with about a second of
+  rest at the finished frame.
+- Sustainable Hanover ships their site with global animations turned off. Ours moves, and the
+  toggle below is how a student who would rather it did not gets their version of it.
+
+### The reduce motion control
+
+`prefers-reduced-motion` covers students who have already set it at the operating system level. It
+does not cover the student on a borrowed laptop, or the one who is fine with motion everywhere else
+and not here. So the site carries its own control.
+
+- **Where:** in the footer of every page, and in the header menu panel, labeled "Reduce motion".
+  A switch with a visible text label, never an icon alone.
+- **Default:** follows the operating system. A student who has already asked for reduced motion
+  gets it without touching anything.
+- **How it works:** the control is a checkbox. Within the page, CSS reads it directly through
+  `:has()`, so it takes effect with no JavaScript at all. JavaScript only carries the choice to the
+  next page, writing `motion` to `localStorage` alongside `situation`, with no identifier attached.
+  Without JavaScript the toggle still works on the page the student is on.
+- **It can go both ways.** Forcing motion back on is available to a student whose operating system
+  setting is on but who wants to watch a diagram move. Reduced is the default in that case, never
+  the ceiling.
+- **Effect is immediate.** No reload, no page jump, and the scroll position does not move.
+
+**What reduced motion changes,** whether it came from the operating system or from the toggle,
+specified per pattern rather than as a blanket rule: parallax layers hold still, looping diagrams
+render in their finished frame and offer "Play" for a single run, a room box switches to its
+enlarged state without growing, flip cards swap without rotating, disclosure bars open without
+sliding, info bars appear without animating, scroll-expanding bands render finished, the sticky bar
+stops condensing, and carousel and anchor scrolling become instant (`scroll-behavior: auto`). Every
+response transition resolves to 1ms. No component loses a state, a control, or a piece of content.
 
 ## 8. Content presentation patterns
 
@@ -474,6 +703,22 @@ permission and reversibility status, cost and time, the three standing disclaime
 against the word budget. A short page is a goal. A page that hides what a student needs in order to
 stay safe or keep their deposit is a failure, and the goal loses that argument every time.
 
+### Graduated depth, everywhere
+
+The three tiers specified for the doll house in §3.2 are the shape of the whole site, not a
+special case for the home page.
+
+| Tier | On the house | In the library | On a page |
+|---|---|---|---|
+| 1 | Hotspot label, a few words | Card title, badges, cost and time | Page title and summary |
+| 2 | Info bar, under 40 words | Card summary, one sentence | The steps |
+| 3 | The improvement page | The improvement page | "Why this works", opened by choice |
+
+A student should be able to stop after any tier and have something true and useful. This is why
+depth goes in disclosure bars rather than in longer paragraphs, and why the summary field is
+capped at 140 characters in the content model. A tier that restates the tier above it at greater
+length is a tier to delete.
+
 ### The patterns themselves
 
 - **Permission status.** The permission badge sits directly under the title on the card, on the
@@ -488,11 +733,22 @@ stay safe or keep their deposit is a failure, and the goal loses that argument e
   guarantee, never a projected dollar total for the year. Any page or info bar showing a number
   carries the savings disclaimer. A number with no entry in [docs/sources.md](docs/sources.md)
   fails `tools/check-content.mjs` and never reaches a screen.
-- **Sources and last-reviewed.** Every content item ends with a "How we know this" block listing
+- **Sources and last-reviewed.** Every content item ends with a "Sources" block listing
   its sources as links, followed by "Last reviewed 2026-08-18" in muted text. It is a link list
   rather than prose, so it is short. Open by default on detail pages, collapsed to a count on
   cards. This block is a feature, not fine print, because it is the reason a student should believe
   the rest of the page.
+- **Short inline, full page for depth, and one source of truth.** Explanatory material appears
+  twice: a "Why this works" disclosure bar of two or three sentences on the improvement page, and
+  the full explainer at `/learn/:slug`. They are different lengths rather than copies. The rule that
+  keeps them from drifting is that the inline version carries no number and no citation of its own.
+  Every figure, every range and every source lives on the explainer, with one `lastReviewed` date.
+  If the inline version needs a number to make sense, it is too long and belongs on the explainer.
+- **Reformatted content credits the page it came from.** Most of this site is Sustainable
+  Hanover's material rewritten for renters, per [docs/project-brief.md](docs/project-brief.md) §4.
+  Where a page adapts one of theirs, the sources block leads with "Adapted from Sustainable
+  Hanover: Weatherize" and links to it. Where we send the student to them as the source of truth,
+  for programs and rebates, the link is in the body of the page and not only in the sources block.
 - **Enablers.** The four enabler topics are labeled "Start here" rather than given an impact
   rating, in the library and on their hotspots, so a student is never told that reading their bill
   saves nothing.
@@ -501,72 +757,83 @@ stay safe or keep their deposit is a failure, and the goal loses that argument e
 
 Microcopy follows [docs/content-strategy.md](docs/content-strategy.md) §2. Lead with the action.
 Money and comfort before climate. Plain declarative sentences, around grade 8. Second person.
-Commas and periods in place of em dashes. No emoji and no warning symbols, write "Safety:" instead.
+Commas and periods in place of em dashes when appropriate. No emoji and no warning symbols, write "Safety:" instead.
 "Typically saves" rather than "will save". Buttons and hotspots name what happens next, so no
 "Submit", no "Click here", and no "Learn more".
 
 | Situation | Copy |
 |---|---|
-| Home, above the drawing | "Tap around your apartment. Most of what is making it cold is fixable, and cheap." |
-| Room prompt | "What is in your living room?" |
-| Hotspot accessible name | "Living room window. Sealing gaps here typically saves the most." |
+| Hero tagline | "Welcome Home*" |
+| Hero note | "*Rental home" |
+| Hero description | "Learn how to improve energy efficiency in your rental to save money and the environment." |
+| Scroll cue | "Take a look inside" |
+| Home, above the drawing | "Tour a rental and its potential upgrades" |
+| Room prompt | "The living room" |
+| Room, enlarged | "The living room" |
+| Guided start | "Start here" on the bill hotspot |
+| Next spot control | "Next spot: the thermostat" |
+| Last spot | "That is all ten spots. View everything in one list." |
+| Back control | "Back to the house" |
+| Hotspot accessible name | "Living room window: Sealing gaps here improves energy efficiency significantly" |
 | Hotspot, does not apply | "Your landlord pays for heat, so this one saves them money and not you." |
-| Progress bar | "You have looked at 3 of 10 spots." |
-| Situation chip, unset | "Set your situation" |
+| Progress bar | "You have viewed 3 of 10 spots." |
+| Visited hotspot | "Viewed" on the flag marker, and the same word added to the accessible name |
+| Looping diagram controls | "Pause" · "Play" |
+| Reduce motion toggle | "Reduce motion" |
+| Situation chip, unset | "Customize for your situation" |
 | Flip card front | "True or false: turning the heat down while you are out costs more than leaving it steady." |
 | Flip card back opener | "False. Reheating a cold room costs less than holding it warm all day." |
-| Disclosure bar labels | "Why this works" · "What if my landlord says no" · "How we know this" |
+| Disclosure bar labels | "Why this works" · "What if my landlord says no" · "Sources" |
 | Carousel control | "Next: November" |
 | Empty result set | "Nothing matches all of those filters. Clear the lease-length filter to see 6 more." Always names a filter to drop, and offers a one-tap way to drop it |
-| Form validation error | "Choose one of the options, or pick 'I am not sure' and we will show you everything." |
-| Safety warning lead-in | "Safety: read this before you start." |
+| Form validation error | "Choose one of the options, or pick 'I am not sure' to view all improvements." |
+| Safety warning lead-in | "Safety" |
 | Landlord permission, ask | "Ask your landlord first. Sending it in writing protects you both." |
-| Savings figure | "Typically saves 5 to 15%, in a unit with single-pane windows." |
-| Checklist print | "Print this, or copy it as text to send to your roommates." |
+| Savings figure | "Typically saves 5 to 15% in energy costs for a unit with single-pane windows." |
+| Checklist print (v2) | "Print this, or copy it as text to send to your roommates." |
 | Out-of-state program | "This is a Vermont program. Hanover renters cannot enroll. The New Hampshire equivalent is NHSaves." |
 
 ## 10. Attribution and branding
 
-The site is built with Sustainable Hanover and should read that way. It launches as an external
-site and may be folded into sustainablehanovernh.org later, per
-[docs/project-brief.md](docs/project-brief.md) §4, so branding has to survive that move.
+The site is made in partnership with Sustainable Hanover. It launches as an external site and may be folded into
+sustainablehanovernh.org later, per [docs/project-brief.md](docs/project-brief.md) §4, so the
+credit has to survive that move.
 
-- **Header:** Our own wordmark in `--font-display`, with "A Sustainable Hanover project" as a
-  subordinate line linking to sustainablehanovernh.org.
-- **Footer, every page:** "Built with Sustainable Hanover, a committee of the Town of Hanover, New
+- **Header:** Our own wordmark in `--font-display`, with "In partnership with Sustainable Hanover"
+  as a subordinate line linking to sustainablehanovernh.org. 
+- **Footer, every page:** "Project created in partnership with Sustainable Hanover, a committee of the Town of Hanover, New
   Hampshire", their logo at a fixed height, a link to their site, and the contact address
   sustainablehanovernh@gmail.com. Also the site-wide last-reviewed date and a link to the
   accessibility statement.
-- **About page:** Full credit to the project team from
-  [docs/project-brief.md](docs/project-brief.md) §8, the partnership description, and who to
-  contact after 2026-08-26.
-- **Logo asset:** Requested from Yolanda Baumgartner in a vector format. Their site currently
-  serves a raster wordmark sized for mobile, which is not adequate for our header. Until a vector
-  file arrives, use the text line only and no logo image.
-- **The illustration carries brand weight too.** The house drawing is the most visible thing on the
-  site and it will be read as Sustainable Hanover's. Show it to Yolanda before launch, not after.
+- **About page:** Full credit to the SIP project team from
+  [docs/project-brief.md](docs/project-brief.md) §8 and the partnership description.
+- **Logo asset:** Using wordmark from the current Sustainable Hanover website.
 - **What we do not do:** We do not present the site as an official Town of Hanover page, we do not
   use the Town seal, and we do not publish anything under their name without review. Per
   [AGENTS.md](AGENTS.md), anything appearing under Sustainable Hanover branding goes to a human
   first.
 
-Every item in this section is provisional until Yolanda confirms it. See §11.
-
 ## 11. Open design questions
 
 | Question | Options | Decision | Date |
 |---|---|---|---|
-| Who draws the house cutaway and the 22 icons, and by when? This is the critical path into the 2026-08-19 build week | One person owns illustration / split by room / ship the room list first and layer the drawing on | | |
-| Is the two-story-with-basement archetype right for Hanover student rentals? Many are apartments in a subdivided house with no basement access | Verify against interviews and real units / draw a second archetype / draw rooms only and no whole house | | |
-| Ten hotspots in v1, or fewer done better? | 10 as listed in §3.1 / 6 covering only the Must topics | | |
+| Who draws the doll house and the 22 icons, and by when? This is the critical path into the 2026-08-19 build week | One person owns illustration / split by room / ship empty labeled room boxes first and add the contents as they are drawn | | |
+| The doll house is an example residence, and nothing on the page says so. Do students read it as a generic teaching house, or do they expect it to match their own unit? | Leave it implicit, as specified, and watch for the misread in usability round 2 / add a line under the drawing if it confuses anyone / draw a second, apartment-shaped arrangement | Implicit, carried by context and the simplified illustration | 2026-08-19 |
+| Is the guided order advisory or does anything enforce it? | Advisory, as specified. Nothing locks / gate tier 3 until tier 2 is seen | Advisory | 2026-08-18 |
+| Ten hotspots in v1, or fewer done better? | 10 as listed in §3.2 / 6 covering only the Must topics | | |
 | Does a hotspot that does not apply to the student's situation dim, disappear, or stay with a reason? | Dim with a text reason, as specified / hide / no change | Dim with a reason, pending usability testing | 2026-08-18 |
-| Does the whole-house view appear on phones at all, or only the room-at-a-time view? | Room at a time below 600px, as specified / pinch-zoom whole house | Room at a time, pending testing at 320px | 2026-08-18 |
+| Mobile layouts are deferred to v2, and [docs/audience.md](docs/audience.md) §8, context of use, is still unwritten. If interviews show students reach this at 11pm on a phone, does the v2 date need to move ahead of everything else in the backlog? | Hold the deferral and revisit after Round 1 interviews / pull basic mobile layouts into v1 and cut a feature to pay for it | Deferred, pending §8 of audience.md | 2026-08-19 |
+| When the doll house does get a phone design in v2, does it become a two-column grid of room boxes or stay the room list? | Two-column grid / room list below 400px / test both | | |
 | Is `animation-timeline: scroll()` support wide enough in August 2026 for the scroll-expanding bands, given no build step and no polyfill? | Ship behind `@supports`, as specified / drop the pattern / static diagrams only | Behind `@supports` | 2026-08-18 |
 | Do the myth flip cards touch safety-critical content, for example space heaters? If so they need the §4 sign-off in content-strategy | Route all flip-card copy through content review / keep safety topics out of flip cards | | |
 | Does Sustainable Hanover have a written brand guide, or is the live stylesheet the only source? | Ask Yolanda / treat published values as canonical | | |
-| Is Poppins for display acceptable given they use acumin-pro, which needs an Adobe Fonts request that AGENTS.md rule 6 bars? | Poppins display, self-hosted / system stack throughout / request approval | | |
+| Poppins now sets display and body, since acumin-pro needs an Adobe Fonts request that AGENTS.md rule 6 bars. Does the partner accept the substitution, and does Poppins 400 hold up for step instructions at 16px? | Poppins throughout, self-hosted, as specified / Poppins display with a system-stack body / request approval for Adobe Fonts | Poppins throughout, at 400 body and 600 display | 2026-08-19 |
 | Can we get their logo as SVG or another vector format? | Vector from Yolanda / text wordmark only in v1 | | |
 | Do we adopt their bright green `#7EDA5D` as a decorative fill, given it fails text contrast at 1.74:1? | Decorative only, as specified / drop it and use only the deep green | Decorative only, pending confirmation | 2026-08-18 |
-| How does the checklist leave the browser? | Print stylesheet / copy as plain text / both | Both, pending features.md | |
+| How does the checklist leave the browser, when it arrives in v2? | Print stylesheet / copy as plain text / both | Both. Cut from v1 on 2026-08-19, see [docs/features.md](docs/features.md) §3 | 2026-08-19 |
 | Does the situation persist between visits, given the no-personal-data rule? | `localStorage` under one key, no identifiers, per architecture.md D10 | Yes, one key, no identifiers | 2026-08-18 |
+| Does the hero cost more than it earns? It puts one screen between a cold student and the house | 85svh with a visible arrow and the next section peeking, as specified / shorter hero / hero only on first visit | 85svh with the arrow | 2026-08-19 |
+| Is `:has()` support wide enough in August 2026 to drive the reduce motion toggle with no JavaScript? | CSS `:has()` with JavaScript only for persistence, as specified / JavaScript for the whole toggle | CSS first, JavaScript persists | 2026-08-19 |
+| Do the looping diagrams distract from the text beside them, even with a pause control? | Watch in usability round 2 / loop only while in view / pause by default and play on press | Loop while in view, pause control always visible | 2026-08-19 |
+| Does parallax survive the accessibility pass, given it is scroll-linked movement? | Capped at 20% travel, decoration only, off below 600px, stoppable, as specified / drop it | Keep, under the §5.1 limits | 2026-08-19 |
 | Dark mode | Not in v1, as specified / v1 | Not in v1 | 2026-08-18 |

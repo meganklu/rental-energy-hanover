@@ -1,6 +1,6 @@
 # Roadmap
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-18
+> **Status:** ● Complete · **Last updated:** 2026-08-19
 
 ## 1. Fixed dates
 
@@ -14,12 +14,12 @@
 
 | Phase | Primary | Dates | Exit criteria | Status |
 |---|---|---|---|---|
-| 0. Planning | Megan | 2026-08-05 | All Tier-1 docs at ◐ Draft; brief approved by Sustainable Hanover | ☐ |
+| 0. Planning | Megan | 2026-08-05 | All Tier-1 docs at ◐ Draft; brief approved by Sustainable Hanover | ☑ |
 | 1. Research | Ryan and Katharine | 2026-08-12 | Round 1 interviews done; audience.md rewritten from evidence | ☐ |
-| 2. Content | Megan | 2026-08-12 | Topic inventory prioritized; v1 content drafted and sourced | ☐ |
-| 3. Design | Megan | 2026-08-12 | IA settled; key screens sketched; tokens contrast-checked | ☐ |
+| 2. Content | Megan | 2026-08-12 | Topic inventory prioritized; v1 content drafted and sourced | ☑ |
+| 3. Design | Megan | 2026-08-12 | IA settled; key screens layout planned; tokens contrast-checked | ☑ |
 | 4. Build | Megan | 2026-08-19 | Must-have features meet acceptance criteria | ☐ |
-| 5. Test | Ryan and Katharine | 2026-08-26 | Usability round 2 done; accessibility passes | ☐ |
+| 5. Test | Ryan and Katharine | 2026-08-26 | Usability round 2 done; the v1 accessibility floor in [accessibility.md](accessibility.md) §5 passes. Screen reader and audit passes are v2 | ☐ |
 | 6. Review & sign-off | All | 2026-08-26 | Partner approval on all content | ☐ |
 | 7. Launch | All | 2026-08-26 | Live; distribution channels notified | ☐ |
 
@@ -28,12 +28,12 @@
 | # | Milestone | Primary | Target date | Depends on | Done |
 |---|---|---|---|---|---|
 | M1 | Create tier-1 planning documentation drafts | Megan | 2026-08-05 | N/A | ☑ |
-| M2 | Write [user interview guide](research-plan.md#2-round-1--discovery-before-building)| Ryan and Katharine | 2026-08-06 | M1 | ☐ |
+| M2 | Write [user interview guide](research-plan.md#2-round-1--discovery-before-building)| Ryan and Katharine | 2026-08-06 | M1 | ☑ |
 | M3 | Conduct user interviews | Ryan and Katharine | 2026-08-12 | M2 | ☐ |
 | M4 | Update [target audience and user personas](audience.md) | Ryan and Katharine | 2026-08-12 | M3 | ☐ |
-| M5 | Research rental and energy usage statistics in Hanover; compile information for web pages incomplete [glossary.md](glossary.md) and [sources.md](sources.md) | Ryan | 2026-08-12 | M1 | ☐ |
-| M6 | Establish [design and style guide](DESIGN.md) | Megan | 2026-08-12 | M1 | ☐ |
-| M6 | Plan layout and webpages; update [features.md](features.md) and [content-strategy.md](content-strategy.md)  | Megan | 2026-08-12 | M6 | ☐ |
+| M5 | Research rental and energy usage statistics in Hanover; compile information for web pages in [glossary.md](glossary.md) and [sources.md](sources.md) | Megan | 2026-08-12 | M1 | ☐ |
+| M6 | Establish [design and style guide](DESIGN.md) | Megan | 2026-08-12 | M1 | ☑ |
+| M7 | Plan layout and webpages; update [features.md](features.md) and [content-strategy.md](content-strategy.md)  | Megan | 2026-08-12 | M6 | ☑ |
 
 ## 4. What gets cut first
 
@@ -47,10 +47,20 @@ If time runs short, drop in this order:
 
 **Never cut:** accessibility, content review, research
 
+Accessibility stays a v1 target under any amount of deadline pressure. The per-component
+requirements in [accessibility.md](accessibility.md) §2 are build-time work and are not available
+to cut. What already moved to v2, on 2026-08-19, is the extensive verification: screen reader
+passes, the full zoom matrix, testing with a disabled user, and a formal audit. Building to the
+standard is protected. Proving it is scheduled.
+
 ## 5. Post-v1 backlog
 
 | Idea | Source | Priority |
 |---|---|---|
+| Mobile layouts: doll house as a phone experience, filter sheet, full-screen nav panel, touch tuning, real-device testing | [DESIGN.md](../DESIGN.md) §6, deferred from v1 on 2026-08-19 | High |
+| F6 generated winter checklist, with print and copy-as-text | [features.md](features.md) §3, cut from v1 on 2026-08-19 | High |
+| F7 space heater cost-per-hour tool | [features.md](features.md) §3. Blocked until the Liberty Utilities residential rate is in [sources.md](sources.md) | Medium |
+| Accessibility verification: screen reader passes, the doll house session, full zoom matrix, testing with a disabled user, and a criterion-by-criterion audit against WCAG 2.2 AA | [accessibility.md](accessibility.md) §5, deferred from v1 on 2026-08-19. Needed before the site can claim conformance | High |
 | [FILL] | [FILL: e.g. usability round 2] | |
 
 ## 6. Status log

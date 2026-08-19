@@ -24,13 +24,13 @@ Fill them roughly in this order — later documents depend on decisions made in 
 | 3 | [interviews.md](interviews.md) | Raw notes + synthesis from Round 1 interviews | ◐ Draft |
 | 4 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ◐ Draft |
 | 5 | [content-strategy.md](content-strategy.md) | Topic inventory, sourcing rules, voice, disclaimers | ● Complete |
-| 6 | [features.md](features.md) | Interactive features, specs, acceptance criteria, priority | ☐ Not started |
-| 7 | [DESIGN.md](../DESIGN.md) | Visual system, IA, sitemap, components | ◐ Draft |
-| 8 | [architecture.md](architecture.md) | Stack, hosting, build, deploy, data | ◐ Draft |
-| 9 | [AGENTS.md](../AGENTS.md) | Instructions for AI coding agents working in this repo | ◐ Draft |
-| 10 | [accessibility.md](accessibility.md) | WCAG target, testing plan, known constraints | ☐ Not started |
-| 11 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ◐ Draft |
-| 12 | [sources.md](sources.md) | Living bibliography, review cadence, verification log | ◐ Draft |
+| 6 | [features.md](features.md) | Interactive features, specs, acceptance criteria, priority | ● Complete |
+| 7 | [DESIGN.md](../DESIGN.md) | Visual system, IA, sitemap, components | ● Complete |
+| 8 | [architecture.md](architecture.md) | Stack, hosting, build, deploy, data | ● Complete |
+| 9 | [AGENTS.md](../AGENTS.md) | Instructions for AI coding agents working in this repo | ● Complete |
+| 10 | [accessibility.md](accessibility.md) | WCAG target, testing plan, known constraints | ● Complete |
+| 11 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ● Complete |
+| 12 | [sources.md](sources.md) | Living bibliography, review cadence, verification log | ● Complete |
 | 13 | [glossary.md](glossary.md) | Plain-language definitions used site-wide | ☐ Not started |
 
 Update the Status column as you go: ☐ Not started → ◐ Draft → ● Complete.

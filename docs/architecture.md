@@ -1,6 +1,6 @@
 # Architecture
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-18 · **Owner:** Megan
+> **Status:** ● Complete · **Last updated:** 2026-08-19 · **Owner:** Megan
 
 The dominant constraint on this project is not performance or scale. It is a $0 budget and a
 short build window, against a site that should keep working without attention. Every decision
@@ -20,7 +20,7 @@ manager, and no server.
 | No personal data collected, per [project-brief.md](project-brief.md) §6 | No backend, no auth, no database, no cookies, no analytics |
 | Content changes a few times a year, mostly re-verified dates and program figures | A CMS is not worth its maintenance cost. Content lives in the pages themselves |
 | Longevity target: still working in five years with no maintenance | Favors platform features over dependencies. Plain HTML, CSS and JS have no version to fall behind |
-| Build window is 2026-08-19 to 2026-08-26 | No time to learn tooling or debug a pipeline. Time goes into content and accessibility |
+| Short build window (project due 2026-08-26) | No time to learn tooling or debug a pipeline. Time goes into content and accessibility |
 
 ## 2. Decisions
 
@@ -32,10 +32,10 @@ manager, and no server.
 | D4 | Styling | Plain CSS in `assets/css/`, design tokens from [DESIGN.md](../DESIGN.md) §4 declared once in `tokens.css` | Sass, Tailwind, CSS-in-JS | Custom properties, nesting and `@media` cover everything the design system needs. No compiler |
 | D5 | Content storage | The prose and the metadata for a content item live together in its own HTML file. Metadata sits in an embedded JSON block. `content/improvements.json` is a generated index of that metadata, used only by the client-side filters | Markdown plus a generator; a JSON file as the single source with pages rendered by JavaScript | Keeps a single editable source per item, keeps every page readable without JavaScript, and still gives the library page structured data to filter |
 | D6 | Hosting | GitHub Pages, deployed from a branch, source `main` at `/` (root) | Netlify, Vercel, Cloudflare Pages, hosting inside sustainablehanovernh.org | Free, no account for anyone to maintain beyond GitHub, and the branch-deploy mode has no workflow file that can break. The Squarespace partner site cannot host custom interactive pages |
-| D7 | Domain | Default `https://<owner>.github.io/rental-energy-hanover/` for v1. A custom domain stays possible later through a `CNAME` file | Buying a domain; a subdomain of hanovernh.org | $0 budget, and [project-brief.md](project-brief.md) §4 expects the site may fold into Sustainable Hanover's site later. See §13 |
+| D7 | Domain | Default `https://meganklu.github.io/rental-energy-hanover/` for v1. A custom domain stays possible later through a `CNAME` file | Buying a domain; a subdomain of hanovernh.org | $0 budget, and [project-brief.md](project-brief.md) §4 expects the site may fold into Sustainable Hanover's site later. See §13 |
 | D8 | Build/CI | No build. One GitHub Actions workflow runs the content check on every push, and it gates nothing about publishing | Building and deploying through Actions | If Actions ever stops working the site keeps publishing. The check is a safety net, not a dependency |
 | D9 | Analytics | None. No cookies, no third-party scripts, no fonts or icons from a CDN | Plausible, GoatCounter, GitHub traffic graphs | Required by [AGENTS.md](../AGENTS.md) rule 6 and by the non-goals. GitHub's built-in repository traffic view collects nothing on our behalf |
-| D10 | Interactive feature state | URL query string is the source of truth for filters and the situation. `localStorage` holds a copy under one key, `situation`, with no identifiers and no free text | In-memory only; cookies; a server session | Query strings make a filtered list shareable, which [DESIGN.md](../DESIGN.md) §2 asks for. `localStorage` stays on the device and sends nothing anywhere. See the open row in [DESIGN.md](../DESIGN.md) §11 |
+| D10 | Interactive feature state | URL query string is the source of truth for filters and the situation. `localStorage` holds a copy under one key, `situation`, plus a second key, `motion`, for the reduce motion choice. No identifiers and no free text in either | In-memory only; cookies; a server session | Query strings make a filtered list shareable, which [DESIGN.md](../DESIGN.md) §2 asks for. `localStorage` stays on the device and sends nothing anywhere. See the open row in [DESIGN.md](../DESIGN.md) §11 |
 | D11 | Page shell | The header, nav and footer are copied into every page. `tools/check-content.mjs` verifies each copy matches `tools/shell.html` | Injecting the shell with JavaScript; server includes | Injection would leave the nav missing without JavaScript and would flash on load. Copying is cheap when a script guards the drift |
 
 ## 3. System overview
@@ -51,7 +51,7 @@ repo (main branch)
       GitHub Pages (deploy from branch: main, folder: /)
               │
               ▼
-      https://<owner>.github.io/rental-energy-hanover/
+      https://meganklu.github.io/rental-energy-hanover/
 ```
 
 There is no build stage between the repository and the web. GitHub Pages copies the files as
@@ -124,10 +124,13 @@ behavior already specified in [DESIGN.md](../DESIGN.md).
 | Situation selector (`/start`) | A plain `<form>` of four fieldsets, one question per screen on mobile through CSS and `hidden` | Submits to `/improvements/` with query parameters, then mirrored to `localStorage` | Yes. Without JS the form still submits and the library page still lists everything |
 | Improvements filter and sort | Every improvement is in the page as a card at load. JavaScript reads `content/improvements.json`, then shows, hides and reorders the cards it already has | Query string, kept in sync with `history.replaceState` | Yes. The unfiltered list is the no-JS experience, and the filter controls are inside a `<form>` that also works as a GET submission |
 | Situation chip in the header | Reads the query string, then `localStorage` | Same as above | Degrades to the "Set your situation" link |
-| Generated checklist (`/checklist`) | Builds items from the index for the student's phase and situation, checkboxes persist | `localStorage` key `checklist`, no identifiers | Partly. Without JS the page shows the full phase checklist, unfiltered and unchecked, and it prints |
-| Print and copy the checklist | `print.css`, plus a copy-as-text button using the clipboard API | None | Print yes. Copy needs JS, and the text stays selectable so it can be copied by hand |
+| Generated checklist (`/checklist`), **v2** | Builds items from the index for the student's phase and situation, checkboxes persist | `localStorage` key `checklist`, no identifiers | Partly. Without JS the page shows the full phase checklist, unfiltered and unchecked, and it prints |
+| Print and copy the checklist, **v2** | `print.css`, plus a copy-as-text button using the clipboard API | None | Print yes. Copy needs JS, and the text stays selectable so it can be copied by hand |
 | Glossary term on first use | `<details>` and `<summary>`, no script | None | Yes |
-| House walkthrough (`/`) | One inline SVG. Rooms switch on `:target`, so CSS alone changes room. Every hotspot is a link to its improvement page | The open room is the URL fragment | Yes. Hotspots navigate to the improvement pages, and the room-by-room link list under the drawing carries every one of them |
+| Hero parallax (`/`) | CSS scroll-linked animation on background layers inside an `@supports (animation-timeline: scroll())` guard. No scroll listener | None | Yes. Layers render static |
+| Looping diagrams (`/learn`) | CSS animation on inline SVG. The pause control is a checkbox that CSS reads, so pausing needs no script | None | Yes, including the pause control |
+| Reduce motion toggle | A checkbox in the footer that CSS reads through `:has()`. JavaScript only mirrors it to `localStorage` so the choice survives navigation | `localStorage` key `motion`, no identifiers | Yes on the current page. The choice does not persist across pages without JavaScript |
+| Doll house (`/`) | One inline SVG of six room boxes. A room enlarges on `:target`, so CSS alone switches rooms. Every hotspot is a link to its improvement page | The enlarged room is the URL fragment | Yes. Hotspots navigate to the improvement pages, and the room-by-room link list under the drawing carries every one of them |
 | Hotspot info bar | JavaScript intercepts the hotspot link and opens a panel built from `content/improvements.json`, then moves focus to it | Fragment only | Yes. Without JavaScript the link goes to the full improvement page, which is the same content |
 | Flip cards (`/learn`) | `<details>` with a CSS flip on `[open]`. No script at all | None | Yes |
 | Carousel | Scroll-snap row of real slides. Previous and next are anchor links to slide IDs | None | Yes |
@@ -142,8 +145,8 @@ fact.
 
 | Metric | Target | Why |
 |---|---|---|
-| HTML + CSS + JS per page | ≤ 100 KB uncompressed | Campus wifi is fine, mobile data in a cold apartment is not |
-| Fonts | ≤ 60 KB total, two subset woff2 files, per [DESIGN.md](../DESIGN.md) §4 | Self-hosted, preloaded, swap-safe |
+| HTML + CSS + JS per page | ≤ 100 KB uncompressed | Campus wifi is fine |
+| Fonts | ≤ 60 KB total, two subset woff2 files (Poppins 400 and 600), per [DESIGN.md](../DESIGN.md) §4 | Self-hosted, preloaded, swap-safe. Poppins sets every word on the site, so a third weight does not fit the budget |
 | Total first-load page weight | ≤ 250 KB including images | A photo-heavy page needs compression, not an exception |
 | Time to interactive | Under 2s on a 4G connection | There is no framework to boot, so this is mostly an image budget |
 | Lighthouse performance | ≥ 95 | |
@@ -154,7 +157,7 @@ fact.
 | Dependency | Purpose | Why not do without it? |
 |---|---|---|
 | None for icons | Iconography per [DESIGN.md](../DESIGN.md) §4 | The icon set and the house illustration are drawn for this site and committed as SVG in `assets/icons/` and `assets/img/`. No icon library, no icon font, no emoji |
-| Poppins woff2 (SIL Open Font License) | Display typeface, per [DESIGN.md](../DESIGN.md) §4 | Self-hosted files in the repo. No Google Fonts request |
+| Poppins woff2 (SIL Open Font License) | Display and body typeface, per [DESIGN.md](../DESIGN.md) §4 | Self-hosted files in the repo, weights 400 and 600. No Google Fonts request |
 | Node 20 (local only) | Runs `tools/check-content.mjs` | The site does not need it. If Node is unavailable, the check can be skipped and the site still publishes |
 
 **Policy:** the published site ships zero third-party runtime code. No CDN, no script tag pointing
@@ -194,7 +197,7 @@ per [AGENTS.md](../AGENTS.md) rule 6.
 ├── learn/
 │   ├── index.html
 │   └── <slug>/index.html
-├── checklist/index.html
+├── checklist/index.html          v2
 ├── before-you-sign/index.html
 ├── your-rights/index.html
 ├── programs/index.html
@@ -204,7 +207,7 @@ per [AGENTS.md](../AGENTS.md) rule 6.
 ├── accessibility/index.html      the public accessibility statement
 ├── assets/
 │   ├── css/    tokens.css · base.css · components.css · print.css
-│   ├── js/     situation.js · library.js · checklist.js
+│   ├── js/     situation.js · library.js · checklist.js (v2)
 │   ├── fonts/  poppins-500.woff2 · poppins-600.woff2
 │   ├── icons/  inline SVG source, copied into pages
 │   └── img/
@@ -234,10 +237,14 @@ sitemap in [DESIGN.md](../DESIGN.md) §2 exactly.
 
 ## 11. Browser and device support
 
-Last two versions of Chrome, Edge, Firefox and Safari on desktop, iOS Safari 16.4 and later, and
-Chrome on Android. That floor covers ES modules, CSS custom properties, CSS nesting, `:has()` and
-container queries, so nothing in the design system needs a fallback. Older browsers still get
-every page's content, because the content is in the HTML.
+Last two versions of Chrome, Edge, Firefox and Safari on desktop, which is what v1 is designed
+for, per [DESIGN.md](../DESIGN.md) §6. That floor covers ES modules, CSS custom properties, CSS
+nesting, `:has()` and container queries, so nothing in the design system needs a fallback. Older
+browsers still get every page's content, because the content is in the HTML.
+
+iOS Safari 16.4 and later and Chrome on Android render every page correctly and reach every
+recommendation, because the narrow-width reflow layout ships in v1 as the zoom path. They are not
+a designed experience until the mobile work lands in v2.
 
 ## 12. Failure modes
 

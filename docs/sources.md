@@ -1,6 +1,6 @@
 # Sources
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-19 · **Owner:** Megan
+> **Status:** ● Complete · **Last updated:** 2026-08-19 · **Owner:** Megan
 
 <!-- GUIDANCE: A living bibliography. Every factual claim on the site cites a row here by ID.
      The "Last verified" column is the point of the whole document — utility programs, rebate
@@ -49,6 +49,7 @@
 | S17a | Advance Transit, fare-free Upper Valley bus | Advance Transit | https://advancetransit.com/ | Transit | Medium | 2026-08-18 | Fare-free. Blue route serves Hanover and Lebanon on weekdays at about 15-minute frequency. West Lebanon hub at Kilton Library. Routes serving the Rte 12A stores still to be confirmed (V8) |
 | S18 | LaValley Building Supply — 5 Airport Rd, West Lebanon NH 03784 | LaValley | https://lavalleys.com/locations/west-lebanon/ | Retail | Medium | 2026-08-18 | Address and hours confirmed from own site; product lines not listed |
 | S19 | Fire Marshal Office | Town of Hanover | https://www.hanovernh.org/204/Fire-Marshal-Office | Municipal / Safety | Low | 2026-08-19 | Handles fire prevention, inspections, and gas/oil system permits; links to NH CO detector law and an addendum doc. Contact for heating-system-specific safety questions. 48 Lyme Road, 603-643-3342 |
+| S20 | Home Repair Program | COVER Home Repair, Inc. | https://coverhomerepair.org/home-repair/ | Nonprofit program | High | 2026-08-19 | **Homeowners only — renters are not eligible and there's no landlord-initiated path.** Serves communities within ~45 min of White River Junction, VT ("Greater Upper Valley"); Hanover isn't named explicitly but is well within that radius. Services: winter weatherization/draft sealing, furnace cleaning, urgent repairs, ramps, fall-prevention. Eligibility: household income ≤60% Area Median Income ($3,695/mo for 1 person to $6,965/mo for 8+ — a different AMI basis than the NH SMI figures in S7a, don't mix them), urgent health/safety need, homeowner participation required. VT residents are no longer routed here for insulated skirting — referred to VT community action agencies instead. **Do not present as a renter-usable program per content-strategy.md §4** — only relevant as something a renter could point a landlord toward (topic #9) |
 
 ## Unsourced claims (TODO)
 

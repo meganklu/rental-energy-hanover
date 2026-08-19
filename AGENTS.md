@@ -36,7 +36,10 @@ before making decisions that affect scope or content.
 
 5. **Accessibility is not optional.** Target is stated in
    [docs/accessibility.md](docs/accessibility.md). Keyboard operability, visible focus, and
-   non-color-dependent meaning are required in every component you write.
+   non-color-dependent meaning are required in every component you write. Extensive testing is
+   deferred to v2, which makes the per-component checklist in
+   [docs/accessibility.md](docs/accessibility.md) §2 the only control there is. Meet it while
+   writing the component. Nothing downstream will catch a miss.
 
 6. **Do not add third-party scripts, trackers, fonts, or analytics** without explicit
    approval. The site sets no cookies and uses no third-party analytics. Nothing on the
@@ -113,7 +116,7 @@ browser, tab through it with the keyboard, and check it at 320px.
 ├── where-to-get-it/ glossary/ about/ accessibility/
 ├── assets/
 │   ├── css/    tokens.css · base.css · components.css · print.css
-│   ├── js/     situation.js · library.js · checklist.js
+│   ├── js/     situation.js · library.js · checklist.js (v2)
 │   ├── fonts/  poppins-500.woff2 · poppins-600.woff2
 │   ├── icons/  inline SVG source
 │   └── img/
@@ -149,7 +152,8 @@ sitemap in [DESIGN.md](DESIGN.md) §2.
 - **Page shell:** the header, nav and footer are copied into every page from `tools/shell.html`.
   If you change one, change `tools/shell.html` and every page, then run the content check
 - **Comments:** explain why, not what. A comment on any non-obvious accessibility choice, so a
-  later editor does not remove it as dead weight
+  later editor does not remove it as dead weight. Avoid over-explaining when possible as this
+  could clutter the code.
 
 ## Content conventions
 
@@ -169,10 +173,17 @@ sitemap in [DESIGN.md](DESIGN.md) §2.
 - Lead with the action, then the reason.
 - State cost and time in student terms ("$12, 20 minutes").
 - Talk about money and comfort first. Leave out guilt-based climate framing.
-- Write plain declarative sentences. Use commas and periods in place of em dashes.
+- Write plain declarative sentences. Use commas and periods in place of em dashes, and vary
+  sentence structure rather than leaning on the dash for every aside.
 - Avoid contrast constructions like "not X, but Y". State the point directly and stop.
 - Skip emoji and warning symbols. Write "Note:" or "Safety:" instead.
 - Use "typically saves" rather than "will save".
+- Use bold and italics sparingly, only where emphasis is truly needed. Do not bold or italicize
+  routine terms, labels, or every key phrase in a sentence.
+- Avoid metaphors and figures of speech. Say what you mean in direct language.
+- Do not over-explain. Give the context a reader needs and stop; if a note isn't needed, cut it rather than pad it. When making edits, evaluate whether a note is actually required or deleting the section or simply revising it is more appropriate.
+- Do not rely too heavily on em dashes. Use a variety of sentence structures.
+- When removing something, completely remove it (do not leave notes all over about it) unless otherwise indicated.
 
 ## What to ask a human about
 
@@ -185,6 +196,7 @@ sitemap in [DESIGN.md](DESIGN.md) §2.
 
 ## Git conventions
 
+- Commit the code to git frequently and by element/update with descriptive commit messages.
 - Branch naming: `content/<topic>`, `feature/<short-name>`, `fix/<short-name>`
 - Commit message style: imperative subject under 72 characters, for example
   "Add window film improvement page". Commit the regenerated `content/improvements.json`
@@ -196,7 +208,7 @@ sitemap in [DESIGN.md](DESIGN.md) §2.
 
 ## Known gotchas
 
-- **Subpath hosting.** The site lives at `https://<owner>.github.io/rental-energy-hanover/` until
+- **Subpath hosting.** The site lives at `https://meganklu.github.io/rental-energy-hanover/` until
   a custom domain exists. Root-absolute paths in `href`, `src`, `url()` and `fetch` all break
   there and all work on `localhost`. Use relative paths everywhere
 - **Case sensitivity.** GitHub Pages serves from Linux and is case-sensitive. `Assets/CSS/base.css`
