@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- shell:head-links -->
+<link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
 <link rel="preload" href="../../assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../../assets/fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../../assets/css/tokens.css">
@@ -13,38 +14,37 @@
 <link rel="stylesheet" href="../../assets/css/print.css" media="print">
 <!-- /shell:head-links -->
 
-<title>Use a space heater safely — Rental Energy Hanover</title>
+<title>Use a space heater safely — Energy for Student Renters</title>
 <meta name="description" content="A space heater runs on electricity and typically costs more to run than it seems. Safety comes before cost here.">
 </head>
 <body>
 
 <!-- shell:header -->
-<a class="skip-link" href="#main">Skip to content</a>
+<a class="skip-link" href="../../#main">Skip to content</a>
 <header class="site-header">
   <div class="page-shell site-header__inner">
     <a class="brand" href="../../index.html">
-      <span class="wordmark">Rental Energy Hanover</span>
-      <span class="partner-line">In partnership with Sustainable Hanover</span>
+      <svg class="icon brand__icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-house"/></svg>
+      <span class="brand__text">
+        <span class="wordmark">Energy for Student Renters</span>
+        <span class="partner-line">In partnership with Sustainable Hanover</span>
+      </span>
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul>
-        <li><a href="../../index.html#house">The house</a></li>
-        <li><a href="../../improvements/" aria-current="page">What you can change</a></li>
-        <li><a href="../../learn/">Learn</a></li>
+        <li><a href="../../index.html#house">Home</a></li>
+        <li><a href="../../improvements/" aria-current="page">Improvements</a></li>
         <li><a href="../../your-rights/">Rights and programs</a></li>
         <li><a href="../../about/">About</a></li>
       </ul>
     </nav>
-    <div class="header-actions">
-      <a class="situation-chip" id="situation-chip" href="../../start/">Set your situation</a>
-    </div>
   </div>
 </header>
 <!-- /shell:header -->
 
 <main id="main">
   <section class="section page-shell">
-    <nav aria-label="Breadcrumb" class="text-small"><a href="../">What you can change</a> / Use a space heater safely</nav>
+    <nav aria-label="Breadcrumb" class="text-small"><a href="../">Improvements</a> / Use a space heater safely</nav>
 
     <article class="improvement content-column">
       <h1>Use a space heater safely</h1>
@@ -52,7 +52,7 @@
 
       <div class="badge-row">
         <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
-        <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-reversible"/></svg>Nothing to undo</span>
+        <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
       </div>
       <div class="fact-row">
         <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>$25 to $75</span>
@@ -109,6 +109,23 @@
   </section>
 </main>
 
+<!-- shell:fab -->
+<a class="fab" id="situation-fab" href="../../start/">
+  <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-sliders"/></svg>
+  Personalize your recommendations
+</a>
+<dialog id="situation-dialog" class="situation-dialog" aria-labelledby="situation-dialog-heading">
+  <div class="situation-dialog__inner">
+    <button type="button" class="situation-dialog__close" id="situation-dialog-close" aria-label="Close">
+      <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-close"/></svg>
+    </button>
+    <div class="situation-dialog__body" id="situation-dialog-body">
+      <!-- assets/js/situation-modal.js fetches start/ and injects its form here -->
+    </div>
+  </div>
+</dialog>
+<!-- /shell:fab -->
+
 <!-- shell:footer -->
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
@@ -123,9 +140,10 @@
     </div>
     <div class="footer-links">
       <a href="../../accessibility/">Accessibility statement</a>
-      <label class="motion-toggle">
-        <input type="checkbox" id="reduce-motion">
-        Reduce motion
+      <label class="switch">
+        <input type="checkbox" id="reduce-motion" class="visually-hidden">
+        <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+        <span class="switch__label">Reduce motion</span>
       </label>
       <p class="footer-meta">Site content last reviewed 2026-08-19.</p>
     </div>
@@ -133,6 +151,7 @@
 </footer>
 <script type="module" src="../../assets/js/motion.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
+<script type="module" src="../../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->
 
 <script type="application/json" class="content-meta">
