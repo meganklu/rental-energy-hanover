@@ -1,0 +1,93 @@
+<!doctype html>
+<!--
+  Canonical page shell. Not a served page — a reference copy of the markup that appears,
+  verbatim in structure, near the top and bottom of every real page.
+
+  Paths in this file are written as if the file lived at the site root (the same depth as
+  index.html). Copying this into a page at a different depth means adjusting every relative
+  path's "../" prefix to match that page's actual depth, and nothing else. For example the
+  stylesheet link below reads "assets/css/tokens.css" here; two directories down, at
+  improvements/<slug>/index.html, the same link reads "../../assets/css/tokens.css".
+  tools/check-content.mjs normalizes away that prefix before comparing a page's shell against
+  this file, so a correctly depth-adjusted copy is not drift. A missing element, a reworded
+  label, or a link to the wrong place is.
+
+  Each page also sets aria-current="page" on its own entry in the primary nav. That attribute
+  is likewise ignored by the drift check.
+
+  See AGENTS.md "Page shell" and "Known gotchas" before editing this file.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- shell:head-links -->
+<link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/print.css" media="print">
+<!-- /shell:head-links -->
+
+<title>Page title — Rental Energy Hanover</title>
+</head>
+<body>
+
+<!-- shell:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="page-shell site-header__inner">
+    <a class="brand" href="index.html">
+      <span class="wordmark">Rental Energy Hanover</span>
+      <span class="partner-line">In partnership with Sustainable Hanover</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="index.html#house">The house</a></li>
+        <li><a href="improvements/">What you can change</a></li>
+        <li><a href="learn/">Learn</a></li>
+        <li><a href="your-rights/">Rights and programs</a></li>
+        <li><a href="about/">About</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="situation-chip" id="situation-chip" href="start/">Set your situation</a>
+    </div>
+  </div>
+</header>
+<!-- /shell:header -->
+
+<main id="main">
+  <!-- page content -->
+</main>
+
+<!-- shell:footer -->
+<footer class="site-footer">
+  <div class="page-shell site-footer__inner">
+    <div class="footer-credit">
+      <img src="assets/img/sh-logo.webp" alt="Sustainable Hanover" width="150" height="52" loading="lazy">
+      <p>
+        Project created in partnership with Sustainable Hanover, a committee of the Town of
+        Hanover, New Hampshire.
+        <a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a>
+        · <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a>
+      </p>
+    </div>
+    <div class="footer-links">
+      <a href="accessibility/">Accessibility statement</a>
+      <label class="motion-toggle">
+        <input type="checkbox" id="reduce-motion">
+        Reduce motion
+      </label>
+      <p class="footer-meta">Site content last reviewed 2026-08-19.</p>
+    </div>
+  </div>
+</footer>
+<script type="module" src="assets/js/motion.js"></script>
+<script type="module" src="assets/js/situation.js"></script>
+<!-- /shell:footer -->
+
+</body>
+</html>

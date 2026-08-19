@@ -1,0 +1,67 @@
+<!doctype html>
+<!--
+  GitHub Pages always serves this exact file for an unmatched path, whatever depth that path
+  was at, while the browser's address bar keeps showing the original URL. A relative path here
+  would resolve against that original URL, not against this file's real location at the repo
+  root, and silently 404 again — the one page on the site where AGENTS.md's "relative paths
+  only" rule would actively break things. So this page is fully self-contained: inline styles,
+  no shared stylesheet, no font, no icon sprite. The "go home" link defaults to "/", correct
+  once a custom domain exists per architecture.md D7, and the inline script below corrects it
+  for the current github.io/rental-energy-hanover/ subpath in the meantime.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — Rental Energy Hanover</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #FFFFFF;
+    color: #14201A;
+    text-align: center;
+  }
+  .wrap { max-width: 32rem; }
+  h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+  p { line-height: 1.6; color: #4C5A52; }
+  a.home {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.5rem 1.5rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+    background: #046648;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a.home:hover { background: #03503A; }
+  a.home:focus-visible { outline: 2px solid #046648; outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Page not found</h1>
+  <p>That page doesn't exist, or the link is out of date. Try the home page instead.</p>
+  <a class="home" id="home-link" href="/">Go to the home page</a>
+</div>
+<script>
+  // Best-effort correction for subpath hosting (e.g. /rental-energy-hanover/). Static fallback
+  // above already gives a correct link once/if this moves to a custom domain at true root.
+  (function () {
+    var segments = location.pathname.split("/").filter(Boolean);
+    if (segments.length > 0) {
+      document.getElementById("home-link").href = "/" + segments[0] + "/";
+    }
+  })();
+</script>
+</body>
+</html>

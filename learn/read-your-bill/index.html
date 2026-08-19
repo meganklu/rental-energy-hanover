@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- shell:head-links -->
+<link rel="preload" href="../../assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../assets/fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/css/tokens.css">
+<link rel="stylesheet" href="../../assets/css/base.css">
+<link rel="stylesheet" href="../../assets/css/components.css">
+<link rel="stylesheet" href="../../assets/css/print.css" media="print">
+<!-- /shell:head-links -->
+
+<title>Read your bill — Rental Energy Hanover</title>
+<meta name="description" content="kWh, rate, and what's actually driving your electric bill. Start here.">
+</head>
+<body>
+
+<!-- shell:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="page-shell site-header__inner">
+    <a class="brand" href="../../index.html">
+      <span class="wordmark">Rental Energy Hanover</span>
+      <span class="partner-line">In partnership with Sustainable Hanover</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="../../index.html#house">The house</a></li>
+        <li><a href="../../improvements/">What you can change</a></li>
+        <li><a href="../../learn/" aria-current="page">Learn</a></li>
+        <li><a href="../../your-rights/">Rights and programs</a></li>
+        <li><a href="../../about/">About</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="situation-chip" id="situation-chip" href="../../start/">Set your situation</a>
+    </div>
+  </div>
+</header>
+<!-- /shell:header -->
+
+<main id="main">
+  <section class="section page-shell">
+    <nav aria-label="Breadcrumb" class="text-small"><a href="../">Learn</a> / Read your bill</nav>
+
+    <article class="content-column">
+      <p class="eyebrow">Start here</p>
+      <h1>Read your bill</h1>
+      <p>
+        Two numbers on your electric bill explain almost everything: how much you used, and what
+        each unit of that costs. Multiply them and you have your bill.
+      </p>
+
+      <figure class="diagram-figure" id="bill-diagram">
+        <svg viewBox="0 0 400 140" role="img" aria-labelledby="bill-diagram-title bill-diagram-desc">
+          <title id="bill-diagram-title">kWh used times rate per kWh equals your bill</title>
+          <desc id="bill-diagram-desc">Three boxes reading kWh used, rate per kWh, and your bill, connected by a multiplication sign and an equals sign, highlighting in sequence.</desc>
+
+          <g class="diagram-anim pulse-a">
+            <rect x="10" y="30" width="110" height="70" rx="6" fill="var(--color-surface)" stroke="var(--color-info-text)" stroke-width="2"/>
+            <text x="65" y="60" text-anchor="middle" font-size="12" fill="var(--color-text)">kWh used</text>
+            <text x="65" y="80" text-anchor="middle" font-size="11" fill="var(--color-text-muted)">(on your bill)</text>
+          </g>
+
+          <text x="135" y="72" text-anchor="middle" font-size="20" fill="var(--color-text-muted)">×</text>
+
+          <g class="diagram-anim pulse-b">
+            <rect x="150" y="30" width="110" height="70" rx="6" fill="var(--color-surface)" stroke="var(--color-warning-text)" stroke-width="2"/>
+            <text x="205" y="60" text-anchor="middle" font-size="12" fill="var(--color-text)">Rate per kWh</text>
+            <text x="205" y="80" text-anchor="middle" font-size="11" fill="var(--color-text-muted)">(cents per unit)</text>
+          </g>
+
+          <text x="275" y="72" text-anchor="middle" font-size="20" fill="var(--color-text-muted)">=</text>
+
+          <g class="diagram-anim pulse-c">
+            <rect x="290" y="30" width="100" height="70" rx="6" fill="var(--color-surface)" stroke="var(--color-accent)" stroke-width="2"/>
+            <text x="340" y="60" text-anchor="middle" font-size="12" fill="var(--color-text)">Your bill</text>
+            <text x="340" y="80" text-anchor="middle" font-size="11" fill="var(--color-text-muted)">(what you pay)</text>
+          </g>
+        </svg>
+        <div class="diagram-controls">
+          <button type="button" aria-pressed="true">
+            <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-pause"/></svg>
+            <span class="diagram-controls__label">Pause</span>
+          </button>
+        </div>
+        <figcaption>
+          The amount you used, in kilowatt-hours, times the rate your utility charges per
+          kilowatt-hour, equals the number at the bottom of the bill.
+        </figcaption>
+      </figure>
+
+      <h2>Where to find each number</h2>
+      <ul>
+        <li>Usage in <a href="../../glossary/#kwh">kWh</a>, usually near the middle of the bill, sometimes with a chart of the last several months.</li>
+        <li>The rate, in cents or dollars per kWh, often printed near the usage figure or in a rate schedule.</li>
+        <li>The total, at the bottom, which is usage times rate plus any fixed monthly charges.</li>
+      </ul>
+
+      <details class="flip-card">
+        <summary>
+          <div class="flip-card__face flip-card__front">
+            <p>True or false: the total dollar amount on your bill tells you how much electricity you used.</p>
+          </div>
+        </summary>
+        <div class="flip-card__face flip-card__back">
+          <p>
+            False. The dollar total mixes your usage with the rate and any fixed charges. The kWh
+            figure is the actual amount of energy you used, and it is the number that changes when
+            you change a habit.
+          </p>
+          <a href="../find-your-drafts/">Find where that energy is going</a>
+        </div>
+      </details>
+
+      <p class="text-small">
+        <strong>Read as text:</strong> True or false, does the total dollar amount on your bill
+        tell you how much electricity you used? False. The dollar total mixes your usage with the
+        rate and any fixed charges. The kWh figure is the actual amount of energy you used.
+      </p>
+
+      <h2>Who serves Hanover</h2>
+      <p>
+        Liberty Utilities (Granite State Electric) is the electric utility serving Hanover.
+        Knowing your provider is what lets you find your actual rate instead of guessing at one.
+      </p>
+
+      <div class="sources-block">
+        <h2>Sources</h2>
+        <ul>
+          <li><a href="https://www.energy.nh.gov/utilities-providers/regulated-utility-services/electric">NH Department of Energy — Regulated Utility Services: Electric</a></li>
+        </ul>
+        <p class="last-reviewed">Last reviewed 2026-08-18.</p>
+      </div>
+    </article>
+  </section>
+</main>
+
+<!-- shell:footer -->
+<footer class="site-footer">
+  <div class="page-shell site-footer__inner">
+    <div class="footer-credit">
+      <img src="../../assets/img/sh-logo.webp" alt="Sustainable Hanover" width="150" height="52" loading="lazy">
+      <p>
+        Project created in partnership with Sustainable Hanover, a committee of the Town of
+        Hanover, New Hampshire.
+        <a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a>
+        · <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a>
+      </p>
+    </div>
+    <div class="footer-links">
+      <a href="../../accessibility/">Accessibility statement</a>
+      <label class="motion-toggle">
+        <input type="checkbox" id="reduce-motion">
+        Reduce motion
+      </label>
+      <p class="footer-meta">Site content last reviewed 2026-08-19.</p>
+    </div>
+  </div>
+</footer>
+<script type="module" src="../../assets/js/motion.js"></script>
+<script type="module" src="../../assets/js/situation.js"></script>
+<!-- /shell:footer -->
+
+<script type="module" src="../../assets/js/diagram.js"></script>
+
+<script type="application/json" class="content-meta">
+{
+  "type": "explainer",
+  "slug": "read-your-bill",
+  "title": "Read your bill",
+  "summary": "kWh, rate, and what's actually driving your electric bill. Start here.",
+  "question": "What is actually driving my electric bill?",
+  "misconception": "The total dollar amount on your bill tells you how much electricity you used.",
+  "impact": "enabler",
+  "appliesToHeat": ["any"],
+  "appliesToPayer": "tenant",
+  "phase": "move-in",
+  "sources": ["S3"],
+  "lastReviewed": "2026-08-18"
+}
+</script>
+</body>
+</html>

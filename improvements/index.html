@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- shell:head-links -->
+<link rel="preload" href="../assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/print.css" media="print">
+<!-- /shell:head-links -->
+
+<title>What you can change — Rental Energy Hanover</title>
+<meta name="description" content="Every improvement a Hanover renter can make, filterable by heat type, who pays, and what your landlord requires.">
+</head>
+<body>
+
+<!-- shell:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="page-shell site-header__inner">
+    <a class="brand" href="../index.html">
+      <span class="wordmark">Rental Energy Hanover</span>
+      <span class="partner-line">In partnership with Sustainable Hanover</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="../index.html#house">The house</a></li>
+        <li><a href="../improvements/" aria-current="page">What you can change</a></li>
+        <li><a href="../learn/">Learn</a></li>
+        <li><a href="../your-rights/">Rights and programs</a></li>
+        <li><a href="../about/">About</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a class="situation-chip" id="situation-chip" href="../start/">Set your situation</a>
+    </div>
+  </div>
+</header>
+<!-- /shell:header -->
+
+<main id="main">
+  <section class="section page-shell">
+    <div class="content-column">
+      <h1>What you can change</h1>
+      <p>
+        Every improvement on the site, in one list. Filter it to your heat type, who pays, and
+        what your landlord requires, or scan the whole thing.
+      </p>
+    </div>
+
+    <form class="filter-form" id="filter-form" method="get">
+      <div class="question-set">
+        <fieldset class="question">
+          <legend>Heat type</legend>
+          <div class="question__options">
+            <label><input type="radio" name="heat" value="any" checked> Any</label>
+            <label><input type="radio" name="heat" value="electric-baseboard"> Electric baseboard</label>
+            <label><input type="radio" name="heat" value="forced-air"> Forced air</label>
+            <label><input type="radio" name="heat" value="radiator"> Radiator</label>
+            <label><input type="radio" name="heat" value="heat-pump"> Heat pump</label>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend>Who pays for heat</legend>
+          <div class="question__options">
+            <label><input type="radio" name="payer" value="any" checked> Any</label>
+            <label><input type="radio" name="payer" value="tenant"> I do</label>
+            <label><input type="radio" name="payer" value="included"> Included in rent</label>
+          </div>
+        </fieldset>
+        <fieldset class="question">
+          <legend>Landlord permission</legend>
+          <div class="question__options">
+            <label><input type="radio" name="permission" value="any" checked> Any</label>
+            <label><input type="radio" name="permission" value="none"> None needed</label>
+            <label><input type="radio" name="permission" value="ask"> Ask first</label>
+            <label><input type="radio" name="permission" value="required"> Landlord does it</label>
+          </div>
+        </fieldset>
+      </div>
+      <p><button type="submit" class="btn btn--secondary">Filter</button></p>
+    </form>
+
+    <p class="results-count" id="results-count" aria-live="polite"></p>
+
+    <ul class="card-grid" id="card-grid">
+
+      <li class="card" data-slug="seal-your-windows-with-film">
+        <p class="badge badge--permission-none">No permission needed</p>
+        <h2 class="card__title"><a href="seal-your-windows-with-film/">Seal your windows with film</a></h2>
+        <p class="card__summary">A plastic film kit over a drafty window, on in an hour, off at move-out.</p>
+      </li>
+
+      <li class="card" data-slug="door-sweeps-and-weatherstripping">
+        <p class="badge badge--permission-ask">Ask your landlord first</p>
+        <h2 class="card__title"><a href="door-sweeps-and-weatherstripping/">Seal your door with a sweep</a></h2>
+        <p class="card__summary">Weatherstripping and a door sweep close the gap most doors leak through.</p>
+      </li>
+
+      <li class="card" data-slug="thermostat-setback">
+        <p class="badge badge--permission-none">No permission needed</p>
+        <h2 class="card__title"><a href="thermostat-setback/">Set your thermostat back</a></h2>
+        <p class="card__summary">Turning the heat down while you are out or asleep typically uses less energy, free.</p>
+      </li>
+
+      <li class="card" data-slug="dont-block-your-radiator-or-baseboard">
+        <p class="badge badge--permission-none">No permission needed</p>
+        <h2 class="card__title"><a href="dont-block-your-radiator-or-baseboard/">Keep your radiator or baseboard clear</a></h2>
+        <p class="card__summary">Furniture and curtains in front of a heat source keep the heat from reaching the room.</p>
+      </li>
+
+      <li class="card" data-slug="space-heaters-real-cost-and-safety">
+        <p class="badge badge--permission-none">No permission needed</p>
+        <h2 class="card__title"><a href="space-heaters-real-cost-and-safety/">Use a space heater safely</a></h2>
+        <p class="card__summary">Costs more to run than central heat, and needs real clearance. Safety first.</p>
+      </li>
+
+      <li class="card" data-slug="hot-water-showers-and-laundry">
+        <p class="badge badge--permission-none">No permission needed</p>
+        <h2 class="card__title"><a href="hot-water-showers-and-laundry/">Cut your hot water use</a></h2>
+        <p class="card__summary">Shower length, laundry temperature, and a dripping tap all affect the bill.</p>
+      </li>
+
+      <li class="card" data-slug="phantom-load-and-plug-loads">
+        <p class="badge badge--permission-none">No permission needed</p>
+        <h2 class="card__title"><a href="phantom-load-and-plug-loads/">Cut phantom load</a></h2>
+        <p class="card__summary">A power strip you can switch off stops plugged-in devices from drawing power all day.</p>
+      </li>
+
+      <li class="card" data-slug="led-lighting-swaps">
+        <p class="badge badge--permission-none">No permission needed</p>
+        <h2 class="card__title"><a href="led-lighting-swaps/">Swap in LED bulbs</a></h2>
+        <p class="card__summary">LEDs use a fraction of the electricity incandescent bulbs do. Keep the originals in a box.</p>
+      </li>
+
+    </ul>
+
+    <p class="empty-state" id="empty-state" hidden>
+      Nothing matches all of those filters yet. <button type="button" class="btn btn--text" id="clear-filters">Clear the filters</button> to see everything.
+    </p>
+  </section>
+</main>
+
+<!-- shell:footer -->
+<footer class="site-footer">
+  <div class="page-shell site-footer__inner">
+    <div class="footer-credit">
+      <img src="../assets/img/sh-logo.webp" alt="Sustainable Hanover" width="150" height="52" loading="lazy">
+      <p>
+        Project created in partnership with Sustainable Hanover, a committee of the Town of
+        Hanover, New Hampshire.
+        <a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a>
+        · <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a>
+      </p>
+    </div>
+    <div class="footer-links">
+      <a href="../accessibility/">Accessibility statement</a>
+      <label class="motion-toggle">
+        <input type="checkbox" id="reduce-motion">
+        Reduce motion
+      </label>
+      <p class="footer-meta">Site content last reviewed 2026-08-19.</p>
+    </div>
+  </div>
+</footer>
+<script type="module" src="../assets/js/motion.js"></script>
+<script type="module" src="../assets/js/situation.js"></script>
+<!-- /shell:footer -->
+
+<script type="module" src="../assets/js/library.js"></script>
+</body>
+</html>

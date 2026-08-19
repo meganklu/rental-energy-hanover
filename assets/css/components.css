@@ -1,0 +1,1242 @@
+/*
+  Components. DESIGN.md §5 is the source of truth for states; this file implements them.
+  Requires tokens.css and base.css loaded first.
+*/
+
+/* ---------- Icons ---------- */
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-accent);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--motion-duration-base) var(--motion-ease),
+    color var(--motion-duration-base) var(--motion-ease);
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: #fff;
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--color-accent);
+}
+
+.btn--secondary:hover {
+  background: var(--color-surface);
+}
+
+.btn--text {
+  border-color: transparent;
+  background: transparent;
+  color: var(--color-accent);
+  padding-inline: var(--space-2);
+}
+
+.btn--text:hover {
+  text-decoration: underline;
+}
+
+.btn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-small);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.badge .icon {
+  width: 1em;
+  height: 1em;
+}
+
+.badge--permission-none {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.badge--permission-ask {
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.badge--permission-required {
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
+}
+
+.badge--reversible {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block: var(--space-3);
+}
+
+/* ---------- Cost / time / impact facts ---------- */
+.fact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-block: var(--space-3);
+  font-size: var(--text-small);
+}
+
+.fact {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.fact .icon {
+  color: var(--color-accent);
+}
+
+.fact--enabler {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* ---------- Callouts ---------- */
+.callout {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  margin-block: var(--space-4);
+}
+
+.callout .icon {
+  flex-shrink: 0;
+  margin-top: 0.15em;
+}
+
+.callout p {
+  margin: 0;
+  max-width: none;
+}
+
+.callout--safety {
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+  border: 1px solid currentColor;
+}
+
+.callout--legal,
+.callout--savings,
+.callout--permission {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-size: var(--text-small);
+}
+
+/* ---------- Disclosure bar ---------- */
+.disclosure {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-block: var(--space-3);
+  overflow: hidden;
+}
+
+.disclosure > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-height: 48px;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-display);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.disclosure > summary .icon {
+  transition: transform var(--motion-duration-base) var(--motion-ease);
+}
+
+.disclosure[open] > summary .icon {
+  transform: rotate(180deg);
+}
+
+.disclosure__body {
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+/* ---------- Sources block ---------- */
+.sources-block {
+  margin-block: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+.sources-block h2, .sources-block h3 {
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.sources-block ul {
+  padding-left: var(--space-5);
+}
+
+.sources-block .last-reviewed {
+  margin-top: var(--space-2);
+}
+
+/* ---------- Glossary term ---------- */
+.gloss {
+  display: inline;
+}
+
+.gloss > summary {
+  display: inline;
+  cursor: pointer;
+  color: var(--color-accent);
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+}
+
+.gloss__body {
+  display: block;
+  margin-top: var(--space-1);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-small);
+  max-width: 28rem;
+}
+
+/* ---------- Cards (the improvements library only) ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--space-5);
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.card:hover {
+  border-color: var(--color-border-strong);
+}
+
+.card__title {
+  font-size: var(--text-h4);
+  margin: 0;
+}
+
+.card__title a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.card__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.card {
+  position: relative;
+}
+
+.card__title a:hover {
+  color: var(--color-accent);
+}
+
+.card__summary {
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+  margin: 0;
+}
+
+/* ---------- Filter / situation form ---------- */
+.question-set {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.question {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin: 0;
+}
+
+.question > legend {
+  font-family: var(--font-display);
+  font-weight: 600;
+  padding: 0 var(--space-1);
+}
+
+.question__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.question__options label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+}
+
+.question__options input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-accent);
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-block: var(--space-4);
+}
+
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 36px;
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: var(--text-small);
+  cursor: pointer;
+}
+
+.filter-chip[aria-pressed="true"] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+.results-count {
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+.empty-state {
+  padding: var(--space-6);
+  text-align: center;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+/* ---------- Situation chip (header) ---------- */
+.situation-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border-strong);
+  font-size: var(--text-small);
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.situation-chip:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-h4);
+  color: var(--color-text);
+}
+
+.partner-line {
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+.primary-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.primary-nav a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+}
+
+.primary-nav a:hover,
+.primary-nav a[aria-current="page"] {
+  color: var(--color-accent);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+  margin-top: var(--space-8);
+}
+
+.site-footer a {
+  color: var(--color-brand);
+}
+
+.site-footer a:hover {
+  color: #fff;
+}
+
+.site-footer__inner {
+  padding-block: var(--space-7);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  justify-content: space-between;
+}
+
+.footer-credit {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: 32rem;
+}
+
+.footer-credit img {
+  height: 40px;
+  width: auto;
+  border-radius: var(--radius-sm);
+  background: #fff;
+  padding: var(--space-1);
+}
+
+.footer-credit p {
+  font-size: var(--text-small);
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  font-size: var(--text-small);
+}
+
+.footer-meta {
+  font-size: var(--text-small);
+  opacity: 0.85;
+}
+
+.motion-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-small);
+}
+
+.motion-toggle input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-brand);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  min-height: 85svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-7) var(--space-5);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__tagline {
+  font-size: clamp(2.5rem, 2rem + 3vw, 4rem);
+  margin: 0;
+}
+
+.hero__note {
+  color: var(--color-text-muted);
+  font-size: var(--text-body);
+}
+
+.hero__description {
+  max-width: 34rem;
+  font-size: var(--text-h4);
+  color: var(--color-text);
+}
+
+.scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: var(--space-4);
+}
+
+.scroll-cue:hover {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.scroll-cue .icon {
+  animation: bob 1.6s var(--motion-ease) infinite;
+  animation-play-state: var(--motion-state);
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.parallax-layer--bg {
+  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg) 100%);
+}
+
+.parallax-layer--silhouette {
+  background: var(--color-surface-brand);
+  clip-path: polygon(0 100%, 0 55%, 15% 45%, 30% 58%, 45% 40%, 60% 55%, 75% 42%, 90% 56%, 100% 48%, 100% 100%);
+  opacity: 0.55;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .parallax-layer--silhouette {
+      animation: rise-silhouette linear;
+      animation-timeline: scroll(root);
+      animation-range: 0 60vh;
+    }
+    .parallax-layer--bg {
+      animation: rise-bg linear;
+      animation-timeline: scroll(root);
+      animation-range: 0 60vh;
+    }
+  }
+}
+
+body:has(#reduce-motion:checked) .parallax-layer {
+  animation: none !important;
+}
+
+@keyframes rise-silhouette {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8%); }
+}
+
+@keyframes rise-bg {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4%); }
+}
+
+@media (max-width: 600px) {
+  .parallax-layer {
+    animation: none !important;
+  }
+}
+
+/* ---------- Doll house ---------- */
+.dollhouse-section {
+  padding-block: var(--space-7);
+}
+
+.dollhouse-intro {
+  max-width: var(--measure);
+}
+
+.dollhouse {
+  display: grid;
+  grid-template-columns: minmax(70px, 0.55fr) 1fr 1fr;
+  grid-template-rows: auto auto auto auto;
+  grid-template-areas:
+    ".      roof     roof"
+    "porch  bedroom  bathroom"
+    "porch  living   kitchen"
+    "basement basement basement";
+  gap: var(--space-2);
+  background: var(--color-brand);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  margin-block: var(--space-5);
+}
+
+.dollhouse__roof {
+  grid-area: roof;
+  background: var(--color-accent);
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  min-height: 48px;
+}
+
+/* Unwrap both the <ul> and each <li> from the box tree, so the .room sections that actually
+   carry grid-area become the grid's real direct-child items instead of their <li> wrappers. */
+.room-list,
+.room-list > li {
+  display: contents;
+}
+
+.room {
+  position: relative;
+  background: var(--color-bg);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  min-height: 150px;
+  scroll-margin-top: 140px;
+}
+
+.room--porch { grid-area: porch; background: var(--color-surface); }
+.room--bedroom { grid-area: bedroom; }
+.room--bathroom { grid-area: bathroom; }
+.room--living { grid-area: living; }
+.room--kitchen { grid-area: kitchen; }
+.room--basement { grid-area: basement; background: var(--color-surface); min-height: 100px; }
+
+.room__heading {
+  font-size: var(--text-small);
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0 0 var(--space-2);
+}
+
+.room-hotspots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.hotspot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: var(--target-min);
+  min-height: var(--target-min);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-accent);
+  background: var(--color-brand);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.hotspot:hover {
+  background: var(--color-surface-brand);
+}
+
+.hotspot .icon {
+  color: var(--color-accent);
+  width: 1.3em;
+  height: 1.3em;
+}
+
+.hotspot__flag {
+  display: none;
+  color: var(--color-accent);
+  width: 1em;
+  height: 1em;
+}
+
+.hotspot--visited {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.hotspot--visited .icon:not(.hotspot__flag) {
+  color: #fff;
+}
+
+.hotspot--visited .hotspot__flag {
+  display: inline-block;
+  color: var(--color-brand);
+}
+
+.hotspot--dimmed {
+  opacity: 0.55;
+}
+
+.hotspot__start-flag {
+  display: inline-block;
+  margin-left: var(--space-1);
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.hotspot--visited .hotspot__start-flag {
+  background: #fff;
+  color: var(--color-accent);
+}
+
+.room--empty .room-hotspots::after {
+  content: "Nothing to check in this room yet.";
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+}
+
+/* Enlarged room: :has() switches the container from the house grid to a
+   big-room-plus-small-strip layout. Pure CSS, no JavaScript. */
+.dollhouse:has(.room:target) {
+  display: block;
+  background: transparent;
+  padding: 0;
+}
+
+.dollhouse:has(.room:target) .dollhouse__roof {
+  display: none;
+}
+
+.dollhouse:has(.room:target) .room-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.dollhouse:has(.room:target) .room {
+  flex: 0 0 auto;
+  min-height: unset;
+  padding: var(--space-2) var(--space-3);
+}
+
+.dollhouse:has(.room:target) .room .room-hotspots {
+  display: none;
+}
+
+.dollhouse:has(.room:target) .room:target {
+  order: -1;
+  flex-basis: 100%;
+  min-height: 320px;
+  padding: var(--space-4);
+  border-color: var(--color-accent);
+  border-width: 3px;
+  transition: min-height var(--motion-duration-room) var(--motion-ease);
+}
+
+.dollhouse:has(.room:target) .room:target .room__heading {
+  font-size: var(--text-h3);
+}
+
+.dollhouse:has(.room:target) .room:target .room-hotspots {
+  display: flex;
+}
+
+/* A single control shown once any room is enlarged, per DESIGN.md §3.2. It has to be the very
+   next element after .dollhouse in the markup, so the adjacent-sibling selector below can react
+   to whichever room is currently :target without needing a copy of this link inside every room. */
+.back-to-house {
+  display: none;
+}
+
+.dollhouse:has(.room:target) + .back-to-house {
+  display: inline-flex;
+}
+
+/* ---------- Info bar ---------- */
+.info-bar {
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin-block: var(--space-4);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-raised);
+}
+
+.info-bar[hidden] {
+  display: none;
+}
+
+.info-bar__heading {
+  margin: 0 0 var(--space-2);
+}
+
+.info-bar__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.info-bar__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+/* ---------- Progress bar ---------- */
+.progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sticky);
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-small);
+}
+
+.progress-bar__track {
+  height: 4px;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+  margin-top: var(--space-1);
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: var(--color-accent);
+  width: var(--progress, 0%);
+  transition: width var(--motion-duration-base) var(--motion-ease);
+}
+
+@media (max-height: 480px) {
+  .progress-bar {
+    position: static;
+    box-shadow: none;
+  }
+}
+
+/* ---------- Room index (no-JS / screen reader / narrow-width fallback) ---------- */
+.room-index {
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 700px) {
+  .room-index__grid {
+    columns: 3;
+    column-gap: var(--space-5);
+  }
+
+  .room-index__room {
+    break-inside: avoid;
+  }
+}
+
+.room-index h3 {
+  margin-bottom: var(--space-2);
+}
+
+.room-index__room {
+  margin-bottom: var(--space-4);
+}
+
+.room-index__room h4 {
+  font-size: var(--text-body);
+  margin-bottom: var(--space-1);
+}
+
+.room-index ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.room-index li {
+  padding: var(--space-1) 0;
+}
+
+.room-index a {
+  min-height: var(--target-min);
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ---------- Flip card ---------- */
+.flip-card {
+  border: none;
+  margin: 0;
+  perspective: 1000px;
+  max-width: 24rem;
+}
+
+.flip-card > summary {
+  list-style: none;
+  cursor: pointer;
+  display: block;
+}
+
+.flip-card > summary::-webkit-details-marker {
+  display: none;
+}
+
+.flip-card__face {
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  min-height: 9rem;
+  display: flex;
+  align-items: center;
+}
+
+.flip-card__front {
+  transition: transform var(--motion-duration-flip) var(--motion-ease),
+    box-shadow var(--motion-duration-base) var(--motion-ease);
+  transform-style: preserve-3d;
+}
+
+.flip-card > summary:hover .flip-card__front {
+  box-shadow: var(--shadow-raised);
+}
+
+.flip-card[open] .flip-card__front {
+  display: none;
+}
+
+.flip-card__back {
+  display: none;
+  border-color: var(--color-accent);
+}
+
+.flip-card[open] .flip-card__back {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.flip-card__back a {
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body:not(:has(#reduce-motion:checked)) .flip-card:not([open]) > summary:hover .flip-card__front {
+    transform: translateY(-2px);
+  }
+}
+
+/* ---------- Carousel ---------- */
+.carousel {
+  position: relative;
+  margin-block: var(--space-5);
+}
+
+.carousel__track {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-2);
+  scrollbar-width: thin;
+}
+
+.carousel__slide {
+  scroll-snap-align: start;
+  flex: 0 0 min(85%, 22rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--color-bg);
+}
+
+.carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.carousel__nav {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--target-min);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.carousel__nav:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.carousel__count {
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Animated diagram ---------- */
+.diagram-figure {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  margin-block: var(--space-5);
+}
+
+.diagram-figure svg {
+  width: 100%;
+  height: auto;
+}
+
+.diagram-figure figcaption {
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+
+.diagram-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.diagram-controls button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--target-min);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-bg);
+  cursor: pointer;
+  font-size: var(--text-small);
+}
+
+.diagram-controls button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* An element the loop animation reads its running state from. Nothing plays until the figure
+   has scrolled into view (assets/js/diagram.js adds .in-view), and the per-diagram Pause button
+   always wins over that once pressed. */
+.diagram-anim {
+  animation-play-state: paused;
+}
+
+.diagram-figure.in-view .diagram-anim {
+  animation-play-state: var(--motion-state);
+}
+
+.diagram-figure.paused .diagram-anim {
+  animation-play-state: paused !important;
+}
+
+/* find-your-drafts: air moving both ways through an unsealed gap. Sub-properties only, never
+   the `animation` shorthand, so these never re-set animation-play-state and fight the rules
+   above that gate it on scroll-into-view, pause, and reduced motion. */
+@keyframes drift-in {
+  0%, 15% { transform: translateX(0); opacity: 0.95; }
+  50% { transform: translateX(16px); opacity: 0.35; }
+  85%, 100% { transform: translateX(0); opacity: 0.95; }
+}
+
+@keyframes drift-out {
+  0%, 15% { transform: translateX(0); opacity: 0.95; }
+  50% { transform: translateX(-16px); opacity: 0.35; }
+  85%, 100% { transform: translateX(0); opacity: 0.95; }
+}
+
+.diagram-anim.flow-in {
+  animation-name: drift-in;
+  animation-duration: 5s;
+  animation-timing-function: var(--motion-ease);
+  animation-iteration-count: infinite;
+}
+
+.diagram-anim.flow-out {
+  animation-name: drift-out;
+  animation-duration: 5s;
+  animation-timing-function: var(--motion-ease);
+  animation-iteration-count: infinite;
+  animation-delay: 0.4s;
+}
+
+/* read-your-bill: three figures on a bill highlight in sequence. */
+@keyframes pulse-highlight {
+  0%, 8%, 100% { opacity: 0.4; }
+  20%, 28% { opacity: 1; }
+}
+
+.diagram-anim.pulse-a {
+  animation-name: pulse-highlight;
+  animation-duration: 5.4s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.diagram-anim.pulse-b {
+  animation-name: pulse-highlight;
+  animation-duration: 5.4s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: 1.4s;
+}
+
+.diagram-anim.pulse-c {
+  animation-name: pulse-highlight;
+  animation-duration: 5.4s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: 2.8s;
+}
+
+/* ---------- Utility layout ---------- */
+.section {
+  padding-block: var(--space-7);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.center-text {
+  text-align: center;
+}
+
+.eyebrow {
+  font-size: var(--text-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+}
+
+/* ---------- Responsive floor ----------
+   The room-index list is never display:none, at any width: DESIGN.md §3.2 requires it to stay
+   in the accessibility tree at every width, since it is the screen-reader path as much as it
+   is the narrow-width path. Below 600px it becomes the only visible route in, because the
+   illustrated drawing (which needs room to show a room and its info bar side by side) drops
+   out; above 600px it stays present but visually secondary to the drawing. */
+@media (max-width: 600px) {
+  .dollhouse {
+    display: none;
+  }
+
+  .room-index {
+    margin-top: var(--space-4);
+  }
+}
