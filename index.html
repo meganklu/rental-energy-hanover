@@ -46,8 +46,13 @@
 
   <section class="hero">
     <div class="hero__mat">
-      <h1 class="hero__tagline">Welcome to your Home<sup aria-hidden="true">*</sup></h1>
-      <p class="hero__note">*Rental home</p>
+      <div class="hero__mat-border">
+        <h1 class="hero__tagline">
+          <span class="hero__tagline-lead">Welcome</span>
+          <span class="hero__tagline-rest">to your Home<sup aria-hidden="true">*</sup></span>
+        </h1>
+        <p class="hero__note">*Rental home</p>
+      </div>
     </div>
     <p class="hero__description">
       Learn how to improve energy efficiency in your rental to save money and the environment.
@@ -59,11 +64,9 @@
   </section>
 
   <section class="dollhouse-section page-shell theme-white" id="house" aria-labelledby="house-heading">
-    <div class="progress-bar" id="progress-bar">
-      <p><span id="progress-text">10 spots to view</span></p>
-      <div class="progress-bar__track" aria-hidden="true">
-        <div class="progress-bar__fill" id="progress-fill"></div>
-      </div>
+    <div class="progress-bar" id="progress-bar" tabindex="0" aria-label="10 spots to view">
+      <span class="progress-bar__fill" id="progress-fill"></span>
+      <span class="progress-bar__tooltip" id="progress-text" aria-hidden="true">10 spots to view</span>
     </div>
 
     <h2 id="house-heading">Tour a rental and its potential upgrades</h2>
@@ -156,8 +159,8 @@
                  data-hotspot-id="kitchen-bill" data-slug="read-your-bill"
                  data-room="Kitchen" data-label="The bill" data-order="1"
                  aria-label="The bill on the fridge: start here to learn what is actually driving your electric bill.">
-                <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-bill"/></svg>
-                <span class="hotspot__label">The bill<span class="hotspot__start-flag">Start here</span></span>
+                <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-cost"/></svg>
+                <span class="hotspot__label">The bill<span class="hotspot__badge-flag" data-flag="start">Start here</span></span>
               </a>
               <a href="improvements/led-lighting-swaps/" class="hotspot"
                  data-hotspot-id="kitchen-light" data-slug="led-lighting-swaps"

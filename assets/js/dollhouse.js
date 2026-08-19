@@ -27,9 +27,13 @@ if (dollhouseEl && infoBar) {
   const visited = getVisited();
   const saveVisited = () => sessionStorage.setItem(VISITED_KEY, JSON.stringify([...visited]));
 
+  const progressBar = document.getElementById("progress-bar");
+
   function updateProgress() {
     if (!progressText) return;
-    progressText.textContent = `You have viewed ${visited.size} of ${TOTAL} spots.`;
+    const text = `You have viewed ${visited.size} of ${TOTAL} spots.`;
+    progressText.textContent = text;
+    progressBar?.setAttribute("aria-label", text);
     if (progressFill) {
       progressFill.style.setProperty("--progress", `${Math.round((visited.size / TOTAL) * 100)}%`);
     }
@@ -43,9 +47,25 @@ if (dollhouseEl && infoBar) {
         h.dataset.baseLabel = h.getAttribute("aria-label") || "";
         h.setAttribute("aria-label", `Viewed. ${h.dataset.baseLabel}`);
         // The "Start here" badge's job is done once the spot has actually been visited.
-        h.querySelector(".hotspot__start-flag")?.remove();
+        h.querySelector('.hotspot__badge-flag[data-flag="start"]')?.remove();
       }
     });
+  }
+
+  // Whichever hotspot the guided order would go to next carries a "Next" badge on the drawing
+  // itself, added 2026-08-19. Never doubles up with "Start here" on the bill hotspot.
+  function updateNextBadge(from) {
+    hotspots.forEach((h) => h.querySelector('.hotspot__badge-flag[data-flag="next"]')?.remove());
+    const next = nextHotspot(from.dataset.order);
+    const nextHasStartBadge = next.querySelector('.hotspot__badge-flag[data-flag="start"]');
+    if (nextHasStartBadge) return;
+    const label = next.querySelector(".hotspot__label");
+    if (!label) return;
+    const flag = document.createElement("span");
+    flag.className = "hotspot__badge-flag";
+    flag.dataset.flag = "next";
+    flag.textContent = "Next";
+    label.appendChild(flag);
   }
 
   async function loadContent() {
@@ -106,6 +126,7 @@ if (dollhouseEl && infoBar) {
     saveVisited();
     refreshVisitedStyling();
     updateProgress();
+    updateNextBadge(hotspot);
     lastTrigger = hotspot;
 
     hotspots.forEach((h) => h.classList.toggle("hotspot--selected", h === hotspot));
@@ -132,6 +153,9 @@ if (dollhouseEl && infoBar) {
           `<span class="badge ${pb[1]}"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#${pb[2]}"/></svg>${pb[0]}</span>`
         );
       }
+    } else if (item.type === "explainer") {
+      // Not an upgrade, so there's no landlordPermission to state.
+      badges.push('<span class="badge badge--basics">Renter basics</span>');
     }
     if (item.reversible) {
       const rt = reversibleText(item.reversible);
@@ -166,7 +190,7 @@ if (dollhouseEl && infoBar) {
         ${
           allSeen
             ? ""
-            : `<button type="button" class="btn btn--secondary" id="info-bar-next">Next spot: ${next.dataset.label}</button>`
+            : `<button type="button" class="btn btn--secondary" id="info-bar-next">Next: ${next.dataset.label}</button>`
         }
         <button type="button" class="btn btn--text" id="info-bar-close">Close</button>
       </div>
