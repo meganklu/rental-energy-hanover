@@ -31,7 +31,7 @@ Fill them roughly in this order — later documents depend on decisions made in 
 | 10 | [accessibility.md](accessibility.md) | WCAG target, testing plan, known constraints | ● Complete |
 | 11 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ● Complete |
 | 12 | [sources.md](sources.md) | Living bibliography, review cadence, verification log | ● Complete |
-| 13 | [glossary.md](glossary.md) | Plain-language definitions used site-wide | ☐ Not started |
+| 13 | [glossary.md](glossary.md) | Plain-language definitions used site-wide | ● Complete |
 
 Update the Status column as you go: ☐ Not started → ◐ Draft → ● Complete.
 
