@@ -201,12 +201,15 @@ mat — earlier language that called the whole hero band the mat was imprecise. 
    shows at the bottom edge and the page reads as continuing. Never a fixed pixel height.
    Background is a solid light green (`--color-surface-brand`, revised 2026-08-19 — first pass
    used `--color-bg`), not tan — the tan is the mat's alone.
-2. The mat rectangle: a `--color-mat` (tan) box, centered in the hero, sized taller than it is
-   wide so the proportions read as an actual doormat rather than a banner, deliberately plain for
-   now (no woven texture — see the open question in §11). Revised 2026-08-19: sized larger
-   overall (a real doormat is a substantial object on the page, not a small card), on a fixed
-   `aspect-ratio` so its proportions are exact and reproducible rather than an incidental result
-   of a width and a min-height.
+2. The mat rectangle: a `--color-mat` (tan) box, centered in the hero, deliberately plain for now
+   (no woven texture — see the open question in §11). Revised 2026-08-19: sized larger overall (a
+   real doormat is a substantial object on the page, not a small card), on a fixed `aspect-ratio`
+   so its proportions are exact and reproducible rather than an incidental result of a width and a
+   min-height. Revised again 2026-08-19, twice: the first pass ran portrait (taller than wide,
+   4:5) on the reasoning that "taller" meant more height than the original flat banner; corrected
+   to landscape `4:3`, actual door-mat proportions (wider than tall). The width cap also grows
+   from `min(90vw, 32rem)` to `min(85vw, 40rem)` — the earlier cap read as small on a wide window,
+   and the hero should use more of the available width.
 3. The black border: a `--color-mat-border` rule, inset from the tan rectangle's edges by a fixed
    margin on all four sides (`inset:`, not padding) so a strip of tan shows *outside* the border
    all the way around and the border keeps close to the tan rectangle's own aspect ratio rather
@@ -973,7 +976,14 @@ credit has to survive that move.
   the two-line text stack next to it (`align-self: stretch` on the icon inside the lockup's flex
   row, rather than a fixed pixel size), and the icon and both lines of text are a single color,
   `--color-accent` — a one-color lockup rather than an icon in the brand color next to text in the
-  body colors.
+  body colors. Revised a third time 2026-08-19: matching the icon's bounding box to the text
+  stack's height was not enough on its own, because the house icon carried real margin inside its
+  own 24×24 viewBox and the gap between icon and text was tuned for two icons of similar visual
+  weight rather than an icon next to a full lockup. Both are tightened together: the house icon is
+  redrawn with less internal margin (closer to the 20px live area the icon spec already calls
+  for, rather than the ~16px it was actually using), so a stretched icon's *visible glyph*, not
+  just its bounding box, reads as the same size as the text, and the icon-to-text gap drops from
+  `--space-2` to `--space-1`.
 - **Footer, every page:** "Project created in partnership with Sustainable Hanover, a committee of the Town of Hanover, New
   Hampshire", their logo at a fixed height, a link to their site, and the contact address
   sustainablehanovernh@gmail.com. Also the site-wide last-reviewed date and a link to the
