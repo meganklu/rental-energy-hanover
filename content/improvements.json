@@ -1,0 +1,249 @@
+[
+  {
+    "type": "improvement",
+    "slug": "dont-block-your-radiator-or-baseboard",
+    "title": "Keep your radiator or baseboard clear",
+    "summary": "Furniture and curtains in front of a heat source keep the heat from reaching the room.",
+    "cost": "free",
+    "time": "under30min",
+    "difficulty": "easy",
+    "landlordPermission": "none",
+    "reversible": "fully",
+    "impact": "medium",
+    "impactNote": null,
+    "appliesToHeat": [
+      "electric-baseboard",
+      "radiator"
+    ],
+    "appliesToPayer": "tenant",
+    "phase": "pre-winter",
+    "materials": [],
+    "safety": null,
+    "sources": [
+      "S22"
+    ],
+    "lastReviewed": "2026-08-19"
+  },
+  {
+    "type": "improvement",
+    "slug": "door-sweeps-and-weatherstripping",
+    "title": "Seal your door with a sweep",
+    "summary": "Weatherstripping and a door sweep close the gap most exterior doors leak through.",
+    "cost": "under25",
+    "time": "1to2hr",
+    "difficulty": "easy",
+    "landlordPermission": "ask",
+    "reversible": "mostly",
+    "impact": "medium",
+    "impactNote": null,
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "tenant",
+    "phase": "pre-winter",
+    "materials": [
+      "weatherstripping",
+      "door sweep"
+    ],
+    "safety": null,
+    "sources": [
+      "S9",
+      "S10"
+    ],
+    "lastReviewed": "2026-08-18"
+  },
+  {
+    "type": "explainer",
+    "slug": "find-your-drafts",
+    "title": "Find your drafts",
+    "summary": "You can't seal a gap you haven't found. A short walkthrough of where heat actually escapes.",
+    "question": "How do I find where my apartment is actually losing heat?",
+    "misconception": "If you can't feel a breeze, there's no draft.",
+    "impact": "enabler",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "tenant",
+    "phase": "pre-winter",
+    "sources": [
+      "S10",
+      "S22"
+    ],
+    "lastReviewed": "2026-08-19"
+  },
+  {
+    "type": "improvement",
+    "slug": "hot-water-showers-and-laundry",
+    "title": "Cut your hot water use",
+    "summary": "Shower length, laundry temperature, and a dripping tap all affect the bill.",
+    "cost": "free",
+    "time": "under30min",
+    "difficulty": "easy",
+    "landlordPermission": "none",
+    "reversible": "fully",
+    "impact": "medium",
+    "impactNote": "A tap dripping about once a second can waste more than 3,000 gallons a year; fixing common leaks saves about 10% on the water bill (EPA)",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "any",
+    "phase": "pre-winter",
+    "materials": [],
+    "safety": null,
+    "sources": [
+      "S23"
+    ],
+    "lastReviewed": "2026-08-19"
+  },
+  {
+    "type": "improvement",
+    "slug": "led-lighting-swaps",
+    "title": "Swap in LED bulbs",
+    "summary": "LEDs use a fraction of the electricity incandescent bulbs do. Keep the originals in a box.",
+    "cost": "under25",
+    "time": "under30min",
+    "difficulty": "easy",
+    "landlordPermission": "none",
+    "reversible": "fully",
+    "impact": "low",
+    "impactNote": "LED bulbs use up to 80% less energy than incandescent bulbs (U.S. DOE)",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "any",
+    "phase": "move-in",
+    "materials": [
+      "LED bulbs"
+    ],
+    "safety": null,
+    "sources": [
+      "S9"
+    ],
+    "lastReviewed": "2026-08-19"
+  },
+  {
+    "type": "improvement",
+    "slug": "phantom-load-and-plug-loads",
+    "title": "Cut phantom load",
+    "summary": "A power strip you can switch off stops plugged-in devices from drawing power all day.",
+    "cost": "under25",
+    "time": "under30min",
+    "difficulty": "easy",
+    "landlordPermission": "none",
+    "reversible": "fully",
+    "impact": "low",
+    "impactNote": null,
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "any",
+    "phase": "move-in",
+    "materials": [
+      "switched power strip"
+    ],
+    "safety": null,
+    "sources": [
+      "S9"
+    ],
+    "lastReviewed": "2026-08-19"
+  },
+  {
+    "type": "explainer",
+    "slug": "read-your-bill",
+    "title": "Read your bill",
+    "summary": "kWh, rate, and what's actually driving your electric bill. Start here.",
+    "question": "What is actually driving my electric bill?",
+    "misconception": "The total dollar amount on your bill tells you how much electricity you used.",
+    "impact": "enabler",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "tenant",
+    "phase": "move-in",
+    "sources": [
+      "S3"
+    ],
+    "lastReviewed": "2026-08-18"
+  },
+  {
+    "type": "improvement",
+    "slug": "seal-your-windows-with-film",
+    "title": "Seal your windows with film",
+    "summary": "A plastic film kit over a drafty window, on in an hour, off at move-out.",
+    "cost": "under25",
+    "time": "1to2hr",
+    "difficulty": "easy",
+    "landlordPermission": "none",
+    "reversible": "fully",
+    "impact": "medium",
+    "impactNote": null,
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "tenant",
+    "phase": "pre-winter",
+    "materials": [
+      "window insulation film kit",
+      "hair dryer",
+      "double-sided tape"
+    ],
+    "safety": null,
+    "sources": [
+      "S9",
+      "S10"
+    ],
+    "lastReviewed": "2026-08-18"
+  },
+  {
+    "type": "improvement",
+    "slug": "space-heaters-real-cost-and-safety",
+    "title": "Use a space heater safely",
+    "summary": "A space heater runs on electricity and typically costs more to run than it seems. Safety comes first.",
+    "cost": "25to75",
+    "time": "under30min",
+    "difficulty": "easy",
+    "landlordPermission": "none",
+    "reversible": "fully",
+    "impact": "medium",
+    "impactNote": null,
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "tenant",
+    "phase": "deep-winter",
+    "materials": [
+      "a listed electric space heater"
+    ],
+    "safety": "Keep 3 feet of clearance from anything flammable, never leave it unattended, plug it directly into a wall outlet, and buy only a listed/certified unit.",
+    "sources": [
+      "S14",
+      "S15"
+    ],
+    "lastReviewed": "2026-08-19"
+  },
+  {
+    "type": "improvement",
+    "slug": "thermostat-setback",
+    "title": "Set your thermostat back",
+    "summary": "Turning the heat down while you are out or asleep typically uses less energy than holding one temperature all day.",
+    "cost": "free",
+    "time": "under30min",
+    "difficulty": "easy",
+    "landlordPermission": "none",
+    "reversible": "fully",
+    "impact": "high",
+    "impactNote": "DOE estimates a programmable thermostat used for setback can save about 10% a year on heating and cooling costs",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "tenant",
+    "phase": "pre-winter",
+    "materials": [],
+    "safety": null,
+    "sources": [
+      "S21",
+      "S22"
+    ],
+    "lastReviewed": "2026-08-19"
+  }
+]
