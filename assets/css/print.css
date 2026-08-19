@@ -1,0 +1,66 @@
+/*
+  A sane default print stylesheet for every page. The full checklist print output (F6) is v2 —
+  see features.md §5 — this just keeps an improvement or explainer page usable on paper today.
+*/
+
+.skip-link,
+.site-header,
+.progress-bar,
+.hero .scroll-cue,
+.parallax-layer,
+.dollhouse,
+.info-bar,
+.diagram-controls,
+.carousel__controls,
+.filter-chips,
+.motion-toggle,
+.site-footer form,
+.back-to-house {
+  display: none !important;
+}
+
+* {
+  animation: none !important;
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+body {
+  color: #000;
+  background: #fff;
+}
+
+a {
+  color: #000;
+  text-decoration: underline;
+}
+
+a[href^="http"]::after {
+  content: " (" attr(href) ")";
+  font-size: 0.85em;
+  font-weight: normal;
+}
+
+/* Disclosures print open, so nothing a student might need is hidden on paper. */
+details:not([open]) summary ~ * {
+  display: block !important;
+}
+
+details {
+  border: 1px solid #999;
+}
+
+.card {
+  break-inside: avoid;
+  border: 1px solid #999;
+}
+
+.site-footer {
+  background: none;
+  color: #000;
+  border-top: 1px solid #999;
+}
+
+.site-footer a {
+  color: #000;
+}

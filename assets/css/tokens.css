@@ -1,0 +1,90 @@
+/*
+  Design tokens. Values from DESIGN.md §4. Change a value here, not in a component file.
+  Brand greens (--color-brand, --color-surface-brand) are decorative only and never carry
+  text — see DESIGN.md §4 for the contrast measurements behind that rule.
+*/
+
+:root {
+  /* Color: surfaces */
+  --color-bg: #FFFFFF;
+  --color-surface: #F2F6EE;
+  --color-surface-brand: #C2E76B;
+  --color-surface-dark: #06301F;
+
+  /* Color: text */
+  --color-text: #14201A;
+  --color-text-muted: #4C5A52;
+  --color-text-on-dark: #FFFFFF;
+
+  /* Color: interactive */
+  --color-accent: #046648;
+  --color-accent-hover: #03503A;
+  --color-brand: #7EDA5D;
+
+  /* Color: status (text-on-background pairs; never used as the only signal, per DESIGN.md §4) */
+  --color-success-text: #046648;
+  --color-success-bg: #E6F3EA;
+  --color-warning-text: #8A5300;
+  --color-warning-bg: #FDF3E0;
+  --color-info-text: #14527A;
+  --color-info-bg: #EAF2F8;
+  --color-danger-text: #A32014;
+  --color-danger-bg: #FCEDEB;
+
+  /* Color: borders */
+  --color-border: #C9D4C6;
+  --color-border-strong: #6F8272;
+
+  /* Type: families. Both self-hosted, Latin-subset, falling back to a system stack per
+     DESIGN.md §4 so a page whose fonts never arrive stays fully legible. */
+  --font-display: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* Type: fluid scale, 360px to 1140px viewports. See DESIGN.md §4. */
+  --text-h1: clamp(2rem, 1.6538rem + 0.0962vw, 2.75rem);
+  --text-h2: clamp(1.5rem, 1.2692rem + 0.0641vw, 2rem);
+  --text-h3: clamp(1.25rem, 1.1346rem + 0.0321vw, 1.5rem);
+  --text-h4: clamp(1.125rem, 1.0673rem + 0.0160vw, 1.25rem);
+  --text-body: clamp(1rem, 0.9712rem + 0.0080vw, 1.0625rem);
+  --text-small: 0.9375rem;
+
+  --leading-display: 1.25;
+  --leading-body: 1.65;
+
+  --measure: 40rem; /* ~65 characters at body size, per DESIGN.md §4 */
+
+  /* Spacing: 4px base scale. No values off this scale. */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.5rem;   /* 24px */
+  --space-6: 2rem;     /* 32px */
+  --space-7: 3rem;     /* 48px */
+  --space-8: 4rem;     /* 64px */
+  --space-9: 6rem;     /* 96px */
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+
+  /* Elevation: borders do most of the work. Shadows are reserved for raised/sticky states. */
+  --shadow-sticky: 0 1px 3px rgba(20, 32, 26, 0.18);
+  --shadow-raised: 0 2px 8px rgba(20, 32, 26, 0.12);
+
+  /* Motion */
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-flip: 260ms;
+  --motion-room: 240ms;
+  --motion-loop: 5s;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Focus ring: one token, everywhere. Never removed, including on mouse click. */
+  --focus-ring: 2px solid var(--color-accent);
+  --focus-ring-offset: 2px;
+
+  /* Hit target floor. WCAG 2.2 sets 24px; this site holds 44px per DESIGN.md §6. */
+  --target-min: 44px;
+}
