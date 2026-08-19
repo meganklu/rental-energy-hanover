@@ -1,6 +1,6 @@
 # Roadmap
 
-> **Status:** ● Complete · **Last updated:** 2026-08-19
+> **Status:** ● Complete · **Last updated:** 2026-08-19 · **Owner:** Megan
 
 ## 1. Fixed dates
 
@@ -31,7 +31,7 @@
 | M2 | Write [user interview guide](research-plan.md#2-round-1--discovery-before-building)| Ryan and Katharine | 2026-08-06 | M1 | ☑ |
 | M3 | Conduct user interviews | Ryan and Katharine | 2026-08-12 | M2 | ☐ |
 | M4 | Update [target audience and user personas](audience.md) | Ryan and Katharine | 2026-08-12 | M3 | ☐ |
-| M5 | Research rental and energy usage statistics in Hanover; compile information for web pages in [glossary.md](glossary.md) and [sources.md](sources.md) | Megan | 2026-08-12 | M1 | ☐ |
+| M5 | Research rental and energy usage statistics in Hanover; compile information for web pages in [glossary.md](glossary.md) and [sources.md](sources.md) | Megan | 2026-08-12 | M1 | ☑ |
 | M6 | Establish [design and style guide](DESIGN.md) | Megan | 2026-08-12 | M1 | ☑ |
 | M7 | Plan layout and webpages; update [features.md](features.md) and [content-strategy.md](content-strategy.md)  | Megan | 2026-08-12 | M6 | ☑ |
 
