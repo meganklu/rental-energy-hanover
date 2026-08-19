@@ -1,6 +1,6 @@
 # Content Strategy
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-18 · **Owner:** Megan
+> **Status:** ● Complete · **Last updated:** 2026-08-19 · **Owner:** Megan
 
 ## 1. Content principles
 
@@ -191,7 +191,6 @@ or doesn't render at all.
 | Program renters can use | NHSaves **Home Energy Assistance** covers 100% of weatherization cost for income-eligible homeowners *and renters*; requires landlord approval; eligibility via county Community Action Agency | [NHSaves HEA](https://nhsaves.com/residential/income-eligible-energy-assistance-program/) | ☑ 2026-08-18 |
 | Non-income-eligible path | **Home Energy Performance program** finances at **2% APR** (Liberty, NHEC, Unitil) or **0%** (Eversource), an unsecured loan through partner lenders for weatherization work "that qualifies for Home Energy Performance rebates" — time-limited while funding lasts. Requires contacting utility provider (Liberty in Hanover, NH). | [nhsaves.com](https://nhsaves.com/residential/weatherization/) | ☑ 2026-08-19 |
 | Income-eligibility threshold | **60% of NH State Median Income.** 2026 guidelines (updated 2026-05-28): household of 1 = **$48,713**; of 2 = $63,702; of 3 = $78,691; of 4 = $93,680; of 5 = $108,668; of 6 = $123,657; of 7 = $126,468; of 8 = $129,278; of 9 = $132,088; of 10 = $134,899 | [NH Dept. of Energy — Assistance Programs Eligibility](https://www.energy.nh.gov/consumers/help-energy-and-utility-bills/assistance-programs-eligibility) | ☑ 2026-08-19 |
-| **Do students qualify as income-eligible?** | While the income threshold for 1 person is above a student's typical earnings, household income qualifications is not specified. Unresolved: how roommates are counted (one household or several?), and whether dependency status matters | TODO(source): call the Grafton County CAA | ☐ |
 | Minimum heat / habitability standard in NH | **RSA 48-A:14** — heating facilities must be properly installed, safely maintained, in good working condition, and capable of heating all habitable rooms, bathrooms and toilet rooms to **an average of at least 65°F**. Where the landlord supplies heat as part of rent, the premises must actually be maintained at that standard. Municipalities may set stricter standards | [RSA 48-A:14](https://gc.nh.gov/rsa/html/III/48-A/48-A-14.htm) | ☑ 2026-08-18 |
 | Tenant remedy for withheld heat | **RSA 540-A:3** prohibits willful interruption of utilities; **RSA 540-A:4** provides actual damages or **$1,000 per day**, whichever is greater. Courts have read this to cover failure to repair heat after notice in addition to deliberate shutoff | [NH Law Library — Winter Heating](https://courts-state-nh-us.libguides.com/c.php?g=898401&p=6463426) | ☑ 2026-08-18 |
 | Winter utility-shutoff protection period | **Nov 15 – Mar 31** (Puc 1202.19). Note: this defines the winter period for utility disconnection rules, not a landlord heating season | [NH Law Library — Winter Heating](https://courts-state-nh-us.libguides.com/c.php?g=898401&p=6463426) | ☑ 2026-08-18 |

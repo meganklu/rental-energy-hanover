@@ -23,14 +23,14 @@ Fill them roughly in this order — later documents depend on decisions made in 
 | 2 | [research-plan.md](research-plan.md) | User interviews and usability testing with student renters | ◐ Draft |
 | 3 | [interviews.md](interviews.md) | Raw notes + synthesis from Round 1 interviews | ◐ Draft |
 | 4 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ◐ Draft |
-| 5 | [content-strategy.md](content-strategy.md) | Topic inventory, sourcing rules, voice, disclaimers | ◐ Draft |
+| 5 | [content-strategy.md](content-strategy.md) | Topic inventory, sourcing rules, voice, disclaimers | ● Complete |
 | 6 | [features.md](features.md) | Interactive features, specs, acceptance criteria, priority | ☐ Not started |
 | 7 | [DESIGN.md](../DESIGN.md) | Visual system, IA, sitemap, components | ◐ Draft |
 | 8 | [architecture.md](architecture.md) | Stack, hosting, build, deploy, data | ◐ Draft |
 | 9 | [AGENTS.md](../AGENTS.md) | Instructions for AI coding agents working in this repo | ◐ Draft |
 | 10 | [accessibility.md](accessibility.md) | WCAG target, testing plan, known constraints | ☐ Not started |
 | 11 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ◐ Draft |
-| 12 | [sources.md](sources.md) | Living bibliography, review cadence, verification log | ☐ Not started |
+| 12 | [sources.md](sources.md) | Living bibliography, review cadence, verification log | ◐ Draft |
 | 13 | [glossary.md](glossary.md) | Plain-language definitions used site-wide | ☐ Not started |
 
 Update the Status column as you go: ☐ Not started → ◐ Draft → ● Complete.

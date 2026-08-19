@@ -3,13 +3,12 @@
 > **Status:** ◐ Draft · **Last updated:** 2026-08-18 · **Owner:** Megan
 
 The dominant constraint on this project is not performance or scale. It is a $0 budget and a
-one-week build window, against a site that should keep working without attention. Every decision
+short build window, against a site that should keep working without attention. Every decision
 below is weighed against that.
 
-**The short version.** Hand-written HTML, CSS and JavaScript, committed to this repository and
+**The short version.** HTML, CSS and JavaScript, committed to this repository and
 served by GitHub Pages straight from the `main` branch. No framework, no bundler, no package
-manager, no server. Editing a page means editing an HTML file, which can be done in GitHub's web
-editor and is live a minute later.
+manager, and no server.
 
 ## 1. Driving constraints
 
