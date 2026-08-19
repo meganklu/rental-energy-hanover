@@ -189,25 +189,34 @@ asterisk" in a screen reader.
 **"Welcome" gets its own line,** revised 2026-08-19, set larger than the rest of the heading, with
 "to your Home\*" wrapping underneath it at the heading's normal size. Still one `<h1>`, one
 accessible name ("Welcome to your Home") — the size and line break are presentational (a `<span>`
-around "Welcome" carrying the larger size), not two separate headings.
+around "Welcome" carrying the larger size), not two separate headings. Revised again 2026-08-19:
+the first pass sized "Welcome" wide enough to overflow the mat at some widths. Its clamp ceiling
+is pulled back so it always fits inside the border with room either side, sized against the mat's
+own width rather than the viewport alone.
 
 **Layout, revised 2026-08-19: what "the mat" actually is.** Only the text and its border are the
 mat — earlier language that called the whole hero band the mat was imprecise. From the outside in:
 
 1. The hero section itself: `min-height: 85svh` rather than `100vh`, so the top of the doll house
    shows at the bottom edge and the page reads as continuing. Never a fixed pixel height.
-   Background is a flat, solid site color (`--color-bg`), not tan — the tan is the mat's alone.
+   Background is a solid light green (`--color-surface-brand`, revised 2026-08-19 — first pass
+   used `--color-bg`), not tan — the tan is the mat's alone.
 2. The mat rectangle: a `--color-mat` (tan) box, centered in the hero, sized taller than it is
    wide so the proportions read as an actual doormat rather than a banner, deliberately plain for
-   now (no woven texture — see the open question in §11).
-3. The black border: a `--color-mat-border` rule inset from the tan rectangle's edges, so a strip
-   of tan shows *outside* the border all the way around. This border, not the tan field, is what
-   directly frames the heading.
+   now (no woven texture — see the open question in §11). Revised 2026-08-19: sized larger
+   overall (a real doormat is a substantial object on the page, not a small card), on a fixed
+   `aspect-ratio` so its proportions are exact and reproducible rather than an incidental result
+   of a width and a min-height.
+3. The black border: a `--color-mat-border` rule, inset from the tan rectangle's edges by a fixed
+   margin on all four sides (`inset:`, not padding) so a strip of tan shows *outside* the border
+   all the way around and the border keeps close to the tan rectangle's own aspect ratio rather
+   than drifting toward square as the mat grows. This border, not the tan field, is what directly
+   frames the heading.
 4. Inside the border: the `<h1>` and, anchored to its bottom-right corner, the `*Rental home` note
    — mimicking where a mat's fine print actually sits.
 
 The description sentence and the scroll arrow sit centered below the mat rectangle, outside it
-entirely, on the hero's own solid background.
+entirely, on the hero's own light green background.
 
 **The scroll arrow.** A real anchor, `<a href="#house">`, carrying the arrow icon and a visible
 text label reading "Take a look inside". It is 44×44px at minimum, sits in the tab order directly
@@ -313,11 +322,10 @@ with a `--color-accent` border and text, the same interactive pattern as every b
 site, at the same 7.0:1 contrast. `--color-brand` stays where §4 already scoped it: the roof and
 other purely decorative fills.
 
-**Room background, revised 2026-08-19.** The white/light-green split from the first pass was
-arbitrary per room. It now follows one rule instead: the top floor (bedroom, bathroom) is
-`--color-bg`; the main floor (porch, living room, kitchen) and the basement are `--color-surface`.
-Reads as "the ground floor and below sit on a tinted surface, the floor above is bright," which is
-a reason rather than a checkerboard.
+**Room background, revised 2026-08-19, revised again 2026-08-19.** The white/light-green split
+from the first pass was arbitrary per room; a floor-based rule replaced it; the floor-based split
+was itself one distinction too many. Every room now shares one background, `--color-bg`, so the
+house reads as one consistent structure rather than a patchwork of surfaces.
 
 **Explainer hotspots carry a "Renter basics" badge** (added 2026-08-19) in place of a permission
 badge, since find-your-drafts and read-your-bill are not upgrades and have no
@@ -342,9 +350,11 @@ it and returns focus to the hotspot. Enlarging a room announces the room name an
 are in it. This is the highest accessibility risk in the project, per
 [docs/accessibility.md](docs/accessibility.md) §3, and it gets a screen reader pass of its own.
 
-**Progress.** Revised 2026-08-19, restyled as a small green pill rather than a labeled bar: a
-rounded, `--color-accent`-filled track that fills as the student explores, with no visible text by
-default. "You have viewed 3 of 10 spots." appears as a tooltip on hover or keyboard focus (the
+**Progress.** Revised 2026-08-19, restyled as a green pill rather than a labeled bar: a rounded,
+`--color-accent`-filled track that fills as the student explores, with no visible text by default.
+Revised again 2026-08-19: the pill spans the full width of the section (the same measure the
+doll house itself uses), not a small fixed-width bar — legible as a progress indicator at a
+glance rather than something to search for. "You have viewed 3 of 10 spots." appears as a tooltip on hover or keyboard focus (the
 pill is a real focusable element, `tabindex="0"`), and the same sentence is always present as its
 `aria-label`, so a screen reader announces it regardless of hover — the count is never hidden
 behind hover alone, only its visible spelled-out form is. Without JavaScript it shows a static
@@ -957,9 +967,13 @@ credit has to survive that move.
 - **Header:** Revised 2026-08-19 — the site's own name changed from "Rental Energy Hanover" to
   "Energy for Student Renters," which describes the audience rather than repeating the town name
   the partner credit line already carries. The header logo is now a lockup: the house icon from
-  the shared icon set (§4) at a small fixed size, next to the wordmark in `--font-display`, both
-  inside one link to `/`. The same house icon is the browser tab favicon. "In partnership with
-  Sustainable Hanover" stays as a subordinate line linking to sustainablehanovernh.org.
+  the shared icon set (§4), next to the wordmark in `--font-display` and the "In partnership with
+  Sustainable Hanover" line stacked under it, both inside one link to `/`. The same house icon is
+  the browser tab favicon. Revised again 2026-08-19: the icon's height matches the full height of
+  the two-line text stack next to it (`align-self: stretch` on the icon inside the lockup's flex
+  row, rather than a fixed pixel size), and the icon and both lines of text are a single color,
+  `--color-accent` — a one-color lockup rather than an icon in the brand color next to text in the
+  body colors.
 - **Footer, every page:** "Project created in partnership with Sustainable Hanover, a committee of the Town of Hanover, New
   Hampshire", their logo at a fixed height, a link to their site, and the contact address
   sustainablehanovernh@gmail.com. Also the site-wide last-reviewed date and a link to the
