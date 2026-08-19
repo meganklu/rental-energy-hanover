@@ -13,7 +13,6 @@ if (dollhouseEl && infoBar) {
   const hotspots = [...dollhouseEl.querySelectorAll(".hotspot")];
   const TOTAL = hotspots.length;
   const VISITED_KEY = "visitedSpots";
-  const roomIndexLink = document.getElementById("everything-in-this-house");
 
   let contentIndex = null;
   let lastTrigger = null;
@@ -28,9 +27,13 @@ if (dollhouseEl && infoBar) {
   const visited = getVisited();
   const saveVisited = () => sessionStorage.setItem(VISITED_KEY, JSON.stringify([...visited]));
 
+  const progressBar = document.getElementById("progress-bar");
+
   function updateProgress() {
     if (!progressText) return;
-    progressText.textContent = `You have viewed ${visited.size} of ${TOTAL} spots.`;
+    const text = `You have viewed ${visited.size} of ${TOTAL} spots.`;
+    progressText.textContent = text;
+    progressBar?.setAttribute("aria-label", text);
     if (progressFill) {
       progressFill.style.setProperty("--progress", `${Math.round((visited.size / TOTAL) * 100)}%`);
     }
@@ -43,8 +46,26 @@ if (dollhouseEl && infoBar) {
       if (isVisited && !h.dataset.baseLabel) {
         h.dataset.baseLabel = h.getAttribute("aria-label") || "";
         h.setAttribute("aria-label", `Viewed. ${h.dataset.baseLabel}`);
+        // The "Start here" badge's job is done once the spot has actually been visited.
+        h.querySelector('.hotspot__badge-flag[data-flag="start"]')?.remove();
       }
     });
+  }
+
+  // Whichever hotspot the guided order would go to next carries a "Next" badge on the drawing
+  // itself, added 2026-08-19. Never doubles up with "Start here" on the bill hotspot.
+  function updateNextBadge(from) {
+    hotspots.forEach((h) => h.querySelector('.hotspot__badge-flag[data-flag="next"]')?.remove());
+    const next = nextHotspot(from.dataset.order);
+    const nextHasStartBadge = next.querySelector('.hotspot__badge-flag[data-flag="start"]');
+    if (nextHasStartBadge) return;
+    const label = next.querySelector(".hotspot__label");
+    if (!label) return;
+    const flag = document.createElement("span");
+    flag.className = "hotspot__badge-flag";
+    flag.dataset.flag = "next";
+    flag.textContent = "Next";
+    label.appendChild(flag);
   }
 
   async function loadContent() {
@@ -64,13 +85,24 @@ if (dollhouseEl && infoBar) {
   }
 
   function reversibleText(value) {
+    // Worded identically everywhere reversibility appears (info bar, improvement pages, cards),
+    // per DESIGN.md §3.2, revised 2026-08-19.
     const map = {
       fully: "Comes off at move-out",
       mostly: "Mostly comes off at move-out",
-      no: "Permanent. Check with your landlord first",
+      no: "Permanent, check with your landlord",
     };
     return map[value] || null;
   }
+
+  const COST_LABEL = { free: "Free", under25: "Under $25", "25to75": "$25 to $75", over75: "Over $75" };
+  const TIME_LABEL = {
+    under30min: "Under 30 minutes",
+    "1to2hr": "1 to 2 hours",
+    afternoon: "An afternoon",
+    contractor: "Needs a contractor",
+  };
+  const IMPACT_LABEL = { low: "Low impact", medium: "Medium impact", high: "High impact" };
 
   function nextHotspot(currentOrder) {
     const order = Number(currentOrder);
@@ -94,7 +126,10 @@ if (dollhouseEl && infoBar) {
     saveVisited();
     refreshVisitedStyling();
     updateProgress();
+    updateNextBadge(hotspot);
     lastTrigger = hotspot;
+
+    hotspots.forEach((h) => h.classList.toggle("hotspot--selected", h === hotspot));
 
     let item = null;
     try {
@@ -118,11 +153,28 @@ if (dollhouseEl && infoBar) {
           `<span class="badge ${pb[1]}"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#${pb[2]}"/></svg>${pb[0]}</span>`
         );
       }
+    } else if (item.type === "explainer") {
+      // Not an upgrade, so there's no landlordPermission to state.
+      badges.push('<span class="badge badge--basics">Renter basics</span>');
     }
     if (item.reversible) {
       const rt = reversibleText(item.reversible);
       if (rt) badges.push(`<span class="badge badge--reversible">${rt}</span>`);
     }
+
+    // The full set of specs shown on the improvement page itself, per DESIGN.md §3.2 — not a
+    // shorter tier-2 subset. Explainer items (read-your-bill, find-your-drafts) carry none of
+    // these fields, so the row is simply empty for them.
+    const facts = [];
+    if (item.cost) facts.push(["icon-cost", COST_LABEL[item.cost]]);
+    if (item.time) facts.push(["icon-time", TIME_LABEL[item.time]]);
+    if (item.impact && IMPACT_LABEL[item.impact]) facts.push(["icon-impact", IMPACT_LABEL[item.impact]]);
+    const factRow = facts
+      .map(
+        ([icon, text]) =>
+          `<span class="fact"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#${icon}"/></svg>${text}</span>`
+      )
+      .join("");
 
     const next = nextHotspot(hotspot.dataset.order);
     const allSeen = visited.size >= TOTAL;
@@ -131,12 +183,15 @@ if (dollhouseEl && infoBar) {
       <p class="eyebrow">${room} · ${label}</p>
       <h3 class="info-bar__heading" tabindex="-1">${item.title}</h3>
       <div class="badge-row">${badges.join("")}</div>
+      ${factRow ? `<div class="fact-row">${factRow}</div>` : ""}
       <p>${item.summary}</p>
       <div class="info-bar__actions">
-        <a class="btn btn--primary" href="${hotspot.getAttribute("href")}">See the full steps</a>
-        <button type="button" class="btn btn--secondary" id="info-bar-next">
-          ${allSeen ? "That is all ten spots. View everything in one list." : `Next spot: ${next.dataset.label}`}
-        </button>
+        <a class="btn btn--primary" href="${hotspot.getAttribute("href")}">Learn more</a>
+        ${
+          allSeen
+            ? ""
+            : `<button type="button" class="btn btn--secondary" id="info-bar-next">Next: ${next.dataset.label}</button>`
+        }
         <button type="button" class="btn btn--text" id="info-bar-close">Close</button>
       </div>
     `;
@@ -146,22 +201,14 @@ if (dollhouseEl && infoBar) {
     const heading = infoBar.querySelector(".info-bar__heading");
     if (moveFocus && heading) heading.focus();
 
-    infoBar.querySelector("#info-bar-next").addEventListener("click", () => {
-      if (allSeen) {
-        infoBar.hidden = true;
-        roomIndexLink?.focus();
-        roomIndexLink?.scrollIntoView({ behavior: "smooth", block: "start" });
-        return;
-      }
-      openHotspot(next);
-    });
-
+    infoBar.querySelector("#info-bar-next")?.addEventListener("click", () => openHotspot(next));
     infoBar.querySelector("#info-bar-close").addEventListener("click", closeInfoBar);
   }
 
   function closeInfoBar() {
     infoBar.hidden = true;
     infoBar.innerHTML = "";
+    hotspots.forEach((h) => h.classList.remove("hotspot--selected"));
     lastTrigger?.focus();
   }
 
@@ -184,6 +231,7 @@ if (dollhouseEl && infoBar) {
     if (!infoBar.hidden && lastTrigger && lastTrigger.closest(".room")?.id !== location.hash.slice(1)) {
       infoBar.hidden = true;
       infoBar.innerHTML = "";
+      hotspots.forEach((h) => h.classList.remove("hotspot--selected"));
     }
   });
 

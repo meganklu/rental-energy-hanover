@@ -13,7 +13,9 @@
 .diagram-controls,
 .carousel__controls,
 .filter-chips,
-.motion-toggle,
+.switch,
+.fab,
+.situation-dialog,
 .site-footer form,
 .back-to-house {
   display: none !important;

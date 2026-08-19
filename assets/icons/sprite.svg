@@ -12,9 +12,11 @@
   </symbol>
 
   <symbol id="icon-thermostat" viewBox="0 0 24 24">
-    <circle cx="12" cy="12" r="8"/>
-    <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/>
-    <line x1="12" y1="12" x2="16" y2="8"/>
+    <path d="M14 15V5a2 2 0 0 0-4 0v10a4 4 0 1 0 4 0Z"/>
+    <line x1="16.2" y1="6.5" x2="18" y2="6.5"/>
+    <line x1="16.2" y1="9.5" x2="18" y2="9.5"/>
+    <line x1="16.2" y1="12.5" x2="18" y2="12.5"/>
+    <circle cx="12" cy="18" r="1.2" fill="currentColor" stroke="none"/>
   </symbol>
 
   <symbol id="icon-radiator" viewBox="0 0 24 24">
@@ -36,8 +38,7 @@
   </symbol>
 
   <symbol id="icon-water-heater" viewBox="0 0 24 24">
-    <rect x="7" y="4" width="10" height="17" rx="4"/>
-    <line x1="7" y1="10" x2="17" y2="10"/>
+    <path d="M12 4C12 4 5.5 13 5.5 16.5a6.5 6.5 0 0 0 13 0C18.5 13 12 4 12 4Z"/>
   </symbol>
 
   <symbol id="icon-plug" viewBox="0 0 24 24">
@@ -55,9 +56,9 @@
   </symbol>
 
   <symbol id="icon-house" viewBox="0 0 24 24">
-    <path d="M4 11 L12 4 L20 11"/>
-    <path d="M5 11 V20 H19 V11"/>
-    <rect x="10.5" y="14" width="3" height="6"/>
+    <path d="M2.5 11 L12 3 L21.5 11"/>
+    <path d="M4 11 V21 H20 V11"/>
+    <rect x="10" y="15" width="4" height="6"/>
   </symbol>
 
   <symbol id="icon-bill" viewBox="0 0 24 24">
@@ -97,12 +98,7 @@
     <polyline points="4 16 7.3 17.6 8.7 14.3"/>
   </symbol>
 
-  <symbol id="icon-viewed" viewBox="0 0 24 24">
-    <line x1="6" y1="3" x2="6" y2="21"/>
-    <path d="M6 4 H17 L14 8 L17 12 H6" stroke-linejoin="round" fill="currentColor" fill-opacity="0.15"/>
-  </symbol>
-
-  <symbol id="icon-cost" viewBox="0 0 24 24">
+<symbol id="icon-cost" viewBox="0 0 24 24">
     <line x1="12" y1="3" x2="12" y2="21"/>
     <path d="M16 7.5c0-1.9-1.8-3-4-3s-4 1-4 3 1.8 2.6 4 3 4 1.1 4 3-1.8 3-4 3-4-1.1-4-3"/>
   </symbol>
@@ -162,6 +158,20 @@
 
   <symbol id="icon-play" viewBox="0 0 24 24">
     <path d="M7 4.5 L19 12 L7 19.5 Z" stroke-linejoin="round"/>
+  </symbol>
+
+  <symbol id="icon-close" viewBox="0 0 24 24">
+    <line x1="5" y1="5" x2="19" y2="19"/>
+    <line x1="19" y1="5" x2="5" y2="19"/>
+  </symbol>
+
+  <symbol id="icon-sliders" viewBox="0 0 24 24">
+    <line x1="4" y1="7" x2="20" y2="7"/>
+    <circle cx="14" cy="7" r="2" fill="var(--color-bg, #fff)"/>
+    <line x1="4" y1="14" x2="20" y2="14"/>
+    <circle cx="9" cy="14" r="2" fill="var(--color-bg, #fff)"/>
+    <line x1="4" y1="21" x2="20" y2="21"/>
+    <circle cx="16" cy="21" r="2" fill="var(--color-bg, #fff)"/>
   </symbol>
 
 </svg>

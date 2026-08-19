@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- shell:head-links -->
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
 <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/tokens.css">
@@ -13,7 +14,7 @@
 <link rel="stylesheet" href="assets/css/print.css" media="print">
 <!-- /shell:head-links -->
 
-<title>Rental Energy Hanover — energy help for Hanover renters</title>
+<title>Energy for Student Renters — a Hanover, NH guide</title>
 <meta name="description" content="An interactive guide to improving the energy efficiency of your Hanover, NH rental. In partnership with Sustainable Hanover.">
 </head>
 <body>
@@ -23,39 +24,36 @@
 <header class="site-header">
   <div class="page-shell site-header__inner">
     <a class="brand" href="index.html">
-      <span class="wordmark">Rental Energy Hanover</span>
-      <span class="partner-line">In partnership with Sustainable Hanover</span>
+      <svg class="icon brand__icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-house"/></svg>
+      <span class="brand__text">
+        <span class="wordmark">Energy for Student Renters</span>
+        <span class="partner-line">In partnership with Sustainable Hanover</span>
+      </span>
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul>
-        <li><a href="index.html#house" aria-current="page">The house</a></li>
-        <li><a href="improvements/">What you can change</a></li>
-        <li><a href="learn/">Learn</a></li>
+        <li><a href="index.html#house" aria-current="page">Home</a></li>
+        <li><a href="improvements/">Improvements</a></li>
         <li><a href="your-rights/">Rights and programs</a></li>
         <li><a href="about/">About</a></li>
       </ul>
     </nav>
-    <div class="header-actions">
-      <a class="situation-chip" id="situation-chip" href="start/">Set your situation</a>
-    </div>
   </div>
 </header>
 <!-- /shell:header -->
 
-<div class="progress-bar" id="progress-bar">
-  <p><span id="progress-text">10 spots to view</span></p>
-  <div class="progress-bar__track" aria-hidden="true">
-    <div class="progress-bar__fill" id="progress-fill"></div>
-  </div>
-</div>
-
 <main id="main">
 
   <section class="hero">
-    <div class="parallax-layer parallax-layer--bg" aria-hidden="true"></div>
-    <div class="parallax-layer parallax-layer--silhouette" aria-hidden="true"></div>
-    <h1 class="hero__tagline">Welcome Home<sup aria-hidden="true">*</sup></h1>
-    <p class="hero__note">*Rental home.</p>
+    <div class="hero__mat">
+      <div class="hero__mat-border">
+        <h1 class="hero__tagline">
+          <span class="hero__tagline-lead">Welcome</span>
+          <span class="hero__tagline-rest">to your Home<sup aria-hidden="true">*</sup></span>
+        </h1>
+        <p class="hero__note">*Rental home</p>
+      </div>
+    </div>
     <p class="hero__description">
       Learn how to improve energy efficiency in your rental to save money and the environment.
     </p>
@@ -66,31 +64,19 @@
   </section>
 
   <section class="dollhouse-section page-shell theme-white" id="house" aria-labelledby="house-heading">
+    <div class="progress-bar" id="progress-bar" tabindex="0" aria-label="10 spots to view">
+      <span class="progress-bar__fill" id="progress-fill"></span>
+      <span class="progress-bar__tooltip" id="progress-text" aria-hidden="true">10 spots to view</span>
+    </div>
+
     <h2 id="house-heading">Tour a rental and its potential upgrades</h2>
     <p class="dollhouse-intro">
-      Click a room to open it, then click a window, thermostat, or other highlighted spot to
-      see what you can do about it.
+      Click a room to open it. Click each highlighted spot to see what you can do about it.
     </p>
 
     <div class="dollhouse" id="dollhouse">
       <div class="dollhouse__roof" aria-hidden="true"></div>
       <ul class="room-list">
-
-        <li>
-          <section id="entry" class="room room--porch" aria-labelledby="entry-h">
-            <h3 id="entry-h"><a class="room-open" href="#entry">Entry and porch</a></h3>
-            <div class="room-hotspots">
-              <a href="improvements/door-sweeps-and-weatherstripping/" class="hotspot"
-                 data-hotspot-id="entry-door" data-slug="door-sweeps-and-weatherstripping"
-                 data-room="Entry" data-label="Exterior door" data-order="4"
-                 aria-label="Entry door: Sealing gaps around the door frame stops drafts, usually without a contractor.">
-                <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-door"/></svg>
-                <span class="hotspot__label">Exterior door</span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
-              </a>
-            </div>
-          </section>
-        </li>
 
         <li>
           <section id="bedroom" class="room room--bedroom" aria-labelledby="bedroom-h">
@@ -102,7 +88,6 @@
                  aria-label="Bedroom radiator or baseboard: Keep it clear so heat can actually reach the room.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-radiator"/></svg>
                 <span class="hotspot__label">Radiator or baseboard</span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
               </a>
               <a href="improvements/space-heaters-real-cost-and-safety/" class="hotspot"
                  data-hotspot-id="bedroom-space-heater" data-slug="space-heaters-real-cost-and-safety"
@@ -110,7 +95,6 @@
                  aria-label="Bedroom space heater: Costs more to run than central heat, and needs safe clearance from anything flammable.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-space-heater"/></svg>
                 <span class="hotspot__label">Space heater</span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
               </a>
             </div>
           </section>
@@ -124,6 +108,21 @@
         </li>
 
         <li>
+          <section id="entry" class="room room--porch" aria-labelledby="entry-h">
+            <h3 id="entry-h"><a class="room-open" href="#entry">Entry and porch</a></h3>
+            <div class="room-hotspots">
+              <a href="improvements/door-sweeps-and-weatherstripping/" class="hotspot"
+                 data-hotspot-id="entry-door" data-slug="door-sweeps-and-weatherstripping"
+                 data-room="Entry" data-label="Exterior door" data-order="4"
+                 aria-label="Entry door: Sealing gaps around the door frame stops drafts, usually without a contractor.">
+                <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-door"/></svg>
+                <span class="hotspot__label">Exterior door</span>
+              </a>
+            </div>
+          </section>
+        </li>
+
+        <li>
           <section id="living-room" class="room room--living" aria-labelledby="living-room-h">
             <h3 id="living-room-h"><a class="room-open" href="#living-room">Living room</a></h3>
             <div class="room-hotspots">
@@ -133,7 +132,6 @@
                  aria-label="Living room window: Sealing gaps here improves energy efficiency significantly.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-window"/></svg>
                 <span class="hotspot__label">Window</span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
               </a>
               <a href="improvements/thermostat-setback/" class="hotspot"
                  data-hotspot-id="living-room-thermostat" data-slug="thermostat-setback"
@@ -141,7 +139,6 @@
                  aria-label="Living room thermostat: Setting it back for a stretch of time typically uses less energy than holding one temperature all day.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-thermostat"/></svg>
                 <span class="hotspot__label">Thermostat</span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
               </a>
               <a href="improvements/phantom-load-and-plug-loads/" class="hotspot"
                  data-hotspot-id="living-room-outlets" data-slug="phantom-load-and-plug-loads"
@@ -149,7 +146,6 @@
                  aria-label="Living room outlets: Devices plugged in but off still draw a small amount of power around the clock.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-plug"/></svg>
                 <span class="hotspot__label">Outlets and plugs</span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
               </a>
             </div>
           </section>
@@ -163,9 +159,8 @@
                  data-hotspot-id="kitchen-bill" data-slug="read-your-bill"
                  data-room="Kitchen" data-label="The bill" data-order="1"
                  aria-label="The bill on the fridge: start here to learn what is actually driving your electric bill.">
-                <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-bill"/></svg>
-                <span class="hotspot__label">The bill<span class="hotspot__start-flag">Start here</span></span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
+                <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-cost"/></svg>
+                <span class="hotspot__label">The bill<span class="hotspot__badge-flag" data-flag="start">Start here</span></span>
               </a>
               <a href="improvements/led-lighting-swaps/" class="hotspot"
                  data-hotspot-id="kitchen-light" data-slug="led-lighting-swaps"
@@ -173,7 +168,6 @@
                  aria-label="Kitchen light fixture: Swapping to LED bulbs cuts the electricity a light uses.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-light-bulb"/></svg>
                 <span class="hotspot__label">Light fixture</span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
               </a>
             </div>
           </section>
@@ -189,7 +183,6 @@
                  aria-label="Basement water heater: Shower length and wash temperature both affect your bill.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-water-heater"/></svg>
                 <span class="hotspot__label">Water heater</span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
               </a>
               <a href="learn/find-your-drafts/" class="hotspot"
                  data-hotspot-id="basement-rim-joist" data-slug="find-your-drafts"
@@ -197,7 +190,6 @@
                  aria-label="Basement rim joist: This is where a lot of a rental's heat actually escapes.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-house"/></svg>
                 <span class="hotspot__label">Rim joist and attic hatch</span>
-                <svg class="icon hotspot__flag" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-viewed"/></svg>
               </a>
             </div>
           </section>
@@ -261,18 +253,24 @@
     </nav>
   </section>
 
-  <section class="section page-shell theme-light center-text">
-    <p class="eyebrow">Not sure where to start?</p>
-    <h2>Tell us about your rental</h2>
-    <p class="content-column" style="margin-inline:auto;">
-      Answer four quick questions about your heat type, your lease, and who pays the bills.
-      Every list on this site narrows to match, and hotspots that don't apply to you are marked
-      so you know why.
-    </p>
-    <p><a class="btn btn--primary" href="start/">Set your situation</a></p>
-  </section>
-
 </main>
+
+<!-- shell:fab -->
+<a class="fab" id="situation-fab" href="start/">
+  <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-sliders"/></svg>
+  Personalize your recommendations
+</a>
+<dialog id="situation-dialog" class="situation-dialog" aria-labelledby="situation-dialog-heading">
+  <div class="situation-dialog__inner">
+    <button type="button" class="situation-dialog__close" id="situation-dialog-close" aria-label="Close">
+      <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-close"/></svg>
+    </button>
+    <div class="situation-dialog__body" id="situation-dialog-body">
+      <!-- assets/js/situation-modal.js fetches start/ and injects its form here -->
+    </div>
+  </div>
+</dialog>
+<!-- /shell:fab -->
 
 <!-- shell:footer -->
 <footer class="site-footer">
@@ -288,9 +286,10 @@
     </div>
     <div class="footer-links">
       <a href="accessibility/">Accessibility statement</a>
-      <label class="motion-toggle">
-        <input type="checkbox" id="reduce-motion">
-        Reduce motion
+      <label class="switch">
+        <input type="checkbox" id="reduce-motion" class="visually-hidden">
+        <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+        <span class="switch__label">Reduce motion</span>
       </label>
       <p class="footer-meta">Site content last reviewed 2026-08-19.</p>
     </div>
@@ -298,6 +297,7 @@
 </footer>
 <script type="module" src="assets/js/motion.js"></script>
 <script type="module" src="assets/js/situation.js"></script>
+<script type="module" src="assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->
 
 <script type="module" src="assets/js/dollhouse.js"></script>

@@ -35,6 +35,10 @@
   --color-border: #C9D4C6;
   --color-border-strong: #6F8272;
 
+  /* Hero welcome mat only. Added 2026-08-19, see DESIGN.md §4. */
+  --color-mat: #D9BE8A;
+  --color-mat-border: #000000;
+
   /* Type: families. Both self-hosted, Latin-subset, falling back to a system stack per
      DESIGN.md §4 so a page whose fonts never arrive stays fully legible. */
   --font-display: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
