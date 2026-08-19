@@ -1,252 +1,153 @@
 # Interviews
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-18 · **Owner:** Ryan
+> **Status:** ◐ Draft · **Last updated:** 2026-08-19 · **Owner:** Ryan
 
 Raw notes from Round 1 discovery interviews. The plan, method, and question guide live in
 [research-plan.md](research-plan.md) §2 — this file is only for capture and synthesis.
 
----
+# Interviewee 1
+Name: Anonymous
+
+Date: 8/16
+
+Apartment/Location: 17 School St. Cluster
+
+## Q1 — Walk me through your apartment. Where is it cold or uncomfortable? What do you do about it?
+Response/Notes:
+It is summer right now, so they are not currently experiencing problems with cold temperatures.
+They imagine that the bedroom could get cold during the winter.
+The apartment has hard floors and exterior walls, which they think could contribute to the bedroom feeling colder.
+
+## Q2 — Who pays for heat where you live?
+Response/Notes:
+The tenant pays for utilities, including heat.
+They are currently subletting the apartment so their sub-leasers use security deposit.
+
+## Q3 — Tell me about the last utility bill you saw.
+Response/Notes:
+They do not look at utility bills because they are currently subletting.
+They have not been tracking their heating or utility costs.
+
+## Q4 — Have you ever changed anything in your apartment? What happened?
+Response/Notes:
+They have never personally made changes to the apartment to improve heating or energy efficiency.
+They do have a roommate who is fairly handy and might be more likely to make or help with practical changes.
+Unless something is really wrong they don’t care about fixing it. 
+
+## Q5 — Have you ever asked your landlord for something?
+Response/Notes:
+They have never asked the landlord for anything related to the apartment or heating.
+Only interaction with them was when moving into the apartment coordinating when they could move in.
+Primarily uses email to contact the landlord and that can have a long-ish response time. 
+
+## Q6 — What did you do with the apartment over winter break? (if applicable)
+Response/Notes:
+Not applicable because they are summer renters.
+They are only staying in the apartment for a limited period of time, sophomore so they aren’t staying into the winter. 
 
-## How to use this file
+## Q7 — Are you aware of things you could do to improve the heating in your place?
+Response/Notes:
+The first response was to change behavior, so use natural heating control with sunlight and windows and then in winter close the windows. 
+They also mentioned just wearing more clothes inside to reduce the need for heating.
+They are aware of some basic measures, such as using plastic window inserts and heard that from their roommate.
+Beyond that, they are not very familiar with other ways to improve heating or energy efficiency.
 
-1. **Before the interview** — copy the [blank template](#template--copy-this-block) to the
-   bottom of [§3 Interview notes](#3-interview-notes), fill in the header, add a row to the
-   [participant index](#1-participant-index).
-2. **During** — type into the numbered sections. Don't clean it up. Mark exact wording with
-   `>` blockquotes; everything else is understood to be paraphrase.
-3. **Within 24 hours** — write the "Top 3 takeaways" and "Surprises" fields while it's fresh.
-   These are the fields you'll actually use later.
-4. **After all interviews** — fill in [§4 Synthesis](#4-synthesis) and push the results into
-   [audience.md](audience.md) §3 and §5.
+## Q8 — Where would you look for help with this?
+Response/Notes:
+They would ask friends who are more interested in sustainability or energy-related issues or google it. 
 
-**Anonymity:** no names, addresses, landlord names, or unit identifiers anywhere in this file.
-Use P1, P2, P3… Per [research-plan.md](research-plan.md) §5.
+## Q9 — What would motivate you to make these changes?
+Response/Notes:
+Saving money would be a major motivation, but it would have to be a decent amount and it is hard to tell because they don’t look at their utility bill.
+They don’t spend a lot of time at the apartment so it feels like they don’t need it.
+unaware of heating costs in winter to keep pipes from freezing.
 
-**Notation:**
+## Q10 — Is there anything preventing you from doing these things?
+Response/Notes:
+They feel too busy to spend time making changes. They also mentioned that maybe in the interim period they would, but during the term they are too busy to think about it. 
+They do not want to go out and buy materials or spend money on improvements (no car).
+Their status as a short-term renter makes permanent improvements or any seasonal improvements feel less worthwhile.
+Since it is summer and they are not currently experiencing heating problems, there is little immediate reason to act.
+They are only going to be in the apartment for a limited amount of time.
 
-| Mark | Meaning |
-|---|---|
-| `>` blockquote | Verbatim quote |
-| `[?]` | Unclear — participant may have misunderstood the question |
-| `[!]` | Surprising / contradicts an assumption in [audience.md](audience.md) |
-| `[gap]` | A knowledge gap → candidate row for [audience.md](audience.md) §3 |
-| `[feat]` | Feature idea → candidate row for [features.md](features.md) §2 |
-| `[src]` | Factual claim we should verify → [sources.md](sources.md) |
 
----
+## Anything else they raised
+They emphasized that being a short-term/summer renter changes how they think about improvements.
+They would be less interested in permanent modifications because they will not be living in the apartment long enough to benefit from them.
 
-## 1. Participant index
+# Interviewee 2
+Name: Anonymous
 
-| ID | Date | Interviewer | Housing type | Heat type | Pays heat? | Lease length | Yrs renting | Notes written up? |
-|---|---|---|---|---|---|---|---|---|
-| P1 | | | | | | | | ☐ |
-| P2 | | | | | | | | ☐ |
-| P3 | | | | | | | | ☐ |
-| P4 | | | | | | | | ☐ |
-| P5 | | | | | | | | ☐ |
-| P6 | | | | | | | | ☐ |
-| P7 | | | | | | | | ☐ |
-| P8 | | | | | | | | ☐ |
+Date: 8/17
 
-**Target:** 5–8 interviews. **Recruitment channels used:** [FILL — mirror research-plan.md §6]
+Apartment/Location: Oak Ridge Rd. Opposite Sachem
 
-**Sample balance check** — fill in as you go, so you notice a skew while you can still fix it:
+## Q1 — Walk me through your apartment. Where is it cold or uncomfortable? What do you do about it?
+Response/Notes:
+It is summer, so they are not currently experiencing heating problems.
+They think the front entrance area would likely be the coldest part of the apartment in winter.
+They sometimes notice a breeze in that area even when the window is mostly closed.
+Hot upstairs right now.
 
-| Dimension | Aiming for | Actual so far |
-|---|---|---|
-| Pays own heat vs. utilities included | [FILL: e.g. mix of both] | |
-| First-year renter vs. experienced | [FILL: mostly first-time] | |
-| Undergrad vs. grad | [FILL] | |
-| Heat type (electric baseboard / forced air / radiator / other) | [FILL: a spread] | |
+## Q2 — Who pays for heat where you live?
+Response/Notes:
+They pay for the heat and other utilities.
 
----
+## Q3 — Tell me about the last utility bill you saw.
+Response/Notes:
+They saw the utility bill for the days in June.
+They are aware of their utility costs and really just care about the number.
 
-## 2. Pre-interview checklist
+## Q4 — Have you ever changed anything in your apartment? What happened?
+Response/Notes:
+They have made a few minor changes, including changing lights and replacing a filter on their washer/dryer combo.
+They have not made any major heating-related changes.
 
-- [ ] Consent given (per [research-plan.md](research-plan.md) §5) — verbal / written: [FILL]
-- [ ] Participant told: purpose, ~[FILL] minutes, anonymous, can skip any question or stop
-- [ ] Recording? ☐ Yes ☐ No — if yes, permission explicitly asked and granted
-- [ ] Interviewer reminded not to lead: ask about **what they did**, not what they would do
+## Q5 — Have you ever asked your landlord for something?
+Response/Notes:
+They asked the landlord to fix a leak near the line to their dishwasher.
+They have not asked the landlord for any heating-related improvements.
 
----
+## Q6 — What did you do with the apartment over winter break? (if applicable)
+Response/Notes:
+They are summer renters and will be living on campus during the fall and most of the academic term.
+They rented the apartment for the summer because it was cheaper and easier to find housing.
 
-## 3. Interview notes
+## Q7 — Are you aware of things you could do to improve the heating in your place?
+Response/Notes:
+They know the apartment has electric baseboard heating and think improving that system could be beneficial.
+They know that keeping windows closed can improve energy efficiency when using AC, although they currently like some airflow in addition to running AC.
+They are aware of sealants for windows but are less familiar with smaller things that can be done to improve heating like inserts or tape. They were talking like a foam sealant.
 
-### Template — copy this block
+## Q8 — Where would you look for help with this?
+Response/Notes:
+They would Google possible solutions and purchase materials on amazon.
 
-<!-- Copy everything between the two rules, paste below, replace PN with the participant ID. -->
+## Q9 — What would motivate you to make these changes?
+Response/Notes:
+Experiencing very cold temperatures would be the biggest motivator.
+Because it is currently summer, heating does not seem particularly important to them.
 
----
+## Q10 — Is there anything preventing you from doing these things?
+Response/Notes:
+They are busy and do not spend much time thinking about small improvements and they are on campus for most of the day. They just need a place to sleep.
+Since they are summer renters, there is little immediate reason to think about winter heating.
 
-### PN — YYYY-MM-DD
+## Anything else they raised
+They are back on campus in the fall so they won’t be thinking about energy efficiency very much anymore when in the dorms. 
 
-**Interviewer:** · **Duration:** · **Format:** in person / video / phone
 
-#### Context
 
-| | |
-|---|---|
-| Year / program | |
-| Housing type | |
-| Roommates | |
-| Lease length & months remaining | |
-| Heat type | |
-| Who pays for heat | |
-| Who pays for electricity | |
-| First time renting? | |
-| Winters lived in this unit | |
 
-#### Q1 — Walk me through your apartment. Where is it cold or uncomfortable? What do you do about it?
 
-<!-- Listen for: which rooms, what time of day, whether they've diagnosed a cause,
-     what workarounds they've already invented. -->
 
 
 
-#### Q2 — Who pays for heat where you live?
 
-<!-- Listen for: hesitation, "I think", "my roommate handles it". Uncertainty here is itself
-     a finding — mark it [gap]. -->
 
 
 
-#### Q3 — Tell me about the last utility bill you saw.
 
-<!-- Listen for: did they see it at all? Do they know the amount, the unit, the rate?
-     Who in the house receives it? -->
 
 
 
-#### Q4 — Have you ever changed anything in your apartment? What happened?
-
-<!-- Listen for: what they felt allowed to do, whether they asked first, whether anything
-     went wrong, deposit anxiety. -->
-
-
-
-#### Q5 — Have you ever asked your landlord for something?
-
-<!-- Listen for: how they asked, response time, outcome, and how they felt about asking.
-     This is the single biggest unknown in the project. -->
-
-
-
-#### Q6 — What did you do with the apartment over winter break? (if applicable)
-
-<!-- Listen for: thermostat setting, whether anyone told them what to do, pipe/freeze
-     awareness. -->
-
-
-
-#### Q7 — Are you aware of things you could do to improve the heating in your place?
-
-<!-- Listen for: what they name unprompted, where they heard it, and whether they believe
-     it works. Note the confidently-wrong answers — those are content priorities. -->
-
-
-
-#### Q8 — Where would you look for help with this?
-
-<!-- Listen for: search terms they'd type, people they'd ask, whether Sustainable Hanover or
-     the town ever comes up. Feeds distribution planning. -->
-
-
-
-#### Q9 — What would motivate you to make these changes?
-
-<!-- Listen for: money vs. comfort vs. climate, and the ordering. Don't offer the list —
-     let them volunteer it. -->
-
-
-
-#### Q10 — Is there anything preventing you from doing these things?
-
-<!-- Listen for: cost, time, permission, roommate coordination, not knowing how,
-     not thinking it's their problem. -->
-
-
-
-#### Anything else they raised
-
-
-
-#### Interviewer wrap-up (fill in within 24 hours)
-
-**Top 3 takeaways**
-1.
-2.
-3.
-
-**Best quotes** (verbatim, usable in the write-up)
->
-
-**Surprises `[!]`** — anything that contradicts [audience.md](audience.md)
-
-**Knowledge gaps `[gap]`** → [audience.md](audience.md) §3
-
-**Feature ideas `[feat]`** → [features.md](features.md) §2
-
-**Claims to verify `[src]`** → [sources.md](sources.md)
-
-**Interview quality notes** — did we lead them? did a question land badly? change it for next time.
-
----
-
-<!-- Paste completed interview blocks below this line, most recent last. -->
-
----
-
-## 4. Synthesis
-
-> Fill this in after the last interview. This section, not the raw notes, is what gets carried
-> into the other documents.
-
-### 4.1 Patterns
-
-<!-- A pattern needs at least 2 participants. One person's opinion is an anecdote — log it in
-     4.4 instead. -->
-
-| # | Pattern | Participants | Confidence | So what? |
-|---|---|---|---|---|
-| 1 | | | High / Med / Low | |
-| 2 | | | | |
-| 3 | | | | |
-
-### 4.2 Knowledge gaps confirmed
-
-<!-- These replace the guessed rows in audience.md §3. Only list gaps you actually observed. -->
-
-| Gap | Seen in | Evidence |
-|---|---|---|
-| | | |
-
-### 4.3 Assumptions we got wrong
-
-<!-- The most valuable output of the whole round. Be honest here. -->
-
-| We assumed | Actually | Where it was written | Fixed? |
-|---|---|---|---|
-| | | audience.md §[FILL] | ☐ |
-
-### 4.4 Outliers and one-offs
-
-<!-- Interesting but unreplicated. Don't design for these; don't lose them either. -->
-
--
-
-### 4.5 What this changes
-
-| Document | Change needed | Owner | Done |
-|---|---|---|---|
-| [audience.md](audience.md) §3 — knowledge gaps | | Liam | ☐ |
-| [audience.md](audience.md) §5 — personas | | Liam | ☐ |
-| [audience.md](audience.md) §6 — lifecycle | | | ☐ |
-| [content-strategy.md](content-strategy.md) §3 — topic priorities | | | ☐ |
-| [features.md](features.md) §2 — feature candidates | | | ☐ |
-| [research-plan.md](research-plan.md) §7 — findings log | | | ☐ |
-
-### 4.6 Questions we still can't answer
-
-<!-- Carry these into Round 2 usability testing rather than guessing. -->
-
--
