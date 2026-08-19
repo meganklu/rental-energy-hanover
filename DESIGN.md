@@ -18,30 +18,28 @@ project. Colors, section rhythm, and the display typeface are taken from
 [sustainablehanovernh.org](https://sustainablehanovernh.org). Where their choices work against a
 dense instructional site read on a phone, this document says so and states the substitution. All
 brand values below were read out of the published stylesheet
-(`static1.squarespace.com/.../site.css`, retrieved 2026-08-18), not from a style guide, so confirm
-them with Yolanda Baumgartner before launch. See §10 and §11.
+(`static1.squarespace.com/.../site.css`, retrieved 2026-08-18), not from a style guide. See §10 and §11.
 
 **Everything here is buildable with no build step.** Per [docs/architecture.md](docs/architecture.md)
-§2 there is no framework, no bundler and no package manager. Every pattern in §5.1 is specified as
+§2 there is no framework, no bundler, and no package manager. Every pattern in §5.1 is specified as
 plain HTML and CSS first, with JavaScript adding only what CSS cannot do. Where a pattern needs
 JavaScript, the section says what a student sees without it.
 
 ## 1. Design principles
 
-1. **Show the apartment, not a wall of text.** The first thing on the screen is something to
+1. **Show the rental instead of a wall of text.** The first thing on the screen is something to
    click. Explanation arrives after the student has pointed at the thing they want to know about.
-2. **Mobile first.** Assume a phone, in a cold apartment, at 11pm. Anything that only works on a
-   laptop does not work.
-3. **Answer first, explain second.** The action comes first. The reasoning is optional depth the
+   The design should be visual and interactive.
+2. **Answer first, explain second.** The action comes first. The reasoning is optional depth the
    student opens. A page that explains before it answers has failed.
-4. **Permission and reversibility are never hidden.** Every recommendation shows whether the
+3. **Permission and reversibility are never hidden.** Every recommendation shows whether the
    landlord has to agree and whether it comes off at move-out, before the student reads the steps.
    These never go behind a flip, a slide, or a collapsed bar.
-5. **Every interactive path has an equal path that is not.** The walkthrough, the flip cards and
+4. **Every interactive path has an equal path that is not.** The walkthrough, the flip cards and
    the carousel are ways of reaching content that also exists as plain linked text. A student
    using a screen reader, a keyboard, or a browser with JavaScript off reaches the same
    recommendations by a route that is as short.
-6. **Legible over clever.** Accessibility is the floor. If a visual treatment fails contrast,
+5. **Legible over clever.** Accessibility is the floor. If a visual treatment fails contrast,
    keyboard use, or 320px reflow, the treatment loses.
 
 ## 2. Information architecture
