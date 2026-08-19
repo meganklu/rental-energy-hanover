@@ -79,6 +79,7 @@ function normalizeShell(fragment) {
 }
 
 const canonicalHeader = normalizeShell(extractRegion(shellText, "header"));
+const canonicalFab = normalizeShell(extractRegion(shellText, "fab"));
 const canonicalFooter = normalizeShell(extractRegion(shellText, "footer"));
 
 // ---------- Walk pages ----------
@@ -96,6 +97,12 @@ for (const pagePath of pages) {
     errors.push(`${rel}: missing <!-- shell:header --> region`);
   } else if (normalizeShell(header) !== canonicalHeader) {
     errors.push(`${rel}: header has drifted from tools/shell.html`);
+  }
+  const fab = extractRegion(text, "fab");
+  if (!fab) {
+    errors.push(`${rel}: missing <!-- shell:fab --> region`);
+  } else if (normalizeShell(fab) !== canonicalFab) {
+    errors.push(`${rel}: fab has drifted from tools/shell.html`);
   }
   if (!footer) {
     errors.push(`${rel}: missing <!-- shell:footer --> region`);

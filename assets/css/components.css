@@ -390,26 +390,6 @@
   border-radius: var(--radius-md);
 }
 
-/* ---------- Situation chip (header) ---------- */
-.situation-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 36px;
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--color-border-strong);
-  font-size: var(--text-small);
-  color: var(--color-text);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.situation-chip:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-}
-
 /* ---------- Header ---------- */
 .site-header {
   border-bottom: 1px solid var(--color-border);
@@ -425,12 +405,26 @@
   padding-block: var(--space-3);
 }
 
+/* Logo lockup: house icon plus wordmark, one link, one unit. */
 .brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.brand__icon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.brand__text {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  text-decoration: none;
-  color: var(--color-text);
 }
 
 .wordmark {
@@ -468,10 +462,76 @@
   color: var(--color-accent);
 }
 
-.header-actions {
-  display: flex;
+/* ---------- Personalize FAB and dialog ---------- */
+.fab {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 20;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  box-shadow: var(--shadow-raised);
+  scroll-margin-bottom: 80px;
+}
+
+.fab:hover {
+  background: var(--color-accent-hover);
+}
+
+.fab .icon {
+  color: #fff;
+}
+
+.situation-dialog {
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0;
+  max-width: 40rem;
+  width: min(90vw, 40rem);
+  max-height: 85vh;
+  box-shadow: var(--shadow-raised);
+}
+
+.situation-dialog::backdrop {
+  background: rgba(20, 32, 26, 0.55);
+}
+
+.situation-dialog__inner {
+  position: relative;
+  padding: var(--space-6);
+  overflow-y: auto;
+}
+
+.situation-dialog__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: var(--target-min);
+  height: var(--target-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.situation-dialog__close:hover {
+  background: var(--color-surface);
+}
+
+.situation-dialog__body form {
+  margin-top: var(--space-4);
 }
 
 /* ---------- Footer ---------- */
@@ -529,41 +589,82 @@
   opacity: 0.85;
 }
 
-.motion-toggle {
-  display: flex;
+/* ---------- Reduce motion switch ---------- */
+.switch {
+  display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   font-size: var(--text-small);
+  cursor: pointer;
 }
 
-.motion-toggle input {
+.switch__track {
+  position: relative;
+  width: 40px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.35);
+  transition: background var(--motion-duration-base) var(--motion-ease);
+}
+
+.switch__thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
   width: 20px;
   height: 20px;
-  accent-color: var(--color-brand);
+  border-radius: 50%;
+  background: #fff;
+  transition: transform var(--motion-duration-base) var(--motion-ease);
 }
 
-/* ---------- Hero ---------- */
+.switch input:checked ~ .switch__track {
+  background: var(--color-brand);
+}
+
+.switch input:checked ~ .switch__track .switch__thumb {
+  transform: translateX(16px);
+}
+
+.switch input:focus-visible ~ .switch__track {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ---------- Hero: the welcome mat ---------- */
 .hero {
-  position: relative;
   min-height: 85svh;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  align-items: flex-start;
-  gap: var(--space-4);
+  gap: var(--space-5);
   padding: var(--space-7) var(--space-5);
-  overflow: hidden;
-  isolation: isolate;
+  background: var(--color-mat);
+  text-align: center;
+}
+
+.hero__mat {
+  position: relative;
+  display: inline-block;
+  border: 3px solid var(--color-mat-border);
+  padding: var(--space-6) var(--space-8) var(--space-7);
+  max-width: 40rem;
 }
 
 .hero__tagline {
   font-size: clamp(2.5rem, 2rem + 3vw, 4rem);
   margin: 0;
+  color: var(--color-mat-border);
 }
 
 .hero__note {
-  color: var(--color-text-muted);
-  font-size: var(--text-body);
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-2);
+  color: var(--color-mat-border);
+  font-size: var(--text-small);
 }
 
 .hero__description {
@@ -579,16 +680,15 @@
   min-height: var(--target-min);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-pill);
-  border: 2px solid var(--color-accent);
-  color: var(--color-accent);
+  border: 2px solid var(--color-mat-border);
+  color: var(--color-mat-border);
   text-decoration: none;
   font-weight: 600;
-  margin-top: var(--space-4);
 }
 
 .scroll-cue:hover {
-  background: var(--color-accent);
-  color: #fff;
+  background: var(--color-mat-border);
+  color: var(--color-mat);
 }
 
 .scroll-cue .icon {
@@ -599,58 +699,6 @@
 @keyframes bob {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(4px); }
-}
-
-.parallax-layer {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
-.parallax-layer--bg {
-  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg) 100%);
-}
-
-.parallax-layer--silhouette {
-  background: var(--color-surface-brand);
-  clip-path: polygon(0 100%, 0 55%, 15% 45%, 30% 58%, 45% 40%, 60% 55%, 75% 42%, 90% 56%, 100% 48%, 100% 100%);
-  opacity: 0.55;
-}
-
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .parallax-layer--silhouette {
-      animation: rise-silhouette linear;
-      animation-timeline: scroll(root);
-      animation-range: 0 60vh;
-    }
-    .parallax-layer--bg {
-      animation: rise-bg linear;
-      animation-timeline: scroll(root);
-      animation-range: 0 60vh;
-    }
-  }
-}
-
-body:has(#reduce-motion:checked) .parallax-layer {
-  animation: none !important;
-}
-
-@keyframes rise-silhouette {
-  from { transform: translateY(0); }
-  to { transform: translateY(-8%); }
-}
-
-@keyframes rise-bg {
-  from { transform: translateY(0); }
-  to { transform: translateY(-4%); }
-}
-
-@media (max-width: 600px) {
-  .parallax-layer {
-    animation: none !important;
-  }
 }
 
 /* ---------- Doll house ---------- */
@@ -668,13 +716,10 @@ body:has(#reduce-motion:checked) .parallax-layer {
   grid-template-rows: auto auto auto auto;
   grid-template-areas:
     ".      roof     roof"
-    "porch  bedroom  bathroom"
+    ".      bedroom  bathroom"
     "porch  living   kitchen"
     "basement basement basement";
   gap: var(--space-2);
-  background: var(--color-brand);
-  padding: var(--space-3);
-  border-radius: var(--radius-md);
   margin-block: var(--space-5);
 }
 
@@ -702,11 +747,12 @@ body:has(#reduce-motion:checked) .parallax-layer {
   scroll-margin-top: 140px;
 }
 
-.room--porch { grid-area: porch; background: var(--color-surface); }
-.room--bedroom { grid-area: bedroom; }
-.room--bathroom { grid-area: bathroom; }
-.room--living { grid-area: living; }
-.room--kitchen { grid-area: kitchen; }
+/* Rooms alternate white and a light green surface for visual variety, no meaning attached. */
+.room--porch { grid-area: porch; background: var(--color-bg); }
+.room--bedroom { grid-area: bedroom; background: var(--color-surface); }
+.room--bathroom { grid-area: bathroom; background: var(--color-bg); }
+.room--living { grid-area: living; background: var(--color-surface); }
+.room--kitchen { grid-area: kitchen; background: var(--color-bg); }
 .room--basement { grid-area: basement; background: var(--color-surface); min-height: 100px; }
 
 .room__heading {
@@ -748,29 +794,19 @@ body:has(#reduce-motion:checked) .parallax-layer {
   height: 1.3em;
 }
 
-.hotspot__flag {
-  display: none;
-  color: var(--color-accent);
-  width: 1em;
-  height: 1em;
-}
-
+/* Visited: reduced opacity rather than a flag icon (revised 2026-08-19), plus "Viewed" added to
+   the accessible name in dollhouse.js. Two signals, neither of them color alone. */
 .hotspot--visited {
-  background: var(--color-accent);
-  color: #fff;
+  opacity: 0.6;
 }
 
-.hotspot--visited .icon:not(.hotspot__flag) {
-  color: #fff;
-}
-
-.hotspot--visited .hotspot__flag {
-  display: inline-block;
-  color: var(--color-brand);
+/* Selected: this hotspot's info bar is the one currently open (added 2026-08-19). */
+.hotspot--selected {
+  box-shadow: 0 0 0 3px var(--color-accent-hover);
 }
 
 .hotspot--dimmed {
-  opacity: 0.55;
+  opacity: 0.45;
 }
 
 .hotspot__start-flag {
@@ -785,10 +821,8 @@ body:has(#reduce-motion:checked) .parallax-layer {
   letter-spacing: 0.03em;
 }
 
-.hotspot--visited .hotspot__start-flag {
-  background: #fff;
-  color: var(--color-accent);
-}
+/* The "Start here" badge is removed from the markup once visited (dollhouse.js), rather than
+   just restyled, since its job is done. No CSS override needed for that state any more. */
 
 .room--empty .room-hotspots::after {
   content: "Nothing to check in this room yet.";
