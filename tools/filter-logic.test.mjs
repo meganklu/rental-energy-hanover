@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { matchesFilters, compareItems } from "../assets/js/filter-logic.mjs";
+import { matchesFilters, compareItems, SORTERS } from "../assets/js/filter-logic.mjs";
 
 const NONE = { heat: "any", payer: "any", permission: "any" };
 
@@ -69,4 +69,22 @@ test("compareItems: higher impact sorts before lower impact regardless of cost",
   const highImpactExpensive = { impact: "high", cost: "over75" };
   const lowImpactFree = { impact: "low", cost: "free" };
   assert.ok(compareItems(highImpactExpensive, lowImpactFree) < 0);
+});
+
+test("SORTERS.costLow: free sorts before an expensive item regardless of impact", () => {
+  const free = { impact: "low", cost: "free" };
+  const pricey = { impact: "high", cost: "over75" };
+  assert.ok(SORTERS.costLow(free, pricey) < 0);
+});
+
+test("SORTERS.timeShort: a quick fix sorts before one that needs a contractor", () => {
+  const quick = { time: "under30min" };
+  const slow = { time: "contractor" };
+  assert.ok(SORTERS.timeShort(quick, slow) < 0);
+});
+
+test("SORTERS.impactHigh: matches compareItems' impact ordering, ignoring cost", () => {
+  const highCostly = { impact: "high", cost: "over75" };
+  const lowFree = { impact: "low", cost: "free" };
+  assert.ok(SORTERS.impactHigh(highCostly, lowFree) < 0);
 });

@@ -85,18 +85,25 @@
   body:not(:has(#reduce-motion:checked)) .filter-chip:hover,
   body:not(:has(#reduce-motion:checked)) .carousel__nav:hover,
   body:not(:has(#reduce-motion:checked)) .situation-dialog__close:hover,
-  body:not(:has(#reduce-motion:checked)) .help-icon:hover {
+  body:not(:has(#reduce-motion:checked)) .help-icon:hover,
+  body:not(:has(#reduce-motion:checked)) .progress-reset:hover {
     transform: scale(1.05);
   }
 }
 
 /* ---------- Badges ---------- */
+/* Revised 2026-08-20: every badge variant now carries the same 1px border-in-currentColor, on
+   top of its own tinted background. Previously only badge--basics and badge--reversible had a
+   border, so the three permission variants (fill only) read as a visually different component
+   from the reversibility/basics pair despite being the same pill. One consistent shape now:
+   tinted background, border, icon, text, for every status this component states. */
 .badge {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-pill);
+  border: 1px solid currentColor;
   font-size: var(--text-small);
   font-weight: 600;
   line-height: 1.3;
@@ -127,13 +134,11 @@
 .badge--basics {
   background: var(--color-surface);
   color: var(--color-text-muted);
-  border: 1px solid var(--color-border-strong);
 }
 
 .badge--reversible {
   background: var(--color-surface);
   color: var(--color-text);
-  border: 1px solid var(--color-border-strong);
 }
 
 .badge-row {
@@ -167,6 +172,28 @@
   font-weight: 600;
 }
 
+/* Price dollar scale, added 2026-08-20, corrected 2026-08-20: a row of three dollar-sign glyphs
+   (reusing icon-cost) next to the cost fact, filled left to right by cost band — free fills
+   none, under25 fills one, 25to75 fills two, over75 fills all three — the familiar $/$$/$$$
+   price-tier convention. First built next to the impact gauge by mistake, which read as "more
+   dollar signs means more impact" when it was meant to echo price; moved to sit with the cost
+   fact it actually describes. Purely reinforcing — the visible cost text ("Under $25") is still
+   the accessible name, so the dollar row is aria-hidden. */
+.price-dollars {
+  display: inline-flex;
+  margin-left: 2px;
+}
+
+.price-dollars .icon {
+  width: 0.85em;
+  height: 0.85em;
+  color: var(--color-border-strong);
+}
+
+.price-dollars .icon.is-filled {
+  color: var(--color-accent);
+}
+
 /* ---------- Callouts ---------- */
 .callout {
   display: flex;
@@ -190,6 +217,20 @@
   background: var(--color-danger-bg);
   color: var(--color-danger-text);
   border: 1px solid currentColor;
+}
+
+/* Added 2026-08-20: on an improvement page with a safety note, the note now runs the full
+   page-shell width below the two-column intro (title/badges/facts beside the illustration),
+   rather than being squeezed into the text column next to the illustration — safety is the one
+   thing on the page that should never compete for space. The background band is genuinely full
+   width; the text inside still keeps a readable measure per DESIGN.md §4. */
+.callout--safety-full {
+  margin-block: var(--space-6);
+  padding: var(--space-5);
+}
+
+.callout--safety-full > div {
+  max-width: var(--measure);
 }
 
 .callout--legal,
@@ -261,6 +302,212 @@
 
 .sources-block .last-reviewed {
   margin-top: var(--space-2);
+}
+
+/* ---------- Improvement page: intro + illustration, added 2026-08-20 ----------
+   Revised layout: the article now runs the page-shell's full 1140px measure instead of being
+   capped at --measure (40rem) top to bottom, which on a wide window left most of the screen
+   blank down the right side. The title, summary, badges, facts and any safety callout keep the
+   readable column; a custom SVG illustration of the improvement sits beside them on a wide
+   screen and drops below the heading block, above "What you need", on a narrow one — a single
+   grid with two named areas that just get restacked at the breakpoint, so the DOM order (text,
+   then figure) is what a screen reader or no-CSS view gets either way. */
+.improvement-intro {
+  display: grid;
+  grid-template-areas: "text" "media";
+  gap: var(--space-6);
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .improvement-intro {
+    grid-template-areas: "text media";
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+
+.improvement-intro__text {
+  grid-area: text;
+  max-width: var(--measure);
+}
+
+.improvement-intro__media {
+  grid-area: media;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.improvement-illustration {
+  width: 100%;
+  max-width: 22rem;
+  height: auto;
+}
+
+/* Matches the doll house / icon-set pen (DESIGN.md §4 Iconography): flat fills, 2px-equivalent
+   strokes, round caps and joins, no gradients, no shadows. Scaled up from the 24x24 icon spec's
+   proportions rather than reusing it directly, since these illustrations carry a little more
+   scene (a clearance zone, an arrow, a before/after) than a single glyph. */
+.improvement-illustration .stroke {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.improvement-illustration .fill-brand {
+  fill: var(--color-brand);
+  stroke: none;
+}
+
+.improvement-illustration .fill-surface {
+  fill: var(--color-surface);
+  stroke: var(--color-border-strong);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.improvement-illustration .muted {
+  stroke: var(--color-border-strong);
+}
+
+.improvement-illustration .dash {
+  stroke-dasharray: 4 4;
+}
+
+.improvement-body {
+  max-width: var(--measure);
+}
+
+/* ---------- Story bar, added 2026-08-20 ----------
+   "Why this works" and "Savings" upgrade from a closed-by-default disclosure/callout pair to a
+   full-width band that is always open — a deliberate exception to DESIGN.md §8's usual
+   "depth goes in a closed disclosure bar" rule, made because these two are short (two or three
+   sentences) and are the connective explanation a student reads right after the steps, not
+   optional depth. Two columns: the heading takes one side at a larger size than a normal h2, the
+   body sits in the other. `.story-bar--reverse` swaps which side is which, so "Why this works"
+   (heading left) and "Savings" (heading right) read as a matched, alternating pair rather than
+   two copies of the same layout. */
+/* Revised 2026-08-20: a tinted band (`--color-surface`, the same tint cards and info bars already
+   use) instead of a plain white bar with hairline top/bottom rules, sized taller to hold the
+   larger heading below, and touching its neighbor — see `.story-bar + .story-bar` — so "Why this
+   works" and "Savings" read as one continuous two-part band rather than two separate bars with a
+   gap between them. */
+.story-bar {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4) var(--space-7);
+  align-items: center;
+  margin: 0;
+  padding: var(--space-8) var(--space-5);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.story-bar + .story-bar {
+  border-top: none;
+}
+
+@media (min-width: 900px) {
+  .story-bar {
+    padding-inline: var(--space-7);
+  }
+}
+
+@media (min-width: 700px) {
+  .story-bar {
+    grid-template-columns: 1fr 1.4fr;
+  }
+
+  /* The reverse variant swaps which side is which by reordering the grid items (auto-placement
+     follows `order`), so the column widths have to swap along with it — otherwise the heading
+     lands in the wide column meant for body copy, and the body squeezes into the narrow one. */
+  .story-bar--reverse {
+    grid-template-columns: 1.4fr 1fr;
+  }
+
+  .story-bar--reverse .story-bar__heading {
+    order: 2;
+    text-align: right;
+  }
+
+  .story-bar--reverse .story-bar__body {
+    order: 1;
+  }
+}
+
+/* Bigger than a normal h1, revised 2026-08-20 (was --text-h1) — this is the one place on an
+   improvement page a heading is allowed to dominate, since the band around it exists to carry
+   exactly these two headings and nothing competes with them for size. */
+.story-bar__heading {
+  margin: 0;
+  font-size: clamp(2.25rem, 1.7rem + 2.75vw, 4.25rem);
+  line-height: 1.05;
+}
+
+.story-bar__body {
+  font-size: var(--text-h4);
+}
+
+.story-bar__body p {
+  max-width: none;
+}
+
+.story-bar__body p + p {
+  margin-top: var(--space-3);
+}
+
+/* Parallax/entrance drift, gated exactly like every other ambient motion on the site (DESIGN.md
+   §7): behind an @supports check since view-timeline animation is a progressive enhancement, off
+   under prefers-reduced-motion or the footer switch, and off below 600px alongside the rest of
+   the site's parallax (§6). Each side drifts in from a slight horizontal offset as the bar
+   crosses the viewport, at opposite starting offsets, which is what reads as "interactive
+   scrolling" rather than a plain fade. Revised 2026-08-20: opacity dropped from the keyframes
+   entirely, transform-only now — a `view()` timeline that never advances (a short viewport in a
+   screenshot tool, an engine that only partially implements the spec) used to leave text stuck at
+   30% opacity, which is a legibility failure DESIGN.md §7 rules out ("freeze anything at any
+   point and the screen still makes sense"). A transform stuck at any point in its range still
+   leaves fully legible, full-contrast text, just offset by at most 14px. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    body:not(:has(#reduce-motion:checked)) .story-bar__heading,
+    body:not(:has(#reduce-motion:checked)) .story-bar__body {
+      animation: story-bar-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+
+    body:not(:has(#reduce-motion:checked)) .story-bar__heading {
+      animation-name: story-bar-in-from-left;
+    }
+
+    body:not(:has(#reduce-motion:checked)) .story-bar--reverse .story-bar__heading {
+      animation-name: story-bar-in-from-right;
+    }
+
+    body:not(:has(#reduce-motion:checked)) .story-bar__body {
+      animation-name: story-bar-in-from-right;
+    }
+
+    body:not(:has(#reduce-motion:checked)) .story-bar--reverse .story-bar__body {
+      animation-name: story-bar-in-from-left;
+    }
+  }
+}
+
+@keyframes story-bar-in-from-left {
+  from { transform: translateX(-14px); }
+  to { transform: translateX(0); }
+}
+
+@keyframes story-bar-in-from-right {
+  from { transform: translateX(14px); }
+  to { transform: translateX(0); }
 }
 
 /* ---------- Glossary term ---------- */
@@ -350,9 +597,21 @@
   border-color: var(--color-border-strong);
 }
 
+/* Revised 2026-08-20: the icon is the same object glyph the doll house hotspot for this
+   improvement uses (icon-window, icon-door, and so on), so a card and the hotspot it corresponds
+   to read as the same thing in two places rather than needing the title text alone to make that
+   link. Decorative — the title text still carries the accessible name. */
 .card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-size: var(--text-h4);
   margin: 0;
+}
+
+.card__title-icon {
+  flex-shrink: 0;
+  color: var(--color-accent);
 }
 
 .card__title a {
@@ -455,6 +714,38 @@
   color: #fff;
 }
 
+/* Added 2026-08-20, replacing the on-page filter form: just the result count and the sort
+   control share a row above the card grid, now that filtering itself happens entirely through
+   the "Personalize your recommendations" FAB (DESIGN.md §3.3) rather than a second, on-page
+   copy of the same four questions. */
+.library-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block: var(--space-4);
+}
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+.sort-control select {
+  min-height: var(--target-min);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--text-small);
+}
+
 .results-count {
   font-size: var(--text-small);
   color: var(--color-text-muted);
@@ -465,6 +756,14 @@
   text-align: center;
   background: var(--color-surface);
   border-radius: var(--radius-md);
+}
+
+/* A way back to the doll house, added 2026-08-20, on every page one of its hotspots links to
+   (the improvement pages and the two explainers). Sits with the breadcrumb rather than inside
+   the article, since it is wayfinding, not content — a plain, unconditional link, unlike the
+   dollhouse's own `.back-to-house` control, which only appears while a room is enlarged. */
+.house-return-link {
+  margin-block: var(--space-3) 0;
 }
 
 /* ---------- Header ---------- */
@@ -483,22 +782,35 @@
 }
 
 /* Logo lockup: house icon plus wordmark, one link, one unit. */
-/* One-color lockup: icon and both lines of text share --color-accent. The icon stretches to the
-   full height of the two-line text stack (align-self: stretch, width: auto keeps it square)
-   rather than a fixed pixel size, so it always matches whatever the text block's height is. */
+/* One-color lockup: icon and both lines of text share --color-accent. Revised 2026-08-20: the
+   icon no longer stretches to 100% of the flex row's height. A percentage height against a
+   flex item whose own height is auto is an indefinite size, and with no viewBox or explicit
+   width/height on the <svg> element, browsers fall back to the default replaced-element size
+   (300x150) to work out the flex line's cross size before stretch even applies — so the "icon
+   fills the text stack's height" intent was actually inflating the whole row to a 150px-tall
+   line and rendering the house icon at that size. Fixed by giving the icon a real, calculated
+   height instead: the two text lines' own line-height plus the gap between them, using the same
+   tokens the text uses, so it still tracks the text stack exactly, just without relying on flex
+   stretch resolving through an indefinite/fallback size. */
 .brand {
   display: flex;
-  align-items: stretch;
-  gap: var(--space-1);
+  align-items: center;
+  gap: 0;
   text-decoration: none;
   color: var(--color-accent);
 }
 
 .brand__icon {
-  align-self: stretch;
+  align-self: center;
   width: auto;
-  height: 100%;
+  height: calc(var(--text-h4) * var(--leading-display) + 2px + var(--text-small) * var(--leading-display));
   flex-shrink: 0;
+  /* icon-house's own walls stop at x=21 of its 24-unit viewBox — only the roof's single-point
+     peak reaches nearer the edge — so even a zero flex `gap` still left visible daylight between
+     the icon and the text next to it. This pulls the text in to close that built-in margin,
+     scoped to this lockup rather than redrawing the shared icon-house symbol, which is also the
+     favicon and every doll house hotspot's icon. */
+  margin-right: -6px;
 }
 
 .brand__text {
@@ -512,11 +824,13 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: var(--text-h4);
+  line-height: var(--leading-display);
   color: inherit;
 }
 
 .partner-line {
   font-size: var(--text-small);
+  line-height: var(--leading-display);
   color: inherit;
 }
 
@@ -721,6 +1035,15 @@
 }
 
 /* ---------- Hero: the welcome mat ---------- */
+/* Revised 2026-08-20, twice: the ground plane behind the mat reads as bluestone paving rather
+   than a flat color. First pass was a regular grid of hairline joints (two layered
+   `linear-gradient`s) — corrected the same day to an irregular "crazy paving" joint pattern
+   (real bluestone is cut in asymmetric slabs, not a brick grid), and scaled up so the tiles read
+   proportionate to the mat sitting on them rather than as a fine texture. Built as an inline SVG
+   background — still no image asset, just a vector pattern instead of a gradient one, the same
+   category of technique the icon set and the shoes below already use. Hand-placed joint lines
+   that share the same coordinate at opposite tile edges (e.g. the first path starts and ends at
+   y=80) so the 320px tile repeats seamlessly with no visible seam. Kept subtle (16% opacity). */
 .hero {
   min-height: 85svh;
   display: flex;
@@ -729,23 +1052,60 @@
   justify-content: center;
   gap: var(--space-5);
   padding: var(--space-7) var(--space-5);
-  background: var(--color-hero-ground);
+  background-color: var(--color-hero-ground);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='rgba(20,32,26,0.16)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 85 L65 105 L150 75 L235 118 L320 85'/%3E%3Cpath d='M96 0 L118 64 L75 160 L107 256 L96 320'/%3E%3Cpath d='M0 213 L86 192 L171 235 L256 203 L320 213'/%3E%3Cpath d='M213 0 L235 96 L192 192 L224 288 L213 320'/%3E%3Cpath d='M150 75 L118 64'/%3E%3Cpath d='M171 235 L192 192'/%3E%3Cpath d='M65 105 L75 160'/%3E%3Cpath d='M235 118 L235 96'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 320px 320px;
   text-align: center;
 }
 
 /* The tan rectangle. A fixed aspect-ratio, taller than wide like an actual doormat, so both this
    and the black border inset inside it share the same shape by construction rather than by
-   coincidence of padding math. Sized larger than the first pass. */
+   coincidence of padding math. Sized larger than the first pass. Revised 2026-08-20: the woven
+   crosshatch texture (§11) is removed again — it read as noise rather than fiber at mat size —
+   leaving the flat `--color-mat` fill. `--shadow-mat` (tokens.css) stays, dropping the whole mat
+   so it still reads as an object sitting on the ground plane rather than a flat color field. */
 .hero__mat {
   position: relative;
   width: min(85vw, 40rem);
   aspect-ratio: 4 / 3;
-  background: var(--color-mat);
+  background-color: var(--color-mat);
+  box-shadow: var(--shadow-mat);
+}
+
+/* A pair of shoes left at the door, added 2026-08-20, redrawn the same day as a bird's-eye pair
+   (was a side-profile silhouette) — dark green (--color-accent) with a black outline and white
+   laces, the site's primary interactive color used decoratively here rather than --color-brand,
+   per the request to move off the lighter green. The two sit in a plain flex row inside one
+   rotated container, so they are strictly parallel to each other (zero rotation between them)
+   while the pair as a whole sits at a slight shared angle to the mat, the way a kicked-off pair
+   actually lands rather than being squared up to the border. Anchored to the mat's own
+   bottom-left corner (the mat is `position: relative`), sized up from the first pass so the pair
+   reads as proportionate to the mat rather than a small accent. Decorative: `aria-hidden`, no
+   accessible name needed since nothing here is informational. */
+.hero__shoes {
+  position: absolute;
+  left: -3%;
+  bottom: -3%;
+  display: flex;
+  gap: 3%;
+  width: 15%;
+  transform: rotate(-8deg);
+  transform-origin: bottom left;
+  pointer-events: none;
+}
+
+.hero__shoes svg {
+  width: 48%;
+  height: auto;
+  flex-shrink: 0;
 }
 
 /* Only this border and what's inside it is "the mat" proper. Inset by a fixed margin (not
    padding) from the tan rectangle's edges, so the tan margin is uniform on all four sides and
-   the border keeps close to the outer rectangle's own proportions as the mat scales. */
+   the border keeps close to the outer rectangle's own proportions as the mat scales.
+   Revised 2026-08-20: padding tightened (was --space-6/--space-5/--space-8) so the lettering,
+   also enlarged below, can fill most of the bordered area rather than leaving a wide margin of
+   plain mat inside the border. */
 .hero__mat-border {
   position: absolute;
   inset: var(--space-5);
@@ -754,23 +1114,30 @@
   align-items: center;
   justify-content: center;
   border: 3px solid var(--color-mat-border);
-  padding: var(--space-6) var(--space-5) var(--space-8);
+  padding: var(--space-4) var(--space-4) var(--space-7);
 }
 
 .hero__tagline {
   margin: 0;
-  line-height: 1.15;
+  line-height: 1.05;
   color: var(--color-mat-border);
 }
 
+/* Revised 2026-08-20: both lines sized up again so the lettering takes up the majority of the
+   bordered field instead of leaving it mostly empty tan, following the same overflow-tested
+   approach as the previous two passes (§3.1) — checked at the mat's min and max widths.
+   The clamp's own ceiling (7rem / 3.75rem) is reached at the same ~753px viewport where the
+   mat's own `min(85vw, 40rem)` cap stops growing, so the text does not keep scaling with vw
+   after the bordered field it sits in has stopped, which is what caused the earlier overflow.
+   Floor checked against the 320px zoom/reflow floor DESIGN.md §6 commits to, not only 360px. */
 .hero__tagline-lead {
   display: block;
-  font-size: clamp(2.75rem, 2.1rem + 4vw, 5rem);
+  font-size: clamp(2.5rem, -1rem + 16.5vw, 7rem);
 }
 
 .hero__tagline-rest {
   display: block;
-  font-size: clamp(1.75rem, 1.35rem + 2.25vw, 2.75rem);
+  font-size: clamp(1.5rem, -0.5rem + 8.5vw, 3.75rem);
 }
 
 .hero__note {
@@ -831,7 +1198,14 @@
    button-triggered version: aria-label carries the button's own name ("Show instructions"),
    aria-describedby points at the tooltip text so it is exposed to assistive tech regardless of
    hover state, and the visible reveal is hover/focus like every other tooltip on the site. */
+/* position + z-index added 2026-08-20: the house's roof and rooms are `clip-path`/grid-item
+   descendants of a plain, non-stacking-context ancestor, so without this the help tooltip's own
+   z-index (below) was being compared against them at the document root and losing — the drawing
+   painted over the second line of the tooltip text. Giving this row its own stacking context
+   settles the comparison here instead, where the tooltip unambiguously wins. */
 .section-heading-row {
+  position: relative;
+  z-index: 5;
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -1009,6 +1383,14 @@
   font-size: var(--text-small);
 }
 
+/* Added 2026-08-20: a room whose hotspots are all hidden by personalization (dollhouse.js),
+   distinct from .room--empty above, which means nothing has been drawn for the room at all. */
+.room--filtered-empty .room-hotspots::after {
+  content: "Nothing here for your situation.";
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+}
+
 /* Enlarged room: :has() switches the container from the house grid to a
    big-room-plus-small-strip layout. Pure CSS, no JavaScript. */
 .dollhouse:has(.room:target) {
@@ -1076,9 +1458,6 @@
   box-shadow: var(--shadow-raised);
 }
 
-.info-bar[hidden] {
-  display: none;
-}
 
 .info-bar__heading {
   margin: 0 0 var(--space-2);
@@ -1103,14 +1482,24 @@
 /* ---------- Progress pill ----------
    Revised 2026-08-19: a plain green rounded bar with no visible text by default. The count is
    an aria-label on the pill itself (announced regardless of hover, and present as the static
-   no-JS fallback), plus a hover/focus tooltip for sighted mouse and keyboard use. */
-.progress-bar {
+   no-JS fallback), plus a hover/focus tooltip for sighted mouse and keyboard use.
+   Revised 2026-08-20: the bar now shares a sticky row with the reset button, rather than being
+   the sticky element itself — the row is what stays pinned near the top of the screen, so the
+   button travels with the bar instead of scrolling away from it. */
+.progress-row {
   position: sticky;
   top: var(--space-3);
   z-index: 10;
-  width: 100%;
-  height: 10px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
   margin: 0 0 var(--space-4);
+}
+
+.progress-bar {
+  position: relative;
+  flex: 1;
+  height: 10px;
   background: var(--color-border);
   border-radius: var(--radius-pill);
   cursor: default;
@@ -1147,8 +1536,34 @@
   opacity: 1;
 }
 
+/* Added 2026-08-20: clears every visited spot and re-shows the "Start here" badge, next to the
+   bar it travels with rather than off in a corner of the section — undoing progress is closely
+   tied to the thing that displays it. Round, matching the pill it sits beside, sized to the same
+   44px floor as every other control. */
+.progress-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--target-min);
+  height: var(--target-min);
+  border-radius: 50%;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--motion-duration-base) var(--motion-ease),
+    border-color var(--motion-duration-base) var(--motion-ease),
+    transform var(--motion-duration-base) var(--motion-ease);
+}
+
+.progress-reset:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
 @media (max-height: 480px) {
-  .progress-bar {
+  .progress-row {
     position: static;
     box-shadow: none;
   }
@@ -1274,6 +1689,8 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding-bottom: var(--space-2);
+  margin: 0;
+  list-style: none;
   scrollbar-width: thin;
 }
 
@@ -1284,6 +1701,22 @@
   border-radius: var(--radius-md);
   padding: var(--space-4);
   background: var(--color-bg);
+}
+
+/* Peek variant, added 2026-08-20 for the Improvements page's "Rental basics" row: each slide
+   centers as it snaps, with enough side padding on the track that the next slide stays partly
+   visible rather than fully off-screen — "focuses on one at a time, but the others are visible
+   in the background." Same track/slide markup and scroll-snap mechanics as the plain carousel
+   above, no JavaScript required for the scrolling itself either way. */
+.carousel--peek .carousel__track {
+  padding-inline: 12%;
+  scroll-padding-inline: 12%;
+}
+
+.carousel--peek .carousel__slide {
+  scroll-snap-align: center;
+  flex-basis: 76%;
+  max-width: 26rem;
 }
 
 .carousel__controls {
@@ -1439,6 +1872,13 @@
 /* ---------- Utility layout ---------- */
 .section {
   padding-block: var(--space-7);
+}
+
+/* Added 2026-08-20: "Rental basics" moved to the top of /improvements, in its own tinted band
+   (theme-brand) so it reads as a distinct, secondary section rather than competing with the main
+   card grid below it for attention. */
+.rental-basics h2 {
+  margin-bottom: var(--space-4);
 }
 
 .stack {

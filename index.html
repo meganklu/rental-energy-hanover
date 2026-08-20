@@ -32,7 +32,7 @@
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul>
-        <li><a href="index.html#house" aria-current="page">Home</a></li>
+        <li><a href="index.html" aria-current="page">Home</a></li>
         <li><a href="improvements/">Improvements</a></li>
         <li><a href="your-rights/">Rights and programs</a></li>
         <li><a href="about/">About</a></li>
@@ -53,6 +53,50 @@
         </h1>
         <p class="hero__note">*Rental home</p>
       </div>
+      <div class="hero__shoes" aria-hidden="true">
+        <svg viewBox="0 0 60 150">
+          <path d="M30 3 C48 3 55 20 54 42 C53 62 50 78 47 98 C46 110 43 122 36 133 C33 138 27 138 24 133 C17 122 14 110 13 98 C10 78 7 62 6 42 C5 20 12 3 30 3 Z" fill="var(--color-accent)" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M14 36 Q30 46 46 36" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+          <g stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+            <line x1="17" y1="48" x2="42" y2="62"/>
+            <line x1="43" y1="48" x2="18" y2="62"/>
+            <line x1="18" y1="62" x2="41" y2="76"/>
+            <line x1="42" y1="62" x2="19" y2="76"/>
+            <line x1="19" y1="76" x2="40" y2="90"/>
+            <line x1="41" y1="76" x2="20" y2="90"/>
+            <line x1="20" y1="90" x2="39" y2="104"/>
+            <line x1="40" y1="90" x2="21" y2="104"/>
+          </g>
+          <g fill="#000">
+            <circle cx="17" cy="48" r="2"/><circle cx="43" cy="48" r="2"/>
+            <circle cx="18" cy="62" r="2"/><circle cx="42" cy="62" r="2"/>
+            <circle cx="19" cy="76" r="2"/><circle cx="41" cy="76" r="2"/>
+            <circle cx="20" cy="90" r="2"/><circle cx="40" cy="90" r="2"/>
+            <circle cx="21" cy="104" r="2"/><circle cx="39" cy="104" r="2"/>
+          </g>
+        </svg>
+        <svg viewBox="0 0 60 150">
+          <path d="M30 3 C48 3 55 20 54 42 C53 62 50 78 47 98 C46 110 43 122 36 133 C33 138 27 138 24 133 C17 122 14 110 13 98 C10 78 7 62 6 42 C5 20 12 3 30 3 Z" fill="var(--color-accent)" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+          <path d="M14 36 Q30 46 46 36" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+          <g stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+            <line x1="17" y1="48" x2="42" y2="62"/>
+            <line x1="43" y1="48" x2="18" y2="62"/>
+            <line x1="18" y1="62" x2="41" y2="76"/>
+            <line x1="42" y1="62" x2="19" y2="76"/>
+            <line x1="19" y1="76" x2="40" y2="90"/>
+            <line x1="41" y1="76" x2="20" y2="90"/>
+            <line x1="20" y1="90" x2="39" y2="104"/>
+            <line x1="40" y1="90" x2="21" y2="104"/>
+          </g>
+          <g fill="#000">
+            <circle cx="17" cy="48" r="2"/><circle cx="43" cy="48" r="2"/>
+            <circle cx="18" cy="62" r="2"/><circle cx="42" cy="62" r="2"/>
+            <circle cx="19" cy="76" r="2"/><circle cx="41" cy="76" r="2"/>
+            <circle cx="20" cy="90" r="2"/><circle cx="40" cy="90" r="2"/>
+            <circle cx="21" cy="104" r="2"/><circle cx="39" cy="104" r="2"/>
+          </g>
+        </svg>
+      </div>
     </div>
     <p class="hero__description">
       Learn how to improve energy efficiency in your rental to save money and the environment.
@@ -64,9 +108,14 @@
   </section>
 
   <section class="dollhouse-section page-shell theme-white" id="house" aria-labelledby="house-heading">
-    <div class="progress-bar" id="progress-bar" tabindex="0" aria-label="10 spots to view">
-      <span class="progress-bar__fill" id="progress-fill"></span>
-      <span class="progress-bar__tooltip" id="progress-text" aria-hidden="true">10 spots to view</span>
+    <div class="progress-row" id="progress-row">
+      <div class="progress-bar" id="progress-bar" tabindex="0" aria-label="10 spots to view">
+        <span class="progress-bar__fill" id="progress-fill"></span>
+        <span class="progress-bar__tooltip" id="progress-text" aria-hidden="true">10 spots to view</span>
+      </div>
+      <button type="button" class="progress-reset" id="progress-reset" aria-label="Reset your progress">
+        <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-replay"/></svg>
+      </button>
     </div>
 
     <div class="section-heading-row">

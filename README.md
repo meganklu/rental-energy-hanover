@@ -26,11 +26,13 @@ python3 -m http.server 8000
 
 ## Documents
 
+These documents were created before building the website to define page content, style guidelines, etc. These documents also provide a summary of research and project goals.
+
 Other group members added to a [Google Doc version of the documentation](https://docs.google.com/document/d/1eiVNgDUkBtcGCEB93DDOc_6X1RAz4_LM5rE8SMaJ24s/edit?usp=sharing). Edits were moved to the GitHub repositoriy by Megan.
 
 | File | Purpose |
 |---|---|
-| [docs/](docs/README.md) | Planning & specification documents — **start here** |
+| [docs/](docs/README.md) | Planning & specification documents |
 | [docs/architecture.md](docs/architecture.md) | Stack, hosting, content pipeline, deploy, rollback |
 | [DESIGN.md](DESIGN.md) | Information architecture, visual system, components |
 | [AGENTS.md](AGENTS.md) | Instructions for AI coding agents working in this repo |

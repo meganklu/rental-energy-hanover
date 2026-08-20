@@ -32,6 +32,10 @@ if (fab && dialog && body && "showModal" in dialog) {
         event.preventDefault();
         saveToStorage(situationFromForm(sourceForm));
         dialog.close();
+        // The dialog saves and closes without navigating away, so anything on the current page
+        // that reads the stored situation (the doll house, the library) needs its own signal to
+        // re-check it rather than waiting for a reload that never comes.
+        window.dispatchEvent(new CustomEvent("situationchange"));
       });
 
       loaded = true;

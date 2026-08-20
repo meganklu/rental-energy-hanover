@@ -77,6 +77,9 @@
   /* Elevation: borders do most of the work. Shadows are reserved for raised/sticky states. */
   --shadow-sticky: 0 1px 3px rgba(20, 32, 26, 0.18);
   --shadow-raised: 0 2px 8px rgba(20, 32, 26, 0.12);
+  /* The hero mat's own drop shadow, added 2026-08-20. Heavier than --shadow-raised, so a
+     doormat-sized object reads as sitting on top of the ground plane behind it. */
+  --shadow-mat: 0 14px 28px rgba(20, 32, 26, 0.30), 0 4px 10px rgba(20, 32, 26, 0.22);
 
   /* Motion */
   --motion-fast: 120ms;

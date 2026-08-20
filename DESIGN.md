@@ -1,6 +1,6 @@
 # Design
 
-> **Status:** ● Complete · **Last updated:** 2026-08-19 · **Owner:** Megan
+> **Status:** ● Complete · **Last updated:** 2026-08-20 · **Owner:** Megan
 
 This document covers information architecture, the visual system, and component behavior. It is
 downstream of [docs/audience.md](docs/audience.md) and [docs/content-strategy.md](docs/content-strategy.md),
@@ -86,11 +86,13 @@ Sustainable Hanover page cannot do.
 ├── /improvements                The library. Every improvement, filterable. The direct route
 │   │                            for a student who already knows what they want
 │   └── /improvements/:slug      One improvement: cost, permission, reversibility, steps, sources
-├── /learn                       Explainers, built as flip cards and animated diagrams
+├── /learn                       Deleted 2026-08-20 (§3.4) — no hub page any more. Its two
+│                                 explainers below keep their URLs, now surfaced from
+│                                 /improvements' "Rental basics" instead of a /learn index
 │   ├── /learn/read-your-bill    Enabler. kWh, rate, what is actually driving the bill
 │   ├── /learn/find-your-drafts  Enabler. Guided walkthrough of where heat escapes
-│   ├── /learn/who-pays-for-what Enabler. Finding it in the lease
-│   └── /learn/:slug             Remaining explainers
+│   ├── /learn/who-pays-for-what Enabler. Finding it in the lease. Not yet built
+│   └── /learn/:slug             Remaining explainers, not yet built
 ├── /checklist                   v2. Generated checklist for the student's phase and situation
 ├── /before-you-sign             Hunting and signing. Viewing checklist, what to ask
 ├── /your-rights                 NH heat standard, habitability, who to call. Legal disclaimer
@@ -104,7 +106,13 @@ Sustainable Hanover page cannot do.
 Rooms are fragments of the home page rather than their own URLs. This keeps the doll house in one
 file, makes `/#kitchen` shareable, and lets CSS `:target` enlarge a room with no JavaScript at all.
 `/where-to-get-it` is a single shared page so the five improvements that involve a purchase link to
-it instead of repeating it. See [docs/content-strategy.md](docs/content-strategy.md) §8.
+it instead of repeating it. See [docs/content-strategy.md](docs/content-strategy.md) §8. Revised
+2026-08-20: each of those improvement pages now also carries a one-sentence "Where to get it" line
+inside its own "What you need" section (retailers, plus the fare-free Advance Transit route to
+West Lebanon), rather than a separate trailing paragraph lower on the page — sourcing information
+belongs with the materials list a student is already reading, not after the steps. This is a short
+inline pointer, not a duplicate of the shared page: `/where-to-get-it` remains the fuller reference
+once it is built, per §8 of content-strategy.md.
 
 **Two routes for website navigation.** The doll house is the guided route. It suits a student who does
 not yet know what to ask for, and it hands out information in graduated tiers as they explore. The
@@ -119,9 +127,12 @@ library.
 - **Primary nav items:** Home · Improvements · Rights and programs · About. Revised 2026-08-19:
   "The house" is renamed "Home" and "What you can change" is renamed "Improvements," matching the
   shorter, plainer vocabulary a student arriving from a link would use. `/learn` no longer has its
-  own top-bar slot; its two explainers are reached from `/improvements` instead (a short "Learn"
-  section on that page), alongside `/before-you-sign`, `/where-to-get-it` and `/glossary`, which
-  were already reached from context rather than the top bar. `/checklist` joins them in v2.
+  own top-bar slot; its two explainers are reached from `/improvements` instead, in the "Rental
+  basics" section (§3.4, renamed from "Learn" 2026-08-20), alongside `/before-you-sign`,
+  `/where-to-get-it` and `/glossary`, which were already reached from context rather than the top
+  bar. `/checklist` joins them in v2. Fixed 2026-08-20: "Home" linked to `/#house`, jumping straight
+  past the hero to the doll house on every visit, including a student who followed "Home" wanting
+  the top of the page they are already partway down. It now links to `/`, plain.
 - **Nav layout:** In v1 the four primary items sit inline in the top bar next to the logo lockup
   (house icon plus wordmark), which fits comfortably at the widths v1 targets. Below 600px they
   wrap to a second row and stay visible. The full-screen panel behind a labeled "Menu" button
@@ -154,7 +165,7 @@ student can send a filtered list to a roommate. Rooms serialize as fragments (`/
 | Room, enlarged `/#room` | Show the three or four things worth knowing about in this room | Tap a hotspot | The room box grows out of the doll house. The same hotspots also render as a plain linked list under the drawing, which is the keyboard, screen reader and no-JavaScript path |
 | Situation selector `/start` | Collect the four inputs that change what we recommend | Answer, then "Show what I can do" | Every question has "I am not sure", which widens results rather than blocking. All four questions on one screen in v1. One question per screen arrives with the mobile layouts in the next version. A plain form, so it submits without JavaScript. Revised 2026-08-19: this is now also the one and only situation form on the site — the improvements library filters against the same four answers rather than keeping a second, separate filter form. Reached directly at `/start`, or as a dialog opened by the "Personalize your recommendations" button (§3.3) from any page, with the same markup either way |
 | Improvements library `/improvements` | Let a student scan everything and narrow it to their situation | Open an improvement | The one screen in the site that is a card grid, because it is the complete index and the direct route for a student who already knows what they want. Default sort: enablers first, then impact, then lowest cost. Empty state never dead-ends |
-| Improvement detail `/improvements/:slug` | Get this done today | Follow the steps | Fixed order: title, summary, badges, safety note if any, what you need, steps, where to get it, sources. Visible prose under 200 words. Depth lives in disclosure bars |
+| Improvement detail `/improvements/:slug` | Get this done today | Follow the steps | Revised 2026-08-20: the page runs the full page-shell width rather than being capped at the 40rem content measure top to bottom. Title, summary, badges and facts sit in two columns above 900px, a custom SVG illustration of the improvement beside them (below 900px the illustration drops below the heading block and above "What you need"). A safety note, where the item has one, is pulled out of that two-column block into its own full-width band directly beneath it — safety does not share space with the illustration, revised again 2026-08-20 after the first pass put it in the text column. What you need, steps, where to get it (folded into "what you need" rather than a trailing paragraph), why this works and savings (now full-width story bars, §5.1), sources. Visible prose under 200 words still applies to the steps and what-you-need column, which keeps the 40rem measure |
 | Explainer `/learn/:slug` | Correct one wrong idea, fast | Flip the cards, then go do the improvement | Built as flip cards and an animated diagram rather than paragraphs. Every explainer carries one diagram that shows the mechanism, for example where heat leaves a room. See §5.1 |
 | Checklist `/checklist` | Take a list away and act on it over a week | Print, or copy as text to send to roommates | **v2**, cut from v1 per [docs/features.md](docs/features.md) §3. State is local to the browser. Nothing is submitted anywhere |
 | Rights `/your-rights` | Find out whether 58°F is legal and who to call | Reach a real help resource | Legal disclaimer at the top, never collapsed. No advice on a specific dispute |
@@ -194,7 +205,15 @@ the first pass sized "Welcome" wide enough to overflow the mat at some widths, s
 ceiling was pulled back — too far back, leaving empty space inside the border once the mat grew
 to its landscape `4:3` shape (below). Revised a third time 2026-08-19: both lines sized back up so
 the heading fills the width the border actually has at the mat's new, larger dimensions, without
-reopening the original overflow.
+reopening the original overflow. Revised a fourth time 2026-08-20, sized up again so the lettering
+fills the majority of the bordered field rather than leaving it mostly plain tan: both lines now
+use a two-point `clamp()` fit to the border's actual content width at two measured anchors — the
+320px zoom/reflow floor DESIGN.md §6 commits to, and 753px, the viewport width where the mat's own
+`min(85vw, 40rem)` cap stops growing. The clamp's outer ceiling is reached right around that same
+753px point, so the text stops scaling with `vw` exactly when the bordered field it sits in stops
+growing too, which is what the third pass's overflow was actually caused by (text kept scaling
+past the point the mat's width had already capped). Checked with no overflow at 320, 360, 400, 480,
+600, 753, 900, 1280 and 1920px.
 
 **Layout, revised 2026-08-19: what "the mat" actually is.** Only the text and its border are the
 mat — earlier language that called the whole hero band the mat was imprecise. From the outside in:
@@ -204,16 +223,41 @@ mat — earlier language that called the whole hero band the mat was imprecise. 
    Background color has moved twice: `--color-bg` (white) at first, then light green
    (`--color-surface-brand`), now a bluestone grey (`--color-hero-ground`, new token, added
    2026-08-19) — a cool, muted stone tone behind the mat, the way an entryway paver reads behind
-   an actual doormat. Not tan — the tan is the mat's alone.
-2. The mat rectangle: a `--color-mat` (tan) box, centered in the hero, deliberately plain for now
-   (no woven texture — see the open question in §11). Revised 2026-08-19: sized larger overall (a
-   real doormat is a substantial object on the page, not a small card), on a fixed `aspect-ratio`
-   so its proportions are exact and reproducible rather than an incidental result of a width and a
-   min-height. Revised again 2026-08-19, twice: the first pass ran portrait (taller than wide,
-   4:5) on the reasoning that "taller" meant more height than the original flat banner; corrected
-   to landscape `4:3`, actual door-mat proportions (wider than tall). The width cap also grows
-   from `min(90vw, 32rem)` to `min(85vw, 40rem)` — the earlier cap read as small on a wide window,
-   and the hero should use more of the available width.
+   an actual doormat. Not tan — the tan is the mat's alone. Revised 2026-08-20, twice: the ground
+   plane first got a regular grid of hairline joints (two layered `linear-gradient`s), corrected
+   the same day to an irregular "crazy paving" joint pattern — a real bluestone patio is cut in
+   asymmetric slabs, not a brick grid — built as an inline SVG background `<pattern>` (still no
+   image asset, a vector pattern rather than a gradient one) with joint lines hand-placed to share
+   the same coordinate at opposite tile edges so the 320px tile repeats with no visible seam, and
+   scaled up so the tiles read proportionate to the mat sitting on them rather than as a fine
+   texture underneath it. Kept subtle (16% opacity).
+2. The mat rectangle: a `--color-mat` (tan) box, centered in the hero. Revised 2026-08-19: sized
+   larger overall (a real doormat is a substantial object on the page, not a small card), on a
+   fixed `aspect-ratio` so its proportions are exact and reproducible rather than an incidental
+   result of a width and a min-height. Revised again 2026-08-19, twice: the first pass ran
+   portrait (taller than wide, 4:5) on the reasoning that "taller" meant more height than the
+   original flat banner; corrected to landscape `4:3`, actual door-mat proportions (wider than
+   tall). The width cap also grows from `min(90vw, 32rem)` to `min(85vw, 40rem)` — the earlier cap
+   read as small on a wide window, and the hero should use more of the available width. Revised
+   2026-08-20, twice: first added a woven coir/coconut crosshatch texture (§11) and a drop shadow
+   (`--shadow-mat`, tokens.css); the crosshatch was reverted the same day — at the mat's actual
+   rendered size it read as visual noise rather than fiber — leaving the flat tan fill, while
+   `--shadow-mat` stays, so the mat still reads as an object resting on the ground plane rather
+   than a flat color field.
+   **The shoes,** added 2026-08-20, redrawn the same day. First pass was a side-profile
+   silhouette pair in `--color-brand` (the decorative-only bright green); redrawn as a bird's-eye
+   pair instead — the view actually available looking down at a doormat — in `--color-accent`
+   (the site's primary green, moved off the lighter decorative one on request) with a black
+   outline and white crossed-lace detail over black eyelets, the small palette a real sneaker's
+   sole/upper/lace contrast actually has. The two `<svg>` shoes sit in one shared flex row inside
+   a single rotated container (`.hero__shoes`), so the pair is strictly parallel to itself — zero
+   rotation between the two shoes — while the row as a whole tilts slightly against the mat, the
+   way a kicked-off pair actually lands rather than squaring up to the border. Sized up from the
+   first pass (and the first redraw, which came out badly oversized — a 60:150 top-down viewBox is
+   2.5:1 tall, and sizing the container by width alone without rechecking the resulting height sent
+   the pair towering up over the mat's own text before the sizing was corrected) so the pair now
+   reads as proportionate to the mat rather than a small accent in its corner. Decorative and
+   `aria-hidden` throughout — nothing here is informational, so nothing needs an accessible name.
 3. The black border: a `--color-mat-border` rule, inset from the tan rectangle's edges by a fixed
    margin on all four sides (`inset:`, not padding) so a strip of tan shows *outside* the border
    all the way around and the border keeps close to the tan rectangle's own aspect ratio rather
@@ -223,7 +267,7 @@ mat — earlier language that called the whole hero band the mat was imprecise. 
    — mimicking where a mat's fine print actually sits.
 
 The description sentence and the scroll arrow sit centered below the mat rectangle, outside it
-entirely, on the hero's own light green background.
+entirely, on the hero's own bluestone ground plane.
 
 **The scroll arrow.** A real anchor, `<a href="#house">`, carrying the arrow icon and a visible
 text label reading "Take a look inside". It is 44×44px at minimum, sits in the tab order directly
@@ -247,6 +291,15 @@ name) so the callout opens on keyboard focus as well as mouse hover, and its tex
 the DOM either way — this is instructions for a novel interaction, not load-bearing content, so
 hiding it by default is a legibility win as long as finding it stays a single, obvious step next
 to the heading it explains.
+
+**Fixed 2026-08-20: the open tooltip was rendering behind the roof.** The tooltip carries its own
+`z-index`, but the roof it was losing to (`.dollhouse__roof`) is drawn with `clip-path`, which
+establishes a stacking context of its own the moment it's set — confirmed empirically (stripping
+the roof's `clip-path` made the tooltip render correctly on top, at any `z-index` value), not just
+a paper stacking-order read. The fix gives `.section-heading-row`, the tooltip's own ancestor, an
+explicit stacking context (`position: relative; z-index: 5`) so the comparison resolves there,
+above the drawing, instead of being decided by how the grid's `clip-path` descendants happen to
+stack at the document root.
 
 **What is drawn.** A doll house. The front wall is removed and all six rooms are visible at once,
 each one a box on a two-story frame, with a basement below. Flat front-on elevation, no
@@ -359,6 +412,38 @@ present in the markup, is "Everything in this house", a list of every room with 
 ordinary links. That list is the screen reader path, the no-JavaScript path, and the layout below
 600px, which makes it the zoom path too. It is never hidden with `display: none` at any width where the drawing is interactive.
 
+**Personalization now actually filters the house, added 2026-08-20.** "Personalize your
+recommendations" (§3.3) previously only ever reached the situation form itself — the stored
+answer changed nothing about what the house showed. It now hides whichever hotspots the stored
+heat type and who-pays answer rule out, reading `content/improvements.json` and running the same
+`matchesFilters` logic the library (§3.4) filters with, so the two stay consistent with each
+other rather than developing their own separate rules. This is the reversal recorded in §11:
+earlier v1 planning called for dimming a non-applicable hotspot with a text reason rather than
+hiding it, and usability judgment moved to hiding once it was actually built — "only show the
+relevant recommendations," full stop, reads clearer on a drawing already carrying ten hotspots
+than a dimmed one a student has to read the reason for to rule out. `hidden` rather than a class
+and `opacity`, so it leaves the accessibility tree as well as the visible drawing. The "Everything
+in this house" list is filtered the same way, entry for entry, and a room whose hotspots are all
+hidden by the current situation shows "Nothing here for your situation." in place of them —
+worded differently from "Nothing to check in this room yet." (`.room--empty`), which means the
+room has no content built for it at all, a different fact. The progress pill's own count
+recalculates to the number of currently-visible spots, so "you have viewed 3 of 10" becomes "3 of
+4" rather than staying pinned to a denominator the student cannot fully reach. None of this needs
+a page reload: the personalize dialog (§3.3) saves and closes in place, so it fires a
+`situationchange` event the house listens for and re-filters against immediately. With JavaScript
+off, there is no way to set a situation in the first place, so every hotspot and every list entry
+simply stays visible — the same fail-open behavior the rest of this file already leans on (a
+missing content-index fetch falls back to the hotspot's own plain link, for instance).
+
+**A way back, added 2026-08-20.** Every page a hotspot links to — the eight improvement pages and
+the two explainers — now carries a plain "Back to the house" link next to its breadcrumb,
+`../../index.html#house`. It is wayfinding, not page content, so it sits outside the article
+rather than inside it, and it is unconditional: it does not try to detect whether the student
+actually arrived from the house before showing itself, which would need a referrer check this
+site's no-build-step, script-optional posture does not want to depend on. A student who arrived
+some other way gets a harmless, always-correct way to the house rather than a link that
+sometimes fails to appear.
+
 **Accessibility.** The doll house is a list of rooms in the markup, positioned by CSS, so tab order
 runs room by room in visual order and each room carries an accessible name and a hotspot count.
 Each hotspot is a `<button>` or `<a>` with a real accessible name ("Living room window: Sealing
@@ -382,6 +467,27 @@ reaches the viewport, then becomes sticky near the top of the screen — with a 
 flush against the very top edge — for as long as that section is in view, and scrolls away
 normally once the student moves past it. It never claims header space on a screen the student has
 not reached the house on yet.
+
+**The fill is capped at 100%, fixed 2026-08-20.** `TOTAL` (the denominator) can shrink after
+personalization (§3.2's own "Personalization now actually filters the house") narrows which spots
+currently apply, and a spot visited before that narrowing stays counted as visited — so
+`visited.size` can end up larger than the new `TOTAL` (6 of 3, say). The percentage that drives
+the fill's width is clamped at 100 for exactly that case: the bar answers "how much of what's
+relevant right now have you seen," which tops out at fully relevant, not at some width past the
+end of the track. The spelled-out count ("You have viewed 6 of 3 spots") is left honest rather
+than also clamped — the bar's width and its text are allowed to say different things, since the
+text is precise, and the bar is closer to a `min-width: 0` progress indicator than a fraction.
+
+**Reset, added 2026-08-20.** A round icon button (the same `icon-replay` glyph the animated
+diagram's replay control uses, §5.1) sits to the right of the pill, inside a shared sticky row
+(`.progress-row`) — the pill itself is no longer the sticky element, the row is, so the button
+travels with the bar instead of being left behind when the page scrolls. Clicking it clears
+`visitedSpots` (`sessionStorage`), removes every hotspot's visited state and "Viewed" accessible-
+name prefix, drops any "Next" badge left on the drawing, and restores the "Start here" badge on
+the bill hotspot — the one badge `refreshVisitedStyling` deletes outright rather than just hiding
+once visited, so reset recreates it from scratch rather than un-hiding something already there.
+Closes an open info bar too, if one is open, since it could be showing a spot reset just put back
+into its unvisited state.
 
 **Weight.** The doll house structure is CSS and HTML, not an SVG payload, so its cost is the
 shared component stylesheet rather than a per-page asset. Each hotspot's icon is a small `<use>`
@@ -433,6 +539,79 @@ Improvements library row of §3's key-screens table. There is no second, separat
 **Without JavaScript.** The button is a real link to `/start`. Clicking it navigates there, the
 same four-question page as always, which still submits as a plain GET with JavaScript off. The
 dialog is pure enhancement on top of that link, not a replacement for it.
+
+### 3.4 The improvements library (revised 2026-08-20)
+
+`/improvements` carried a second, on-page filter form (heat type, who pays, landlord permission)
+from v1's first pass, duplicating the one four-question form §3.3 already commits to being the
+site's only situation form. It is removed. Filtering is now driven entirely by the same stored
+situation the FAB and the doll house (§3.2) read, through the same `matchesFilters` function —
+one filtering rule, everywhere it applies, rather than three components that could each drift.
+Landlord permission is no longer a filter dimension here at all, since the situation form never
+collected a permission preference to filter by.
+
+**What the page opens with.** No description paragraph above the grid — "Every improvement on
+the site, filterable by..." was explaining a mechanism (the removed form) rather than telling a
+student something they needed, and DESIGN.md's own content rules (§8) already treat an
+over-explaining sentence like that as a page's word budget spent on nothing. A `library-toolbar`
+row above the grid instead holds two things: the result count (`aria-live`, unchanged in spirit
+from the original "Showing X of Y" behavior, now actually reachable — it never had a live source
+to react to before this revision, since the on-page form and the stored situation were two
+different things) and a sort control.
+
+**Sort control, added 2026-08-20.** A plain `<select>`, four options: Recommended (impact, then
+cost — the existing default order), Lowest cost, Shortest time, Highest impact. `assets/js/
+filter-logic.mjs` exports these as `SORTERS`, alongside the `compareItems` function it already
+exported (kept under both names, so nothing that already imported `compareItems` needed to
+change). A native select rather than a custom control: keyboard and screen-reader behavior come
+free, and a sort-order choice does not need the visual weight a custom widget would carry.
+
+**Cards now carry the full spec, not one permission pill.** Revised 2026-08-20: each card's badge
+row and fact row are now identical in shape to what the doll house's info bar (§3.2) shows for
+the same item — both permission and reversibility badges, and the cost, time and impact facts —
+rather than a single "No permission needed"-style pill standing in for all of it. A student
+scanning the library now gets the same tier-2 depth the house already gives, not a shallower
+version of it just because they arrived by the direct route instead of the guided one. Each
+card's title also carries the same object icon its doll house hotspot uses (`icon-window`,
+`icon-thermostat`, and so on) immediately to its left, decorative and `aria-hidden`, so a card and
+its hotspot read as the same thing encountered by two different routes, per §2's "both reach the
+same content items" rule.
+
+**"Rental basics," moved to the top, added 2026-08-20.** The two explainer topics
+(`read-your-bill`, `find-your-drafts`) previously sat in a "Learn" section below the main grid,
+titled "Learn" with a "Short explainers that correct one wrong idea at a time" subhead and a
+per-card "Start here" / "Enabler" tag. Renamed "Rental basics," moved above the main grid in its
+own `theme-brand` tinted band so it reads as a distinct, secondary entry point rather than
+competing with the improvement cards for attention, and the section-level label and per-card tags
+are dropped — the heading "Rental basics" already says what the section is without a subhead
+restating it, and "Renter basics" (the badge already used for these items in the doll house info
+bar, §3.2) now does the job "Start here" and "Enabler" were each doing differently per card.
+Built as `.carousel--peek`: each slide scroll-snaps to center with the track padded so a
+neighboring slide stays partly visible — "focused on one, the others visible in the background,"
+scrollable with no JavaScript needed for the scrolling itself, same mechanism as the `.carousel`
+component §5.1 already specifies. Prev/next controls and a "1 of 2" counter are deferred: with
+only two slides, both already show at least partially via the peek at once, so a separate control
+would be redundant until the section holds enough items that it stops being true.
+
+**The `/learn` hub page is deleted, added 2026-08-20.** Its own nav slot was already removed
+2026-08-19 (§2); the page itself sat unlinked from anywhere on the site until this revision
+surfaced its two explainers through "Rental basics" instead. `/learn/read-your-bill/` and
+`/learn/find-your-drafts/` are not deleted — only the index that listed them — so their URLs are
+unchanged, and their breadcrumbs, which read "Learn / Read your bill" against the now-gone hub,
+now read "Improvements / Read your bill" against the section that actually surfaces them.
+
+**A latent bug this surfaced, fixed 2026-08-20, not specific to the library.** Setting an
+element's `hidden` attribute did nothing on this site for any element whose own component rule
+sets `display` — `.card`, `.hotspot`, and others — because that rule and the browser's built-in
+`[hidden] { display: none }` rule have equal specificity, and an author style beats a
+user-agent style on a tie regardless of which one seems more specific to a reader. `.info-bar`
+had already accumulated its own one-off `.info-bar[hidden] { display: none }` fix for exactly
+this; the doll house's new personalization filtering (§3.2) hit the same failure on `.hotspot`,
+which is what surfaced it. Fixed once, generally: `base.css` now carries a `[hidden] { display:
+none !important; }` reset, and the one-off `.info-bar` rule is removed as redundant. The
+`!important` is deliberate here — it enforces what the `hidden` attribute already promises
+semantically, for every element on the site, rather than patching each component rule that sets
+`display` one at a time as each one happens to get caught by it.
 
 ## 4. Visual system
 
@@ -546,7 +725,31 @@ pages carry six to ten headings each, so the scale is compressed.
 - **Elevation:** Borders instead of shadows. Two shadow tokens: `--shadow-sticky`
   (`0 1px 3px rgba(20, 32, 26, 0.18)`) for the sticky bars, and `--shadow-raised`
   (`0 2px 8px rgba(20, 32, 26, 0.12)`) for an open info bar and a flipped card, so the raised state
-  is visible without relying on the flip animation to communicate it.
+  is visible without relying on the flip animation to communicate it. A third, `--shadow-mat`
+  (added 2026-08-20), is heavier again and scoped to the hero mat alone — see §3.1.
+
+**Badges, revised 2026-08-20.** Every `.badge` variant (the three permission states, reversible,
+and the "Renter basics" neutral variant) now carries the same 1px border in its own text color, on
+top of its own tinted background. Previously only the reversible and basics variants had a border;
+the three permission-status fills did not, so the same pill component read as two visually
+different things depending on which status it stated. One consistent shape now: tint, border,
+icon, text, everywhere a badge appears — improvement pages, cards, and the doll house info bar all
+read `.badge` from the same rule.
+
+**Impact rating, revised 2026-08-20.** The gauge icon (`icon-impact` in the sprite) now has three
+dedicated variants — `icon-impact-low`, `-medium`, `-high` — with the needle drawn at a different
+position on the dial per level, rather than every impact rating showing the identical glyph. Used
+on improvement pages and the library (§3.4), and read by `assets/js/dollhouse.js` for the doll
+house info bar, so the icon matches the stated level everywhere impact is shown.
+
+**Price dollar scale, added 2026-08-20, corrected the same day.** A row of three small
+dollar-sign glyphs (`.price-dollars`, reusing `icon-cost`) fills left to right by cost band — free
+fills none, under25 fills one, 25to75 fills two, over75 fills all three — echoing the familiar
+$/$$/$$$ price-tier convention. First built next to the impact gauge, filling by impact level,
+which read backwards the first time anyone other than the person who built it looked at it: more
+dollar signs next to an impact rating reads as "this claims to save more," not "this costs more."
+Moved to sit with the cost fact it was always meant to describe. Decorative and `aria-hidden`
+either way: the visible cost text ("Under $25") is the accessible name.
 
 ### Iconography
 
@@ -614,13 +817,16 @@ to be better than.
 | Room box | One room in the house, and the enlarged view of it | small (in the house), enlarged (`:target`), focused, empty (no hotspots apply to this student) |
 | Next spot control | Carries the guided order from one info bar to the next | default, focus-visible, last spot, removed once all spots are seen (revised 2026-08-19, was a relabeled state) |
 | Back to the house | Returns from an enlarged room to the full view | default, focus-visible |
-| Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker), dimmed (does not apply to the student's situation, with a text reason), 44px hit area |
+| Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker), hidden (does not apply to the student's situation — reversed 2026-08-20, was dimmed with a text reason, see §3.2), 44px hit area |
 | Info bar | Opens under the drawing with the short answer | closed, opening, open, empty, error, no JavaScript (becomes a link) |
 | Flip card | Flashcards for myths and definitions | front, back, focus-visible, reduced motion. Spec in §5.1 |
 | Carousel | Ordered walkthroughs and before-and-after pairs | first, middle, last, keyboard, no JavaScript. Spec in §5.1 |
 | Animated diagram | Shows a mechanism the student cannot see, for example where heat leaves a room | static (first frame), playing, finished, replay, reduced motion, no JavaScript. Spec in §5.1 |
-| Sticky progress bar | Progress through the house, and position within a long page | at rest, condensed, unstuck on short viewports, no JavaScript |
-| Disclosure bar | "Why this works", "What if my landlord says no", "How we know this" | closed, open, focus-visible, deep-linked open |
+| Sticky progress bar | Progress through the house, and position within a long page | at rest, condensed, unstuck on short viewports, no JavaScript. Fill capped at 100% regardless of the raw ratio (added 2026-08-20) |
+| Progress reset (added 2026-08-20) | Clears visited state and restores "Start here," sitting in the same sticky row as the progress bar | default, hover, focus-visible |
+| Disclosure bar | "What if my landlord says no", "How we know this" | closed, open, focus-visible, deep-linked open |
+| Story bar (added 2026-08-20) | "Why this works" and "Savings" on an improvement page — a full-width, always-open band, heading on one side at a larger size, body on the other. `.story-bar--reverse` swaps which side is which. Spec in §5.1 | default, parallax entrance running, held still (reduced motion or `animation-timeline: view()` unsupported), off below 600px |
+| Improvement illustration (added 2026-08-20) | A custom SVG depicting the specific improvement, beside the heading block on a wide screen, below it on a narrow one. Decorative — the page's prose carries the information, the drawing carries the "what does this look like" | single static state, no motion |
 | Improvement card | The unit of the library only | default, hover, focus-visible, visited, filtered-out (removed rather than dimmed) |
 | Permission badge | States `landlordPermission`, three variants | three variants, each with icon and text, inline and card sizes |
 | Reversibility badge | States `reversible` in move-out terms | three variants |
@@ -743,12 +949,54 @@ from the messaging.
 
 - Native `<details>` and `<summary>`, styled as a full-width bar, minimum 48px tall, with a chevron
   that rotates. No JavaScript.
-- The label says what is inside. "Why this works", "What if my landlord says no", "How we know
-  this". Never "More" and never "Read more".
+- The label says what is inside. "What if my landlord says no", "How we know this". Never "More"
+  and never "Read more".
 - Open state is deep-linkable, so a link can point at an opened section.
 - One level of nesting only. A disclosure inside a disclosure is a sign the page needs splitting.
 - **Never used for:** safety notes, permission status, reversibility, cost and time, or the three
   standing disclaimers. Those are always visible on the page.
+
+**Story bar, added 2026-08-20, restyled the same day.** "Why this works" and "Savings" on an
+improvement page. A deliberate exception to the disclosure-bar-by-default rule above: both are
+short (two or three sentences), both are the connective explanation a student reads right after
+the steps rather than optional depth, and hiding either behind a closed `<summary>` was costing
+more clicks than the length justified. Full-width, always open, two columns, on a tinted
+(`--color-surface`) background — the same tint cards and info bars already use — so the pair reads
+as a distinct band against the plain-white "What you need"/Steps sections around it.
+
+- Two-column grid: the heading takes one side, the body sits in the other. `.story-bar--reverse`
+  swaps which side is which — "Why this works" runs heading-left, "Savings" runs heading-right —
+  so the two read as a matched, alternating pair down the page rather than two copies of the same
+  layout. Below 700px both stack, heading first.
+- **The heading is sized well past a normal `<h1>`,** revised 2026-08-20 (was `--text-h1`): a
+  dedicated clamp up to 4.25rem, since this is the one heading on an improvement page allowed to
+  dominate — nothing else competes with it for size inside the band that exists to carry exactly
+  these two headings. Padding grew to match (`--space-8` block, up from `--space-6`), so the band
+  reads as genuinely taller, not just differently colored.
+- **The two bars touch,** added 2026-08-20: no margin between "Why this works" and "Savings," a
+  shared border (`.story-bar + .story-bar` drops its own top border, since the first bar's bottom
+  border already draws the line between them) so the pair reads as one continuous two-part band
+  rather than two separate bars with a gap.
+- **Parallax/entrance drift, gated exactly like every other ambient motion in this document
+  (§7):** behind `@supports (animation-timeline: view())`, since `view()` timelines are a
+  progressive enhancement; off under `prefers-reduced-motion: reduce` or the footer switch; off
+  below 600px, alongside the rest of the site's parallax (§6). Each side drifts in from a slight
+  horizontal offset (opposite offsets on the two sides) as the bar crosses the viewport — a few
+  pixels of travel, well under the 20% cap §7 sets for a continuously-running scroll-linked layer,
+  because this is a one-time entrance rather than a loop. `view()` rather than the `scroll()`
+  timeline the rest of §7 specifies: `scroll()` ties an element's animation to the whole
+  document's scroll distance, which suits a layer that runs the length of a page; `view()` ties it
+  to the element's own transit through the viewport, which is the better fit for one self-contained
+  band animating once as it arrives. Same `@supports`-guarded, reduced-motion-first philosophy
+  either way. **Fixed 2026-08-20: opacity dropped from the keyframes entirely, transform-only
+  now.** A `view()` timeline that never advances — a short viewport, an engine that only partially
+  implements the spec — used to leave the heading and body stuck at 30% opacity, found by actually
+  screenshotting the page rather than assumed away, and a direct violation of §7's own "freeze
+  anything at any point and the screen still makes sense" rule. A transform stuck mid-range still
+  leaves fully legible, full-contrast text, offset by at most 14px; only opacity's failure mode was
+  unsafe, so only opacity was removed.
+- Never carries a number or a claim that is not already stated in the plain-text sources block —
+  same rule as everywhere else content presents a figure (§8).
 
 ## 6. Responsive behavior
 
@@ -1008,7 +1256,34 @@ credit has to survive that move.
   house-width short of the full 24 units each direction) so the bounding box and the visible
   glyph are close enough that stretching the box to text height reads as matching the glyph to
   text height. Width is not set explicitly — `width: auto` alongside the fixed height keeps the
-  icon's own proportions as its rendered size changes, rather than distorting it.
+  icon's own proportions as its rendered size changes, rather than distorting it. Revised a fifth
+  time 2026-08-20: the icon was still rendering far larger than the text stack, and the cause
+  turned out to be upstream of every previous pass — `.brand__icon` sized itself with
+  `height: 100%` against `.brand`, a flex row whose own height is `auto`. A percentage height
+  against an indefinite parent is itself indefinite, and with no `viewBox` or explicit
+  width/height on the `<svg>` element, browsers fall back to the default replaced-element size
+  (300×150) to work out the flex row's hypothetical cross size before stretch alignment even
+  applies — so the row, and the icon inside it, were resolving to a 150px-tall line regardless of
+  how large the two-line text stack actually was (measured: 150px against a real text-stack height
+  of about 55px). Separately, `.wordmark` and `.partner-line` were inheriting the body's 1.65
+  line-height rather than the display value, inflating the text stack's own height too. Both are
+  fixed together: the two spans now set `line-height: var(--leading-display)` explicitly, and
+  `.brand__icon` sizes itself with a calculated height (the two text lines' line-heights plus the
+  gap between them, using the same tokens the text uses) instead of a percentage stretch, so it
+  tracks the text stack by computation rather than by a flex-stretch mechanism that depended on an
+  indefinite parent size. Revised a sixth time 2026-08-20: the gap between the icon and the text
+  stack, `.brand`'s own `gap`, was still reading as loose once the icon was sized correctly —
+  dropped from `--space-1` (4px) to a flat 2px, off the spacing scale deliberately, since the
+  lockup is meant to read as one mark rather than two elements with visible daylight between them,
+  and no token on the 4px scale sits usefully below 4px. Revised a seventh time 2026-08-20: even
+  at zero `gap`, daylight remained, and this time the `gap` value was not the cause — measuring
+  the rendered boxes directly showed the icon and text bounding boxes were already touching (0px
+  apart) while a visible gap still read on screen. The cause is inside `icon-house` itself: its
+  walls (the rect-like block, the shape's real visual mass) stop at x=21 of the symbol's 24-unit
+  viewBox, and only the roof's single-point peak reaches nearer the edge, so the icon's own
+  bounding box carries built-in empty space on its right side no flex `gap` can close. Fixed with
+  `margin-right: -6px` on `.brand__icon`, scoped to this lockup rather than redrawing the shared
+  `icon-house` symbol, which is also the favicon and every doll house hotspot that reuses it.
 - **Footer, every page:** "Project created in partnership with Sustainable Hanover, a committee of the Town of Hanover, New
   Hampshire", their logo at a fixed height, a link to their site, and the contact address
   sustainablehanovernh@gmail.com. Also the site-wide last-reviewed date and a link to the
@@ -1026,11 +1301,11 @@ credit has to survive that move.
 | Question | Options | Decision | Date |
 |---|---|---|---|
 | Who draws the doll house and the 22 icons, and by when? This is the critical path into the 2026-08-19 build week | One person owns illustration / split by room / ship empty labeled room boxes first and add the contents as they are drawn | | |
-| The hero mat is a flat tan with a black border, deliberately undecorated for now. Does it stay this plain, or get a woven coir texture (CSS repeating-gradient crosshatch, no image asset) later? | Keep it flat, as specified 2026-08-19 / add a woven texture pass once the flat version has been reviewed | Flat for now | 2026-08-19 |
+| The hero mat is a flat tan with a black border. Does it stay this plain, or get a woven coir texture (CSS repeating-gradient crosshatch, no image asset) later? | Keep it flat / add a woven texture pass | Tried the crosshatch 2026-08-20, reverted the same day — read as noise at the mat's actual size. Flat tan, plus `--shadow-mat` and a pair of shoes at the corner (§3.1) | 2026-08-20 |
 | The doll house is an example residence, and nothing on the page says so. Do students read it as a generic teaching house, or do they expect it to match their own unit? | Leave it implicit, as specified, and watch for the misread in usability round 2 / add a line under the drawing if it confuses anyone / draw a second, apartment-shaped arrangement | Implicit, carried by context and the simplified illustration | 2026-08-19 |
 | Is the guided order advisory or does anything enforce it? | Advisory, as specified. Nothing locks / gate tier 3 until tier 2 is seen | Advisory | 2026-08-18 |
 | Ten hotspots in v1, or fewer done better? | 10 as listed in §3.2 / 6 covering only the Must topics | | |
-| Does a hotspot that does not apply to the student's situation dim, disappear, or stay with a reason? | Dim with a text reason, as specified / hide / no change | Dim with a reason, pending usability testing | 2026-08-18 |
+| Does a hotspot that does not apply to the student's situation dim, disappear, or stay with a reason? | Dim with a text reason, as specified / hide / no change | Hide — reversed 2026-08-20, see §3.2 | 2026-08-20 |
 | Mobile layouts are deferred to v2, and [docs/audience.md](docs/audience.md) §8, context of use, is still unwritten. If interviews show students reach this at 11pm on a phone, does the v2 date need to move ahead of everything else in the backlog? | Hold the deferral and revisit after Round 1 interviews / pull basic mobile layouts into v1 and cut a feature to pay for it | Deferred, pending §8 of audience.md | 2026-08-19 |
 | When the doll house does get a phone design in v2, does it become a two-column grid of room boxes or stay the room list? | Two-column grid / room list below 400px / test both | | |
 | Is `animation-timeline: scroll()` support wide enough in August 2026 for the scroll-expanding bands, given no build step and no polyfill? | Ship behind `@supports`, as specified / drop the pattern / static diagrams only | Behind `@supports` | 2026-08-18 |

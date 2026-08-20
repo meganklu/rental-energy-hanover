@@ -3,6 +3,7 @@
 
 export const IMPACT_RANK = { enabler: 0, high: 1, medium: 2, low: 3 };
 export const COST_RANK = { free: 0, under25: 1, "25to75": 2, over75: 3 };
+export const TIME_RANK = { under30min: 0, "1to2hr": 1, afternoon: 2, contractor: 3 };
 
 export function matchesFilters(item, filters) {
   if (!item) return false;
@@ -30,3 +31,13 @@ export function compareItems(a, b) {
   const costB = COST_RANK[b?.cost] ?? 9;
   return costA - costB;
 }
+
+// Named sort orders for the library's sort control (F2). "recommended" is compareItems above,
+// kept under both names so existing callers and tests that import compareItems directly still
+// work unchanged.
+export const SORTERS = {
+  recommended: compareItems,
+  costLow: (a, b) => (COST_RANK[a?.cost] ?? 9) - (COST_RANK[b?.cost] ?? 9),
+  timeShort: (a, b) => (TIME_RANK[a?.time] ?? 9) - (TIME_RANK[b?.time] ?? 9),
+  impactHigh: (a, b) => (IMPACT_RANK[a?.impact] ?? 9) - (IMPACT_RANK[b?.impact] ?? 9),
+};

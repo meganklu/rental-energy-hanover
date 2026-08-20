@@ -1,34 +1,27 @@
-// The improvements library filter, F2 in features.md. Every card already exists in the page at
-// load — this reads content/improvements.json for the structured fields, then shows, hides and
-// reorders the cards already in the DOM. It never rebuilds the list from JSON, so the page is a
-// complete library with JavaScript off. Guarded on the elements it needs.
+// The improvements library filter and sort, F2 in features.md. Every card already exists in the
+// page at load — this reads content/improvements.json for the structured fields, then shows,
+// hides and reorders the cards already in the DOM. It never rebuilds the list from JSON, so the
+// page is a complete library with JavaScript off.
+//
+// Revised 2026-08-20: the on-page filter form is gone. The "Personalize your recommendations"
+// FAB was always meant to be the one situation form site-wide (DESIGN.md §3.3) — the library
+// having its own second copy was the thing DESIGN.md's own 2026-08-19 revision note says it
+// removed, but the library's filtering never actually got switched over to read the stored
+// situation instead. It does now, via the same matchesFilters the doll house's personalization
+// (dollhouse.js) uses, so the two stay in agreement. `permission` is always "any" here because
+// the situation form never collects a permission preference — nothing on the library narrows by
+// that dimension any more.
 
-import { matchesFilters, compareItems } from "./filter-logic.mjs";
+import { matchesFilters, SORTERS } from "./filter-logic.mjs";
+import { readFromStorage } from "./situation-store.mjs";
 
 const grid = document.getElementById("card-grid");
-const form = document.getElementById("filter-form");
 
-if (grid && form) {
+if (grid) {
   const resultsCount = document.getElementById("results-count");
   const emptyState = document.getElementById("empty-state");
-  const clearBtn = document.getElementById("clear-filters");
+  const sortSelect = document.getElementById("sort-select");
   const cards = [...grid.querySelectorAll(".card")];
-
-  function currentFilters() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-      heat: params.get("heat") || "any",
-      payer: params.get("payer") || "any",
-      permission: params.get("permission") || "any",
-    };
-  }
-
-  function syncFormToFilters(filters) {
-    ["heat", "payer", "permission"].forEach((field) => {
-      const input = form.querySelector(`input[name="${field}"][value="${filters[field]}"]`);
-      if (input) input.checked = true;
-    });
-  }
 
   async function run() {
     let index = [];
@@ -40,21 +33,22 @@ if (grid && form) {
     }
 
     const bySlug = new Map(index.map((item) => [item.slug, item]));
-    const filters = currentFilters();
-    syncFormToFilters(filters);
+    const situation = readFromStorage();
+    const active = !!situation && (situation.heat !== "any" || situation.payer !== "any");
+    const filters = { heat: situation?.heat || "any", payer: situation?.payer || "any", permission: "any" };
 
     let visibleCount = 0;
     cards.forEach((card) => {
       const item = bySlug.get(card.dataset.slug);
-      const show = matchesFilters(item, filters);
+      const show = !active || matchesFilters(item, filters);
       card.hidden = !show;
       if (show) visibleCount += 1;
-      if (item) card.dataset.impact = item.impact;
     });
 
+    const comparator = SORTERS[sortSelect?.value] || SORTERS.recommended;
     cards
       .filter((c) => !c.hidden)
-      .sort((a, b) => compareItems(bySlug.get(a.dataset.slug), bySlug.get(b.dataset.slug)))
+      .sort((a, b) => comparator(bySlug.get(a.dataset.slug), bySlug.get(b.dataset.slug)))
       .forEach((card) => grid.appendChild(card));
 
     if (resultsCount) {
@@ -66,18 +60,10 @@ if (grid && form) {
     if (emptyState) emptyState.hidden = visibleCount > 0;
   }
 
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const params = new URLSearchParams(new FormData(form));
-    history.replaceState(null, "", `?${params}`);
-    run();
-  });
-
-  clearBtn?.addEventListener("click", () => {
-    form.querySelectorAll('input[value="any"]').forEach((input) => (input.checked = true));
-    history.replaceState(null, "", window.location.pathname);
-    run();
-  });
+  sortSelect?.addEventListener("change", run);
+  // The personalize dialog saves and closes without navigating away (situation-modal.js), so it
+  // announces the change instead of leaving the library to notice on its own.
+  window.addEventListener("situationchange", run);
 
   run();
 }
