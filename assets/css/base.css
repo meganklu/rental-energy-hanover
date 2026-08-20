@@ -60,6 +60,18 @@ img, picture, svg {
   max-width: 100%;
 }
 
+/* Fixed 2026-08-20: found via the doll house's new personalization filtering (JS setting
+   `el.hidden = true`), but latent everywhere — any element whose own component rule sets a
+   `display` value (`.card`, `.hotspot`, and others) has the same specificity as the UA
+   stylesheet's `[hidden] { display: none }`, and author styles beat UA styles on a tie, so the
+   component's `display` silently won and the element stayed visible. `!important` here is
+   deliberate and narrow: it enforces what the `hidden` attribute already promises semantically,
+   for every element on the site that uses it, rather than patching each component rule one at a
+   time (already done once, at `.info-bar[hidden]`, which this now makes redundant). */
+[hidden] {
+  display: none !important;
+}
+
 /* ---------- Reduced motion state ----------
    Every ambient animation (parallax, looping diagrams) reads animation-play-state from
    --motion-state instead of being toggled directly, so one variable controls all of them.

@@ -32,7 +32,7 @@
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul>
-        <li><a href="../../index.html#house">Home</a></li>
+        <li><a href="../../index.html">Home</a></li>
         <li><a href="../../improvements/" aria-current="page">Improvements</a></li>
         <li><a href="../../your-rights/">Rights and programs</a></li>
         <li><a href="../../about/">About</a></li>
@@ -45,37 +45,73 @@
 <main id="main">
   <section class="section page-shell">
     <nav aria-label="Breadcrumb" class="text-small"><a href="../">Improvements</a> / Set your thermostat back</nav>
+    <a class="btn btn--secondary house-return-link" href="../../index.html#house">
+      <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-house"/></svg>
+      Back to the house
+    </a>
 
-    <article class="improvement content-column">
-      <h1>Set your thermostat back</h1>
-      <p class="card__summary">Turning the heat down while you are out or asleep typically uses less energy than holding one temperature all day.</p>
+    <article class="improvement">
+      <div class="improvement-intro">
+        <div class="improvement-intro__text">
+          <h1>Set your thermostat back</h1>
+          <p class="card__summary">Turning the heat down while you are out or asleep typically uses less energy than holding one temperature all day.</p>
 
-      <div class="badge-row">
-        <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
-        <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+          <div class="badge-row">
+            <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
+            <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact">
+              <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
+              <span class="price-dollars" aria-hidden="true">
+                <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
+                <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
+                <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
+              </span>
+              Free
+            </span>
+            <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
+            <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-impact-high"/></svg>High impact</span>
+          </div>
+        </div>
+
+        <figure class="improvement-intro__media">
+          <svg class="improvement-illustration" viewBox="0 0 240 200" role="img" aria-labelledby="illo-title-thermostat">
+            <title id="illo-title-thermostat">A thermostat dial set back for the night, with an arrow showing the temperature dropping</title>
+            <path class="stroke" d="M128 130 V60 a14 14 0 0 0 -28 0 v70 a26 26 0 1 0 28 0 Z" stroke-width="3"/>
+            <circle cx="114" cy="146" r="7" fill="var(--color-accent)" stroke="none"/>
+            <g class="stroke muted">
+              <line x1="140" y1="72" x2="152" y2="72"/>
+              <line x1="140" y1="92" x2="152" y2="92"/>
+              <line x1="140" y1="112" x2="152" y2="112"/>
+            </g>
+            <path class="stroke dash" d="M96 40 a34 34 0 0 0 -26 32" opacity="0.7"/>
+            <path class="stroke" d="M78 66 l-8 6 l-2 -10" opacity="0.7"/>
+            <g transform="translate(168,44)">
+              <path d="M22 4 a16 16 0 1 0 0 32 a13 13 0 0 1 0 -32 Z" fill="var(--color-brand)" stroke="none"/>
+            </g>
+          </svg>
+        </figure>
       </div>
-      <div class="fact-row">
-        <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>Free</span>
-        <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
-        <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-impact"/></svg>High impact</span>
+
+      <div class="improvement-body">
+        <h2>What you need</h2>
+        <ul>
+          <li>Nothing. Just your existing thermostat.</li>
+        </ul>
+
+        <h2>Steps</h2>
+        <ol>
+          <li>Find your normal comfortable temperature and note it.</li>
+          <li>Before bed or before leaving for the day, lower the setting a few degrees.</li>
+          <li>If your thermostat is programmable, schedule the setback so you do not have to remember it.</li>
+          <li>Set it back up when you return or wake, rather than leaving it low all day.</li>
+        </ol>
       </div>
 
-      <h2>What you need</h2>
-      <ul>
-        <li>Nothing. Just your existing thermostat.</li>
-      </ul>
-
-      <h2>Steps</h2>
-      <ol>
-        <li>Find your normal comfortable temperature and note it.</li>
-        <li>Before bed or before leaving for the day, lower the setting a few degrees.</li>
-        <li>If your thermostat is programmable, schedule the setback so you do not have to remember it.</li>
-        <li>Set it back up when you return or wake, rather than leaving it low all day.</li>
-      </ol>
-
-      <details class="disclosure">
-        <summary><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-disclosure"/></svg>Why this works</summary>
-        <div class="disclosure__body">
+      <div class="story-bar">
+        <h2 class="story-bar__heading">Why this works</h2>
+        <div class="story-bar__body">
           <p>
             A common belief is that reheating a cold room costs more than leaving the heat on the
             whole time. It does not. A heating system loses more total energy holding one
@@ -85,14 +121,17 @@
             day narrows that gap and saves energy overall.
           </p>
         </div>
-      </details>
-
-      <div class="callout callout--savings">
-        <p><strong>Savings:</strong> Estimates are typical ranges, not guarantees. What you actually save depends on your building, your heating system, and the weather.
-        The U.S. Department of Energy estimates that using a programmable thermostat to set the heat back while you are away or asleep can save about 10% a year on heating and cooling costs.</p>
       </div>
 
-      <div class="sources-block">
+      <div class="story-bar story-bar--reverse">
+        <h2 class="story-bar__heading">Savings</h2>
+        <div class="story-bar__body">
+          <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
+          <p>The U.S. Department of Energy estimates that using a programmable thermostat to set the heat back while you are away or asleep can save about 10% a year on heating and cooling costs.</p>
+        </div>
+      </div>
+
+      <div class="sources-block improvement-body">
         <h2>Sources</h2>
         <ul>
           <li><a href="https://bsesc.energy.gov/energy-basics/hvac-programmable-thermostats">U.S. Department of Energy — Energy Basics: HVAC Programmable Thermostats</a></li>

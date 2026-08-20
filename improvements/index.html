@@ -15,7 +15,7 @@
 <!-- /shell:head-links -->
 
 <title>Improvements — Energy for Student Renters</title>
-<meta name="description" content="Every improvement a Hanover renter can make, filterable by heat type, who pays, and what your landlord requires.">
+<meta name="description" content="Every improvement a Hanover renter can make. Personalize your recommendations to narrow the list to your own situation.">
 </head>
 <body>
 
@@ -32,7 +32,7 @@
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul>
-        <li><a href="../index.html#house">Home</a></li>
+        <li><a href="../index.html">Home</a></li>
         <li><a href="../improvements/" aria-current="page">Improvements</a></li>
         <li><a href="../your-rights/">Rights and programs</a></li>
         <li><a href="../about/">About</a></li>
@@ -43,125 +43,198 @@
 <!-- /shell:header -->
 
 <main id="main">
+
+  <section class="section page-shell theme-brand rental-basics">
+    <h2>Rental basics</h2>
+    <div class="carousel carousel--peek">
+      <ul class="carousel__track" tabindex="0" aria-label="Rental basics articles">
+        <li class="carousel__slide" id="rb-read-your-bill">
+          <h3 class="card__title">
+            <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>
+            <a href="../learn/read-your-bill/">Read your bill</a>
+          </h3>
+          <p class="card__summary">kWh, rate, and what's actually driving your electric bill.</p>
+          <div class="badge-row">
+            <span class="badge badge--basics">Renter basics</span>
+          </div>
+        </li>
+        <li class="carousel__slide" id="rb-find-your-drafts">
+          <h3 class="card__title">
+            <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-house"/></svg>
+            <a href="../learn/find-your-drafts/">Find your drafts</a>
+          </h3>
+          <p class="card__summary">You can't seal a gap you haven't found.</p>
+          <div class="badge-row">
+            <span class="badge badge--basics">Renter basics</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <section class="section page-shell">
     <div class="content-column">
       <h1>Improvements</h1>
-      <p>
-        Every improvement on the site, in one list. Filter it to your heat type, who pays, and
-        what your landlord requires, or scan the whole thing.
-      </p>
     </div>
 
-    <form class="filter-form" id="filter-form" method="get">
-      <div class="question-set">
-        <fieldset class="question">
-          <legend>Heat type</legend>
-          <div class="question__options">
-            <label><input type="radio" name="heat" value="any" checked> Any</label>
-            <label><input type="radio" name="heat" value="electric-baseboard"> Electric baseboard</label>
-            <label><input type="radio" name="heat" value="forced-air"> Forced air</label>
-            <label><input type="radio" name="heat" value="radiator"> Radiator</label>
-            <label><input type="radio" name="heat" value="heat-pump"> Heat pump</label>
-          </div>
-        </fieldset>
-        <fieldset class="question">
-          <legend>Who pays for heat</legend>
-          <div class="question__options">
-            <label><input type="radio" name="payer" value="any" checked> Any</label>
-            <label><input type="radio" name="payer" value="tenant"> I do</label>
-            <label><input type="radio" name="payer" value="included"> Included in rent</label>
-          </div>
-        </fieldset>
-        <fieldset class="question">
-          <legend>Landlord permission</legend>
-          <div class="question__options">
-            <label><input type="radio" name="permission" value="any" checked> Any</label>
-            <label><input type="radio" name="permission" value="none"> None needed</label>
-            <label><input type="radio" name="permission" value="ask"> Ask first</label>
-            <label><input type="radio" name="permission" value="required"> Landlord does it</label>
-          </div>
-        </fieldset>
-      </div>
-      <p><button type="submit" class="btn btn--secondary">Filter</button></p>
-    </form>
-
-    <p class="results-count" id="results-count" aria-live="polite"></p>
+    <div class="library-toolbar">
+      <p class="results-count" id="results-count" aria-live="polite"></p>
+      <label class="sort-control">
+        Sort by
+        <select id="sort-select">
+          <option value="recommended">Recommended</option>
+          <option value="costLow">Lowest cost</option>
+          <option value="timeShort">Shortest time</option>
+          <option value="impactHigh">Highest impact</option>
+        </select>
+      </label>
+    </div>
 
     <ul class="card-grid" id="card-grid">
 
       <li class="card" data-slug="seal-your-windows-with-film">
-        <p class="badge badge--permission-none">No permission needed</p>
-        <h2 class="card__title"><a href="seal-your-windows-with-film/">Seal your windows with film</a></h2>
+        <h2 class="card__title">
+          <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-window"/></svg>
+          <a href="seal-your-windows-with-film/">Seal your windows with film</a>
+        </h2>
         <p class="card__summary">A plastic film kit over a drafty window, on in an hour, off at move-out.</p>
+        <div class="badge-row">
+          <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
+          <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Under $25</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>1 to 2 hours</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
+        </div>
       </li>
 
       <li class="card" data-slug="door-sweeps-and-weatherstripping">
-        <p class="badge badge--permission-ask">Ask your landlord first</p>
-        <h2 class="card__title"><a href="door-sweeps-and-weatherstripping/">Seal your door with a sweep</a></h2>
+        <h2 class="card__title">
+          <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-door"/></svg>
+          <a href="door-sweeps-and-weatherstripping/">Seal your door with a sweep</a>
+        </h2>
         <p class="card__summary">Weatherstripping and a door sweep close the gap most doors leak through.</p>
+        <div class="badge-row">
+          <span class="badge badge--permission-ask"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-ask"/></svg>Ask your landlord first</span>
+          <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Mostly comes off at move-out</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Under $25</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>1 to 2 hours</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
+        </div>
       </li>
 
       <li class="card" data-slug="thermostat-setback">
-        <p class="badge badge--permission-none">No permission needed</p>
-        <h2 class="card__title"><a href="thermostat-setback/">Set your thermostat back</a></h2>
+        <h2 class="card__title">
+          <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-thermostat"/></svg>
+          <a href="thermostat-setback/">Set your thermostat back</a>
+        </h2>
         <p class="card__summary">Turning the heat down while you are out or asleep typically uses less energy, free.</p>
+        <div class="badge-row">
+          <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
+          <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Free</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-high"/></svg>High impact</span>
+        </div>
       </li>
 
       <li class="card" data-slug="dont-block-your-radiator-or-baseboard">
-        <p class="badge badge--permission-none">No permission needed</p>
-        <h2 class="card__title"><a href="dont-block-your-radiator-or-baseboard/">Keep your radiator or baseboard clear</a></h2>
+        <h2 class="card__title">
+          <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-radiator"/></svg>
+          <a href="dont-block-your-radiator-or-baseboard/">Keep your radiator or baseboard clear</a>
+        </h2>
         <p class="card__summary">Furniture and curtains in front of a heat source keep the heat from reaching the room.</p>
+        <div class="badge-row">
+          <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
+          <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Free</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
+        </div>
       </li>
 
       <li class="card" data-slug="space-heaters-real-cost-and-safety">
-        <p class="badge badge--permission-none">No permission needed</p>
-        <h2 class="card__title"><a href="space-heaters-real-cost-and-safety/">Use a space heater safely</a></h2>
+        <h2 class="card__title">
+          <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-space-heater"/></svg>
+          <a href="space-heaters-real-cost-and-safety/">Use a space heater safely</a>
+        </h2>
         <p class="card__summary">Costs more to run than central heat, and needs real clearance. Safety first.</p>
+        <div class="badge-row">
+          <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
+          <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>$25 to $75</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
+        </div>
       </li>
 
       <li class="card" data-slug="hot-water-showers-and-laundry">
-        <p class="badge badge--permission-none">No permission needed</p>
-        <h2 class="card__title"><a href="hot-water-showers-and-laundry/">Cut your hot water use</a></h2>
+        <h2 class="card__title">
+          <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-water-heater"/></svg>
+          <a href="hot-water-showers-and-laundry/">Cut your hot water use</a>
+        </h2>
         <p class="card__summary">Shower length, laundry temperature, and a dripping tap all affect the bill.</p>
+        <div class="badge-row">
+          <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
+          <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Free</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
+        </div>
       </li>
 
       <li class="card" data-slug="phantom-load-and-plug-loads">
-        <p class="badge badge--permission-none">No permission needed</p>
-        <h2 class="card__title"><a href="phantom-load-and-plug-loads/">Cut phantom load</a></h2>
+        <h2 class="card__title">
+          <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plug"/></svg>
+          <a href="phantom-load-and-plug-loads/">Cut phantom load</a>
+        </h2>
         <p class="card__summary">A power strip you can switch off stops plugged-in devices from drawing power all day.</p>
+        <div class="badge-row">
+          <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
+          <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Under $25</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-low"/></svg>Low impact</span>
+        </div>
       </li>
 
       <li class="card" data-slug="led-lighting-swaps">
-        <p class="badge badge--permission-none">No permission needed</p>
-        <h2 class="card__title"><a href="led-lighting-swaps/">Swap in LED bulbs</a></h2>
+        <h2 class="card__title">
+          <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-light-bulb"/></svg>
+          <a href="led-lighting-swaps/">Swap in LED bulbs</a>
+        </h2>
         <p class="card__summary">LEDs use a fraction of the electricity incandescent bulbs do. Keep the originals in a box.</p>
+        <div class="badge-row">
+          <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>No permission needed</span>
+          <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Under $25</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-low"/></svg>Low impact</span>
+        </div>
       </li>
 
     </ul>
 
     <p class="empty-state" id="empty-state" hidden>
-      Nothing matches all of those filters yet. <button type="button" class="btn btn--text" id="clear-filters">Clear the filters</button> to see everything.
+      Nothing matches your situation yet. Open "Personalize your recommendations" to change it.
     </p>
   </section>
 
-  <section class="section page-shell theme-light">
-    <div class="content-column">
-      <h2>Learn</h2>
-      <p>Short explainers that correct one wrong idea at a time.</p>
-    </div>
-    <ul class="card-grid">
-      <li class="card">
-        <p class="fact fact--enabler">Start here</p>
-        <h3 class="card__title"><a href="../learn/read-your-bill/">Read your bill</a></h3>
-        <p class="card__summary">kWh, rate, and what's actually driving your electric bill.</p>
-      </li>
-      <li class="card">
-        <p class="fact fact--enabler">Enabler</p>
-        <h3 class="card__title"><a href="../learn/find-your-drafts/">Find your drafts</a></h3>
-        <p class="card__summary">You can't seal a gap you haven't found.</p>
-      </li>
-    </ul>
-  </section>
 </main>
 
 <!-- shell:fab -->

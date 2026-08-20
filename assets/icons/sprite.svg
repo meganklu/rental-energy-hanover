@@ -116,6 +116,29 @@
     <line x1="20" y1="17" x2="19.99" y2="17"/>
   </symbol>
 
+  <!-- Impact gauge, added 2026-08-20: same dial, needle at a different position per level, so
+       the icon itself reads as the amount rather than repeating the identical glyph three times. -->
+  <symbol id="icon-impact-low" viewBox="0 0 24 24">
+    <path d="M4 17a8 8 0 0 1 16 0"/>
+    <line x1="12" y1="17" x2="7.3" y2="13.2"/>
+    <line x1="4" y1="17" x2="4.01" y2="17"/>
+    <line x1="20" y1="17" x2="19.99" y2="17"/>
+  </symbol>
+
+  <symbol id="icon-impact-medium" viewBox="0 0 24 24">
+    <path d="M4 17a8 8 0 0 1 16 0"/>
+    <line x1="12" y1="17" x2="12" y2="9"/>
+    <line x1="4" y1="17" x2="4.01" y2="17"/>
+    <line x1="20" y1="17" x2="19.99" y2="17"/>
+  </symbol>
+
+  <symbol id="icon-impact-high" viewBox="0 0 24 24">
+    <path d="M4 17a8 8 0 0 1 16 0"/>
+    <line x1="12" y1="17" x2="16.7" y2="13.2"/>
+    <line x1="4" y1="17" x2="4.01" y2="17"/>
+    <line x1="20" y1="17" x2="19.99" y2="17"/>
+  </symbol>
+
   <symbol id="icon-disclosure" viewBox="0 0 24 24">
     <polyline points="6 9 12 15 18 9"/>
   </symbol>
