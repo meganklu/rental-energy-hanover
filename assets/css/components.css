@@ -84,7 +84,8 @@
   body:not(:has(#reduce-motion:checked)) .card:hover,
   body:not(:has(#reduce-motion:checked)) .filter-chip:hover,
   body:not(:has(#reduce-motion:checked)) .carousel__nav:hover,
-  body:not(:has(#reduce-motion:checked)) .situation-dialog__close:hover {
+  body:not(:has(#reduce-motion:checked)) .situation-dialog__close:hover,
+  body:not(:has(#reduce-motion:checked)) .help-icon:hover {
     transform: scale(1.05);
   }
 }
@@ -728,7 +729,7 @@
   justify-content: center;
   gap: var(--space-5);
   padding: var(--space-7) var(--space-5);
-  background: var(--color-surface-brand);
+  background: var(--color-hero-ground);
   text-align: center;
 }
 
@@ -764,12 +765,12 @@
 
 .hero__tagline-lead {
   display: block;
-  font-size: clamp(2.25rem, 1.8rem + 2.5vw, 3.25rem);
+  font-size: clamp(2.75rem, 2.1rem + 4vw, 5rem);
 }
 
 .hero__tagline-rest {
   display: block;
-  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+  font-size: clamp(1.75rem, 1.35rem + 2.25vw, 2.75rem);
 }
 
 .hero__note {
@@ -824,6 +825,62 @@
 
 .dollhouse-intro {
   max-width: var(--measure);
+}
+
+/* The heading plus its help icon, added 2026-08-19. Reuses the .term__tooltip idea (§3.3) as a
+   button-triggered version: aria-label carries the button's own name ("Show instructions"),
+   aria-describedby points at the tooltip text so it is exposed to assistive tech regardless of
+   hover state, and the visible reveal is hover/focus like every other tooltip on the site. */
+.section-heading-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.help-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--target-min);
+  height: var(--target-min);
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: help;
+  transition: color var(--motion-duration-base) var(--motion-ease),
+    transform var(--motion-duration-base) var(--motion-ease);
+}
+
+.help-icon:hover,
+.help-icon:focus-visible {
+  color: var(--color-accent);
+}
+
+.help-icon__tooltip {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: var(--space-2);
+  width: max-content;
+  max-width: 20rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+  font-size: var(--text-small);
+  font-weight: 400;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-duration-base) var(--motion-ease);
+  z-index: 30;
+}
+
+.help-icon:hover .help-icon__tooltip,
+.help-icon:focus-visible .help-icon__tooltip {
+  opacity: 1;
 }
 
 .dollhouse {

@@ -190,17 +190,21 @@ asterisk" in a screen reader.
 "to your Home\*" wrapping underneath it at the heading's normal size. Still one `<h1>`, one
 accessible name ("Welcome to your Home") — the size and line break are presentational (a `<span>`
 around "Welcome" carrying the larger size), not two separate headings. Revised again 2026-08-19:
-the first pass sized "Welcome" wide enough to overflow the mat at some widths. Its clamp ceiling
-is pulled back so it always fits inside the border with room either side, sized against the mat's
-own width rather than the viewport alone.
+the first pass sized "Welcome" wide enough to overflow the mat at some widths, so its clamp
+ceiling was pulled back — too far back, leaving empty space inside the border once the mat grew
+to its landscape `4:3` shape (below). Revised a third time 2026-08-19: both lines sized back up so
+the heading fills the width the border actually has at the mat's new, larger dimensions, without
+reopening the original overflow.
 
 **Layout, revised 2026-08-19: what "the mat" actually is.** Only the text and its border are the
 mat — earlier language that called the whole hero band the mat was imprecise. From the outside in:
 
 1. The hero section itself: `min-height: 85svh` rather than `100vh`, so the top of the doll house
    shows at the bottom edge and the page reads as continuing. Never a fixed pixel height.
-   Background is a solid light green (`--color-surface-brand`, revised 2026-08-19 — first pass
-   used `--color-bg`), not tan — the tan is the mat's alone.
+   Background color has moved twice: `--color-bg` (white) at first, then light green
+   (`--color-surface-brand`), now a bluestone grey (`--color-hero-ground`, new token, added
+   2026-08-19) — a cool, muted stone tone behind the mat, the way an entryway paver reads behind
+   an actual doormat. Not tan — the tan is the mat's alone.
 2. The mat rectangle: a `--color-mat` (tan) box, centered in the hero, deliberately plain for now
    (no woven texture — see the open question in §11). Revised 2026-08-19: sized larger overall (a
    real doormat is a substantial object on the page, not a small card), on a fixed `aspect-ratio`
@@ -232,6 +236,17 @@ cap, the arrow, and the peeking top edge of the next section are all there for t
 ### 3.2 The doll house
 
 The centerpiece. Everything else on the site can be reached from it.
+
+**How to play is a callout, not a paragraph, added 2026-08-19.** "Click a room to open it. Click
+each highlighted spot to see what you can do about it." moved off the page by default and into a
+hover/focus callout, opened from a help icon (a question mark in a circle) sitting next to the
+"Tour a rental and its potential upgrades" heading. Same `.term`/tooltip pattern already used for
+the situation form's glossary terms (§3.3), reused rather than inventing a second tooltip
+component. The icon is a real, labeled, focusable control ("Show instructions" as its accessible
+name) so the callout opens on keyboard focus as well as mouse hover, and its text is present in
+the DOM either way — this is instructions for a novel interaction, not load-bearing content, so
+hiding it by default is a legibility win as long as finding it stays a single, obvious step next
+to the heading it explains.
 
 **What is drawn.** A doll house. The front wall is removed and all six rooms are visible at once,
 each one a box on a two-story frame, with a basement below. Flat front-on elevation, no
@@ -457,6 +472,7 @@ interactive work.
 | `--color-border-strong` | `#6F8272` | Form control borders, hotspot outlines, anything that must meet 3:1 | ☑ 4.1:1 on bg, 3.8:1 on surface |
 | `--color-mat` | `#D9BE8A` | Added 2026-08-19. The hero's welcome-mat background. Used nowhere else | ☑ 9.3:1 with `--color-text` |
 | `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
+| `--color-hero-ground` | `#94A0A7` | Added 2026-08-19. The hero section's own background, behind the mat. A bluestone grey, used nowhere else | ☑ 6.3:1 with `--color-text`, 7.9:1 with `--color-mat-border` |
 
 - **Dark mode:** ☐ Supported ☑ Not in v1. The token structure supports adding one later
   without touching component code.
@@ -571,10 +587,12 @@ rather than a tank, both more immediately legible at hotspot size than the liter
 versions they replace. The bill hotspot icon is now the dollar sign (reusing the "dollar" facts
 icon) rather than a sheet-of-paper glyph — the bill hotspot is fundamentally about a dollar figure,
 and the dollar sign reads faster at hotspot size. The "flag (spot viewed)" icon above is retired
-— see §3.2, a visited hotspot is now shown at reduced opacity instead. Two icons added: "close" (an
-X, for the personalize dialog) and "sliders" (three adjustable rows, for the personalize FAB). The
-"doll house" object icon doubles as the site logo, in the header lockup next to the wordmark and
-as the browser tab favicon.
+— see §3.2, a visited hotspot is now shown at reduced opacity instead. Icons added: "close" (an
+X, for the personalize dialog), "sliders" (three adjustable rows, for the personalize FAB), and
+"help" (a question mark in a circle, for the doll house instructions callout, §3.2). The "doll
+house" object icon doubles as the site logo, in the header lockup next to the wordmark and as the
+browser tab favicon; it has been redrawn twice since (§10) to close the gap between its bounding
+box and its visible glyph.
 
 An icon is never the only label, and never the only difference between two states.
 
@@ -983,7 +1001,14 @@ credit has to survive that move.
   redrawn with less internal margin (closer to the 20px live area the icon spec already calls
   for, rather than the ~16px it was actually using), so a stretched icon's *visible glyph*, not
   just its bounding box, reads as the same size as the text, and the icon-to-text gap drops from
-  `--space-2` to `--space-1`.
+  `--space-2` to `--space-1`. Revised a fourth time 2026-08-19: still too large, because
+  `align-self: stretch` matches the *bounding box* to the text height, and even a 20px live area
+  inside a 24px box means the box is 20% taller than the visible glyph. The house icon is redrawn
+  again, this time near edge-to-edge in its viewBox (roofline peak at y=2, wall base at y=22, one
+  house-width short of the full 24 units each direction) so the bounding box and the visible
+  glyph are close enough that stretching the box to text height reads as matching the glyph to
+  text height. Width is not set explicitly — `width: auto` alongside the fixed height keeps the
+  icon's own proportions as its rendered size changes, rather than distorting it.
 - **Footer, every page:** "Project created in partnership with Sustainable Hanover, a committee of the Town of Hanover, New
   Hampshire", their logo at a fixed height, a link to their site, and the contact address
   sustainablehanovernh@gmail.com. Also the site-wide last-reviewed date and a link to the

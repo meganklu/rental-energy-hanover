@@ -69,10 +69,13 @@
       <span class="progress-bar__tooltip" id="progress-text" aria-hidden="true">10 spots to view</span>
     </div>
 
-    <h2 id="house-heading">Tour a rental and its potential upgrades</h2>
-    <p class="dollhouse-intro">
-      Click a room to open it. Click each highlighted spot to see what you can do about it.
-    </p>
+    <div class="section-heading-row">
+      <h2 id="house-heading">Tour a rental and its potential upgrades</h2>
+      <button type="button" class="help-icon" aria-label="Show instructions" aria-describedby="house-help-tip">
+        <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-help"/></svg>
+        <span class="help-icon__tooltip" id="house-help-tip" role="tooltip">Click a room to open it. Click each highlighted spot to see what you can do about it.</span>
+      </button>
+    </div>
 
     <div class="dollhouse" id="dollhouse">
       <div class="dollhouse__roof" aria-hidden="true"></div>
