@@ -140,6 +140,14 @@
   color: var(--color-text);
 }
 
+/* Added 2026-08-21 for /programs: a program this reader cannot use. Neutral rather than the red
+   of a safety note — "this one is not for you" is a fact about who the program serves, not a
+   warning about doing something dangerous. */
+.badge--unavailable {
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+}
+
 /* No fill, revised 2026-08-21. Reversibility is a property every improvement has, in three
    grades, so a flat tint here put status-level weight on a field that is never a status and
    competed with the three permission fills next to it, which are the ones that earn one. The
@@ -733,6 +741,95 @@
 .card__summary {
   color: var(--color-text-muted);
   font-size: var(--text-small);
+  margin: 0;
+}
+
+/* ---------- Glossary page, added 2026-08-21 ----------
+   A plain <dl>, because a glossary is exactly the thing a description list is for and a screen
+   reader announces the term/definition pairing without any ARIA. Each entry keeps a stable
+   `#anchor`, since pages deep-link into this one mid-sentence and those links are the reason the
+   page exists. `scroll-margin-top` so an entry arrived at by its anchor is not tucked under the
+   top of the window. */
+.glossary {
+  margin: 0;
+}
+
+.glossary > div {
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  scroll-margin-top: var(--space-6);
+}
+
+.glossary dt {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 600;
+  line-height: var(--leading-display);
+}
+
+.glossary dd {
+  margin: var(--space-2) 0 0;
+  max-width: var(--measure);
+}
+
+.glossary dd + dd {
+  margin-top: var(--space-2);
+}
+
+.glossary .also-called {
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Program card, added 2026-08-21 ----------
+   The component DESIGN.md §5 has listed since the start, built for /programs. Not `.card`: cards
+   are the improvements library's unit and stay there (§5), and a program is read one at a time in
+   a stack rather than scanned in a grid. The left rule is the one visual difference between a
+   program a renter can use and one they cannot, and it is never the only difference — the badge
+   above it says which in words. */
+.program-list {
+  display: grid;
+  gap: var(--space-5);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.program {
+  padding: var(--space-5);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.program--unavailable {
+  border-left-color: var(--color-border-strong);
+  background: var(--color-surface);
+}
+
+.program > * + * {
+  margin-top: var(--space-3);
+}
+
+.program h3 {
+  margin: 0;
+}
+
+.program dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  font-size: var(--text-small);
+}
+
+.program dt {
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.program dd {
   margin: 0;
 }
 

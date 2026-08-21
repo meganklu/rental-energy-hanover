@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- shell:head-links -->
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<link rel="preload" href="../assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/poppins-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/print.css" media="print">
+<!-- /shell:head-links -->
+
+<title>Accessibility statement — Energy for Student Renters</title>
+<meta name="description" content="What this site is built to meet, what has been checked, what has not been tested yet, and how to report a barrier.">
+</head>
+<body>
+
+<!-- shell:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="page-shell site-header__inner">
+    <a class="brand" href="../index.html">
+      <svg class="icon brand__icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-house"/></svg>
+      <span class="brand__text">
+        <span class="wordmark">Energy for Student Renters</span>
+        <span class="partner-line">In partnership with Sustainable Hanover</span>
+      </span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../improvements/">Improvements</a></li>
+        <li><a href="../your-rights/">Rights and programs</a></li>
+        <li><a href="../about/">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- /shell:header -->
+
+<main id="main">
+
+  <section class="section page-shell">
+    <div class="page-head">
+      <h1>Accessibility statement</h1>
+      <p class="lede">
+        What this site is built to meet, what has actually been checked, and what has not been
+        tested yet.
+      </p>
+    </div>
+
+    <div class="content-column">
+      <h2>What we are building to</h2>
+      <p>
+        We build this site to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2 Level AA</a>.
+        That is a requirement while each part is written, not a goal for later.
+      </p>
+      <p>
+        It has not yet been fully tested against that standard, and we have not yet tested it with
+        screen reader users. So this page states a commitment and a status. It does not claim
+        conformance, because a claim would need an audit that has not happened.
+      </p>
+
+      <h2>What is built in</h2>
+      <ul>
+        <li>Every control works from the keyboard alone, in a visible order, with a focus outline
+          that is never removed.</li>
+        <li>Nothing depends on color to make sense. Every status carries text, and usually an icon
+          as well.</li>
+        <li>The doll house on the home page is a drawing, and everything in it is also a plain
+          list of links under it. That list is present at every screen width and is the route a
+          screen reader, a keyboard, or a phone-sized window takes.</li>
+        <li>Every page works with JavaScript switched off. Scripts filter, sort and remember.
+          They do not carry the content.</li>
+        <li>Body text is never smaller than 16px, and the layout reflows to a 320px-wide window
+          with no sideways scrolling, which is also what a desktop browser does at 400% zoom.</li>
+        <li>Text sits on its background at a contrast ratio of at least 4.5:1, and most of it is
+          well above that. The measurements are recorded in the design documentation.</li>
+      </ul>
+
+      <h2>Motion</h2>
+      <p>
+        This site moves more than most. Diagrams loop so you can watch a mechanism you cannot
+        otherwise see, and a few things shift as you scroll.
+      </p>
+      <ul>
+        <li>If your device is set to reduce motion, everything here holds still from the first
+          frame. You do not have to ask twice.</li>
+        <li>A <strong>Reduce motion</strong> switch sits in the bottom-left corner of every page
+          and in the footer, for a borrowed laptop or a setting you would rather not change
+          system-wide. It works with JavaScript off on the page you are on.</li>
+        <li>A <strong>Pause</strong> button appears next to it on any page with something looping.</li>
+        <li>You can also force motion back on if your device asks for reduced motion and you would
+          rather watch a diagram move.</li>
+        <li>Nothing on this site starts moving on load, and no carousel advances on its own.</li>
+      </ul>
+      <p>
+        Freeze any animation here at any point and the screen still makes sense. Motion never
+        carries information that is not also written down.
+      </p>
+
+      <h2>What has been checked</h2>
+      <ul>
+        <li>Automated scans with axe DevTools and Lighthouse, before each change goes live.</li>
+        <li>A keyboard-only pass on each component as it was built.</li>
+        <li>Contrast measured on every design token, and re-measured whenever one changes.</li>
+        <li>Both reduced-motion paths, the device setting and the switch on the page.</li>
+        <li>A spot check at 320px wide and at 200% zoom.</li>
+      </ul>
+      <p class="text-small">
+        Automated tools catch roughly a third of accessibility problems. A clean scan is a signal
+        that the obvious things are right. It is not evidence that the site conforms.
+      </p>
+
+      <h2>What has not been tested</h2>
+      <p>These are known gaps, listed so that nobody has to discover them the hard way.</p>
+      <ul>
+        <li>No screen reader pass has been run on any page. Semantic HTML and native elements are
+          doing that work so far, which is the reason we expect it to hold, not evidence that it
+          does.</li>
+        <li>The doll house in particular has not been screen reader tested. This is the largest
+          open risk on the site. The plain link list under it exists so that the content is
+          reachable regardless.</li>
+        <li>The site has not been tested with a disabled user.</li>
+        <li>No criterion-by-criterion audit against WCAG 2.2 AA has been done.</li>
+        <li>Narrow widths reflow and are readable. Nothing is tuned for touch, and phone layouts
+          are the first item in the next version.</li>
+      </ul>
+
+      <h2>Tell us about a barrier</h2>
+      <p>
+        If something here does not work for you, we want to hear about it, including the things
+        listed above. Email
+        <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a> and say
+        which page it was and what happened. A report about a page in the untested list above is
+        as useful as one about anything else.
+      </p>
+      <p>
+        If you need something on this site in another format, ask at the same address.
+      </p>
+
+      <div class="sources-block">
+        <h2>Sources</h2>
+        <ul>
+          <li><a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines (WCAG) 2.2</a>, W3C</li>
+        </ul>
+        <p class="last-reviewed">Last reviewed 2026-08-21.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- shell:fab -->
+<a class="fab" id="situation-fab" href="../start/">
+  <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
+  Personalize your recommendations
+</a>
+<dialog id="situation-dialog" class="situation-dialog" aria-labelledby="situation-dialog-heading">
+  <div class="situation-dialog__inner">
+    <button type="button" class="situation-dialog__close" id="situation-dialog-close" aria-label="Close">
+      <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-close"/></svg>
+    </button>
+    <div class="situation-dialog__body" id="situation-dialog-body">
+      <!-- assets/js/situation-modal.js fetches start/ and injects its form here -->
+    </div>
+  </div>
+</dialog>
+<!-- /shell:fab -->
+
+<!-- shell:motion-fab -->
+<div class="motion-fab" role="group" aria-label="Motion settings">
+  <button type="button" class="motion-fab__pause" id="motion-pause" aria-pressed="false">
+    <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-pause"/></svg>
+    <span class="visually-hidden">Pause animations</span>
+  </button>
+  <label class="switch motion-fab__switch">
+    <input type="checkbox" class="reduce-motion-input visually-hidden">
+    <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+    <span class="switch__label">Reduce motion</span>
+  </label>
+</div>
+<!-- /shell:motion-fab -->
+
+<!-- shell:footer -->
+<footer class="site-footer">
+  <div class="page-shell site-footer__inner">
+    <div class="footer-credit">
+      <a class="footer-logo" href="https://sustainablehanovernh.org/">
+        <img src="../assets/img/sh-logo.webp" alt="Sustainable Hanover" width="300" height="103" loading="lazy">
+      </a>
+      <div>
+        <p>
+          Project created in partnership with Sustainable Hanover, a committee of the Town of
+          Hanover, New Hampshire.
+        </p>
+        <ul class="footer-contact">
+          <li><a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a></li>
+          <li><a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a href="../accessibility/">Accessibility statement</a>
+      <a href="https://github.com/meganklu/rental-energy-hanover">
+        <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-code"/></svg>
+        View the source code
+      </a>
+      <label class="switch">
+        <input type="checkbox" class="reduce-motion-input visually-hidden">
+        <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+        <span class="switch__label">Reduce motion</span>
+      </label>
+      <p class="footer-meta">Site content last reviewed 2026-08-21.</p>
+    </div>
+  </div>
+</footer>
+<script type="module" src="../assets/js/motion.js"></script>
+<script type="module" src="../assets/js/house-return.js"></script>
+<script type="module" src="../assets/js/situation.js"></script>
+<script type="module" src="../assets/js/situation-modal.js"></script>
+<!-- /shell:footer -->
+</body>
+</html>
