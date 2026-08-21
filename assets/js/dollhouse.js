@@ -15,8 +15,9 @@ const progressFill = document.getElementById("progress-fill");
 if (dollhouseEl && infoBar) {
   const hotspots = [...dollhouseEl.querySelectorAll(".hotspot")];
   // Captured now, at load, before any visiting can happen — the one reliable point at which the
-  // "Start here" badge is guaranteed to still be exactly where the markup put it, so reset (below)
-  // has a fixed hotspot to restore it to regardless of what has been clicked since.
+  // "Start here" badge is guaranteed to still be exactly where the markup put it. updateStartBadge
+  // (below) treats this as the badge's home and only moves it elsewhere when this hotspot is not
+  // available, so it needs a record of where "here" was that survives everything clicked since.
   const startBadgeHotspot = hotspots.find((h) => h.querySelector('.hotspot__badge-flag[data-flag="start"]'));
   let TOTAL = hotspots.length;
   const VISITED_KEY = "visitedSpots";
@@ -60,26 +61,48 @@ if (dollhouseEl && infoBar) {
       if (isVisited && !h.dataset.baseLabel) {
         h.dataset.baseLabel = h.getAttribute("aria-label") || "";
         h.setAttribute("aria-label", `Viewed. ${h.dataset.baseLabel}`);
-        // The "Start here" badge's job is done once the spot has actually been visited.
-        h.querySelector('.hotspot__badge-flag[data-flag="start"]')?.remove();
       }
     });
   }
 
+  function setFlag(hotspot, flag, text) {
+    const label = hotspot?.querySelector(".hotspot__label");
+    if (!label || label.querySelector(`.hotspot__badge-flag[data-flag="${flag}"]`)) return;
+    const el = document.createElement("span");
+    el.className = "hotspot__badge-flag";
+    el.dataset.flag = flag;
+    el.textContent = text;
+    label.appendChild(el);
+  }
+
+  const clearFlag = (flag) =>
+    hotspots.forEach((h) => h.querySelector(`.hotspot__badge-flag[data-flag="${flag}"]`)?.remove());
+
+  // "Start here" is placed rather than fixed, revised 2026-08-21 (DESIGN.md §3.2). It stays on
+  // the hotspot the markup put it on for as long as that hotspot is showing and unvisited, and
+  // moves to the lowest-numbered spot in the guided order that is showing and unvisited whenever
+  // it is not. Personalization is what made this necessary: it can hide the bill hotspot, and a
+  // student whose situation does that used to lose the badge entirely, leaving them the
+  // undifferentiated house the badge exists to prevent. Once every showing spot has been visited
+  // there is no "start" left to point at, so no hotspot carries it.
+  function updateStartBadge() {
+    clearFlag("start");
+    const available = (h) => !h.hidden && !visited.has(h.dataset.hotspotId);
+    const target =
+      startBadgeHotspot && available(startBadgeHotspot)
+        ? startBadgeHotspot
+        : hotspots.filter(available).sort((a, b) => a.dataset.order - b.dataset.order)[0];
+    setFlag(target, "start", "Start here");
+  }
+
   // Whichever hotspot the guided order would go to next carries a "Next" badge on the drawing
-  // itself, added 2026-08-19. Never doubles up with "Start here" on the bill hotspot.
+  // itself, added 2026-08-19. Never doubles up with "Start here", wherever that currently sits,
+  // so this has to run after updateStartBadge.
   function updateNextBadge(from) {
-    hotspots.forEach((h) => h.querySelector('.hotspot__badge-flag[data-flag="next"]')?.remove());
+    clearFlag("next");
     const next = nextHotspot(from.dataset.order);
-    const nextHasStartBadge = next.querySelector('.hotspot__badge-flag[data-flag="start"]');
-    if (nextHasStartBadge) return;
-    const label = next.querySelector(".hotspot__label");
-    if (!label) return;
-    const flag = document.createElement("span");
-    flag.className = "hotspot__badge-flag";
-    flag.dataset.flag = "next";
-    flag.textContent = "Next";
-    label.appendChild(flag);
+    if (!next || next.querySelector('.hotspot__badge-flag[data-flag="start"]')) return;
+    setFlag(next, "next", "Next");
   }
 
   async function loadContent() {
@@ -110,6 +133,10 @@ if (dollhouseEl && infoBar) {
   }
 
   const COST_LABEL = { free: "Free", under25: "Under $25", "25to75": "$25 to $75", over75: "Over $75" };
+  // How many dollar-sign glyphs each cost band draws, per DESIGN.md §4. The same mapping the
+  // cards and the improvement pages render in markup, so the info bar does not state the cost
+  // with a different symbol than the page it links to.
+  const COST_DOLLARS = { free: 1, under25: 1, "25to75": 2, over75: 3 };
   const TIME_LABEL = {
     under30min: "Under 30 minutes",
     "1to2hr": "1 to 2 hours",
@@ -143,6 +170,7 @@ if (dollhouseEl && infoBar) {
     saveVisited();
     refreshVisitedStyling();
     updateProgress();
+    updateStartBadge();
     updateNextBadge(hotspot);
     lastTrigger = hotspot;
 
@@ -182,16 +210,18 @@ if (dollhouseEl && infoBar) {
     // The full set of specs shown on the improvement page itself, per DESIGN.md §3.2 — not a
     // shorter tier-2 subset. Explainer items (read-your-bill, find-your-drafts) carry none of
     // these fields, so the row is simply empty for them.
+    const icon = (name) =>
+      `<svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#${name}"/></svg>`;
+    const dollars = (cost) =>
+      `<span class="price-dollars" aria-hidden="true">${
+        `<svg class="icon"><use href="assets/icons/sprite.svg#icon-cost"/></svg>`.repeat(COST_DOLLARS[cost] || 1)
+      }</span>`;
+
     const facts = [];
-    if (item.cost) facts.push(["icon-cost", COST_LABEL[item.cost]]);
-    if (item.time) facts.push(["icon-time", TIME_LABEL[item.time]]);
-    if (item.impact && IMPACT_LABEL[item.impact]) facts.push([`icon-impact-${item.impact}`, IMPACT_LABEL[item.impact]]);
-    const factRow = facts
-      .map(
-        ([icon, text]) =>
-          `<span class="fact"><svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#${icon}"/></svg>${text}</span>`
-      )
-      .join("");
+    if (item.cost) facts.push([dollars(item.cost), COST_LABEL[item.cost]]);
+    if (item.time) facts.push([icon("icon-time"), TIME_LABEL[item.time]]);
+    if (item.impact && IMPACT_LABEL[item.impact]) facts.push([icon(`icon-impact-${item.impact}`), IMPACT_LABEL[item.impact]]);
+    const factRow = facts.map(([mark, text]) => `<span class="fact">${mark}${text}</span>`).join("");
 
     const next = nextHotspot(hotspot.dataset.order);
     const allSeen = visited.size >= TOTAL;
@@ -323,6 +353,8 @@ if (dollhouseEl && infoBar) {
 
     TOTAL = hotspots.filter((h) => !h.hidden).length || hotspots.length;
     updateProgress();
+    // Hiding a hotspot can take "Start here" off the drawing entirely, so it is re-placed here.
+    updateStartBadge();
 
     // A stale info bar for a hotspot the new situation just hid would be confusing left open.
     if (!infoBar.hidden && lastTrigger?.hidden) closeInfoBar();
@@ -343,21 +375,15 @@ if (dollhouseEl && infoBar) {
         h.setAttribute("aria-label", h.dataset.baseLabel);
         delete h.dataset.baseLabel;
       }
-      h.querySelector('.hotspot__badge-flag[data-flag="next"]')?.remove();
     });
-    const label = startBadgeHotspot?.querySelector(".hotspot__label");
-    if (label && !label.querySelector('.hotspot__badge-flag[data-flag="start"]')) {
-      const flag = document.createElement("span");
-      flag.className = "hotspot__badge-flag";
-      flag.dataset.flag = "start";
-      flag.textContent = "Start here";
-      label.appendChild(flag);
-    }
+    clearFlag("next");
+    updateStartBadge();
     if (!infoBar.hidden) closeInfoBar();
     updateProgress();
   });
 
   refreshVisitedStyling();
+  updateStartBadge();
   updateProgress();
   applyPersonalization();
 }

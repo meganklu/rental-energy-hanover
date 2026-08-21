@@ -203,4 +203,37 @@
     <circle cx="16" cy="21" r="2" fill="var(--color-bg, #fff)"/>
   </symbol>
 
+  <!-- Added 2026-08-21 for /learn/heating-systems, which asks a reader to identify what is
+       actually on their wall. icon-radiator already covers a hot-water or steam radiator; these
+       three cover the other things a Hanover rental puts heat through. -->
+  <symbol id="icon-baseboard" viewBox="0 0 24 24">
+    <rect x="2" y="11" width="20" height="8" rx="1"/>
+    <line x1="5" y1="14" x2="19" y2="14"/>
+    <line x1="5" y1="16.5" x2="19" y2="16.5"/>
+    <line x1="1" y1="21" x2="23" y2="21"/>
+  </symbol>
+
+  <symbol id="icon-vent" viewBox="0 0 24 24">
+    <rect x="3" y="5" width="18" height="14" rx="1"/>
+    <line x1="6" y1="9" x2="18" y2="9"/>
+    <line x1="6" y1="12" x2="18" y2="12"/>
+    <line x1="6" y1="15" x2="18" y2="15"/>
+  </symbol>
+
+  <symbol id="icon-mini-split" viewBox="0 0 24 24">
+    <rect x="2" y="4" width="20" height="8" rx="2"/>
+    <line x1="5" y1="8" x2="19" y2="8"/>
+    <path d="M8 15c0 2.5 1.6 3.5 1.6 5"/>
+    <path d="M12 15c0 2.5 1.6 3.5 1.6 5"/>
+    <path d="M16 15c0 2.5 1.6 3.5 1.6 5"/>
+  </symbol>
+
+  <!-- Angle brackets, added 2026-08-21 for the footer's "View the source code" link. Deliberately
+       not a GitHub mark: that is a third-party logo this project has no license to place, and
+       the destination happens to be GitHub rather than being about GitHub. -->
+  <symbol id="icon-code" viewBox="0 0 24 24">
+    <polyline points="8.5 6.5 3 12 8.5 17.5"/>
+    <polyline points="15.5 6.5 21 12 15.5 17.5"/>
+  </symbol>
+
 </svg>

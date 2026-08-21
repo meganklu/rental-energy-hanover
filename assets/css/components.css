@@ -36,13 +36,13 @@
 
 .btn--primary {
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 .btn--primary:hover {
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 .btn--secondary {
@@ -102,6 +102,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
+  max-width: 100%;
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-pill);
   border: 1px solid currentColor;
@@ -131,14 +132,29 @@
 }
 
 /* Added 2026-08-19: explainer hotspots (not upgrades) carry this instead of a permission badge.
-   Deliberately not success/warning/info, which already mean the three permission states. */
+   Deliberately not success/warning/info, which already mean the three permission states.
+   Revised 2026-08-21: takes the fill of the Renter basics band itself (--color-surface-brand,
+   11.9:1 with --color-text) rather than the generic surface grey, so the badge and the section
+   those pages live in are visibly the same thing. DESIGN.md §4. */
 .badge--basics {
+  background: var(--color-surface-brand);
+  color: var(--color-text);
+}
+
+/* Added 2026-08-21 for /programs: a program this reader cannot use. Neutral rather than the red
+   of a safety note — "this one is not for you" is a fact about who the program serves, not a
+   warning about doing something dangerous. */
+.badge--unavailable {
   background: var(--color-surface);
   color: var(--color-text-muted);
 }
 
+/* No fill, revised 2026-08-21. Reversibility is a property every improvement has, in three
+   grades, so a flat tint here put status-level weight on a field that is never a status and
+   competed with the three permission fills next to it, which are the ones that earn one. The
+   border in currentColor (above) is what keeps this a legible pill rather than loose text. */
 .badge--reversible {
-  background: var(--color-surface);
+  background: transparent;
   color: var(--color-text);
 }
 
@@ -477,10 +493,17 @@
    full margin-block, so "Why this works" and "Savings" sit apart with visible daylight between
    them instead of touching — the entrance animation on each needs that separation to actually
    read as two bars animating in, not one static band. */
-.story-bar {
+/* The shared "background spans the window, text stays put" breakout, extracted 2026-08-21 from
+   the two places that had each written it out (story bars, and the Renter basics band). Every
+   band that uses it sits inside `.page-shell`'s 1140px cap, so it has to climb back out to the
+   viewport edge; the inner wrapper puts the content back where it was. */
+.full-bleed {
   width: 100vw;
-  margin-block: var(--space-8);
   margin-inline: calc(50% - 50vw);
+}
+
+.story-bar {
+  margin-block: var(--space-8);
   background: var(--color-surface);
   border-block: 1px solid var(--color-border);
 }
@@ -525,10 +548,11 @@
 
 /* Bigger than a normal h1, revised 2026-08-20 (was --text-h1) — this is the one place on an
    improvement page a heading is allowed to dominate, since the band around it exists to carry
-   exactly these two headings and nothing competes with them for size. */
+   exactly these two headings and nothing competes with them for size. Tokenized 2026-08-21 as
+   --text-display, so the page titles could reuse it rather than a second clamp beside this one. */
 .story-bar__heading {
   margin: 0;
-  font-size: clamp(2.25rem, 1.7rem + 2.75vw, 4.25rem);
+  font-size: var(--text-display);
   line-height: 1.05;
 }
 
@@ -721,6 +745,108 @@
   margin: 0;
 }
 
+/* ---------- Glossary page, added 2026-08-21 ----------
+   A plain <dl>, because a glossary is exactly the thing a description list is for and a screen
+   reader announces the term/definition pairing without any ARIA. Each entry keeps a stable
+   `#anchor`, since pages deep-link into this one mid-sentence and those links are the reason the
+   page exists. `scroll-margin-top` so an entry arrived at by its anchor is not tucked under the
+   top of the window. */
+.glossary {
+  margin: 0;
+}
+
+.glossary > div {
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  scroll-margin-top: var(--space-6);
+}
+
+.glossary dt {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 600;
+  line-height: var(--leading-display);
+}
+
+.glossary dd {
+  margin: var(--space-2) 0 0;
+  max-width: var(--measure);
+}
+
+.glossary dd + dd {
+  margin-top: var(--space-2);
+}
+
+.glossary .also-called {
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+/* ---------- Program card, added 2026-08-21 ----------
+   The component DESIGN.md §5 has listed since the start, built for /programs. Not `.card`: cards
+   are the improvements library's unit and stay there (§5), and a program is read one at a time in
+   a stack rather than scanned in a grid. The left rule is the one visual difference between a
+   program a renter can use and one they cannot, and it is never the only difference — the badge
+   above it says which in words. */
+.program-list {
+  display: grid;
+  gap: var(--space-5);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.program {
+  padding: var(--space-5);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.program--unavailable {
+  border-left-color: var(--color-border-strong);
+  background: var(--color-surface);
+}
+
+.program > * + * {
+  margin-top: var(--space-3);
+}
+
+.program h3 {
+  margin: 0;
+}
+
+.program dl,
+.program dl a {
+  overflow-wrap: anywhere;
+}
+
+.program dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  font-size: var(--text-small);
+}
+
+/* Two columns only where there is room for the term and its answer side by side. Below this the
+   answer sits under the term, which is what a description list does by default anyway. */
+@media (min-width: 560px) {
+  .program dl {
+    grid-template-columns: auto 1fr;
+  }
+}
+
+.program dt {
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.program dd {
+  margin: 0;
+}
+
 /* ---------- Filter / situation form ---------- */
 .question-set {
   display: grid;
@@ -793,7 +919,7 @@
 .filter-chip[aria-pressed="true"] {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 /* Added 2026-08-20, replacing the on-page filter form: just the result count and the sort
@@ -947,7 +1073,7 @@
   padding: var(--space-3) var(--space-5);
   border-radius: var(--radius-pill);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-text-on-dark);
   text-decoration: none;
   font-family: var(--font-display);
   font-weight: 600;
@@ -961,31 +1087,49 @@
    label never dims or disappears the way an opacity-based hover would. */
 .fab:hover {
   background: var(--color-accent-hover);
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 .fab .icon {
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 /* ---------- Motion controls FAB, added 2026-08-21 ----------
-   A second floating control, top-right so it never competes with the Personalize FAB at bottom-
-   right, pairing the reduce-motion toggle with a page-scoped pause button. WCAG 2.2.2 asks for a
-   way to pause moving content that is independent of the OS-level prefers-reduced-motion setting;
-   each learn-page diagram used to carry its own Pause button for that, duplicated per page. Now
-   that every animated page (learn-page diagrams and the improvement illustrations above, both
-   marked `.motion-loop`) shares the same --motion-state plumbing, one control here covers all of
-   them, so the per-diagram buttons are gone. The pause button only appears when `.motion-loop` is
-   present somewhere on the page — `:has()`, the same technique the reduce-motion switch already
-   uses elsewhere in this file — so it never shows on a page with nothing to pause. */
+   A second floating control pairing the reduce-motion toggle with a page-scoped pause button.
+   WCAG 2.2.2 asks for a way to pause moving content that is independent of the OS-level
+   prefers-reduced-motion setting; each learn-page diagram used to carry its own Pause button for
+   that, duplicated per page. Now that every animated page (learn-page diagrams and the improvement
+   illustrations above, both marked `.motion-loop`) shares the same --motion-state plumbing, one
+   control here covers all of them, so the per-diagram buttons are gone. The pause button only
+   appears when `.motion-loop` is present somewhere on the page — `:has()`, the same technique the
+   reduce-motion switch already uses elsewhere in this file — so it never shows on a page with
+   nothing to pause.
+
+   Bottom-left, moved there 2026-08-21 (was top-right). Top-right put a fixed decoration on top of
+   two sets of live controls at once: the primary nav, which is top-right on every page, and the
+   doll house's sticky progress row and reset button, which pin to the top of the viewport for as
+   long as a student is touring the house. Bottom-left is the one corner nothing else on this site
+   claims, with the Personalize FAB opposite it, and it clears both by construction rather than by
+   a `top` offset that has to be re-tuned per breakpoint. DESIGN.md §7. */
 .motion-fab {
   position: fixed;
-  top: var(--space-5);
-  right: var(--space-5);
+  left: var(--space-5);
+  bottom: var(--space-5);
   z-index: 20;
   display: flex;
   align-items: center;
   gap: var(--space-2);
+}
+
+/* Both controls carry a real border and full-strength text rather than sitting as pale shapes on
+   whatever is behind them (fixed 2026-08-21). The surface tint alone was close enough to white
+   that on a white page the control had no edge at all. */
+.motion-fab__pause,
+.motion-fab__switch {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text);
+  box-shadow: var(--shadow-raised);
 }
 
 .motion-fab__pause {
@@ -994,13 +1138,10 @@
   justify-content: center;
   width: var(--target-min);
   height: var(--target-min);
-  border: none;
   border-radius: 50%;
-  background: var(--color-surface);
-  color: var(--color-text);
   cursor: pointer;
-  box-shadow: var(--shadow-raised);
   transition: color var(--motion-duration-base) var(--motion-ease),
+    border-color var(--motion-duration-base) var(--motion-ease),
     transform var(--motion-duration-base) var(--motion-ease);
 }
 
@@ -1010,25 +1151,21 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .motion-fab__pause:hover {
   color: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 .motion-fab__switch {
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-pill);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-raised);
+  font-weight: 600;
 }
 
-/* Below this width the header's own brand lockup and nav wrap onto multiple lines and fill the
-   full viewport width (site-header__inner's flex-wrap, no dedicated breakpoint of its own to
-   match), leaving no clear corner for a second fixed top-right control — at the site's 320px
-   accessibility floor an untouched `.motion-fab` sat directly over the wordmark on first paint.
-   Dropping the switch's visible text label (the accessible name stays, `.switch__label` is still
-   in the DOM, just visually hidden) shrinks the fab to two small circles, small enough to clear
-   the wrapped brand text instead of sitting on top of it. */
+/* Below this width both controls collapse to plain 44px circles, and the Personalize FAB opposite
+   them is capped so its label wraps instead of running into them. The switch keeps its accessible
+   name — `.switch__label` stays in the DOM, just visually hidden. */
 @media (max-width: 640px) {
   .motion-fab {
-    top: 9rem;
+    gap: var(--space-1);
   }
 
   .motion-fab__switch {
@@ -1040,6 +1177,26 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 
   .motion-fab__switch .switch__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* The label shortens to "Personalize" rather than wrapping to four lines across the corner of a
+     320px window. `.fab__rest` goes visually hidden rather than being removed, so the accessible
+     name stays the full "Personalize your recommendations" and DESIGN.md §2's "never an icon with
+     no word next to it" still holds. The max-width is the backstop for a wrapped label. */
+  .fab {
+    max-width: calc(100vw - 9rem);
+  }
+
+  .fab__rest {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -1109,7 +1266,7 @@ body:has(.motion-loop) .motion-fab__pause {
 }
 
 .site-footer a:hover {
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 .site-footer__inner {
@@ -1120,19 +1277,44 @@ body:has(.motion-loop) .motion-fab__pause {
   justify-content: space-between;
 }
 
-.footer-credit {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  max-width: 32rem;
+/* A flex item's `min-width: auto` refuses to shrink below its content's minimum, which is how a
+   single long word in one column pushes the whole page wider than the window. */
+.site-footer__inner > * {
+  min-width: 0;
 }
 
-.footer-credit img {
-  height: 40px;
-  width: auto;
+/* `flex-wrap` and `min-width: 0` added 2026-08-21, when a 320px reflow measurement found this row
+   was the single largest source of horizontal overflow on every page of the site. Two causes,
+   both fixed here: the logo and the text sat in a row that could not wrap, and the contact email
+   is a thirty-character unbreakable token that set a min-content width wider than the viewport. */
+.footer-credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: 34rem;
+  min-width: 0;
+}
+
+.footer-credit > div {
+  min-width: 0;
+}
+
+/* The logo is a link to sustainablehanovernh.org, added 2026-08-21 — it was the one piece of the
+   partner's branding on the page that was not clickable, which is the opposite of what a partner
+   logo is for. Its `alt` is the link's accessible name. DESIGN.md §10. */
+.footer-logo {
+  flex-shrink: 0;
+  display: block;
   border-radius: var(--radius-sm);
-  background: #fff;
-  padding: var(--space-1);
+  background: var(--color-text-on-dark);
+  padding: var(--space-2);
+  transition: transform var(--motion-duration-base) var(--motion-ease);
+}
+
+.footer-logo img {
+  height: 68px;
+  width: auto;
 }
 
 .footer-credit p {
@@ -1140,11 +1322,37 @@ body:has(.motion-loop) .motion-fab__pause {
   margin: 0;
 }
 
+/* Website and email each on their own line, revised 2026-08-21: they are two ways to make
+   contact and a reader is picking one, not reading a sentence that happens to contain both. */
+.footer-contact,
+.footer-contact a {
+  overflow-wrap: anywhere;
+}
+
+.footer-contact {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-small);
+}
+
+.footer-contact li + li {
+  margin-top: var(--space-1);
+}
+
 .footer-links {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   font-size: var(--text-small);
+  align-items: flex-start;
+}
+
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
 }
 
 .footer-meta {
@@ -1167,8 +1375,15 @@ body:has(.motion-loop) .motion-fab__pause {
   height: 24px;
   flex-shrink: 0;
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--switch-track);
   transition: background var(--motion-duration-base) var(--motion-ease);
+}
+
+/* The dark footer is the one place a translucent white track is the readable choice. Everywhere
+   else --switch-track's default (a solid --color-border-strong) is, which is the whole reason it
+   is a token. Added 2026-08-21, DESIGN.md §7. */
+.site-footer {
+  --switch-track: rgba(255, 255, 255, 0.45);
 }
 
 .switch__thumb {
@@ -1178,7 +1393,7 @@ body:has(.motion-loop) .motion-fab__pause {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--color-text-on-dark);
   transition: transform var(--motion-duration-base) var(--motion-ease);
 }
 
@@ -1196,14 +1411,13 @@ body:has(.motion-loop) .motion-fab__pause {
 }
 
 /* ---------- Hero: the welcome mat ---------- */
-/* Revised 2026-08-21: the ground plane is now literal cut bluestone slabs — axis-aligned
-   rectangles of different sizes (an "ashlar" stone-paving layout), not the curved crazy-paving
-   joints of the previous pass. Built from full-width/full-height divider lines only, offset
-   differently row to row so it doesn't read as a uniform brick grid; every line that touches a
-   tile edge runs the full width or height, so the 320px tile repeats with no visible seam by
-   construction (a partial-length joint would only need to match its opposite edge to stay
-   seamless, but the full-length lines make that automatic). Still an inline SVG background, no
-   image asset, kept subtle (16% opacity). */
+/* The ground plane is cut bluestone in a random-ashlar layout: whole rectangular slabs of several
+   sizes, squares among them, joints breaking rather than running through. Generated by
+   `node tools/ashlar.mjs` and pasted here as a static data URI — see DESIGN.md §3.1 for why the
+   joints are derived from a dissection rather than drawn by hand (the two earlier passes drew
+   them, and both had joints that stopped short of a slab's edge), and for how slabs straddling
+   the tile edge are what keeps the 320px repeat from showing. No image asset, no build step.
+   Kept subtle (16% opacity). */
 .hero {
   min-height: 85svh;
   display: flex;
@@ -1213,7 +1427,7 @@ body:has(.motion-loop) .motion-fab__pause {
   gap: var(--space-5);
   padding: var(--space-7) var(--space-5);
   background-color: var(--color-hero-ground);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cpath fill='none' stroke='rgba(20,32,26,0.16)' stroke-width='2' stroke-linecap='round' d='M0 85 L320 85 M0 160 L320 160 M0 250 L320 250 M60 0 L60 85 M140 0 L140 85 M230 0 L230 85 M100 85 L100 160 M190 85 L190 160 M260 85 L260 160 M40 160 L40 250 M150 160 L150 250 M240 160 L240 250 M90 250 L90 320 M180 250 L180 320 M250 250 L250 320'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27320%27%20height%3D%27320%27%20viewBox%3D%270%200%20320%20320%27%3E%3Cpath%20fill%3D%27none%27%20stroke%3D%27rgba(20%2C32%2C26%2C0.16)%27%20stroke-width%3D%272%27%20d%3D%27M40%20120V200M80%200V40M80%2080V320M120%2040V280M160%20280V320M200%200V160M200%20240V280M240%200V240M240%20280V320M280%200V200M280%20280V320M320%2040V80M0%2040V80M320%20120V160M0%20120V160M320%20200V280M0%20200V280M0%2040H320M0%2080H120M240%2080H320M0%20120H80M280%20120H320M0%20160H40M80%20160H240M280%20160H320M0%20200H80M240%20200H320M120%20240H320M0%20280H320M80%20320H280M80%200H280%27%2F%3E%3C%2Fsvg%3E");
   background-size: 320px 320px;
   text-align: center;
 }
@@ -1258,6 +1472,60 @@ body:has(.motion-loop) .motion-fab__pause {
   width: 48%;
   height: auto;
   flex-shrink: 0;
+}
+
+/* The walk, added 2026-08-21 (DESIGN.md §3.1). Scroll-progress driven, not timed: the container
+   carries the forward travel while each shoe alternates between ahead of it and behind it, half a
+   stride apart, which is what reads as a gait rather than as two shoes sliding sideways together.
+   Because scroll position *is* the animation's progress, it reverses when the student scrolls back
+   and stops when they stop — nothing here moves on its own, so unlike the site's loops it needs no
+   Pause button (§7). Gated the same three ways as the story-bar drift below: @supports, because
+   scroll-driven animation is a progressive enhancement; prefers-reduced-motion and the
+   reduce-motion switch; and min-width 600px, with the rest of the site's scroll motion (§6). Under
+   any of those the shoes hold the position they ship in, which is the first keyframe. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    /* Sub-properties, not the `animation` shorthand: the shorthand would reset
+       animation-duration, and a scroll-driven animation wants that left at `auto` so it spans the
+       whole range rather than resolving to a zero-length one. */
+    body:not(:has(.reduce-motion-input:checked)) .hero__shoes,
+    body:not(:has(.reduce-motion-input:checked)) .hero__shoes svg {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 70vh;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .hero__shoes {
+      animation-name: shoes-walk;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .hero__shoes svg:first-child {
+      animation-name: shoe-step-lead;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .hero__shoes svg:last-child {
+      animation-name: shoe-step-follow;
+    }
+  }
+}
+
+/* The container keeps its resting -8deg through the whole walk, so the pair stays tilted the way
+   a kicked-off pair landed. translateX runs along that rotated axis, which sends them up the mat
+   slightly as they cross it rather than straight sideways. */
+@keyframes shoes-walk {
+  from { transform: rotate(-8deg) translateX(0); }
+  to { transform: rotate(-8deg) translateX(300%); }
+}
+
+@keyframes shoe-step-lead {
+  0%, 25%, 50%, 75%, 100% { transform: translate(20%, -4%) rotate(4deg); }
+  12.5%, 37.5%, 62.5%, 87.5% { transform: translate(-16%, 0) rotate(-3deg); }
+}
+
+@keyframes shoe-step-follow {
+  0%, 25%, 50%, 75%, 100% { transform: translate(-16%, 0) rotate(-3deg); }
+  12.5%, 37.5%, 62.5%, 87.5% { transform: translate(20%, -4%) rotate(4deg); }
 }
 
 /* Only this border and what's inside it is "the mat" proper. Inset by a fixed margin (not
@@ -1371,8 +1639,11 @@ body:has(.motion-loop) .motion-fab__pause {
   gap: var(--space-2);
 }
 
+/* Deliberately not `position: relative`: the tooltip below is positioned against
+   `.section-heading-row` instead, which is the content column's own width. Anchored to the button
+   it could start anywhere along a wrapped heading and run off the side of a 320px window, which a
+   reflow measurement caught doing exactly that. */
 .help-icon {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1398,7 +1669,7 @@ body:has(.motion-loop) .motion-fab__pause {
   left: 0;
   margin-top: var(--space-2);
   width: max-content;
-  max-width: 20rem;
+  max-width: min(20rem, 100%);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
@@ -1528,7 +1799,7 @@ body:has(.motion-loop) .motion-fab__pause {
   padding: 1px var(--space-2);
   border-radius: var(--radius-pill);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-text-on-dark);
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -1729,7 +2000,12 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* ---------- Room index (no-JS / screen reader / narrow-width fallback) ---------- */
+/* ---------- Room index (no-JS / screen reader / narrow-width fallback) ----------
+   Closed by default since 2026-08-21, as the site's standard `.disclosure` bar. `<details>` is
+   what makes that safe: the summary is a real, keyboard-operable control that stays in the tab
+   order and stays announced at every width, so the list is still *reachable* everywhere even
+   while it is not shown — which is what the no-JavaScript, screen-reader and 320px-reflow paths
+   actually need. Never `display: none` at any width. DESIGN.md §3.2. */
 .room-index {
   margin-top: var(--space-6);
 }
@@ -1745,8 +2021,12 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-.room-index h3 {
-  margin-bottom: var(--space-2);
+.room-index > summary {
+  font-size: var(--text-h3);
+}
+
+.room-index .disclosure__body {
+  padding-top: var(--space-4);
 }
 
 .room-index__room {
@@ -1863,7 +2143,7 @@ body:has(.motion-loop) .motion-fab__pause {
   background: var(--color-bg);
 }
 
-/* Peek variant, added 2026-08-20 for the Improvements page's "Rental basics" row: each slide
+/* Peek variant, added 2026-08-20 for the Improvements page's "Renter basics" row: each slide
    centers as it snaps, with enough side padding on the track that the next slide stays partly
    visible rather than fully off-screen — "focuses on one at a time, but the others are visible
    in the background." Same track/slide markup and scroll-snap mechanics as the plain carousel
@@ -1908,6 +2188,15 @@ body:has(.motion-loop) .motion-fab__pause {
 .carousel__count {
   font-size: var(--text-small);
   color: var(--color-text-muted);
+}
+
+/* At either end the control points at the slide already showing (assets/js/carousel.js). Dimmed
+   and marked aria-disabled rather than removed from the DOM, so the row does not reflow and the
+   control does not vanish out from under a keyboard user mid-press. Still focusable, per WCAG
+   2.4.11 — aria-disabled says "does nothing here", `disabled` would say "skip me". */
+.carousel__nav[aria-disabled] {
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 /* ---------- Animated diagram ---------- */
@@ -2002,33 +2291,321 @@ body:has(.motion-loop) .motion-fab__pause {
   animation-delay: 2.8s;
 }
 
+/* ---------- Heating systems diagrams, added 2026-08-21 ----------
+   Adapted from the project team's own earlier heat pump site (docs/sources.md S25) into this
+   site's tokens, icon pen (DESIGN.md §4) and motion plumbing. Two substantive changes came with
+   the port. The original moved its refrigerant particles with SMIL `<animateMotion>`, which
+   ignores `animation-play-state` and so could not be reached by this site's Pause button or
+   reduce-motion switch; they run on a CSS `offset-path` instead, which is a real animation like
+   every other loop here and is gated by `.motion-loop` in exactly the same way (DESIGN.md §5.1
+   also rules SMIL out). And the original's season toggle re-tinted the whole page through a
+   `data-season` attribute set by script; here it is a pair of radio buttons scoped to the one
+   figure, so it needs no JavaScript, arrives keyboard-operable and announced without any ARIA,
+   and cannot change anything outside the diagram it belongs to. */
+.hvac-figure {
+  margin-block: var(--space-6);
+}
+
+.hvac-figure svg {
+  width: 100%;
+  height: auto;
+}
+
+.hvac-figure figcaption {
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+  margin-top: var(--space-3);
+  max-width: var(--measure);
+}
+
+/* A real fieldset of radios rather than buttons: one choice out of two, which is what radios are,
+   and it means arrow keys move between seasons and a screen reader announces the group. */
+.season-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  margin: 0 0 var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+}
+
+.season-toggle label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding-inline: var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-small);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--motion-duration-base) var(--motion-ease),
+    color var(--motion-duration-base) var(--motion-ease);
+}
+
+.season-toggle input:checked + label {
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+}
+
+.season-toggle input:focus-visible + label {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Winter is the state the figure ships in, so it is also what renders where `:has()` is not
+   supported: the summer layer stays hidden and the diagram is still correct and complete. */
+.season-summer {
+  display: none;
+}
+
+.hvac-figure:has(.season-input--summer:checked) .season-summer {
+  display: block;
+}
+
+.hvac-figure:has(.season-input--summer:checked) .season-winter {
+  display: none;
+}
+
+.hvac-sky { fill: var(--color-info-bg); }
+.hvac-ground { fill: var(--color-surface); }
+.hvac-roof { fill: var(--color-accent); }
+.hvac-room { fill: var(--color-bg); }
+.hvac-floor { fill: var(--color-surface); }
+.hvac-wall { fill: var(--color-border-strong); }
+.hvac-unit { fill: var(--color-accent); }
+.hvac-stroke { fill: none; stroke: var(--color-border-strong); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.hvac-vent { stroke: rgba(255, 255, 255, 0.65); stroke-width: 4; stroke-linecap: round; }
+.hvac-label { fill: var(--color-text); font-family: var(--font-body); font-size: 16px; }
+.hvac-loop { fill: none; stroke: var(--color-border-strong); stroke-width: 2; stroke-dasharray: 4 5; opacity: 0.6; }
+.hvac-particle { fill: var(--color-brand); stroke: var(--color-accent); stroke-width: 1.5; }
+
+.hvac-figure:has(.season-input--summer:checked) .hvac-sky { fill: var(--color-warning-bg); }
+
+/* Motion. Every rule below sets only a name and a duration; `.motion-loop` in the markup supplies
+   the iteration count and the --motion-state play-state, the same as the improvement
+   illustrations above. */
+@keyframes hvac-spin { to { transform: rotate(360deg); } }
+
+.hvac-fan {
+  animation-name: hvac-spin;
+  animation-duration: 3s;
+  animation-timing-function: linear;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* offset-distance rather than a translate, so the particle follows the refrigerant loop's actual
+   corners instead of a straight line between its ends. */
+@keyframes hvac-orbit { to { offset-distance: 100%; } }
+
+.hvac-particle {
+  /* The same path the `.hvac-loop` line in the markup draws. If one moves the other has to. */
+  offset-path: path("M180 185 H350 V150 H180 Z");
+  animation-name: hvac-orbit;
+  animation-duration: 3.6s;
+  animation-timing-function: linear;
+}
+
+.season-summer .hvac-particle {
+  animation-direction: reverse;
+}
+
+@keyframes hvac-snow {
+  from { transform: translateY(-14px); opacity: 0; }
+  20%, 80% { opacity: 0.95; }
+  to { transform: translateY(96px); opacity: 0; }
+}
+
+.hvac-flake {
+  animation-name: hvac-snow;
+  animation-duration: 6s;
+  animation-timing-function: linear;
+}
+
+@keyframes hvac-sunpulse {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.12); }
+}
+
+.hvac-sun-glow {
+  animation-name: hvac-sunpulse;
+  animation-duration: 4s;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes hvac-flicker {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.86); }
+}
+
+.hvac-flame {
+  animation-name: hvac-flicker;
+  animation-duration: 1.6s;
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+
+@keyframes hvac-exhaust {
+  from { transform: translateY(0); opacity: 0; }
+  25%, 70% { opacity: 0.8; }
+  to { transform: translateY(-215px); opacity: 0; }
+}
+
+.hvac-smoke {
+  animation-name: hvac-exhaust;
+  animation-duration: 2.6s;
+  animation-timing-function: linear;
+}
+
+/* Per-instance offsets, so a set of snowflakes or exhaust puffs does not move in lockstep. Named
+   classes rather than inline `style` attributes, per AGENTS.md: styling stays in this file. */
+.hvac-delay-1 { animation-delay: -1.2s; }
+.hvac-delay-2 { animation-delay: -2.4s; }
+.hvac-delay-3 { animation-delay: -0.7s; }
+.hvac-delay-4 { animation-delay: -3.4s; }
+.hvac-delay-5 { animation-delay: -4.6s; }
+
+/* ---------- Heat source identification grid, added 2026-08-21 ---------- */
+.id-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: var(--space-4);
+  padding: 0;
+  margin-block: var(--space-5);
+  list-style: none;
+}
+
+.id-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+}
+
+.id-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--text-h4);
+}
+
+.id-card__head .icon {
+  width: 1.6em;
+  height: 1.6em;
+  color: var(--color-accent);
+}
+
+.id-card p {
+  margin: 0;
+  font-size: var(--text-small);
+  max-width: none;
+}
+
+.id-card__tell {
+  color: var(--color-text-muted);
+}
+
+/* ---------- Comparison table, added 2026-08-21 ---------- */
+.table-wrap {
+  overflow-x: auto;
+  margin-block: var(--space-5);
+}
+
+.data-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 34rem;
+  font-size: var(--text-small);
+}
+
+.data-table th,
+.data-table td {
+  padding: var(--space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.data-table thead th {
+  font-family: var(--font-display);
+  border-bottom: 2px solid var(--color-border-strong);
+}
+
+.data-table tbody th {
+  font-weight: 600;
+}
+
 /* ---------- Utility layout ---------- */
 .section {
   padding-block: var(--space-7);
 }
 
-/* Added 2026-08-20: "Rental basics" moved to the top of /improvements, in its own tinted band
-   (theme-brand) so it reads as a distinct, secondary section rather than competing with the main
-   card grid below it for attention. Revised 2026-08-21: the tint now lives on a full-bleed outer
-   section (the same 100vw + negative-margin breakout `.story-bar` uses) with an inner
-   `.page-shell` carrying the actual padding and max-width, so the background spans the window
-   edge to edge while the heading and carousel stay at the page's normal reading width. The
-   bottom edge is cut to a single downward point with `clip-path` — an arrow aimed at the card
-   grid below — with extra bottom padding on the inner wrapper so the point falls in empty space
-   rather than across the carousel, even at a narrow viewport where the content column nearly
-   fills the full width and sits closest to the diagonal cut. */
-.rental-basics {
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
+/* Added 2026-08-20 as "Rental basics", renamed "Renter basics" 2026-08-21 (the badge on the same
+   items already read that, so the site had two names for one thing). The two explainers moved to
+   the top of /improvements in their own tinted band (theme-brand) so they read as a distinct,
+   secondary section rather than competing with the main card grid below for attention. The tint
+   sits on a `.full-bleed` outer section with an inner `.page-shell` carrying the padding and
+   max-width, so the background spans the window edge to edge while the heading and carousel stay
+   at the page's normal reading width. The bottom edge is cut to a single downward point with
+   `clip-path` — an arrow aimed at the card grid below — with extra bottom padding on the inner
+   wrapper so the point falls in empty space rather than across the carousel, even at a narrow
+   viewport where the content column nearly fills the width and sits closest to the diagonal. */
+.renter-basics {
   clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 100%, 0 88%);
 }
 
-.rental-basics > .page-shell {
+.renter-basics > .page-shell {
   padding-bottom: var(--space-9);
 }
 
-.rental-basics h2 {
+.renter-basics h2 {
   margin-bottom: var(--space-4);
+}
+
+/* Vertical rhythm inside a plain reading column, added 2026-08-21. base.css resets every heading
+   and paragraph to zero margin, so prose has to opt back in — the same rule `.improvement-body`
+   already carries, now shared by the pages that are mostly prose (about, rights, programs and the
+   rest). An h2 starts a new named section rather than the next paragraph, so it gets more room. */
+.content-column > * + * {
+  margin-top: var(--space-5);
+}
+
+.content-column > h2 {
+  margin-top: var(--space-8);
+}
+
+.content-column > h3 {
+  margin-top: var(--space-6);
+}
+
+/* ---------- Page head, added 2026-08-21 ----------
+   The block every page opens with, so a page title looks the same everywhere on the site instead
+   of each page inventing its own. Centered, at display size (§4) — one step above h1, because a
+   page title is alone on its band with nothing competing for attention, which is the same reason
+   a story bar's heading gets that size. The lede under it is optional and keeps the reading
+   measure even though the block is centered. */
+.page-head {
+  text-align: center;
+  margin-bottom: var(--space-7);
+}
+
+.page-head h1 {
+  font-size: var(--text-display);
+  line-height: 1.05;
+}
+
+.page-head .lede {
+  max-width: var(--measure);
+  margin: var(--space-4) auto 0;
+  font-size: var(--text-h4);
+  color: var(--color-text-muted);
 }
 
 .stack {

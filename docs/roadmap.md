@@ -1,6 +1,6 @@
 # Roadmap
 
-> **Status:** ● Complete · **Last updated:** 2026-08-19 · **Owner:** Megan
+> **Status:** ● Complete · **Last updated:** 2026-08-21 · **Owner:** Megan
 
 ## 1. Fixed dates
 
@@ -18,7 +18,7 @@
 | 1. Research | Ryan and Katharine | 2026-08-12 | Round 1 interviews done; audience.md rewritten from evidence | ☐ |
 | 2. Content | Megan | 2026-08-12 | Topic inventory prioritized; v1 content drafted and sourced | ☑ |
 | 3. Design | Megan | 2026-08-12 | IA settled; key screens layout planned; tokens contrast-checked | ☑ |
-| 4. Build | Megan | 2026-08-19 | Must-have features meet acceptance criteria | ☐ |
+| 4. Build | Megan | 2026-08-19 | Must-have features meet acceptance criteria | ◐ F1, F2, F4 done. F3 (flip-card myth busters) partially built and needs its myth/correction pairs through content review |
 | 5. Test | Ryan and Katharine | 2026-08-26 | Usability round 2 done; the v1 accessibility floor in [accessibility.md](accessibility.md) §5 passes. Screen reader and audit passes are v2 | ☐ |
 | 6. Review & sign-off | All | 2026-08-26 | Partner approval on all content | ☐ |
 | 7. Launch | All | 2026-08-26 | Live; distribution channels notified | ☐ |
@@ -68,3 +68,4 @@ standard is protected. Proving it is scheduled.
 | Date | Update |
 |---|---|
 | 2026-08-18 | Stack decided: hand-written HTML, CSS and JavaScript, no build step, hosted on GitHub Pages from `main`. [architecture.md](architecture.md) and [AGENTS.md](../AGENTS.md) filled in accordingly |
+| 2026-08-21 | Design pass on the home page closed out, and the rest of the site built. A CSS consolidation pass ran first ([DESIGN.md](../DESIGN.md) §5) so the shared patterns existed before eight pages copied them. Six pages added — `/about`, `/accessibility`, `/your-rights`, `/programs`, `/glossary`, `/where-to-get-it`, `/before-you-sign` — plus a third Renter basics explainer, `/learn/heating-systems` (topic #20, new). Every link in the primary nav and the footer now resolves; before this the nav's own "Rights and programs" and "About" entries 404'd. Phase 4 (Build) exit criteria met for the must-have features except F3 |

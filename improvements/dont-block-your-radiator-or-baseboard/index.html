@@ -20,7 +20,7 @@
 <body>
 
 <!-- shell:header -->
-<a class="skip-link" href="../../#main">Skip to content</a>
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="page-shell site-header__inner">
     <a class="brand" href="../../index.html">
@@ -61,7 +61,7 @@
             <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
           </div>
           <div class="fact-row">
-            <span class="fact">Free</span>
+            <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg></span>Free</span>
             <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
             <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
           </div>
@@ -104,7 +104,7 @@
         </ol>
       </div>
 
-      <div class="story-bar">
+      <div class="story-bar full-bleed">
         <div class="story-bar__inner">
           <h2 class="story-bar__heading">Why this works</h2>
           <div class="story-bar__body">
@@ -118,7 +118,7 @@
         </div>
       </div>
 
-      <div class="story-bar story-bar--reverse">
+      <div class="story-bar full-bleed story-bar--reverse">
         <div class="story-bar__inner">
           <h2 class="story-bar__heading">Savings</h2>
           <div class="story-bar__body">
@@ -141,7 +141,7 @@
 <!-- shell:fab -->
 <a class="fab" id="situation-fab" href="../../start/">
   <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-sliders"/></svg>
-  Personalize your recommendations
+  <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
 <dialog id="situation-dialog" class="situation-dialog" aria-labelledby="situation-dialog-heading">
   <div class="situation-dialog__inner">
@@ -173,22 +173,32 @@
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
     <div class="footer-credit">
-      <img src="../../assets/img/sh-logo.webp" alt="Sustainable Hanover" width="150" height="52" loading="lazy">
-      <p>
-        Project created in partnership with Sustainable Hanover, a committee of the Town of
-        Hanover, New Hampshire.
-        <a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a>
-        · <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a>
-      </p>
+      <a class="footer-logo" href="https://sustainablehanovernh.org/">
+        <img src="../../assets/img/sh-logo.webp" alt="Sustainable Hanover" width="300" height="103" loading="lazy">
+      </a>
+      <div>
+        <p>
+          Project created in partnership with Sustainable Hanover, a committee of the Town of
+          Hanover, New Hampshire.
+        </p>
+        <ul class="footer-contact">
+          <li><a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a></li>
+          <li><a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-links">
       <a href="../../accessibility/">Accessibility statement</a>
+      <a href="https://github.com/meganklu/rental-energy-hanover">
+        <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-code"/></svg>
+        View the source code
+      </a>
       <label class="switch">
         <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
-      <p class="footer-meta">Site content last reviewed 2026-08-19.</p>
+      <p class="footer-meta">Site content last reviewed 2026-08-21.</p>
     </div>
   </div>
 </footer>

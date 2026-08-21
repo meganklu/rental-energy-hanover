@@ -88,9 +88,11 @@ Sustainable Hanover page cannot do.
 │   └── /improvements/:slug      One improvement: cost, permission, reversibility, steps, sources
 ├── /learn                       Deleted 2026-08-20 (§3.4) — no hub page any more. Its two
 │                                 explainers below keep their URLs, now surfaced from
-│                                 /improvements' "Rental basics" instead of a /learn index
+│                                 /improvements' "Renter basics" instead of a /learn index
 │   ├── /learn/read-your-bill    Enabler. kWh, rate, what is actually driving the bill
 │   ├── /learn/find-your-drafts  Enabler. Guided walkthrough of where heat escapes
+│   ├── /learn/heating-systems   Enabler. What kind of heat you have and what it means for
+│   │                             you as a renter. Added 2026-08-21, §3.5
 │   ├── /learn/who-pays-for-what Enabler. Finding it in the lease. Not yet built
 │   └── /learn/:slug             Remaining explainers, not yet built
 ├── /checklist                   v2. Generated checklist for the student's phase and situation
@@ -170,6 +172,11 @@ student can send a filtered list to a roommate. Rooms serialize as fragments (`/
 | Checklist `/checklist` | Take a list away and act on it over a week | Print, or copy as text to send to roommates | **v2**, cut from v1 per [docs/features.md](docs/features.md) §3. State is local to the browser. Nothing is submitted anywhere |
 | Rights `/your-rights` | Find out whether 58°F is legal and who to call | Reach a real help resource | Legal disclaimer at the top, never collapsed. No advice on a specific dispute |
 | Programs `/programs` | Find out whether a renter can use this | Go to the program's own page | Any program with `state` other than NH is labeled as another state's program or is not rendered |
+| Before you sign `/before-you-sign` | Know what to look at during a ten-minute viewing | Take the list to the viewing | Built 2026-08-21. A viewing checklist plus the two questions to ask about heat and who pays. No legal content: it links to `/your-rights` for that |
+| Where to get it `/where-to-get-it` | Find the materials without a car | Pick a route | Built 2026-08-21. The shared sourcing page §2 promised: online delivery, and the fare-free Advance Transit route to the West Lebanon stores. Hanover's own hardware store closed in 2023 and the page says so |
+| Glossary `/glossary` | Look up one term and get back to what you were reading | Follow the link back | Built 2026-08-21 from [docs/glossary.md](docs/glossary.md). Every term is a `<dt>`/`<dd>` pair with a stable `#anchor`, because pages deep-link into it mid-sentence |
+| About `/about` | Know who made this and whether to trust it | Read the credit, or contact them | Built 2026-08-21. Team credit, the Sustainable Hanover partnership, how the content is sourced and reviewed, and the standing disclaimers in full |
+| Accessibility `/accessibility` | Find out whether this site will work for them, and say so if it does not | Report a barrier | Built 2026-08-21. States what v1 commits to and, plainly, what is still unverified per [docs/accessibility.md](docs/accessibility.md) §5. A statement that overclaims is worse than none |
 
 Screens for features cut from v1 are marked. See [docs/features.md](docs/features.md) §3 for what
 ships and why.
@@ -226,11 +233,24 @@ mat — earlier language that called the whole hero band the mat was imprecise. 
    an actual doormat. Not tan — the tan is the mat's alone. Revised 2026-08-20, twice: the ground
    plane first got a regular grid of hairline joints (two layered `linear-gradient`s), corrected
    the same day to an irregular "crazy paving" joint pattern — a real bluestone patio is cut in
-   asymmetric slabs, not a brick grid — built as an inline SVG background `<pattern>` (still no
-   image asset, a vector pattern rather than a gradient one) with joint lines hand-placed to share
-   the same coordinate at opposite tile edges so the 320px tile repeats with no visible seam, and
-   scaled up so the tiles read proportionate to the mat sitting on them rather than as a fine
-   texture underneath it. Kept subtle (16% opacity).
+   asymmetric slabs, not a brick grid — built as an inline SVG background (still no image asset, a
+   vector pattern rather than a gradient one), scaled up so the tiles read proportionate to the mat
+   sitting on them rather than as a fine texture underneath it. Kept subtle (16% opacity).
+   Revised 2026-08-21 to **random ashlar**, which is what a cut-bluestone patio actually is: whole
+   rectangular slabs of several different sizes, squares among them, set so the joints break rather
+   than running through. The two earlier passes both drew joint lines by hand, which is why both
+   had joints that stopped short of a stone's edge — a hand-placed line has no way of knowing where
+   the stone it borders ends. The pattern is now generated from a **dissection** instead: the 320px
+   tile is an 8×8 grid of 40px units, every unit belongs to exactly one slab, and slabs run from
+   1×1 (a 40px square) up to 3×2. The joints are then derived rather than drawn — every edge
+   between two units that belong to *different* slabs becomes a line, and every edge inside one
+   slab does not. A missing joint is not possible by construction, because a joint is defined as
+   the boundary between two stones rather than as a line someone placed. Seamlessness works the
+   same way: the grid wraps (unit 7 is adjacent to unit 0 in both axes), so slabs cross the tile
+   edge and there is no full-width or full-height line marking the 320px repeat. Generated once by
+   `tools/ashlar.mjs` and pasted into `components.css` as a static data URI, so the published site
+   still ships a plain CSS background and no build step (AGENTS.md rule 8) — the tool exists to
+   regenerate the pattern by hand, not to run at deploy.
 2. The mat rectangle: a `--color-mat` (tan) box, centered in the hero. Revised 2026-08-19: sized
    larger overall (a real doormat is a substantial object on the page, not a small card), on a
    fixed `aspect-ratio` so its proportions are exact and reproducible rather than an incidental
@@ -258,6 +278,42 @@ mat — earlier language that called the whole hero band the mat was imprecise. 
    the pair towering up over the mat's own text before the sizing was corrected) so the pair now
    reads as proportionate to the mat rather than a small accent in its corner. Decorative and
    `aria-hidden` throughout — nothing here is informational, so nothing needs an accessible name.
+
+   **Shape, revised 2026-08-21, twice.** The first pass reshaped the outline from memory into a
+   waisted foot silhouette — wide ball, pinched arch, heel bulge — and shortened the toe cap. The
+   second pass redrew it against the reference sneaker the request actually pointed at, which was
+   worth doing because the icon differs from the guess in three ways that matter:
+
+   - **The outline is a smooth capsule,** not a waisted foot. Roughly 2.3:1 long to wide, blunt at
+     both ends, with only a gentle taper toward the heel. The waist made it read as a slipper.
+   - **The toe cap is inset on every side,** a separate panel with the upper's color visible all
+     the way around it, rather than a band spanning the full width of the toe. This is most of what
+     "slightly smaller" turned out to mean. Its inner edge, the one facing the laces, is close to
+     straight — the request asked for that directly, and it is kept flat here even though the icon
+     curves that edge down toward the tongue, because the instruction is the more specific source.
+   **Where the icon was followed and then un-followed: the lacing.** The reference laces as a
+   ladder, two rails with three rungs across them and the ends trailing past the heel, and it is
+   the most recognizable thing about that drawing. It was ported over faithfully, and then reverted
+   the same day to the crossed laces and eyelet dots it replaced. The reason is scale. This shoe
+   renders at about 85px wide. At 400% zoom the ladder is clearly a ladder; at 85px it is a row of
+   hash marks, while a crossed lace still reads as a lace because the X shape carries it rather
+   than the rung spacing. The dark heel opening came back for the same reason: without it the lower
+   half of the shoe is an undifferentiated green field at that size.
+
+   **The rule this leaves behind:** check a decorative drawing at the size it actually renders, not
+   at the zoom it was drawn at. The ladder pass was only ever checked at 400%, which is how
+   something more faithful to the source shipped as something harder to recognize. Where fidelity
+   to a reference and legibility at display size disagree, legibility wins.
+
+   **The walk, added 2026-08-21.** Scrolling down out of the hero walks the pair across the mat.
+   The container carries the forward travel and each shoe carries its own step — lift, swing, set
+   down — with the two shoes half a stride out of phase, so it reads as a gait rather than as two
+   shoes sliding sideways together. It is a scroll-progress animation, not a timed one: the
+   position in the walk *is* the scroll position, so scrolling back up walks them back, and
+   stopping stops them. Gated exactly like the story-bar drift in §7 — behind an `@supports` check
+   for `animation-timeline`, off under `prefers-reduced-motion`, off with the reduce-motion switch,
+   and off below 600px with the rest of the site's scroll motion. With any of those in force the
+   shoes simply sit where they started, which is the state the hero has always shipped.
 3. The black border: a `--color-mat-border` rule, inset from the tan rectangle's edges by a fixed
    margin on all four sides (`inset:`, not padding) so a strip of tan shows *outside* the border
    all the way around and the border keeps close to the tan rectangle's own aspect ratio rather
@@ -365,6 +421,16 @@ itself, not only inside whichever info bar happens to be open. Exactly one hotsp
 time, recomputed after each spot is opened. It never doubles up with "Start here" on the bill
 hotspot before anything has been visited; that badge already does the same job there.
 
+**"Start here" moves when personalization takes it away, added 2026-08-21.** The badge lives in
+the markup on the bill hotspot, which was fine while the house always showed everything. Since
+personalization began hiding hotspots (below), a student whose situation rules the bill out lost
+the badge entirely and got back exactly the undifferentiated house the badge exists to prevent.
+The badge is now placed rather than fixed: it stays on the bill hotspot whenever that hotspot is
+showing, and moves to the lowest-numbered spot in the guided order that is both showing and
+unvisited whenever it is not. Only one hotspot ever carries it, and if every showing spot has
+already been visited it goes away, same as before — there is no "start" left to point at. Nothing
+about this reaches the no-JavaScript path, which never filters and so never loses the badge.
+
 A visited hotspot is shown at reduced opacity rather than with a flag icon, revised 2026-08-19 —
 simpler, and it reads at a glance without needing a legend. This is one of the three ways a visited
 state is distinguishable (opacity, plus the "Viewed" word added to its accessible name, per
@@ -411,6 +477,16 @@ on, the same link opens the info bar instead and updates the fragment. Under the
 present in the markup, is "Everything in this house", a list of every room with its hotspots as
 ordinary links. That list is the screen reader path, the no-JavaScript path, and the layout below
 600px, which makes it the zoom path too. It is never hidden with `display: none` at any width where the drawing is interactive.
+
+**"Everything in this house" is a disclosure, revised 2026-08-21.** The list used to sit open
+below the drawing at every width, which put a twelve-item link list directly under a section whose
+whole point is that you explore it by clicking the drawing. It is now the site's standard
+disclosure bar (§5) — the same closed-by-default `<details>` the improvement pages use for depth —
+labelled "Everything in this house" and closed on load. `<details>` is what makes this safe to do:
+the summary is a real, keyboard-operable control that is always in the tab order and always
+announced, so the list stays *reachable* at every width even while it is not *shown*, which is what
+the no-JavaScript and zoom paths above actually need. It is still never `display: none`, and it is
+still the only route in below 600px, one press away rather than zero.
 
 **Personalization now actually filters the house, added 2026-08-20.** "Personalize your
 recommendations" (§3.3) previously only ever reached the situation form itself — the stored
@@ -577,15 +653,30 @@ card's title also carries the same object icon its doll house hotspot uses (`ico
 its hotspot read as the same thing encountered by two different routes, per §2's "both reach the
 same content items" rule.
 
-**"Rental basics," moved to the top, added 2026-08-20.** The two explainer topics
+**The page title, revised 2026-08-21.** "Improvements" now sits centered at the top of the page
+at display size (`--text-display`, §4) rather than left-aligned inside the 40rem content column at
+normal h1 size. The page has no lede sentence under it (see "What the page opens with" above), so
+a normal-size h1 in a narrow left column read as a label someone forgot to finish rather than as
+the start of a page. This is the shared `.page-head` block (§5), and every page built after this
+one uses it, so a page title looks the same everywhere on the site.
+
+**"Renter basics," moved to the top, added 2026-08-20, renamed 2026-08-21.** The two explainer topics
 (`read-your-bill`, `find-your-drafts`) previously sat in a "Learn" section below the main grid,
 titled "Learn" with a "Short explainers that correct one wrong idea at a time" subhead and a
-per-card "Start here" / "Enabler" tag. Renamed "Rental basics," moved above the main grid in its
+per-card "Start here" / "Enabler" tag. Renamed and moved above the main grid in its
 own `theme-brand` tinted band so it reads as a distinct, secondary entry point rather than
 competing with the improvement cards for attention, and the section-level label and per-card tags
-are dropped — the heading "Rental basics" already says what the section is without a subhead
-restating it, and "Renter basics" (the badge already used for these items in the doll house info
-bar, §3.2) now does the job "Start here" and "Enabler" were each doing differently per card.
+are dropped — the heading already says what the section is without a subhead restating it, and the
+"Renter basics" badge (already used for these items in the doll house info bar, §3.2) now does the
+job "Start here" and "Enabler" were each doing differently per card.
+
+Two follow-ups, 2026-08-21. **The name is "Renter basics" everywhere.** The section shipped as
+"Rental basics" while the badge on the same items read "Renter basics," so the site had two names
+for one thing. "Renter" is the right half of the pair: these pages are about being a renter, not
+about the rental. **The badge comes off the cards in this section.** A "Renter basics" pill on a
+card sitting directly under a "Renter basics" heading states the same fact twice. The badge stays
+everywhere the item appears outside this section — the doll house info bar, and any future list
+that mixes explainers in with improvements — which is where it is actually doing work.
 Built as `.carousel--peek`: each slide scroll-snaps to center with the track padded so a
 neighboring slide stays partly visible — "focused on one, the others visible in the background,"
 scrollable with no JavaScript needed for the scrolling itself, same mechanism as the `.carousel`
@@ -595,7 +686,7 @@ would be redundant until the section holds enough items that it stops being true
 
 **The `/learn` hub page is deleted, added 2026-08-20.** Its own nav slot was already removed
 2026-08-19 (§2); the page itself sat unlinked from anywhere on the site until this revision
-surfaced its two explainers through "Rental basics" instead. `/learn/read-your-bill/` and
+surfaced its two explainers through "Renter basics" instead. `/learn/read-your-bill/` and
 `/learn/find-your-drafts/` are not deleted — only the index that listed them — so their URLs are
 unchanged, and their breadcrumbs, which read "Learn / Read your bill" against the now-gone hub,
 now read "Improvements / Read your bill" against the section that actually surfaces them.
@@ -612,6 +703,41 @@ none !important; }` reset, and the one-off `.info-bar` rule is removed as redund
 `!important` is deliberate here — it enforces what the `hidden` attribute already promises
 semantically, for every element on the site, rather than patching each component rule that sets
 `display` one at a time as each one happens to get caught by it.
+
+### 3.5 The heating systems explainer, added 2026-08-21
+
+`/learn/heating-systems`. The third Renter basics page, and the one the other two point at when a
+student asks the question underneath most of their questions: *what kind of heat do I even have?*
+
+**Why it exists.** The situation form (§3.3) opens by asking a student to pick their heat type, and
+personalization across the whole site keys off that answer. Until now the site asked the question
+without ever teaching it. A student who cannot answer it picks "I am not sure", which widens results
+rather than narrowing them, so the one input that makes the site personal was the one input the site
+gave no help with. This page is what the form's glossary tooltips shorten to.
+
+**What it covers, in this order.** What is in the room and what it means: radiator or baseboard,
+electric baseboard, forced air, heat pump, and the window unit that is not heat at all. Then how to
+tell them apart by looking, since that is the actual task. Then what each one means for a renter
+specifically — what you can change yourself, what runs on which fuel, and which of them is the one
+where "who pays" changes the answer.
+
+**The animated diagram** is the page's centerpiece, per §5.1's "an explainer is not a page of
+paragraphs". It is adapted from the heat pump work the same project team built at
+`meganklu.github.io/heat-pumps-hanover`, which already had a worked cutaway of a heat pump moving
+heat, a furnace burning fuel and venting exhaust, and a window AC unit. Adapted, not copied: the
+original is a four-page site of its own with a different palette, a Google-hosted font, and a
+season toggle driving the whole page's color. Here it is one diagram in this site's tokens, this
+site's icon pen (§4), and this site's motion plumbing (`.motion-loop`, `--motion-state`), so the
+Pause button and the reduce-motion switch reach it like every other loop on the site. The season
+toggle survives, scoped to the diagram rather than the page: it is what shows that a heat pump is
+the one system in the set that runs both directions, which is the single fact hardest to get
+across in prose.
+
+**What it does not do.** It does not tell a student to get a heat pump. A renter cannot install
+one, and a page that spends its length on equipment the reader cannot buy is the homeowner advice
+this project exists to not be ([docs/project-brief.md](docs/project-brief.md)). Heat pumps are here
+because some Hanover rentals already have them and a student needs to recognize one, and because
+the "ask your landlord" path in `/programs` is where that conversation actually belongs.
 
 ## 4. Visual system
 
@@ -636,7 +762,7 @@ interactive work.
 |---|---|---|---|
 | `--color-bg` | `#FFFFFF` | Page background | ☑ base |
 | `--color-surface` | `#F2F6EE` | Cards, filter bar, info bars, inset blocks | ☑ 15.3:1 with text |
-| `--color-surface-brand` | `#C2E76B` | Full-width highlight bands, mirroring their tinted sections | ☑ 11.9:1 with text |
+| `--color-surface-brand` | `#C2E76B` | Full-width highlight bands, mirroring their tinted sections. Also the "Renter basics" badge fill (2026-08-21) | ☑ 11.9:1 with text |
 | `--color-surface-dark` | `#06301F` | Dark section band, mirroring their dark sections | ☑ 14.5:1 with white |
 | `--color-text` | `#14201A` | Body text. Near-black with a green cast, softer than their pure black at long reading lengths | ☑ 16.8:1 on bg |
 | `--color-text-muted` | `#4C5A52` | Metadata, last-reviewed stamps, captions | ☑ 7.3:1 on bg, 6.6:1 on surface |
@@ -690,6 +816,7 @@ Type scale, fluid between 360px and 1140px viewports:
 
 | Element | Narrow | Desktop |
 |---|---|---|
+| Display (`--text-display`) | 2.25rem | 4.25rem |
 | h1 | 2rem | 2.75rem |
 | h2 | 1.5rem | 2rem |
 | h3 | 1.25rem | 1.5rem |
@@ -699,6 +826,14 @@ Type scale, fluid between 360px and 1140px viewports:
 
 Sustainable Hanover sets h1 at 4rem. That works on a page with one heading and a photograph. Our
 pages carry six to ten headings each, so the scale is compressed.
+
+**The display size, tokenized 2026-08-21.** One step above h1, and deliberately outside the
+compressed scale above: it is for a heading that is alone on its band with nothing competing for
+attention, which on this site means exactly two things — a story bar's heading (§5.1) and a page
+title in `.page-head` (§5). It shipped 2026-08-20 as a `clamp()` written inline in the story-bar
+rule; making it a token is what let the page titles reuse it rather than a second, slightly
+different clamp being written next to the first. Anything that is not one of those two cases uses
+h1 and below.
 
 - **Font loading:** Two self-hosted woff2 files, Poppins 400 and 600, subset to Latin, both
   preloaded, with `font-display: swap` and a `size-adjust` fallback so the swap does not shift
@@ -736,20 +871,43 @@ different things depending on which status it stated. One consistent shape now: 
 icon, text, everywhere a badge appears — improvement pages, cards, and the doll house info bar all
 read `.badge` from the same rule.
 
+**Badges, revised again 2026-08-21.** Two changes, in opposite directions, which is the point of
+recording them together. The **reversibility** badge ("Comes off at move-out" and its two other
+wordings) loses its fill and keeps only its border and text. The **"Renter basics"** badge takes
+the fill of the section it belongs to, `--color-surface-brand`, instead of the generic
+`--color-surface` grey-green. Both follow the same rule: a badge's fill should mean something.
+Reversibility is a property every improvement has and states in three grades, so filling it tinted
+one flat color put visual weight on a field that is never a status — the three permission states
+next to it are the ones that earn a fill, and dropping this one's makes them read. "Renter basics"
+is the reverse case: it marks a distinct *kind* of page, and matching it to the band those pages
+live in (§3.4) is the fill doing real work. Contrast holds at 11.9:1 either way; the border in
+`currentColor` from 2026-08-20 is what keeps the unfilled badge a legible pill shape rather than
+loose text.
+
 **Impact rating, revised 2026-08-20.** The gauge icon (`icon-impact` in the sprite) now has three
 dedicated variants — `icon-impact-low`, `-medium`, `-high` — with the needle drawn at a different
 position on the dial per level, rather than every impact rating showing the identical glyph. Used
 on improvement pages and the library (§3.4), and read by `assets/js/dollhouse.js` for the doll
 house info bar, so the icon matches the stated level everywhere impact is shown.
 
-**Price dollar scale, added 2026-08-20, corrected the same day.** A row of three small
-dollar-sign glyphs (`.price-dollars`, reusing `icon-cost`) fills left to right by cost band — free
-fills none, under25 fills one, 25to75 fills two, over75 fills all three — echoing the familiar
-$/$$/$$$ price-tier convention. First built next to the impact gauge, filling by impact level,
+**Price dollar scale, added 2026-08-20, corrected the same day, revised twice 2026-08-21.** A row
+of small dollar-sign glyphs (`.price-dollars`, reusing `icon-cost`) states the cost band by how
+many of them there are — the familiar $/$$/$$$ price-tier convention. First built next to the impact gauge, filling by impact level,
 which read backwards the first time anyone other than the person who built it looked at it: more
 dollar signs next to an impact rating reads as "this claims to save more," not "this costs more."
 Moved to sit with the cost fact it was always meant to describe. Decorative and `aria-hidden`
 either way: the visible cost text ("Under $25") is the accessible name.
+
+The two 2026-08-21 revisions. **Free gets one glyph, not zero.** Zero glyphs is not a cheaper
+price, it is a missing element: the cost fact on a free improvement rendered as bare text while
+every other card in the same grid rendered text with a symbol beside it, so the free ones read as
+unfinished rather than as free. One glyph is the floor of the scale, and the visible word "Free"
+is what actually distinguishes it from "Under $25" — which is fine, because that word is the
+accessible name and the glyphs are decoration. **The scale reaches the cards.** It shipped on
+improvement pages only; the cards on `/improvements` and the doll house info bar both still drew a
+single glyph regardless of band, which is the one place the convention actively misinforms, since
+one glyph there meant "cost" rather than "cheap". Cards, info bar and full page now all render
+from the same four-band mapping: free 1, under25 1, 25to75 2, over75 3.
 
 ### Iconography
 
@@ -797,6 +955,14 @@ house" object icon doubles as the site logo, in the header lockup next to the wo
 browser tab favicon; it has been redrawn twice since (§10) to close the gap between its bounding
 box and its visible glyph.
 
+Four icons added 2026-08-21, taking the set to 27. **`icon-code`,** angle brackets, for the
+footer's "View the source code" link (§10). **`icon-baseboard`, `icon-vent` and `icon-mini-split`**
+for `/learn/heating-systems` (§3.5), which asks a reader to identify what is actually on their
+wall: `icon-radiator` already covered a hot-water or steam radiator, and these are the other three
+things a Hanover rental delivers heat through. They are drawn to the same 24×24 spec as the rest
+and are used at a larger size in that page's identification grid, which is the "the illustration
+uses the same pen" rule above doing its job — the cards needed no separate drawing style.
+
 An icon is never the only label, and never the only difference between two states.
 
 ## 5. Component inventory
@@ -824,7 +990,7 @@ to be better than.
 | Animated diagram | Shows a mechanism the student cannot see, for example where heat leaves a room | static (first frame), playing, finished, replay, reduced motion, no JavaScript. Spec in §5.1 |
 | Sticky progress bar | Progress through the house, and position within a long page | at rest, condensed, unstuck on short viewports, no JavaScript. Fill capped at 100% regardless of the raw ratio (added 2026-08-20) |
 | Progress reset (added 2026-08-20) | Clears visited state and restores "Start here," sitting in the same sticky row as the progress bar | default, hover, focus-visible |
-| Disclosure bar | "What if my landlord says no", "How we know this" | closed, open, focus-visible, deep-linked open |
+| Disclosure bar | "What if my landlord says no", "How we know this", "Everything in this house" (2026-08-21) | closed, open, focus-visible, deep-linked open |
 | Story bar (added 2026-08-20) | "Why this works" and "Savings" on an improvement page — a full-width, always-open band, heading on one side at a larger size, body on the other. `.story-bar--reverse` swaps which side is which. Spec in §5.1 | default, parallax entrance running, held still (reduced motion or `animation-timeline: view()` unsupported), off below 600px |
 | Improvement illustration (added 2026-08-20) | A custom SVG depicting the specific improvement, beside the heading block on a wide screen, below it on a narrow one. Decorative — the page's prose carries the information, the drawing carries the "what does this look like" | single static state, no motion |
 | Improvement card | The unit of the library only | default, hover, focus-visible, visited, filtered-out (removed rather than dimmed) |
@@ -835,6 +1001,14 @@ to be better than.
 | Checklist item (v2) | One step in the generated checklist | unchecked, checked, disabled (blocked by a prerequisite), needs-permission, printed |
 | Situation form | The one four-question form, used at `/start` and inside the personalize dialog | default, focused, selected, "not sure", cleared, results-count live region on the library |
 | Floating action button (added 2026-08-19) | "Personalize your recommendations," fixed bottom-right, every page | default, hover, focus-visible, active |
+| Motion controls FAB (added 2026-08-21) | The reduce-motion switch and a Pause button, fixed bottom-left, every page. Pause appears only where the page has something looping | default, hover, focus-visible, paused, compact (below 640px), no JavaScript (switch still works, Pause is absent) |
+| Page head (added 2026-08-21) | The title block every page opens with: centered `<h1>` at `--text-display`, optional lede under it. The `.content-column` under it centers to match, and carries the same vertical rhythm rule `.improvement-body` already had | with lede, without lede, below 600px |
+| Full-bleed band (added 2026-08-21) | The shared "background spans the window, text stays put" wrapper behind story bars and the Renter basics band | default, tinted, clipped to a point (Renter basics) |
+| Program card (built 2026-08-21) | One program on `/programs`. Read one at a time in a stack, not scanned in a grid, which is why it is not `.card` | renter-usable, landlord-approval-required, not available to renters (left rule and badge, never the rule alone) |
+| Glossary entry (built 2026-08-21) | One term on `/glossary`. A `<dl>` pair with a stable `#anchor`, since pages deep-link into it mid-sentence | default, arrived at by anchor (offset so it is not tucked under the top of the window) |
+| Identification card (added 2026-08-21) | "Is this what is on your wall?" on `/learn/heating-systems`. An icon at large size, what it looks like, and how to tell it apart from the one next to it | single state |
+| Data table (added 2026-08-21) | A small comparison table. Scrolls sideways inside its own wrapper rather than making the page scroll | default, narrower than its content (wrapper scrolls) |
+| Season toggle (added 2026-08-21) | Winter or summer, scoped to one diagram. A `<fieldset>` of two radios, so it needs no JavaScript and no ARIA | winter (default, and the no-`:has()` fallback), summer, focus-visible |
 | Personalize dialog (added 2026-08-19) | `<dialog>` holding the situation form, opened by the FAB | closed, open, focus-trapped, no JavaScript (FAB is a plain link to `/start` instead) |
 | Callout, safety | Renders `safety` above steps, never below, never collapsed | single variant, `--color-danger` |
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
@@ -850,6 +1024,34 @@ loading, error, empty.
 Focus-visible is one token everywhere: a 2px `--color-accent` ring at 2px offset, which holds 3:1
 against white and against `--color-surface`. It is never removed, including on mouse click, and it
 is drawn outside the SVG shape for hotspots so it is not clipped.
+
+**Skip link, fixed 2026-08-21.** Every page below the root wrote it as `href="../#main"`, which
+resolves to the *home page's* main content rather than the current page's. The first focusable
+element on the page navigated away from the page. It came from a misreading of the shell rule in
+[AGENTS.md](AGENTS.md): a copied shell fragment adjusts its relative paths per depth, but a
+fragment-only href has no path to adjust and is already correct at any depth. It reads `#main`
+everywhere now, and `tools/check-content.mjs` accepts that at every depth because its
+normalization only strips a leading `../`, which this no longer has.
+
+**Consolidation pass, 2026-08-21.** Run deliberately before the remaining pages were built,
+because every duplicated value in the CSS at that moment was about to be duplicated eight more
+times. Five things merged:
+
+- **`--text-display`** (§4). The story-bar heading's `clamp()` was written inline in its own rule.
+  It is a token now, and the page titles use it rather than a second clamp beside the first.
+- **`.full-bleed`.** Story bars and the Renter basics band had each written out the same
+  `width: 100vw; margin-inline: calc(50% - 50vw)` breakout. One utility now, and the two keep only
+  what actually differs — the tint, and Renter basics' clipped point.
+- **`.page-head`.** Every page opened its title differently. One block now: centered `<h1>` at
+  display size, optional lede under it.
+- **The switch track color** is a token with a footer override, rather than one hard-coded
+  translucent white serving both a dark footer and a light floating control. See §7.
+- **Hard-coded `#fff`** in component rules is `--color-text-on-dark` where it means "text on a dark
+  surface". The token existed and half the rules were already using it.
+
+Also folded in rather than reinvented: "Everything in this house" is now the existing disclosure
+bar (§3.2), and the price dollar scale now has one mapping read by the cards, the info bar and the
+improvement pages (§4) instead of three renderings of the same idea.
 
 **Tactile hover, added 2026-08-19.** Every button-like control (`.btn`, hotspots, the FAB, the
 scroll cue, cards, filter chips, carousel controls, the dialog close button) grows slightly on
@@ -1038,6 +1240,29 @@ and it gets one spot check before launch. The full zoom matrix is deferred with 
 testing, per [docs/accessibility.md](docs/accessibility.md) §5. This is the same code path the
 mobile work in v2 will build on, so nothing here is thrown away.
 
+**The 320px pass, 2026-08-21.** Run before the new pages shipped, and it found real breakage
+rather than confirming what was assumed. Every page on the site scrolled sideways at 320px, which
+is a 1.4.10 failure and the one accessibility criterion §6 above says is not deferred. Measured
+rather than eyeballed: each page rendered at 320px, every element's right edge compared against
+the viewport, and then the page actually scrolled to see whether it moved. Four causes, all fixed:
+
+- **The footer credit row.** The largest offender, and on every page. The logo and the text sat in
+  a flex row that could not wrap, and the contact email is a thirty-character unbreakable token
+  that set a min-content width wider than the whole window. It wraps now, and `min-width: 0` lets
+  the columns actually shrink.
+- **Long links anywhere in prose.** An email address or a URL written out as link text is one
+  token. `overflow-wrap` on the reading column and on the links inside it. The subtlety worth
+  recording: a direct `overflow-wrap` declaration on `a` beats an inherited one from the column,
+  so the container rule has to name the links too or it silently does nothing to the exact
+  elements causing the problem.
+- **The full-width bands.** `width: 100vw` counts the vertical scrollbar; the body's content box
+  does not. Every page with a scrollbar was about 8px wider than its window. `overflow-x: clip` on
+  `body` — `clip` and not `hidden`, since `hidden` would make the body a scroll container and the
+  doll house's sticky progress row would stop pinning. Verified after the change that the row
+  still pins.
+- **The Personalize FAB.** Its label wrapped to four lines across the corner of a 320px window. It
+  shortens to "Personalize" below 640px, with the full label still the accessible name.
+
 ## 7. Motion
 
 Motion is part of how this site teaches. It moves more than most content sites do, and every
@@ -1056,7 +1281,15 @@ student gets a way to turn that off.
 - **Where motion is used.** Eight places, revised 2026-08-19 (the hero no longer parallaxes, per
   §3.1). Parallax on the section bands, the looping diagram on each explainer, a room box growing
   and shrinking back, the flip card turning, the carousel scrolling, the info bar opening under the
-  drawing, the disclosure bar expanding, and the scroll-expanding diagram bands.
+  drawing, the disclosure bar expanding, and the scroll-expanding diagram bands. Two more since:
+  the improvement illustrations, which each carry one small loop (2026-08-21), and the hero shoes,
+  which walk across the mat as the student scrolls out of the hero (2026-08-21, §3.1).
+- **A third kind: scroll-driven.** Added 2026-08-21, alongside the hero shoes. Neither response nor
+  ambient, and it needs saying because it changes which rule applies: the animation's progress is
+  the scroll position, so it only ever moves while the student is moving, and it reverses when they
+  scroll back. WCAG 2.2.2 does not reach it — nothing is moving on its own to be paused — so these
+  do not carry a Pause button, the way the parallax bands never have. They are still switched off
+  entirely by `prefers-reduced-motion`, by the reduce-motion switch, and below 600px.
 - **Loops are allowed, and they come with controls.** Content that moves for more than 5 seconds
   needs a mechanism to pause, stop, or hide it under WCAG 2.2.2, and a loop runs indefinitely by
   definition. Every looping animation therefore carries its own visible "Pause" button, and the
@@ -1084,8 +1317,13 @@ student gets a way to turn that off.
 does not cover the student on a borrowed laptop, or the one who is fine with motion everywhere else
 and not here. So the site carries its own control.
 
-- **Where:** in the footer of every page, and in the header menu panel, labeled "Reduce motion".
-  A switch with a visible text label, never an icon alone.
+- **Where:** revised 2026-08-21. It sits in a floating control of its own, fixed to the
+  bottom-left corner of every page, paired with the Pause button (below). It is also still in the
+  footer, which is where it shipped and which is the copy a student reaches by tabbing to the end
+  of a page. Both carry `.reduce-motion-input`, and `assets/js/motion.js` keeps them in sync, so a
+  page showing both never disagrees with itself. Labeled "Reduce motion" with a visible text label,
+  never an icon alone, except in the compact form below 640px where the label goes visually hidden
+  and the accessible name carries it.
 - **Default:** follows the operating system. A student who has already asked for reduced motion
   gets it without touching anything.
 - **How it works:** the control is a checkbox, revised 2026-08-19 to be styled as an actual
@@ -1100,6 +1338,30 @@ and not here. So the site carries its own control.
   setting is on but who wants to watch a diagram move. Reduced is the default in that case, never
   the ceiling.
 - **Effect is immediate.** No reload, no page jump, and the scroll position does not move.
+
+**The Pause button, added 2026-08-21.** One per page rather than one per animation. Every looping
+animation on the site now reads `--motion-state` from a single custom property, so one button can
+stop all of them, and the per-diagram Pause buttons the explainer pages carried are gone. It
+appears only when the page actually has something looping (`body:has(.motion-loop)`), and it is
+deliberately not remembered across pages: it is a "stop this now" control, not an accessibility
+preference, and the switch beside it is the one that persists.
+
+**Where the floating control sits, and why it moved,** 2026-08-21. It shipped top-right, which put
+it on top of two things at once: the primary nav, which is top-right on every page, and the doll
+house's sticky progress row and reset button, which pin to the top of the viewport while the
+student is touring the house. Both are controls, so this was a fixed decoration covering live
+targets. It moved to bottom-left — the one corner on this site that nothing else claims, with the
+Personalize FAB opposite it at bottom-right — which clears the header and the sticky row by
+construction rather than by a `top` offset tuned per breakpoint. Below 640px both controls collapse
+to plain 44px circles and the Personalize FAB is capped in width so the two never meet.
+
+**Contrast, fixed 2026-08-21.** The switch track was drawn in translucent white, which is correct
+in the dark footer it was built for and nearly invisible once the same switch appeared on the light
+floating control. The track color is now a token that the footer overrides, rather than one value
+serving both places: `--color-border-strong` by default (4.1:1, over the 3:1 WCAG 1.4.11 asks of a
+control boundary) and translucent white inside `.site-footer`. The floating control also takes a
+`--color-border-strong` border and full-strength `--color-text` labels, so it reads as a control
+sitting on the page rather than a pale shape floating over it.
 
 **What reduced motion changes,** whether it came from the operating system or from the toggle,
 specified per pattern rather than as a blanket rule: parallax layers hold still, looping diagrams
@@ -1288,6 +1550,22 @@ credit has to survive that move.
   Hampshire", their logo at a fixed height, a link to their site, and the contact address
   sustainablehanovernh@gmail.com. Also the site-wide last-reviewed date and a link to the
   accessibility statement.
+- **Footer, revised 2026-08-21.** Four changes, all of them about the partner credit doing its job
+  rather than sitting there. **The logo is a link** to sustainablehanovernh.org. It was the one
+  piece of Sustainable Hanover branding on the page that was not clickable, which is the opposite
+  of what a partner logo is for; a reader who wants their site reaches for the logo before they
+  read the sentence next to it. It keeps its `alt="Sustainable Hanover"`, which is now the link's
+  accessible name, and the text link below it stays — the same destination twice is correct here,
+  since one of the two is an image and the other is the address written out. **The logo is
+  larger**, 68px tall against 40px. At 40px against a three-line paragraph it read as a bullet
+  point. **The website address and the email each get their own line**, instead of sharing one
+  line separated by a middot. They are two different ways to make contact and a reader is picking
+  one, not reading a sentence. **A "View the source code" link** goes to the GitHub repository,
+  next to the accessibility statement. The repository is public and the project is coursework
+  whose method is part of what it is showing, per [docs/ai-use.md](docs/ai-use.md); a reader who
+  wants to see how a claim on this site was built should not have to be told the URL. It carries a
+  new `icon-code` glyph drawn to the §4 spec — angle brackets — rather than a GitHub mark, which
+  would be a third-party logo the project has no license to place.
 - **About page:** Full credit to the SIP project team from
   [docs/project-brief.md](docs/project-brief.md) §8 and the partnership description.
 - **Logo asset:** Using wordmark from the current Sustainable Hanover website.

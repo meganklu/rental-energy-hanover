@@ -20,7 +20,7 @@
 <body>
 
 <!-- shell:header -->
-<a class="skip-link" href="../#main">Skip to content</a>
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="page-shell site-header__inner">
     <a class="brand" href="../index.html">
@@ -45,25 +45,29 @@
 <main id="main">
 
   <section class="section page-shell">
-    <div class="content-column">
+    <div class="page-head">
       <h1>Improvements</h1>
     </div>
   </section>
 
-  <section class="theme-brand rental-basics">
+  <section class="theme-brand full-bleed renter-basics">
     <div class="section page-shell">
-      <h2>Rental basics</h2>
+      <h2>Renter basics</h2>
       <div class="carousel carousel--peek">
-        <ul class="carousel__track" tabindex="0" aria-label="Rental basics articles">
+        <ul class="carousel__track" tabindex="0" aria-label="Renter basics articles">
           <li class="carousel__slide" id="rb-read-your-bill">
             <h3 class="card__title">
               <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>
               <a href="../learn/read-your-bill/">Read your bill</a>
             </h3>
             <p class="card__summary">kWh, rate, and what's actually driving your electric bill.</p>
-            <div class="badge-row">
-              <span class="badge badge--basics">Renter basics</span>
-            </div>
+          </li>
+          <li class="carousel__slide" id="rb-heating-systems">
+            <h3 class="card__title">
+              <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-radiator"/></svg>
+              <a href="../learn/heating-systems/">Understanding your heating system</a>
+            </h3>
+            <p class="card__summary">What kind of heat you have, how to tell by looking, and what it means for your bill.</p>
           </li>
           <li class="carousel__slide" id="rb-find-your-drafts">
             <h3 class="card__title">
@@ -71,11 +75,19 @@
               <a href="../learn/find-your-drafts/">Find your drafts</a>
             </h3>
             <p class="card__summary">You can't seal a gap you haven't found.</p>
-            <div class="badge-row">
-              <span class="badge badge--basics">Renter basics</span>
-            </div>
           </li>
         </ul>
+        <div class="carousel__controls">
+          <a class="carousel__nav" href="#rb-read-your-bill" data-carousel-prev>
+            <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-previous"/></svg>
+            Previous
+          </a>
+          <p class="carousel__count" data-carousel-count aria-live="polite">3 articles</p>
+          <a class="carousel__nav" href="#rb-find-your-drafts" data-carousel-next>
+            Next
+            <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-next"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -107,7 +119,7 @@
           <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
         </div>
         <div class="fact-row">
-          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Under $25</span>
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>Under $25</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>1 to 2 hours</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
@@ -124,7 +136,7 @@
           <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Mostly comes off at move-out</span>
         </div>
         <div class="fact-row">
-          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Under $25</span>
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>Under $25</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>1 to 2 hours</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
@@ -141,7 +153,7 @@
           <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
         </div>
         <div class="fact-row">
-          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Free</span>
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>Free</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-high"/></svg>High impact</span>
         </div>
@@ -158,7 +170,7 @@
           <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
         </div>
         <div class="fact-row">
-          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Free</span>
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>Free</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
@@ -175,7 +187,7 @@
           <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
         </div>
         <div class="fact-row">
-          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>$25 to $75</span>
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>$25 to $75</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
@@ -192,7 +204,7 @@
           <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
         </div>
         <div class="fact-row">
-          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Free</span>
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>Free</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
@@ -209,7 +221,7 @@
           <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
         </div>
         <div class="fact-row">
-          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Under $25</span>
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>Under $25</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-low"/></svg>Low impact</span>
         </div>
@@ -226,7 +238,7 @@
           <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
         </div>
         <div class="fact-row">
-          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>Under $25</span>
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>Under $25</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-low"/></svg>Low impact</span>
         </div>
@@ -244,7 +256,7 @@
 <!-- shell:fab -->
 <a class="fab" id="situation-fab" href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
-  Personalize your recommendations
+  <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
 <dialog id="situation-dialog" class="situation-dialog" aria-labelledby="situation-dialog-heading">
   <div class="situation-dialog__inner">
@@ -276,22 +288,32 @@
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
     <div class="footer-credit">
-      <img src="../assets/img/sh-logo.webp" alt="Sustainable Hanover" width="150" height="52" loading="lazy">
-      <p>
-        Project created in partnership with Sustainable Hanover, a committee of the Town of
-        Hanover, New Hampshire.
-        <a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a>
-        · <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a>
-      </p>
+      <a class="footer-logo" href="https://sustainablehanovernh.org/">
+        <img src="../assets/img/sh-logo.webp" alt="Sustainable Hanover" width="300" height="103" loading="lazy">
+      </a>
+      <div>
+        <p>
+          Project created in partnership with Sustainable Hanover, a committee of the Town of
+          Hanover, New Hampshire.
+        </p>
+        <ul class="footer-contact">
+          <li><a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a></li>
+          <li><a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-links">
       <a href="../accessibility/">Accessibility statement</a>
+      <a href="https://github.com/meganklu/rental-energy-hanover">
+        <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-code"/></svg>
+        View the source code
+      </a>
       <label class="switch">
         <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
-      <p class="footer-meta">Site content last reviewed 2026-08-19.</p>
+      <p class="footer-meta">Site content last reviewed 2026-08-21.</p>
     </div>
   </div>
 </footer>
@@ -301,6 +323,7 @@
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->
 
+<script type="module" src="../assets/js/carousel.js"></script>
 <script type="module" src="../assets/js/library.js"></script>
 </body>
 </html>

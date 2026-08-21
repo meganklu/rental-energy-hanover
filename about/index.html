@@ -14,8 +14,8 @@
 <link rel="stylesheet" href="../assets/css/print.css" media="print">
 <!-- /shell:head-links -->
 
-<title>Set your situation — Energy for Student Renters</title>
-<meta name="description" content="Answer four questions about your heat type and lease so every list on the site narrows to what applies to you.">
+<title>About — Energy for Student Renters</title>
+<meta name="description" content="Who made this site, how its content is sourced and reviewed, and the disclaimers that apply to everything on it.">
 </head>
 <body>
 
@@ -35,7 +35,7 @@
         <li><a href="../index.html">Home</a></li>
         <li><a href="../improvements/">Improvements</a></li>
         <li><a href="../your-rights/">Rights and programs</a></li>
-        <li><a href="../about/">About</a></li>
+        <li><a href="../about/" aria-current="page">About</a></li>
       </ul>
     </nav>
   </div>
@@ -43,75 +43,108 @@
 <!-- /shell:header -->
 
 <main id="main">
+
   <section class="section page-shell">
-    <div class="content-column">
-      <h1>Set your situation</h1>
-      <p>
-        Answer what you can. Every list on this site narrows to match, and the doll house dims
-        anything that does not apply to you. Nothing here is required, and nothing you enter
-        leaves your browser.
-      </p>
-      <p class="text-small">
-        Not sure what heats your place?
-        <a href="../learn/heating-systems/">Understanding your heating system</a> shows you how to
-        tell by looking.
+    <div class="page-head">
+      <h1>About</h1>
+      <p class="lede">
+        A guide to making a Hanover rental cheaper and warmer to live in, written for students who
+        have never paid a heating bill.
       </p>
     </div>
 
-    <form action="../improvements/" method="get" novalidate>
-      <div class="question-set">
+    <div class="content-column">
+      <h2>Why this site exists</h2>
+      <p>
+        Most home energy advice is written for people who own their home. It assumes you can
+        replace a window, insulate an attic, or install a new heating system. A renter can do
+        almost none of that, and a page that opens with those options is a page that stops being
+        useful in its first paragraph.
+      </p>
+      <p>
+        Every improvement here states two things a homeowner guide never has to: whether you need
+        your landlord's permission, and whether it comes off again when you move out. Those two
+        answers are what decide whether advice is worth reading when the apartment is not yours.
+      </p>
+      <p>
+        Sustainable Hanover already publishes weatherization guidance for homeowners in town. This
+        site adapts that work for renters and adds the part a static page cannot do: you tell it
+        your heat type and who pays for it, and it narrows what it shows you.
+      </p>
 
-        <fieldset class="question">
-          <legend>What heats your place?</legend>
-          <div class="question__options">
-            <label><input type="radio" name="heat" value="electric-baseboard"> <span class="term" tabindex="0">Electric baseboard<span class="term__tooltip" role="tooltip">A heating element inside a long, low unit along the bottom of a wall, warming the room directly.</span></span></label>
-            <label><input type="radio" name="heat" value="forced-air"> <span class="term" tabindex="0">Forced air<span class="term__tooltip" role="tooltip">Pushes heated air through ducts and vents. You'll feel it blowing.</span></span></label>
-            <label><input type="radio" name="heat" value="radiator"> <span class="term" tabindex="0">Radiator<span class="term__tooltip" role="tooltip">Heats a metal unit that warms the room by radiating heat, with no fan.</span></span></label>
-            <label><input type="radio" name="heat" value="heat-pump"> <span class="term" tabindex="0">Heat pump<span class="term__tooltip" role="tooltip">Moves heat rather than generating it, and can usually cool the room in summer too.</span></span></label>
-            <label><input type="radio" name="heat" value="any" checked> I am not sure</label>
-          </div>
-        </fieldset>
+      <h2>Who made it</h2>
+      <p>
+        Built by Megan Lu, Ryan Lee and Katharine Morley as a Dartmouth Sustainability Internship
+        Program project, in partnership with Sustainable Hanover, a committee of the Town of
+        Hanover, New Hampshire. Yolanda Baumgartner is the Sustainable Hanover contact and reviews
+        content for accuracy and for the partner's branding.
+      </p>
+      <p>
+        Reach the project through Sustainable Hanover at
+        <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a>.
+      </p>
 
-        <fieldset class="question">
-          <legend>Who pays for heat?</legend>
-          <div class="question__options">
-            <label><input type="radio" name="payer" value="tenant"> I do, on my own bill</label>
-            <label><input type="radio" name="payer" value="included"> It is included in rent</label>
-            <label><input type="radio" name="payer" value="any" checked> I am not sure</label>
-          </div>
-        </fieldset>
+      <h2>How the content is sourced</h2>
+      <p>
+        Every number on this site traces to a named source, and each page lists its own at the
+        bottom with the date it was last checked. Where no source exists, the number does not go on
+        the page. Rates, rebates and program terms go stale faster than anything else here, so
+        those pages carry the shortest review interval.
+      </p>
+      <p>
+        Content about tenant rights and about safety is reviewed by a person before it publishes.
+        Neither is written from a search result.
+      </p>
+      <p>
+        The whole project is public, including the planning documents, the source list, and a
+        record of how it was built.
+        <a href="https://github.com/meganklu/rental-energy-hanover">View the source code</a>.
+      </p>
 
-        <fieldset class="question">
-          <legend>Months left on your lease?</legend>
-          <div class="question__options">
-            <label><input type="radio" name="lease" value="under3"> Less than 3</label>
-            <label><input type="radio" name="lease" value="3to6"> 3 to 6</label>
-            <label><input type="radio" name="lease" value="6to12"> 6 to 12</label>
-            <label><input type="radio" name="lease" value="over12"> More than 12</label>
-            <label><input type="radio" name="lease" value="any" checked> I am not sure</label>
-          </div>
-        </fieldset>
+      <h2>What this site will not do</h2>
+      <ul>
+        <li>Name a specific landlord or a specific property.</li>
+        <li>Recommend a brand, or link to a product for commission.</li>
+        <li>Collect anything about you. Your situation and your reduce-motion setting are stored
+          in your own browser and are never sent anywhere.</li>
+        <li>Advise you on a dispute you are actually having. That needs a person, and
+          <a href="../your-rights/">Rights and programs</a> says who.</li>
+      </ul>
 
-        <fieldset class="question">
-          <legend>Where are you in the year?</legend>
-          <div class="question__options">
-            <label><input type="radio" name="phase" value="hunting"> Still looking for a place</label>
-            <label><input type="radio" name="phase" value="signing"> Signing a lease</label>
-            <label><input type="radio" name="phase" value="move-in"> Just moved in</label>
-            <label><input type="radio" name="phase" value="pre-winter"> Getting ready for winter</label>
-            <label><input type="radio" name="phase" value="deep-winter"> Deep winter</label>
-            <label><input type="radio" name="phase" value="break"> Leaving for a break</label>
-            <label><input type="radio" name="phase" value="spring"> Spring or staying through summer</label>
-            <label><input type="radio" name="phase" value="move-out"> Moving out</label>
-            <label><input type="radio" name="phase" value="any" checked> I am not sure</label>
-          </div>
-        </fieldset>
-
+      <h2>The disclaimers</h2>
+      <div class="callout callout--legal">
+        <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-safety"/></svg>
+        <div>
+          <p><strong>Legal:</strong> This site provides general information, not legal advice.
+            Leases and situations differ.</p>
+        </div>
+      </div>
+      <div class="callout callout--savings">
+        <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact"/></svg>
+        <div>
+          <p><strong>Savings:</strong> Estimates are typical ranges, not guarantees. What you
+            actually save depends on your building, your heating system, and the weather.</p>
+        </div>
+      </div>
+      <div class="callout callout--permission">
+        <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-ask"/></svg>
+        <div>
+          <p><strong>Permission:</strong> Check your lease before making any change. When in
+            doubt, ask your landlord in writing.</p>
+        </div>
       </div>
 
-      <p><button type="submit" class="btn btn--primary">Show what I can do</button></p>
-    </form>
+      <div class="sources-block">
+        <h2>Sources</h2>
+        <ul>
+          <li><a href="https://sustainablehanovernh.org/">Sustainable Hanover</a></li>
+          <li><a href="https://www.hanovernh.org/">Town of Hanover</a></li>
+        </ul>
+        <p class="last-reviewed">Last reviewed 2026-08-21.</p>
+      </div>
+    </div>
   </section>
+
 </main>
 
 <!-- shell:fab -->
@@ -183,6 +216,5 @@
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->
-
 </body>
 </html>
