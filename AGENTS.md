@@ -52,6 +52,8 @@ before making decisions that affect scope or content.
    site. See [docs/architecture.md](docs/architecture.md) §2. If you believe a change needs
    tooling, ask a human first.
 
+9. After receiving edits, **document then implement**: add the edits and design decisions to the documentation (doc folder files, DESIGN.md, etc.). Then, implement the changes on the website. 
+
 ## Tech stack
 
 Decided in [docs/architecture.md](docs/architecture.md) §2. Read it before changing anything

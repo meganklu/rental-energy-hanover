@@ -34,6 +34,9 @@
 | M5 | Research rental and energy usage statistics in Hanover; compile information for web pages in [glossary.md](glossary.md) and [sources.md](sources.md) | Megan | 2026-08-12 | M1 | ☑ |
 | M6 | Establish [design and style guide](DESIGN.md) | Megan | 2026-08-12 | M1 | ☑ |
 | M7 | Plan layout and webpages; update [features.md](features.md) and [content-strategy.md](content-strategy.md)  | Megan | 2026-08-12 | M6 | ☑ |
+| M8 | Initial website build  | Megan | 2026-08-19 | M7 | ☑ |
+| M9 | Website design edits  | Megan | 2026-08-23 | M8 | ☐ |
+| M10 | Website content edits  | All | 2026-08-26 | M8 | ☐ |
 
 ## 4. What gets cut first
 

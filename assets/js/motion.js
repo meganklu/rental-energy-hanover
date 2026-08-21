@@ -2,8 +2,9 @@
 // through CSS alone (`body:has(.reduce-motion-input:checked)` and `body.motion-paused` in
 // base.css) with no JavaScript needed for the effect itself. This module only does what actually
 // needs script: showing the toggle in the position that matches the student's OS by default,
-// keeping the footer switch and the motion-fab switch (a page can carry both) in sync with each
-// other, remembering an explicit choice across pages, and wiring the motion-fab's Pause button.
+// holding every `.reduce-motion-input` on the page in agreement (one today, in the motion-fab, and
+// the footer carried a second until 2026-08-21), remembering an explicit choice across pages, and
+// wiring the motion-fab's Pause button.
 
 const toggles = document.querySelectorAll(".reduce-motion-input");
 

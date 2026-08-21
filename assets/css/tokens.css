@@ -100,9 +100,9 @@
   /* Hit target floor. WCAG 2.2 sets 24px; this site holds 44px per DESIGN.md §6. */
   --target-min: 44px;
 
-  /* The reduce-motion switch's track. One value cannot serve both places the switch appears:
-     translucent white reads on the dark footer and vanishes on the light floating control. This
-     is the light-surface value (4.1:1, over the 3:1 WCAG 1.4.11 asks of a control boundary);
-     .site-footer overrides it. Added 2026-08-21, DESIGN.md §7. */
+  /* The reduce-motion switch's track. 4.1:1, over the 3:1 WCAG 1.4.11 asks of a control boundary.
+     A token rather than a literal because the switch is meant to survive appearing on surfaces of
+     different lightness: it had a translucent-white override for the dark footer until the footer
+     copy was removed 2026-08-21. DESIGN.md §7. */
   --switch-track: var(--color-border-strong);
 }

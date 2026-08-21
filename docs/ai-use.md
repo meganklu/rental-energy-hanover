@@ -243,7 +243,28 @@ Additional pages:
 
 As always, add to documentation before implementing. Also, please update README for the status of the project
 
-### 2026-08-21
+### 2026-08-21 Bugs and Minor Edits
 
 Footer:
 - Remove the reduce motion toggle from the footer since it is now a FAB
+- Put the links for "Accessibility statement" and source code closer together (regular line spacing)
+
+Home page:
+- Have the shoes walk forward in a natural walking motion/stride
+- Make the tiles larger for the bluestone pattern. The shape/design of the pattern looks good otherwise
+- After selecting the spot labeled start here, start here moves around instead of becoming a next label
+- Put all of the articles, including the understanding heating systems one, into the house
+- The width of the help question mark (hover over to get instructions about the doll house) is too narrow
+
+Improvements page:
+- The carousel for renter basics does not work as intended
+- Only the drafts article is shown, even when clicking a different renter basics article
+- The animation for the cards when hovering is not there for the renter basics articles
+
+Navigation bar:
+- Separate the rights page and programs page. These should be separate links on the top bar
+
+### 2026-08-21 Finish Adding Content and Minor 
+
+Disclaimers:
+- Make the disclaimer cards (legal, safety, etc.) consistent in color and design.

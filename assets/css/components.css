@@ -1340,10 +1340,16 @@ body:has(.motion-loop) .motion-fab__pause {
   margin-top: var(--space-1);
 }
 
+/* The two links read as a pair at ordinary line spacing, revised 2026-08-21. Each carried the
+   site's 44px --target-min as a min-height with a column gap stacked on top, which set two
+   closely related links a full line apart. The 4px block padding here still leaves each link
+   about 33px tall, over the 24px WCAG 2.5.8 floor that applies to a link inside a run of links;
+   the site's own 44px commitment (DESIGN.md §6) stays where it belongs, on standalone controls.
+   The last-reviewed line keeps its distance with its own margin, so the pair above it is the
+   only thing reading as a group. */
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
   font-size: var(--text-small);
   align-items: flex-start;
 }
@@ -1352,12 +1358,13 @@ body:has(.motion-loop) .motion-fab__pause {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: var(--target-min);
+  padding-block: var(--space-1);
 }
 
 .footer-meta {
   font-size: var(--text-small);
   opacity: 0.85;
+  margin-top: var(--space-4);
 }
 
 /* ---------- Reduce motion switch ---------- */
@@ -1377,13 +1384,6 @@ body:has(.motion-loop) .motion-fab__pause {
   border-radius: var(--radius-pill);
   background: var(--switch-track);
   transition: background var(--motion-duration-base) var(--motion-ease);
-}
-
-/* The dark footer is the one place a translucent white track is the readable choice. Everywhere
-   else --switch-track's default (a solid --color-border-strong) is, which is the whole reason it
-   is a token. Added 2026-08-21, DESIGN.md §7. */
-.site-footer {
-  --switch-track: rgba(255, 255, 255, 0.45);
 }
 
 .switch__thumb {
