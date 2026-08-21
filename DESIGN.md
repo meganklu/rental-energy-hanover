@@ -1277,7 +1277,7 @@ as a distinct band against the plain-white "What you need"/Steps sections around
   rather than two separate bars with a gap.
 - **Parallax/entrance drift, gated exactly like every other ambient motion in this document
   (§7):** behind `@supports (animation-timeline: view())`, since `view()` timelines are a
-  progressive enhancement; off under `prefers-reduced-motion: reduce` or the footer switch; off
+  progressive enhancement; off under `prefers-reduced-motion: reduce` or the reduce-motion switch; off
   below 600px, alongside the rest of the site's parallax (§6). Each side drifts in from a slight
   horizontal offset (opposite offsets on the two sides) as the bar crosses the viewport — a few
   pixels of travel, well under the 20% cap §7 sets for a continuously-running scroll-linked layer,

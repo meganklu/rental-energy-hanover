@@ -74,7 +74,7 @@
    Added 2026-08-19, DESIGN.md §5. Every button-like control grows slightly on hover, additive to
    whatever color/border change it already has. A response transition, so it is held still (not
    merely slowed) under the same reduced-motion gating as everything else — the OS setting, or
-   the footer switch. Each target already declares `transition: transform ...` on its own base
+   the reduce-motion switch. Each target already declares `transition: transform ...` on its own base
    rule; this block only supplies the actual scale, so it stays in one place. */
 @media (prefers-reduced-motion: no-preference) {
   body:not(:has(.reduce-motion-input:checked)) .btn:hover,
@@ -571,7 +571,7 @@
 
 /* Parallax/entrance drift, gated exactly like every other ambient motion on the site (DESIGN.md
    §7): behind an @supports check since view-timeline animation is a progressive enhancement, off
-   under prefers-reduced-motion or the footer switch, and off below 600px alongside the rest of
+   under prefers-reduced-motion or the reduce-motion switch, and off below 600px alongside the rest of
    the site's parallax (§6). Each side drifts in from a slight horizontal offset as the bar
    crosses the viewport, at opposite starting offsets, which is what reads as "interactive
    scrolling" rather than a plain fade. Revised 2026-08-20: opacity dropped from the keyframes
