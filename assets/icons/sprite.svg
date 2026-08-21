@@ -158,8 +158,8 @@
   </symbol>
 
   <symbol id="icon-replay" viewBox="0 0 24 24">
-    <path d="M20 12a8 8 0 1 1-3-6.2"/>
-    <polyline points="17 2 17 6 21 6"/>
+    <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+    <polyline points="1 4 1 10 7 10"/>
   </symbol>
 
   <symbol id="icon-print" viewBox="0 0 24 24">

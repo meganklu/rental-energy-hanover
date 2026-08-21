@@ -62,10 +62,7 @@
           </div>
           <div class="fact-row">
             <span class="fact">
-              <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
               <span class="price-dollars" aria-hidden="true">
-                <svg class="icon is-filled"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
-                <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
                 <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
               </span>
               Under $25
@@ -88,8 +85,8 @@
             <path class="stroke" d="M76 16 h96" stroke-width="4" opacity="0.55"/>
             <rect class="fill-brand" x="76" y="172" width="98" height="10" rx="3"/>
             <g opacity="0.55">
-              <path class="stroke muted dash" d="M52 150 q10 -6 0 -12 q-10 -6 0 -12"/>
-              <path class="stroke muted dash" d="M42 158 q10 -6 0 -12 q-10 -6 0 -12"/>
+              <path class="stroke muted dash illo-drift-out motion-loop" d="M52 150 q10 -6 0 -12 q-10 -6 0 -12"/>
+              <path class="stroke muted dash illo-drift-in motion-loop" d="M42 158 q10 -6 0 -12 q-10 -6 0 -12"/>
             </g>
             <line class="stroke" x1="30" y1="146" x2="66" y2="164" stroke-width="4"/>
             <line class="stroke" x1="66" y1="146" x2="30" y2="164" stroke-width="4"/>
@@ -129,21 +126,25 @@
       </div>
 
       <div class="story-bar">
-        <h2 class="story-bar__heading">Why this works</h2>
-        <div class="story-bar__body">
-          <p>
-            An exterior door is framed with small manufacturing and settling gaps around its
-            edges, and the bottom gap in particular is often big enough to see daylight through.
-            Weatherstripping and a sweep close that gap so conditioned air stays inside instead of
-            leaking out around the door.
-          </p>
+        <div class="story-bar__inner">
+          <h2 class="story-bar__heading">Why this works</h2>
+          <div class="story-bar__body">
+            <p>
+              An exterior door is framed with small manufacturing and settling gaps around its
+              edges, and the bottom gap in particular is often big enough to see daylight through.
+              Weatherstripping and a sweep close that gap so conditioned air stays inside instead of
+              leaking out around the door.
+            </p>
+          </div>
         </div>
       </div>
 
       <div class="story-bar story-bar--reverse">
-        <h2 class="story-bar__heading">Savings</h2>
-        <div class="story-bar__body">
-          <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
+        <div class="story-bar__inner">
+          <h2 class="story-bar__heading">Savings</h2>
+          <div class="story-bar__body">
+            <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
+          </div>
         </div>
       </div>
 
@@ -176,6 +177,20 @@
 </dialog>
 <!-- /shell:fab -->
 
+<!-- shell:motion-fab -->
+<div class="motion-fab" role="group" aria-label="Motion settings">
+  <button type="button" class="motion-fab__pause" id="motion-pause" aria-pressed="false">
+    <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-pause"/></svg>
+    <span class="visually-hidden">Pause animations</span>
+  </button>
+  <label class="switch motion-fab__switch">
+    <input type="checkbox" class="reduce-motion-input visually-hidden">
+    <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+    <span class="switch__label">Reduce motion</span>
+  </label>
+</div>
+<!-- /shell:motion-fab -->
+
 <!-- shell:footer -->
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
@@ -191,7 +206,7 @@
     <div class="footer-links">
       <a href="../../accessibility/">Accessibility statement</a>
       <label class="switch">
-        <input type="checkbox" id="reduce-motion" class="visually-hidden">
+        <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
@@ -200,6 +215,7 @@
   </div>
 </footer>
 <script type="module" src="../../assets/js/motion.js"></script>
+<script type="module" src="../../assets/js/house-return.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->

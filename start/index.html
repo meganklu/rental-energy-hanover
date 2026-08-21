@@ -126,6 +126,20 @@
 </dialog>
 <!-- /shell:fab -->
 
+<!-- shell:motion-fab -->
+<div class="motion-fab" role="group" aria-label="Motion settings">
+  <button type="button" class="motion-fab__pause" id="motion-pause" aria-pressed="false">
+    <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-pause"/></svg>
+    <span class="visually-hidden">Pause animations</span>
+  </button>
+  <label class="switch motion-fab__switch">
+    <input type="checkbox" class="reduce-motion-input visually-hidden">
+    <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+    <span class="switch__label">Reduce motion</span>
+  </label>
+</div>
+<!-- /shell:motion-fab -->
+
 <!-- shell:footer -->
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
@@ -141,7 +155,7 @@
     <div class="footer-links">
       <a href="../accessibility/">Accessibility statement</a>
       <label class="switch">
-        <input type="checkbox" id="reduce-motion" class="visually-hidden">
+        <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
@@ -150,6 +164,7 @@
   </div>
 </footer>
 <script type="module" src="../assets/js/motion.js"></script>
+<script type="module" src="../assets/js/house-return.js"></script>
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->

@@ -56,7 +56,8 @@
       <div class="hero__shoes" aria-hidden="true">
         <svg viewBox="0 0 60 150">
           <path d="M30 3 C48 3 55 20 54 42 C53 62 50 78 47 98 C46 110 43 122 36 133 C33 138 27 138 24 133 C17 122 14 110 13 98 C10 78 7 62 6 42 C5 20 12 3 30 3 Z" fill="var(--color-accent)" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M14 36 Q30 46 46 36" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+          <path d="M30 3 C48 3 55 20 54 42 Q30 54 6 42 C5 20 12 3 30 3 Z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
+          <ellipse cx="30" cy="118" rx="9" ry="14" fill="#1a1a1a" stroke="#000" stroke-width="1"/>
           <g stroke="#fff" stroke-width="2.5" stroke-linecap="round">
             <line x1="17" y1="48" x2="42" y2="62"/>
             <line x1="43" y1="48" x2="18" y2="62"/>
@@ -77,7 +78,8 @@
         </svg>
         <svg viewBox="0 0 60 150">
           <path d="M30 3 C48 3 55 20 54 42 C53 62 50 78 47 98 C46 110 43 122 36 133 C33 138 27 138 24 133 C17 122 14 110 13 98 C10 78 7 62 6 42 C5 20 12 3 30 3 Z" fill="var(--color-accent)" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M14 36 Q30 46 46 36" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+          <path d="M30 3 C48 3 55 20 54 42 Q30 54 6 42 C5 20 12 3 30 3 Z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
+          <ellipse cx="30" cy="118" rx="9" ry="14" fill="#1a1a1a" stroke="#000" stroke-width="1"/>
           <g stroke="#fff" stroke-width="2.5" stroke-linecap="round">
             <line x1="17" y1="48" x2="42" y2="62"/>
             <line x1="43" y1="48" x2="18" y2="62"/>
@@ -324,6 +326,20 @@
 </dialog>
 <!-- /shell:fab -->
 
+<!-- shell:motion-fab -->
+<div class="motion-fab" role="group" aria-label="Motion settings">
+  <button type="button" class="motion-fab__pause" id="motion-pause" aria-pressed="false">
+    <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-pause"/></svg>
+    <span class="visually-hidden">Pause animations</span>
+  </button>
+  <label class="switch motion-fab__switch">
+    <input type="checkbox" class="reduce-motion-input visually-hidden">
+    <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+    <span class="switch__label">Reduce motion</span>
+  </label>
+</div>
+<!-- /shell:motion-fab -->
+
 <!-- shell:footer -->
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
@@ -339,7 +355,7 @@
     <div class="footer-links">
       <a href="accessibility/">Accessibility statement</a>
       <label class="switch">
-        <input type="checkbox" id="reduce-motion" class="visually-hidden">
+        <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
@@ -348,6 +364,7 @@
   </div>
 </footer>
 <script type="module" src="assets/js/motion.js"></script>
+<script type="module" src="assets/js/house-return.js"></script>
 <script type="module" src="assets/js/situation.js"></script>
 <script type="module" src="assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->

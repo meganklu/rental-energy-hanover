@@ -73,17 +73,24 @@ img, picture, svg {
 }
 
 /* ---------- Reduced motion state ----------
-   Every ambient animation (parallax, looping diagrams) reads animation-play-state from
-   --motion-state instead of being toggled directly, so one variable controls all of them.
-   Three inputs feed it, in order of how they're allowed to override one another:
+   Every ambient animation (parallax, looping diagrams, the improvement illustrations) reads
+   animation-play-state from --motion-state instead of being toggled directly, so one variable
+   controls all of them. Four inputs feed it, in order of how they're allowed to override one
+   another:
      1. Default: running.
-     2. OS preference (prefers-reduced-motion) or the footer checkbox: paused.
-     3. The footer checkbox explicitly unchecked by script, after having been auto-checked
+     2. OS preference (prefers-reduced-motion), either reduce-motion switch (footer or the
+        motion-fab, both carrying `.reduce-motion-input` since a page can show both), or the
+        motion-fab's explicit Pause button: paused.
+     3. The reduce-motion switch explicitly unchecked by script, after having been auto-checked
         for an OS preference: running again. This is the "force motion back on" path in
         DESIGN.md §7, and it can only happen once assets/js/motion.js has run, because
         distinguishing "never touched, OS prefers reduced" from "explicitly turned back on"
         needs script. Without JavaScript the OS preference (step 2) is the floor and cannot
-        be overridden, which is the documented, accepted limitation. */
+        be overridden, which is the documented, accepted limitation.
+     4. The Pause button, toggled by assets/js/motion.js, wins over everything — even an explicit
+        "force motion on" — since pressing it while motion is forced on should still pause. It is
+        deliberately not persisted (assets/js/motion.js only ever adds/removes the class on the
+        current document): a per-page, session-local override, not an accessibility preference. */
 :root {
   --motion-state: running;
   --motion-duration-flip: var(--motion-flip);
@@ -100,7 +107,7 @@ img, picture, svg {
   }
 }
 
-body:has(#reduce-motion:checked) {
+body:has(.reduce-motion-input:checked) {
   --motion-state: paused;
   --motion-duration-flip: 1ms;
   --motion-duration-room: 1ms;
@@ -114,6 +121,17 @@ body:has(#reduce-motion:checked) {
   --motion-duration-flip: var(--motion-flip);
   --motion-duration-room: var(--motion-room);
   --motion-duration-base: var(--motion-base);
+}
+
+/* The motion-fab's Pause button (assets/js/motion.js). Set on `body`, a descendant of the `:root`
+   element the two rules above target, so it overrides them for everything on the page by
+   inheritance rather than by winning a specificity contest — it applies regardless of which of
+   the two states above is active, including "forced on". */
+body.motion-paused {
+  --motion-state: paused;
+  --motion-duration-flip: 1ms;
+  --motion-duration-room: 1ms;
+  --motion-duration-base: 1ms;
 }
 
 @media (prefers-reduced-motion: no-preference) {

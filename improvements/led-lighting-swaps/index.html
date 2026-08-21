@@ -62,10 +62,7 @@
           </div>
           <div class="fact-row">
             <span class="fact">
-              <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
               <span class="price-dollars" aria-hidden="true">
-                <svg class="icon is-filled"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
-                <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
                 <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
               </span>
               Under $25
@@ -88,7 +85,7 @@
             <line class="stroke" x1="98" y1="70" x2="152" y2="70" stroke-width="3"/>
             <path class="stroke" d="M146 62 l10 8 l-10 8" stroke-width="3"/>
             <g transform="translate(188,68)">
-              <circle r="34" fill="var(--color-brand)" opacity="0.35"/>
+              <circle class="illo-glow motion-loop" r="34" fill="var(--color-brand)" opacity="0.35"/>
               <circle class="stroke" cx="0" cy="0" r="26"/>
               <line class="stroke" x1="-9" y1="26" x2="9" y2="26"/>
               <line class="stroke" x1="-7" y1="34" x2="7" y2="34"/>
@@ -120,22 +117,26 @@
       </div>
 
       <div class="story-bar">
-        <h2 class="story-bar__heading">Why this works</h2>
-        <div class="story-bar__body">
-          <p>
-            An incandescent bulb makes light by heating a filament, which wastes most of its
-            energy as heat rather than light. An LED produces the same brightness from a fraction
-            of the electricity, and lasts far longer, so the swap keeps paying off every time the
-            light is on.
-          </p>
+        <div class="story-bar__inner">
+          <h2 class="story-bar__heading">Why this works</h2>
+          <div class="story-bar__body">
+            <p>
+              An incandescent bulb makes light by heating a filament, which wastes most of its
+              energy as heat rather than light. An LED produces the same brightness from a fraction
+              of the electricity, and lasts far longer, so the swap keeps paying off every time the
+              light is on.
+            </p>
+          </div>
         </div>
       </div>
 
       <div class="story-bar story-bar--reverse">
-        <h2 class="story-bar__heading">Savings</h2>
-        <div class="story-bar__body">
-          <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
-          <p>The U.S. Department of Energy states that LED bulbs use up to 80% less energy than incandescent bulbs.</p>
+        <div class="story-bar__inner">
+          <h2 class="story-bar__heading">Savings</h2>
+          <div class="story-bar__body">
+            <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
+            <p>The U.S. Department of Energy states that LED bulbs use up to 80% less energy than incandescent bulbs.</p>
+          </div>
         </div>
       </div>
 
@@ -167,6 +168,20 @@
 </dialog>
 <!-- /shell:fab -->
 
+<!-- shell:motion-fab -->
+<div class="motion-fab" role="group" aria-label="Motion settings">
+  <button type="button" class="motion-fab__pause" id="motion-pause" aria-pressed="false">
+    <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-pause"/></svg>
+    <span class="visually-hidden">Pause animations</span>
+  </button>
+  <label class="switch motion-fab__switch">
+    <input type="checkbox" class="reduce-motion-input visually-hidden">
+    <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+    <span class="switch__label">Reduce motion</span>
+  </label>
+</div>
+<!-- /shell:motion-fab -->
+
 <!-- shell:footer -->
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
@@ -182,7 +197,7 @@
     <div class="footer-links">
       <a href="../../accessibility/">Accessibility statement</a>
       <label class="switch">
-        <input type="checkbox" id="reduce-motion" class="visually-hidden">
+        <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
@@ -191,6 +206,7 @@
   </div>
 </footer>
 <script type="module" src="../../assets/js/motion.js"></script>
+<script type="module" src="../../assets/js/house-return.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->
