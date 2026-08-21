@@ -51,8 +51,19 @@ html {
   text-size-adjust: 100%;
 }
 
+/* `overflow-x: clip` added 2026-08-21, for the full-width bands (`.full-bleed` in components.css:
+   story bars, the Renter basics section). Those break out of the page shell with `width: 100vw`,
+   and `100vw` includes the width of the vertical scrollbar while the body's own content box does
+   not, so every page with a scrollbar was about 8px wider than its window and scrolled sideways
+   by that much. WCAG 1.4.10 and docs/accessibility.md §2 both rule that out.
+   `clip` rather than `hidden` on purpose: `hidden` would make the body a scroll container, and
+   the doll house's sticky progress row would then stick to the body instead of the window and
+   never actually pin. `clip` creates no scroll container, so sticky keeps resolving against the
+   viewport. Pairing `overflow-x: clip` with a `visible` overflow-y is legal only for `clip`,
+   which is the other reason it is the right value here. */
 body {
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 img, picture, svg {
@@ -172,9 +183,17 @@ p {
   max-width: var(--measure);
 }
 
+/* `overflow-wrap` added 2026-08-21: an email address or a URL written out as link text is one
+   unbreakable thirty-character token, and at the 320px reflow floor it can be wider than the
+   window on its own. `break-word` here, not `anywhere`: `anywhere` also drops the intrinsic
+   min-content width to a single character, which makes any shrink-to-fit box holding a link
+   collapse and wrap mid-word when it had room not to. `anywhere` is applied where it is actually
+   needed instead, on the blocks that have to shrink (see `.content-column` below and
+   `.footer-contact` in components.css). */
 a {
   color: var(--color-accent);
   text-decoration-thickness: from-font;
+  overflow-wrap: break-word;
 }
 
 a:hover {
@@ -261,6 +280,17 @@ a:hover {
   max-width: 1140px;
   margin-inline: auto;
   padding-inline: var(--space-5);
+}
+
+/* `anywhere` so this column's own minimum width is not set by the longest email address inside
+   it. It is a reading column that has to be able to shrink to the 320px floor. The `a` in the
+   selector is load-bearing: the rule above sets `break-word` on every link, which as a direct
+   declaration beats an inherited `anywhere` and would leave exactly the links that cause the
+   problem still unbreakable. `anywhere` lowers the intrinsic minimum without forcing any break,
+   so on a block of a definite width like this one it changes nothing visible. */
+.content-column,
+.content-column a {
+  overflow-wrap: anywhere;
 }
 
 .content-column {

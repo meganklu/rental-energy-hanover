@@ -77,6 +77,17 @@
             <p class="card__summary">You can't seal a gap you haven't found.</p>
           </li>
         </ul>
+        <div class="carousel__controls">
+          <a class="carousel__nav" href="#rb-read-your-bill" data-carousel-prev>
+            <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-previous"/></svg>
+            Previous
+          </a>
+          <p class="carousel__count" data-carousel-count aria-live="polite">3 articles</p>
+          <a class="carousel__nav" href="#rb-find-your-drafts" data-carousel-next>
+            Next
+            <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-next"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -245,7 +256,7 @@
 <!-- shell:fab -->
 <a class="fab" id="situation-fab" href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
-  Personalize your recommendations
+  Personalize<span class="fab__rest"> your recommendations</span>
 </a>
 <dialog id="situation-dialog" class="situation-dialog" aria-labelledby="situation-dialog-heading">
   <div class="situation-dialog__inner">
@@ -312,6 +323,7 @@
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->
 
+<script type="module" src="../assets/js/carousel.js"></script>
 <script type="module" src="../assets/js/library.js"></script>
 </body>
 </html>

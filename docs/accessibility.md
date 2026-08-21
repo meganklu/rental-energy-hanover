@@ -126,10 +126,11 @@ phase after it. None of it is optional.
 | Method | Tool | When | Owner |
 |---|---|---|---|
 | Automated scan | axe DevTools and Lighthouse in Chrome | Before every merge to `main`, since `main` publishes live | Megan |
+| Internal link check | A script walking every `href` and `src` in the repo | Alongside `tools/check-content.mjs`, whenever pages are added | Megan |
 | Keyboard-only pass on each new component | Manual, no mouse touched | As the component is built. Not a separate phase | Megan |
 | Contrast audit of design tokens | Measured at design time, recorded in [DESIGN.md](../DESIGN.md) §4 | ☑ Done 2026-08-18. Re-check on any token change | Megan |
 | Reduced motion, both paths | The operating system setting and the site toggle | One pass before launch | Megan |
-| Spot check at 320px width and 200% zoom | Manual, one page of each type | One pass before launch | Megan |
+| Spot check at 320px width and 200% zoom | Manual, one page of each type | ☑ Done 2026-08-21, measured rather than eyeballed: every page rendered at 320px, every element's right edge compared against the viewport, then the page scrolled to confirm it does not move. Found and fixed four real 1.4.10 failures — see [DESIGN.md](../DESIGN.md) §6 | Megan |
 | Acceptance criteria in [features.md](features.md) §4 | Manual, per feature | As each feature is finished | Megan |
 
 ### Deferred to v2
@@ -156,5 +157,6 @@ Owners follow the phase assignments in [roadmap.md](roadmap.md) §2.
 | Parallax is scroll-linked decorative motion. It conforms with the §5.1 limits and the toggle, and it is still motion nobody asked for | 2.3.3 is AAA and not our target | Low | Held under the §5.1 caps. Drop it if usability round 2 shows anyone struggling | 2026-08-19 |
 | The reduce motion choice does not persist across pages without JavaScript | None. It works on the current page either way | Low | Accepted. Persistence needs a script by definition | 2026-08-19 |
 | No testing with a disabled user is secured yet | Process, not a criterion | High | Raise in [research-plan.md](research-plan.md) recruitment | 2026-08-19 |
+| The skip link on every page below the root pointed at the home page's `#main` rather than the current page's, so the first focusable element on the page navigated away from it | 2.4.1 | High | ☑ Fixed 2026-08-21. Logged here because it is exactly the class of defect §5's deferred keyboard passes exist to catch, and it survived every build-time check the site has | 2026-08-21 |
 | The doll house has not been screen reader tested | 1.1.1, 2.1.1, 4.1.2 | Unknown | Its own session, deferred to v2 per §5. The link-list path is the reason this is a known unknown rather than a known defect | 2026-08-19 |
 | Conformance with WCAG 2.2 AA is unverified. The site is built to the target and not yet audited against it | All | Known and disclosed | The v2 passes in §5. Disclosed on `/accessibility` in the meantime, per §1 | 2026-08-19 |

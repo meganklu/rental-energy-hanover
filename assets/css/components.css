@@ -102,6 +102,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
+  max-width: 100%;
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-pill);
   border: 1px solid currentColor;
@@ -816,12 +817,25 @@
   margin: 0;
 }
 
+.program dl,
+.program dl a {
+  overflow-wrap: anywhere;
+}
+
 .program dl {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr;
   gap: var(--space-1) var(--space-3);
   margin: 0;
   font-size: var(--text-small);
+}
+
+/* Two columns only where there is room for the term and its answer side by side. Below this the
+   answer sits under the term, which is what a description list does by default anyway. */
+@media (min-width: 560px) {
+  .program dl {
+    grid-template-columns: auto 1fr;
+  }
 }
 
 .program dt {
@@ -1174,8 +1188,24 @@ body:has(.motion-loop) .motion-fab__pause {
     border: 0;
   }
 
+  /* The label shortens to "Personalize" rather than wrapping to four lines across the corner of a
+     320px window. `.fab__rest` goes visually hidden rather than being removed, so the accessible
+     name stays the full "Personalize your recommendations" and DESIGN.md §2's "never an icon with
+     no word next to it" still holds. The max-width is the backstop for a wrapped label. */
   .fab {
     max-width: calc(100vw - 9rem);
+  }
+
+  .fab__rest {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 }
 
@@ -1247,11 +1277,27 @@ body:has(.motion-loop) .motion-fab__pause {
   justify-content: space-between;
 }
 
+/* A flex item's `min-width: auto` refuses to shrink below its content's minimum, which is how a
+   single long word in one column pushes the whole page wider than the window. */
+.site-footer__inner > * {
+  min-width: 0;
+}
+
+/* `flex-wrap` and `min-width: 0` added 2026-08-21, when a 320px reflow measurement found this row
+   was the single largest source of horizontal overflow on every page of the site. Two causes,
+   both fixed here: the logo and the text sat in a row that could not wrap, and the contact email
+   is a thirty-character unbreakable token that set a min-content width wider than the viewport. */
 .footer-credit {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-4);
   max-width: 34rem;
+  min-width: 0;
+}
+
+.footer-credit > div {
+  min-width: 0;
 }
 
 /* The logo is a link to sustainablehanovernh.org, added 2026-08-21 — it was the one piece of the
@@ -1278,6 +1324,11 @@ body:has(.motion-loop) .motion-fab__pause {
 
 /* Website and email each on their own line, revised 2026-08-21: they are two ways to make
    contact and a reader is picking one, not reading a sentence that happens to contain both. */
+.footer-contact,
+.footer-contact a {
+  overflow-wrap: anywhere;
+}
+
 .footer-contact {
   list-style: none;
   padding: 0;
@@ -1588,8 +1639,11 @@ body:has(.motion-loop) .motion-fab__pause {
   gap: var(--space-2);
 }
 
+/* Deliberately not `position: relative`: the tooltip below is positioned against
+   `.section-heading-row` instead, which is the content column's own width. Anchored to the button
+   it could start anywhere along a wrapped heading and run off the side of a 320px window, which a
+   reflow measurement caught doing exactly that. */
 .help-icon {
-  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1615,7 +1669,7 @@ body:has(.motion-loop) .motion-fab__pause {
   left: 0;
   margin-top: var(--space-2);
   width: max-content;
-  max-width: 20rem;
+  max-width: min(20rem, 100%);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
@@ -2134,6 +2188,15 @@ body:has(.motion-loop) .motion-fab__pause {
 .carousel__count {
   font-size: var(--text-small);
   color: var(--color-text-muted);
+}
+
+/* At either end the control points at the slide already showing (assets/js/carousel.js). Dimmed
+   and marked aria-disabled rather than removed from the DOM, so the row does not reflow and the
+   control does not vanish out from under a keyboard user mid-press. Still focusable, per WCAG
+   2.4.11 — aria-disabled says "does nothing here", `disabled` would say "skip me". */
+.carousel__nav[aria-disabled] {
+  opacity: 0.45;
+  pointer-events: none;
 }
 
 /* ---------- Animated diagram ---------- */

@@ -1223,6 +1223,29 @@ and it gets one spot check before launch. The full zoom matrix is deferred with 
 testing, per [docs/accessibility.md](docs/accessibility.md) §5. This is the same code path the
 mobile work in v2 will build on, so nothing here is thrown away.
 
+**The 320px pass, 2026-08-21.** Run before the new pages shipped, and it found real breakage
+rather than confirming what was assumed. Every page on the site scrolled sideways at 320px, which
+is a 1.4.10 failure and the one accessibility criterion §6 above says is not deferred. Measured
+rather than eyeballed: each page rendered at 320px, every element's right edge compared against
+the viewport, and then the page actually scrolled to see whether it moved. Four causes, all fixed:
+
+- **The footer credit row.** The largest offender, and on every page. The logo and the text sat in
+  a flex row that could not wrap, and the contact email is a thirty-character unbreakable token
+  that set a min-content width wider than the whole window. It wraps now, and `min-width: 0` lets
+  the columns actually shrink.
+- **Long links anywhere in prose.** An email address or a URL written out as link text is one
+  token. `overflow-wrap` on the reading column and on the links inside it. The subtlety worth
+  recording: a direct `overflow-wrap` declaration on `a` beats an inherited one from the column,
+  so the container rule has to name the links too or it silently does nothing to the exact
+  elements causing the problem.
+- **The full-width bands.** `width: 100vw` counts the vertical scrollbar; the body's content box
+  does not. Every page with a scrollbar was about 8px wider than its window. `overflow-x: clip` on
+  `body` — `clip` and not `hidden`, since `hidden` would make the body a scroll container and the
+  doll house's sticky progress row would stop pinning. Verified after the change that the row
+  still pins.
+- **The Personalize FAB.** Its label wrapped to four lines across the corner of a 320px window. It
+  shortens to "Personalize" below 640px, with the full label still the accessible name.
+
 ## 7. Motion
 
 Motion is part of how this site teaches. It moves more than most content sites do, and every
