@@ -62,10 +62,7 @@
           </div>
           <div class="fact-row">
             <span class="fact">
-              <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
               <span class="price-dollars" aria-hidden="true">
-                <svg class="icon is-filled"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
-                <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
                 <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
               </span>
               Under $25
@@ -88,8 +85,10 @@
               <rect class="fill-surface" x="0" y="0" width="30" height="16" rx="6"/>
               <path class="stroke" d="M0 8 h-14" stroke-width="4"/>
             </g>
-            <path class="stroke" d="M118 150 q10 -4 18 -2" opacity="0.7"/>
-            <path class="stroke" d="M116 158 q10 -4 20 -1" opacity="0.5"/>
+            <g class="stroke illo-glow motion-loop">
+              <path d="M118 150 q10 -4 18 -2" opacity="0.7"/>
+              <path d="M116 158 q10 -4 20 -1" opacity="0.5"/>
+            </g>
           </svg>
         </figure>
       </div>
@@ -116,21 +115,25 @@
       </div>
 
       <div class="story-bar">
-        <h2 class="story-bar__heading">Why this works</h2>
-        <div class="story-bar__body">
-          <p>
-            A single pane of glass is one of the weakest points in a rental's building envelope,
-            and cold air moves through the gap between an old sash and its frame even when the
-            window looks closed. The film adds a sealed layer of trapped air next to the glass,
-            which cuts down the draft you would otherwise feel sitting near the window.
-          </p>
+        <div class="story-bar__inner">
+          <h2 class="story-bar__heading">Why this works</h2>
+          <div class="story-bar__body">
+            <p>
+              A single pane of glass is one of the weakest points in a rental's building envelope,
+              and cold air moves through the gap between an old sash and its frame even when the
+              window looks closed. The film adds a sealed layer of trapped air next to the glass,
+              which cuts down the draft you would otherwise feel sitting near the window.
+            </p>
+          </div>
         </div>
       </div>
 
       <div class="story-bar story-bar--reverse">
-        <h2 class="story-bar__heading">Savings</h2>
-        <div class="story-bar__body">
-          <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
+        <div class="story-bar__inner">
+          <h2 class="story-bar__heading">Savings</h2>
+          <div class="story-bar__body">
+            <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
+          </div>
         </div>
       </div>
 
@@ -163,6 +166,20 @@
 </dialog>
 <!-- /shell:fab -->
 
+<!-- shell:motion-fab -->
+<div class="motion-fab" role="group" aria-label="Motion settings">
+  <button type="button" class="motion-fab__pause" id="motion-pause" aria-pressed="false">
+    <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-pause"/></svg>
+    <span class="visually-hidden">Pause animations</span>
+  </button>
+  <label class="switch motion-fab__switch">
+    <input type="checkbox" class="reduce-motion-input visually-hidden">
+    <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+    <span class="switch__label">Reduce motion</span>
+  </label>
+</div>
+<!-- /shell:motion-fab -->
+
 <!-- shell:footer -->
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
@@ -178,7 +195,7 @@
     <div class="footer-links">
       <a href="../../accessibility/">Accessibility statement</a>
       <label class="switch">
-        <input type="checkbox" id="reduce-motion" class="visually-hidden">
+        <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
@@ -187,6 +204,7 @@
   </div>
 </footer>
 <script type="module" src="../../assets/js/motion.js"></script>
+<script type="module" src="../../assets/js/house-return.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->

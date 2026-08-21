@@ -44,39 +44,43 @@
 
 <main id="main">
 
-  <section class="section page-shell theme-brand rental-basics">
-    <h2>Rental basics</h2>
-    <div class="carousel carousel--peek">
-      <ul class="carousel__track" tabindex="0" aria-label="Rental basics articles">
-        <li class="carousel__slide" id="rb-read-your-bill">
-          <h3 class="card__title">
-            <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>
-            <a href="../learn/read-your-bill/">Read your bill</a>
-          </h3>
-          <p class="card__summary">kWh, rate, and what's actually driving your electric bill.</p>
-          <div class="badge-row">
-            <span class="badge badge--basics">Renter basics</span>
-          </div>
-        </li>
-        <li class="carousel__slide" id="rb-find-your-drafts">
-          <h3 class="card__title">
-            <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-house"/></svg>
-            <a href="../learn/find-your-drafts/">Find your drafts</a>
-          </h3>
-          <p class="card__summary">You can't seal a gap you haven't found.</p>
-          <div class="badge-row">
-            <span class="badge badge--basics">Renter basics</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </section>
-
   <section class="section page-shell">
     <div class="content-column">
       <h1>Improvements</h1>
     </div>
+  </section>
 
+  <section class="theme-brand rental-basics">
+    <div class="section page-shell">
+      <h2>Rental basics</h2>
+      <div class="carousel carousel--peek">
+        <ul class="carousel__track" tabindex="0" aria-label="Rental basics articles">
+          <li class="carousel__slide" id="rb-read-your-bill">
+            <h3 class="card__title">
+              <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-cost"/></svg>
+              <a href="../learn/read-your-bill/">Read your bill</a>
+            </h3>
+            <p class="card__summary">kWh, rate, and what's actually driving your electric bill.</p>
+            <div class="badge-row">
+              <span class="badge badge--basics">Renter basics</span>
+            </div>
+          </li>
+          <li class="carousel__slide" id="rb-find-your-drafts">
+            <h3 class="card__title">
+              <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-house"/></svg>
+              <a href="../learn/find-your-drafts/">Find your drafts</a>
+            </h3>
+            <p class="card__summary">You can't seal a gap you haven't found.</p>
+            <div class="badge-row">
+              <span class="badge badge--basics">Renter basics</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section page-shell">
     <div class="library-toolbar">
       <p class="results-count" id="results-count" aria-live="polite"></p>
       <label class="sort-control">
@@ -254,6 +258,20 @@
 </dialog>
 <!-- /shell:fab -->
 
+<!-- shell:motion-fab -->
+<div class="motion-fab" role="group" aria-label="Motion settings">
+  <button type="button" class="motion-fab__pause" id="motion-pause" aria-pressed="false">
+    <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-pause"/></svg>
+    <span class="visually-hidden">Pause animations</span>
+  </button>
+  <label class="switch motion-fab__switch">
+    <input type="checkbox" class="reduce-motion-input visually-hidden">
+    <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+    <span class="switch__label">Reduce motion</span>
+  </label>
+</div>
+<!-- /shell:motion-fab -->
+
 <!-- shell:footer -->
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
@@ -269,7 +287,7 @@
     <div class="footer-links">
       <a href="../accessibility/">Accessibility statement</a>
       <label class="switch">
-        <input type="checkbox" id="reduce-motion" class="visually-hidden">
+        <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
@@ -278,6 +296,7 @@
   </div>
 </footer>
 <script type="module" src="../assets/js/motion.js"></script>
+<script type="module" src="../assets/js/house-return.js"></script>
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->

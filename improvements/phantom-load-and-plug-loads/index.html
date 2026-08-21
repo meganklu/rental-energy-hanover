@@ -62,10 +62,7 @@
           </div>
           <div class="fact-row">
             <span class="fact">
-              <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
               <span class="price-dollars" aria-hidden="true">
-                <svg class="icon is-filled"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
-                <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
                 <svg class="icon"><use href="../../assets/icons/sprite.svg#icon-cost"/></svg>
               </span>
               Under $25
@@ -92,7 +89,7 @@
             </g>
             <g transform="translate(178,100)">
               <rect class="stroke" x="-8" y="-16" width="16" height="32" rx="8"/>
-              <circle cx="0" cy="6" r="4" fill="var(--color-accent)" stroke="none"/>
+              <circle class="illo-glow motion-loop" cx="0" cy="6" r="4" fill="var(--color-accent)" stroke="none"/>
             </g>
             <line class="stroke" x1="200" y1="70" x2="212" y2="58" stroke-width="3"/>
             <line class="stroke" x1="212" y1="70" x2="200" y2="58" stroke-width="3"/>
@@ -116,16 +113,18 @@
       </div>
 
       <div class="story-bar">
-        <h2 class="story-bar__heading">Why this works</h2>
-        <div class="story-bar__body">
-          <p>
-            Many devices draw a small amount of power even while off or in standby, just to keep a
-            clock, a light, or a remote sensor ready. Plugged-in chargers with nothing attached
-            still pull a little too. A single device is barely noticeable, but a room full of them
-            plugged in around the clock adds up quietly on a bill you are already paying. A
-            switched power strip lets you cut all of it at once instead of unplugging each thing by
-            hand.
-          </p>
+        <div class="story-bar__inner">
+          <h2 class="story-bar__heading">Why this works</h2>
+          <div class="story-bar__body">
+            <p>
+              Many devices draw a small amount of power even while off or in standby, just to keep a
+              clock, a light, or a remote sensor ready. Plugged-in chargers with nothing attached
+              still pull a little too. A single device is barely noticeable, but a room full of them
+              plugged in around the clock adds up quietly on a bill you are already paying. A
+              switched power strip lets you cut all of it at once instead of unplugging each thing by
+              hand.
+            </p>
+          </div>
         </div>
       </div>
 
@@ -157,6 +156,20 @@
 </dialog>
 <!-- /shell:fab -->
 
+<!-- shell:motion-fab -->
+<div class="motion-fab" role="group" aria-label="Motion settings">
+  <button type="button" class="motion-fab__pause" id="motion-pause" aria-pressed="false">
+    <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-pause"/></svg>
+    <span class="visually-hidden">Pause animations</span>
+  </button>
+  <label class="switch motion-fab__switch">
+    <input type="checkbox" class="reduce-motion-input visually-hidden">
+    <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+    <span class="switch__label">Reduce motion</span>
+  </label>
+</div>
+<!-- /shell:motion-fab -->
+
 <!-- shell:footer -->
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
@@ -172,7 +185,7 @@
     <div class="footer-links">
       <a href="../../accessibility/">Accessibility statement</a>
       <label class="switch">
-        <input type="checkbox" id="reduce-motion" class="visually-hidden">
+        <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
@@ -181,6 +194,7 @@
   </div>
 </footer>
 <script type="module" src="../../assets/js/motion.js"></script>
+<script type="module" src="../../assets/js/house-return.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <!-- /shell:footer -->

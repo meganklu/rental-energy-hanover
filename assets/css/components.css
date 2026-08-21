@@ -77,16 +77,17 @@
    the footer switch. Each target already declares `transition: transform ...` on its own base
    rule; this block only supplies the actual scale, so it stays in one place. */
 @media (prefers-reduced-motion: no-preference) {
-  body:not(:has(#reduce-motion:checked)) .btn:hover,
-  body:not(:has(#reduce-motion:checked)) .hotspot:hover,
-  body:not(:has(#reduce-motion:checked)) .fab:hover,
-  body:not(:has(#reduce-motion:checked)) .scroll-cue:hover,
-  body:not(:has(#reduce-motion:checked)) .card:hover,
-  body:not(:has(#reduce-motion:checked)) .filter-chip:hover,
-  body:not(:has(#reduce-motion:checked)) .carousel__nav:hover,
-  body:not(:has(#reduce-motion:checked)) .situation-dialog__close:hover,
-  body:not(:has(#reduce-motion:checked)) .help-icon:hover,
-  body:not(:has(#reduce-motion:checked)) .progress-reset:hover {
+  body:not(:has(.reduce-motion-input:checked)) .btn:hover,
+  body:not(:has(.reduce-motion-input:checked)) .hotspot:hover,
+  body:not(:has(.reduce-motion-input:checked)) .fab:hover,
+  body:not(:has(.reduce-motion-input:checked)) .scroll-cue:hover,
+  body:not(:has(.reduce-motion-input:checked)) .card:hover,
+  body:not(:has(.reduce-motion-input:checked)) .filter-chip:hover,
+  body:not(:has(.reduce-motion-input:checked)) .carousel__nav:hover,
+  body:not(:has(.reduce-motion-input:checked)) .situation-dialog__close:hover,
+  body:not(:has(.reduce-motion-input:checked)) .help-icon:hover,
+  body:not(:has(.reduce-motion-input:checked)) .progress-reset:hover,
+  body:not(:has(.reduce-motion-input:checked)) .motion-fab__pause:hover {
     transform: scale(1.05);
   }
 }
@@ -172,25 +173,20 @@
   font-weight: 600;
 }
 
-/* Price dollar scale, added 2026-08-20, corrected 2026-08-20: a row of three dollar-sign glyphs
-   (reusing icon-cost) next to the cost fact, filled left to right by cost band — free fills
-   none, under25 fills one, 25to75 fills two, over75 fills all three — the familiar $/$$/$$$
-   price-tier convention. First built next to the impact gauge by mistake, which read as "more
-   dollar signs means more impact" when it was meant to echo price; moved to sit with the cost
-   fact it actually describes. Purely reinforcing — the visible cost text ("Under $25") is still
-   the accessible name, so the dollar row is aria-hidden. */
+/* Price dollar scale, added 2026-08-20, revised 2026-08-21: renders exactly as many dollar-sign
+   glyphs (reusing icon-cost) as the improvement's cost band has tiers below and including it —
+   one for under25, two for 25to75, three for over75, none for free — the familiar $/$$/$$$
+   price-tier convention. Previously always rendered three icons and grayed out the ones above
+   the tier, which read as one large leading $ plus partially colored small ones rather than a
+   plain dollar-sign count. The visible cost text ("Under $25") is still the accessible name, so
+   the row stays aria-hidden. */
 .price-dollars {
   display: inline-flex;
-  margin-left: 2px;
 }
 
 .price-dollars .icon {
-  width: 0.85em;
-  height: 0.85em;
-  color: var(--color-border-strong);
-}
-
-.price-dollars .icon.is-filled {
+  width: 1em;
+  height: 1em;
   color: var(--color-accent);
 }
 
@@ -225,7 +221,7 @@
    thing on the page that should never compete for space. The background band is genuinely full
    width; the text inside still keeps a readable measure per DESIGN.md §4. */
 .callout--safety-full {
-  margin-block: var(--space-6);
+  margin-block: var(--space-7);
   padding: var(--space-5);
 }
 
@@ -281,7 +277,7 @@
 
 /* ---------- Sources block ---------- */
 .sources-block {
-  margin-block: var(--space-5);
+  margin-block: var(--space-7);
   padding-top: var(--space-4);
   border-top: 1px solid var(--color-border);
   font-size: var(--text-small);
@@ -317,7 +313,7 @@
   grid-template-areas: "text" "media";
   gap: var(--space-6);
   align-items: center;
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-8);
 }
 
 @media (min-width: 900px) {
@@ -379,8 +375,88 @@
   stroke-dasharray: 4 4;
 }
 
+/* ---------- Improvement illustration loops, added 2026-08-21 ----------
+   Each illustration gets one small, meaningful loop instead of sitting static — rising heat, a
+   dripping showerhead, a moving draft, a glowing bulb, a marching-dash arrow. `.motion-loop` is
+   the shared marker: it reads --motion-state, so OS preference, the reduce-motion toggle and the
+   floating pause button (below) all stop it exactly like every other ambient animation on the
+   site, and its mere presence on a page is what makes the floating pause button visible at all
+   (see `.motion-fab__pause`). No scroll-gate like the learn-page diagrams below — an illustration
+   sits in the intro, already in the viewport on load, so it can read --motion-state directly. */
+.motion-loop {
+  animation-play-state: var(--motion-state);
+  animation-iteration-count: infinite;
+  animation-timing-function: var(--motion-ease);
+}
+
+@keyframes illo-rise {
+  0%, 100% { transform: translateY(0); opacity: 0.85; }
+  50% { transform: translateY(-6px); opacity: 0.3; }
+}
+
+.illo-rise {
+  animation-name: illo-rise;
+  animation-duration: 2.6s;
+}
+
+@keyframes illo-drip {
+  0%, 20% { transform: translateY(0); opacity: 0.6; }
+  70% { transform: translateY(10px); opacity: 0.15; }
+  71%, 100% { transform: translateY(0); opacity: 0; }
+}
+
+.illo-drip {
+  animation-name: illo-drip;
+  animation-duration: 2.2s;
+}
+
+@keyframes illo-glow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.08); }
+}
+
+.illo-glow {
+  animation-name: illo-glow;
+  animation-duration: 2.4s;
+  transform-origin: center;
+}
+
+@keyframes illo-flow {
+  to { stroke-dashoffset: -16; }
+}
+
+.illo-flow {
+  animation-name: illo-flow;
+  animation-duration: 1.6s;
+  animation-timing-function: linear;
+}
+
+.illo-drift-in {
+  animation-name: drift-in;
+  animation-duration: 3.2s;
+}
+
+.illo-drift-out {
+  animation-name: drift-out;
+  animation-duration: 3.2s;
+  animation-delay: 0.3s;
+}
+
 .improvement-body {
   max-width: var(--measure);
+}
+
+/* Base.css resets every heading and paragraph to zero margin, so vertical rhythm inside an
+   article's prose has to be opted back in explicitly rather than inherited from the browser
+   default. Added 2026-08-21 alongside the wider "more room between sections" pass: every direct
+   child gets space above it except the first, and an h2 (a new named section, not just the next
+   paragraph) gets more than that. */
+.improvement-body > * + * {
+  margin-top: var(--space-5);
+}
+
+.improvement-body > h2 {
+  margin-top: var(--space-8);
 }
 
 /* ---------- Story bar, added 2026-08-20 ----------
@@ -392,42 +468,48 @@
    body sits in the other. `.story-bar--reverse` swaps which side is which, so "Why this works"
    (heading left) and "Savings" (heading right) read as a matched, alternating pair rather than
    two copies of the same layout. */
-/* Revised 2026-08-20: a tinted band (`--color-surface`, the same tint cards and info bars already
-   use) instead of a plain white bar with hairline top/bottom rules, sized taller to hold the
-   larger heading below, and touching its neighbor — see `.story-bar + .story-bar` — so "Why this
-   works" and "Savings" read as one continuous two-part band rather than two separate bars with a
-   gap between them. */
+/* Revised 2026-08-21: the band itself now breaks out to the full window width (the standard
+   100vw + negative-margin trick, since `.story-bar` sits inside `.page-shell`'s 1140px cap like
+   the rest of the article) while `.story-bar__inner` keeps the heading and body at the same
+   position and width they had before — "the text can stay where it is". That split also undoes
+   2026-08-20's "touching neighbor" treatment (`.story-bar + .story-bar` used to drop the shared
+   border to read as one continuous band): each bar now keeps its own border on every side and a
+   full margin-block, so "Why this works" and "Savings" sit apart with visible daylight between
+   them instead of touching — the entrance animation on each needs that separation to actually
+   read as two bars animating in, not one static band. */
 .story-bar {
+  width: 100vw;
+  margin-block: var(--space-8);
+  margin-inline: calc(50% - 50vw);
+  background: var(--color-surface);
+  border-block: 1px solid var(--color-border);
+}
+
+.story-bar__inner {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-4) var(--space-7);
   align-items: center;
-  margin: 0;
+  max-width: 1140px;
+  margin-inline: auto;
   padding: var(--space-8) var(--space-5);
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.story-bar + .story-bar {
-  border-top: none;
 }
 
 @media (min-width: 900px) {
-  .story-bar {
+  .story-bar__inner {
     padding-inline: var(--space-7);
   }
 }
 
 @media (min-width: 700px) {
-  .story-bar {
+  .story-bar__inner {
     grid-template-columns: 1fr 1.4fr;
   }
 
   /* The reverse variant swaps which side is which by reordering the grid items (auto-placement
      follows `order`), so the column widths have to swap along with it — otherwise the heading
      lands in the wide column meant for body copy, and the body squeezes into the narrow one. */
-  .story-bar--reverse {
+  .story-bar--reverse .story-bar__inner {
     grid-template-columns: 1.4fr 1fr;
   }
 
@@ -475,26 +557,26 @@
    leaves fully legible, full-contrast text, just offset by at most 14px. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
-    body:not(:has(#reduce-motion:checked)) .story-bar__heading,
-    body:not(:has(#reduce-motion:checked)) .story-bar__body {
+    body:not(:has(.reduce-motion-input:checked)) .story-bar__heading,
+    body:not(:has(.reduce-motion-input:checked)) .story-bar__body {
       animation: story-bar-in linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 35%;
     }
 
-    body:not(:has(#reduce-motion:checked)) .story-bar__heading {
+    body:not(:has(.reduce-motion-input:checked)) .story-bar__heading {
       animation-name: story-bar-in-from-left;
     }
 
-    body:not(:has(#reduce-motion:checked)) .story-bar--reverse .story-bar__heading {
+    body:not(:has(.reduce-motion-input:checked)) .story-bar--reverse .story-bar__heading {
       animation-name: story-bar-in-from-right;
     }
 
-    body:not(:has(#reduce-motion:checked)) .story-bar__body {
+    body:not(:has(.reduce-motion-input:checked)) .story-bar__body {
       animation-name: story-bar-in-from-right;
     }
 
-    body:not(:has(#reduce-motion:checked)) .story-bar--reverse .story-bar__body {
+    body:not(:has(.reduce-motion-input:checked)) .story-bar--reverse .story-bar__body {
       animation-name: story-bar-in-from-left;
     }
   }
@@ -802,15 +884,10 @@
 
 .brand__icon {
   align-self: center;
-  width: auto;
+  width: calc(var(--text-h4) * var(--leading-display) + 2px + var(--text-small) * var(--leading-display));;
   height: calc(var(--text-h4) * var(--leading-display) + 2px + var(--text-small) * var(--leading-display));
   flex-shrink: 0;
-  /* icon-house's own walls stop at x=21 of its 24-unit viewBox — only the roof's single-point
-     peak reaches nearer the edge — so even a zero flex `gap` still left visible daylight between
-     the icon and the text next to it. This pulls the text in to close that built-in margin,
-     scoped to this lockup rather than redrawing the shared icon-house symbol, which is also the
-     favicon and every doll house hotspot's icon. */
-  margin-right: -6px;
+  margin-right: 10px;
 }
 
 .brand__text {
@@ -889,6 +966,90 @@
 
 .fab .icon {
   color: #fff;
+}
+
+/* ---------- Motion controls FAB, added 2026-08-21 ----------
+   A second floating control, top-right so it never competes with the Personalize FAB at bottom-
+   right, pairing the reduce-motion toggle with a page-scoped pause button. WCAG 2.2.2 asks for a
+   way to pause moving content that is independent of the OS-level prefers-reduced-motion setting;
+   each learn-page diagram used to carry its own Pause button for that, duplicated per page. Now
+   that every animated page (learn-page diagrams and the improvement illustrations above, both
+   marked `.motion-loop`) shares the same --motion-state plumbing, one control here covers all of
+   them, so the per-diagram buttons are gone. The pause button only appears when `.motion-loop` is
+   present somewhere on the page — `:has()`, the same technique the reduce-motion switch already
+   uses elsewhere in this file — so it never shows on a page with nothing to pause. */
+.motion-fab {
+  position: fixed;
+  top: var(--space-5);
+  right: var(--space-5);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.motion-fab__pause {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--target-min);
+  height: var(--target-min);
+  border: none;
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  box-shadow: var(--shadow-raised);
+  transition: color var(--motion-duration-base) var(--motion-ease),
+    transform var(--motion-duration-base) var(--motion-ease);
+}
+
+body:has(.motion-loop) .motion-fab__pause {
+  display: inline-flex;
+}
+
+.motion-fab__pause:hover {
+  color: var(--color-accent);
+}
+
+.motion-fab__switch {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-raised);
+}
+
+/* Below this width the header's own brand lockup and nav wrap onto multiple lines and fill the
+   full viewport width (site-header__inner's flex-wrap, no dedicated breakpoint of its own to
+   match), leaving no clear corner for a second fixed top-right control — at the site's 320px
+   accessibility floor an untouched `.motion-fab` sat directly over the wordmark on first paint.
+   Dropping the switch's visible text label (the accessible name stays, `.switch__label` is still
+   in the DOM, just visually hidden) shrinks the fab to two small circles, small enough to clear
+   the wrapped brand text instead of sitting on top of it. */
+@media (max-width: 640px) {
+  .motion-fab {
+    top: 9rem;
+  }
+
+  .motion-fab__switch {
+    padding: 0;
+    width: var(--target-min);
+    height: var(--target-min);
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .motion-fab__switch .switch__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 }
 
 .situation-dialog {
@@ -1035,15 +1196,14 @@
 }
 
 /* ---------- Hero: the welcome mat ---------- */
-/* Revised 2026-08-20, twice: the ground plane behind the mat reads as bluestone paving rather
-   than a flat color. First pass was a regular grid of hairline joints (two layered
-   `linear-gradient`s) — corrected the same day to an irregular "crazy paving" joint pattern
-   (real bluestone is cut in asymmetric slabs, not a brick grid), and scaled up so the tiles read
-   proportionate to the mat sitting on them rather than as a fine texture. Built as an inline SVG
-   background — still no image asset, just a vector pattern instead of a gradient one, the same
-   category of technique the icon set and the shoes below already use. Hand-placed joint lines
-   that share the same coordinate at opposite tile edges (e.g. the first path starts and ends at
-   y=80) so the 320px tile repeats seamlessly with no visible seam. Kept subtle (16% opacity). */
+/* Revised 2026-08-21: the ground plane is now literal cut bluestone slabs — axis-aligned
+   rectangles of different sizes (an "ashlar" stone-paving layout), not the curved crazy-paving
+   joints of the previous pass. Built from full-width/full-height divider lines only, offset
+   differently row to row so it doesn't read as a uniform brick grid; every line that touches a
+   tile edge runs the full width or height, so the 320px tile repeats with no visible seam by
+   construction (a partial-length joint would only need to match its opposite edge to stay
+   seamless, but the full-length lines make that automatic). Still an inline SVG background, no
+   image asset, kept subtle (16% opacity). */
 .hero {
   min-height: 85svh;
   display: flex;
@@ -1053,7 +1213,7 @@
   gap: var(--space-5);
   padding: var(--space-7) var(--space-5);
   background-color: var(--color-hero-ground);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cg fill='none' stroke='rgba(20,32,26,0.16)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M0 85 L65 105 L150 75 L235 118 L320 85'/%3E%3Cpath d='M96 0 L118 64 L75 160 L107 256 L96 320'/%3E%3Cpath d='M0 213 L86 192 L171 235 L256 203 L320 213'/%3E%3Cpath d='M213 0 L235 96 L192 192 L224 288 L213 320'/%3E%3Cpath d='M150 75 L118 64'/%3E%3Cpath d='M171 235 L192 192'/%3E%3Cpath d='M65 105 L75 160'/%3E%3Cpath d='M235 118 L235 96'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320' viewBox='0 0 320 320'%3E%3Cpath fill='none' stroke='rgba(20,32,26,0.16)' stroke-width='2' stroke-linecap='round' d='M0 85 L320 85 M0 160 L320 160 M0 250 L320 250 M60 0 L60 85 M140 0 L140 85 M230 0 L230 85 M100 85 L100 160 M190 85 L190 160 M260 85 L260 160 M40 160 L40 250 M150 160 L150 250 M240 160 L240 250 M90 250 L90 320 M180 250 L180 320 M250 250 L250 320'/%3E%3C/svg%3E");
   background-size: 320px 320px;
   text-align: center;
 }
@@ -1079,16 +1239,16 @@
    rotated container, so they are strictly parallel to each other (zero rotation between them)
    while the pair as a whole sits at a slight shared angle to the mat, the way a kicked-off pair
    actually lands rather than being squared up to the border. Anchored to the mat's own
-   bottom-left corner (the mat is `position: relative`), sized up from the first pass so the pair
-   reads as proportionate to the mat rather than a small accent. Decorative: `aria-hidden`, no
-   accessible name needed since nothing here is informational. */
+   bottom-left corner (the mat is `position: relative`). Revised 2026-08-21: sized up again (was
+   15%) so the pair reads as proportionate to the mat rather than a small accent. Decorative:
+   `aria-hidden`, no accessible name needed since nothing here is informational. */
 .hero__shoes {
   position: absolute;
-  left: -3%;
-  bottom: -3%;
+  left: -4%;
+  bottom: -4%;
   display: flex;
   gap: 3%;
-  width: 15%;
+  width: 24%;
   transform: rotate(-8deg);
   transform-origin: bottom left;
   pointer-events: none;
@@ -1672,7 +1832,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  body:not(:has(#reduce-motion:checked)) .flip-card:not([open]) > summary:hover .flip-card__front {
+  body:not(:has(.reduce-motion-input:checked)) .flip-card:not([open]) > summary:hover .flip-card__front {
     transform: translateY(-2px);
   }
 }
@@ -1770,44 +1930,17 @@
   margin-top: var(--space-2);
 }
 
-.diagram-controls {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-top: var(--space-3);
-}
-
-.diagram-controls button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-height: var(--target-min);
-  padding-inline: var(--space-3);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border-strong);
-  background: var(--color-bg);
-  cursor: pointer;
-  font-size: var(--text-small);
-}
-
-.diagram-controls button:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-}
-
-/* An element the loop animation reads its running state from. Nothing plays until the figure
-   has scrolled into view (assets/js/diagram.js adds .in-view), and the per-diagram Pause button
-   always wins over that once pressed. */
+/* An element the loop animation reads its running state from. Nothing plays until the figure has
+   scrolled into view (assets/js/diagram.js adds .in-view); once it has, --motion-state (OS
+   preference, the reduce-motion switch, or the motion-fab's Pause button) takes over. Also
+   carries `.motion-loop`, the same marker the improvement illustrations use, so the motion-fab's
+   Pause button shows up on these pages too — see `.motion-fab__pause` in the FAB section. */
 .diagram-anim {
   animation-play-state: paused;
 }
 
 .diagram-figure.in-view .diagram-anim {
   animation-play-state: var(--motion-state);
-}
-
-.diagram-figure.paused .diagram-anim {
-  animation-play-state: paused !important;
 }
 
 /* find-your-drafts: air moving both ways through an unsealed gap. Sub-properties only, never
@@ -1876,7 +2009,24 @@
 
 /* Added 2026-08-20: "Rental basics" moved to the top of /improvements, in its own tinted band
    (theme-brand) so it reads as a distinct, secondary section rather than competing with the main
-   card grid below it for attention. */
+   card grid below it for attention. Revised 2026-08-21: the tint now lives on a full-bleed outer
+   section (the same 100vw + negative-margin breakout `.story-bar` uses) with an inner
+   `.page-shell` carrying the actual padding and max-width, so the background spans the window
+   edge to edge while the heading and carousel stay at the page's normal reading width. The
+   bottom edge is cut to a single downward point with `clip-path` — an arrow aimed at the card
+   grid below — with extra bottom padding on the inner wrapper so the point falls in empty space
+   rather than across the carousel, even at a narrow viewport where the content column nearly
+   fills the full width and sits closest to the diagonal cut. */
+.rental-basics {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 50% 100%, 0 88%);
+}
+
+.rental-basics > .page-shell {
+  padding-bottom: var(--space-9);
+}
+
 .rental-basics h2 {
   margin-bottom: var(--space-4);
 }
