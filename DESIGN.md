@@ -938,6 +938,14 @@ house" object icon doubles as the site logo, in the header lockup next to the wo
 browser tab favicon; it has been redrawn twice since (§10) to close the gap between its bounding
 box and its visible glyph.
 
+Four icons added 2026-08-21, taking the set to 27. **`icon-code`,** angle brackets, for the
+footer's "View the source code" link (§10). **`icon-baseboard`, `icon-vent` and `icon-mini-split`**
+for `/learn/heating-systems` (§3.5), which asks a reader to identify what is actually on their
+wall: `icon-radiator` already covered a hot-water or steam radiator, and these are the other three
+things a Hanover rental delivers heat through. They are drawn to the same 24×24 spec as the rest
+and are used at a larger size in that page's identification grid, which is the "the illustration
+uses the same pen" rule above doing its job — the cards needed no separate drawing style.
+
 An icon is never the only label, and never the only difference between two states.
 
 ## 5. Component inventory
@@ -979,6 +987,11 @@ to be better than.
 | Motion controls FAB (added 2026-08-21) | The reduce-motion switch and a Pause button, fixed bottom-left, every page. Pause appears only where the page has something looping | default, hover, focus-visible, paused, compact (below 640px), no JavaScript (switch still works, Pause is absent) |
 | Page head (added 2026-08-21) | The title block every page opens with: centered `<h1>` at `--text-display`, optional lede under it | with lede, without lede, below 600px |
 | Full-bleed band (added 2026-08-21) | The shared "background spans the window, text stays put" wrapper behind story bars and the Renter basics band | default, tinted, clipped to a point (Renter basics) |
+| Program card (built 2026-08-21) | One program on `/programs`. Read one at a time in a stack, not scanned in a grid, which is why it is not `.card` | renter-usable, landlord-approval-required, not available to renters (left rule and badge, never the rule alone) |
+| Glossary entry (built 2026-08-21) | One term on `/glossary`. A `<dl>` pair with a stable `#anchor`, since pages deep-link into it mid-sentence | default, arrived at by anchor (offset so it is not tucked under the top of the window) |
+| Identification card (added 2026-08-21) | "Is this what is on your wall?" on `/learn/heating-systems`. An icon at large size, what it looks like, and how to tell it apart from the one next to it | single state |
+| Data table (added 2026-08-21) | A small comparison table. Scrolls sideways inside its own wrapper rather than making the page scroll | default, narrower than its content (wrapper scrolls) |
+| Season toggle (added 2026-08-21) | Winter or summer, scoped to one diagram. A `<fieldset>` of two radios, so it needs no JavaScript and no ARIA | winter (default, and the no-`:has()` fallback), summer, focus-visible |
 | Personalize dialog (added 2026-08-19) | `<dialog>` holding the situation form, opened by the FAB | closed, open, focus-trapped, no JavaScript (FAB is a plain link to `/start` instead) |
 | Callout, safety | Renders `safety` above steps, never below, never collapsed | single variant, `--color-danger` |
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
@@ -994,6 +1007,14 @@ loading, error, empty.
 Focus-visible is one token everywhere: a 2px `--color-accent` ring at 2px offset, which holds 3:1
 against white and against `--color-surface`. It is never removed, including on mouse click, and it
 is drawn outside the SVG shape for hotspots so it is not clipped.
+
+**Skip link, fixed 2026-08-21.** Every page below the root wrote it as `href="../#main"`, which
+resolves to the *home page's* main content rather than the current page's. The first focusable
+element on the page navigated away from the page. It came from a misreading of the shell rule in
+[AGENTS.md](AGENTS.md): a copied shell fragment adjusts its relative paths per depth, but a
+fragment-only href has no path to adjust and is already correct at any depth. It reads `#main`
+everywhere now, and `tools/check-content.mjs` accepts that at every depth because its
+normalization only strips a leading `../`, which this no longer has.
 
 **Consolidation pass, 2026-08-21.** Run deliberately before the remaining pages were built,
 because every duplicated value in the CSS at that moment was about to be duplicated eight more

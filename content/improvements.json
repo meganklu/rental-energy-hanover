@@ -72,6 +72,22 @@
     "lastReviewed": "2026-08-19"
   },
   {
+    "type": "explainer",
+    "slug": "heating-systems",
+    "title": "Understanding your heating system",
+    "summary": "What kind of heat your rental has, how to tell by looking, and what each kind means for your bill.",
+    "question": "What kind of heat do I have, and what does that mean for me?",
+    "misconception": "All heat is the same, so it does not matter which kind the apartment has.",
+    "sources": [
+      "S24",
+      "S25",
+      "S12d",
+      "S22",
+      "S21"
+    ],
+    "lastReviewed": "2026-08-21"
+  },
+  {
     "type": "improvement",
     "slug": "hot-water-showers-and-laundry",
     "title": "Cut your hot water use",
