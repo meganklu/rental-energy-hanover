@@ -12,7 +12,10 @@
 // belong to different slabs — which is what makes a missing joint impossible. The grid wraps in
 // both axes, so slabs cross the tile edge and no full-width or full-height line marks the repeat.
 
-const TILE = 320;
+// Scaled up 2026-08-21 (DESIGN.md §3.1): 480 rather than 320, so a unit is 60px and slabs run
+// 60px to 180px. Only the scale changed — same UNITS, same seed, same dissection — because the
+// pattern's shape was right and the stones were just small against the mat sitting on them.
+const TILE = 480;
 const UNITS = 8;
 const STEP = TILE / UNITS;
 // [width, height, weight]. Weights keep a mix on the ground rather than letting one size
@@ -20,6 +23,7 @@ const STEP = TILE / UNITS;
 // of nothing but 3x2 slabs stops reading as cut stone and starts reading as a brick bond.
 const SIZES = [[1, 1, 3], [2, 2, 4], [2, 1, 4], [1, 2, 4], [3, 1, 2], [1, 3, 2], [3, 2, 2], [2, 3, 2]];
 const STROKE = "rgba(20,32,26,0.16)";
+// Deliberately not scaled with TILE. Larger stones should not come with heavier mortar lines.
 const WIDTH = 2;
 
 // Deterministic PRNG, so a given seed always regenerates the same pattern.
@@ -134,7 +138,7 @@ const { vert, horiz } = joints(owner);
 const parts = [];
 for (const [x, y0, y1] of merge(vert)) {
   parts.push(`M${x} ${y0}V${y1}`);
-  // A joint on the tile edge is drawn on both edges: a 2px stroke centered on x=320 loses its
+  // A joint on the tile edge is drawn on both edges: a 2px stroke centered on x=TILE loses its
   // outer half to the viewBox, and the matching half at x=0 of the next tile completes it.
   if (x === TILE) parts.push(`M0 ${y0}V${y1}`);
 }

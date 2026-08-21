@@ -1417,8 +1417,10 @@ body:has(.motion-loop) .motion-fab__pause {
    `node tools/ashlar.mjs` and pasted here as a static data URI — see DESIGN.md §3.1 for why the
    joints are derived from a dissection rather than drawn by hand (the two earlier passes drew
    them, and both had joints that stopped short of a slab's edge), and for how slabs straddling
-   the tile edge are what keeps the 320px repeat from showing. No image asset, no build step.
-   Kept subtle (16% opacity). */
+   the tile edge are what keeps the repeat from showing. No image asset, no build step. Kept
+   subtle (16% opacity). Scaled up 2026-08-21: a 480px tile rather than 320px, so the stones read
+   as proportionate to the mat sitting on them. Same dissection, same seed, and the joint stroke
+   stays 2px rather than scaling with the tile. */
 .hero {
   min-height: 85svh;
   display: flex;
@@ -1428,8 +1430,8 @@ body:has(.motion-loop) .motion-fab__pause {
   gap: var(--space-5);
   padding: var(--space-7) var(--space-5);
   background-color: var(--color-hero-ground);
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27320%27%20height%3D%27320%27%20viewBox%3D%270%200%20320%20320%27%3E%3Cpath%20fill%3D%27none%27%20stroke%3D%27rgba(20%2C32%2C26%2C0.16)%27%20stroke-width%3D%272%27%20d%3D%27M40%20120V200M80%200V40M80%2080V320M120%2040V280M160%20280V320M200%200V160M200%20240V280M240%200V240M240%20280V320M280%200V200M280%20280V320M320%2040V80M0%2040V80M320%20120V160M0%20120V160M320%20200V280M0%20200V280M0%2040H320M0%2080H120M240%2080H320M0%20120H80M280%20120H320M0%20160H40M80%20160H240M280%20160H320M0%20200H80M240%20200H320M120%20240H320M0%20280H320M80%20320H280M80%200H280%27%2F%3E%3C%2Fsvg%3E");
-  background-size: 320px 320px;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27480%27%20height%3D%27480%27%20viewBox%3D%270%200%20480%20480%27%3E%3Cpath%20fill%3D%27none%27%20stroke%3D%27rgba(20%2C32%2C26%2C0.16)%27%20stroke-width%3D%272%27%20d%3D%27M60%20180V300M120%200V60M120%20120V480M180%2060V420M240%20420V480M300%200V240M300%20360V420M360%200V360M360%20420V480M420%200V300M420%20420V480M480%2060V120M0%2060V120M480%20180V240M0%20180V240M480%20300V420M0%20300V420M0%2060H480M0%20120H180M360%20120H480M0%20180H120M420%20180H480M0%20240H60M120%20240H360M420%20240H480M0%20300H120M360%20300H480M180%20360H480M0%20420H480M120%20480H420M120%200H420%27%2F%3E%3C%2Fsvg%3E");
+  background-size: 480px 480px;
   text-align: center;
 }
 
@@ -1450,40 +1452,45 @@ body:has(.motion-loop) .motion-fab__pause {
 /* A pair of shoes left at the door, added 2026-08-20, redrawn the same day as a bird's-eye pair
    (was a side-profile silhouette) — dark green (--color-accent) with a black outline and white
    laces, the site's primary interactive color used decoratively here rather than --color-brand,
-   per the request to move off the lighter green. The two sit in a plain flex row inside one
-   rotated container, so they are strictly parallel to each other (zero rotation between them)
-   while the pair as a whole sits at a slight shared angle to the mat, the way a kicked-off pair
-   actually lands rather than being squared up to the border. Anchored to the mat's own
-   bottom-left corner (the mat is `position: relative`). Revised 2026-08-21: sized up again (was
-   15%) so the pair reads as proportionate to the mat rather than a small accent. Decorative:
-   `aria-hidden`, no accessible name needed since nothing here is informational. */
+   per the request to move off the lighter green. The two sit in one rotated container, so they are
+   strictly parallel to each other (zero rotation between them) while the pair as a whole sits at a
+   slight shared angle to the mat, the way a kicked-off pair actually lands rather than being
+   squared up to the border. Anchored to the mat's own bottom-left corner (the mat is
+   `position: relative`). Revised 2026-08-21: sized up again (was 15%) so the pair reads as
+   proportionate to the mat rather than a small accent, and turned to face the direction it walks
+   (see the walk below). Decorative: `aria-hidden`, no accessible name needed since nothing here
+   is informational. */
 .hero__shoes {
   position: absolute;
   left: -4%;
   bottom: -4%;
   display: flex;
-  gap: 3%;
-  width: 24%;
+  /* A column, revised 2026-08-21. The shoe is turned to point right (see the markup), and from
+     above, a pair facing right sits one shoe in front of the other on the screen's vertical axis.
+     `width` now measures the shoe's length rather than its width, so it grew from 24% to 27% to
+     land the pair at the same rendered size it had before the turn. */
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 27%;
   transform: rotate(-8deg);
   transform-origin: bottom left;
   pointer-events: none;
 }
 
 .hero__shoes svg {
-  width: 48%;
+  width: 100%;
   height: auto;
   flex-shrink: 0;
 }
 
-/* The walk, added 2026-08-21 (DESIGN.md §3.1). Scroll-progress driven, not timed: the container
-   carries the forward travel while each shoe alternates between ahead of it and behind it, half a
-   stride apart, which is what reads as a gait rather than as two shoes sliding sideways together.
-   Because scroll position *is* the animation's progress, it reverses when the student scrolls back
-   and stops when they stop — nothing here moves on its own, so unlike the site's loops it needs no
+/* The walk, added 2026-08-21, rebuilt the same day (DESIGN.md §3.1). Scroll-progress driven, not
+   timed: the container carries the forward travel and each shoe carries its own step. Because
+   scroll position *is* the animation's progress, it reverses when the student scrolls back and
+   stops when they stop — nothing here moves on its own, so unlike the site's loops it needs no
    Pause button (§7). Gated the same three ways as the story-bar drift below: @supports, because
    scroll-driven animation is a progressive enhancement; prefers-reduced-motion and the
    reduce-motion switch; and min-width 600px, with the rest of the site's scroll motion (§6). Under
-   any of those the shoes hold the position they ship in, which is the first keyframe. */
+   any of those the shoes hold the position the markup gives them, side by side and level. */
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
     /* Sub-properties, not the `animation` shorthand: the shorthand would reset
@@ -1511,22 +1518,34 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* The container keeps its resting -8deg through the whole walk, so the pair stays tilted the way
-   a kicked-off pair landed. translateX runs along that rotated axis, which sends them up the mat
-   slightly as they cross it rather than straight sideways. */
+/* The container keeps its resting -8deg through the whole walk, so the pair stays tilted the way a
+   kicked-off pair landed. translateX runs along that rotated axis, which is also the axis the toes
+   point down, and it sends the pair up the mat slightly as they cross it. 270% of the container's
+   own width lands them just inside the mat's right edge. */
 @keyframes shoes-walk {
   from { transform: rotate(-8deg) translateX(0); }
-  to { transform: rotate(-8deg) translateX(300%); }
+  to { transform: rotate(-8deg) translateX(270%); }
 }
 
+/* The stride, and why these numbers are not taste. The two keyframe sets below are the same walk
+   half a cycle apart, three cycles across the scroll range. One cycle is 33.333% of the range and
+   the container advances 90% of a shoe's length in it, so half a cycle advances 45%. A foot that
+   is planted has to stay still against the ground while that happens, which means drifting exactly
+   -45% relative to the container: hence ±22.5% around the mean, and hence the other foot covering
+   90% against the ground in its half, at twice the container's speed. Change the travel above and
+   these have to move with it or the planted foot starts skidding, which is the thing the first
+   pass got wrong. `scale` stands in for the lift at the middle of each swing — from directly
+   overhead a raised foot reads as a nearer one, and there is no other axis to show it on. */
 @keyframes shoe-step-lead {
-  0%, 25%, 50%, 75%, 100% { transform: translate(20%, -4%) rotate(4deg); }
-  12.5%, 37.5%, 62.5%, 87.5% { transform: translate(-16%, 0) rotate(-3deg); }
+  0%, 33.333%, 66.667%, 100% { transform: translateX(22.5%) scale(1); }
+  16.667%, 50%, 83.333% { transform: translateX(-22.5%) scale(1); }
+  25%, 58.333%, 91.667% { transform: translateX(0) scale(1.06); }
 }
 
 @keyframes shoe-step-follow {
-  0%, 25%, 50%, 75%, 100% { transform: translate(-16%, 0) rotate(-3deg); }
-  12.5%, 37.5%, 62.5%, 87.5% { transform: translate(20%, -4%) rotate(4deg); }
+  0%, 33.333%, 66.667%, 100% { transform: translateX(-22.5%) scale(1); }
+  16.667%, 50%, 83.333% { transform: translateX(22.5%) scale(1); }
+  8.333%, 41.667%, 75% { transform: translateX(0) scale(1.06); }
 }
 
 /* Only this border and what's inside it is "the mat" proper. Inset by a fixed margin (not
@@ -1670,7 +1689,11 @@ body:has(.motion-loop) .motion-fab__pause {
   left: 0;
   margin-top: var(--space-2);
   width: max-content;
-  max-width: min(20rem, 100%);
+  /* Widened 2026-08-21: the 20rem cap broke a two-sentence instruction into four short lines and
+     made a callout read as a column of text. The `100%` half is what keeps it inside a narrow
+     window, and it is measured against .section-heading-row rather than the button, per the note
+     above. */
+  max-width: min(34rem, 100%);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
