@@ -54,50 +54,41 @@
         <p class="hero__note">*Rental home</p>
       </div>
       <div class="hero__shoes" aria-hidden="true">
+        <!-- Drawn once, used twice. Bird's-eye view: the shoe has the three widths a foot seen
+             from above actually has (a wide ball, a waist at the arch, a smaller heel bulge), and
+             the white toe cap is a short panel with a nearly flat inner edge rather than a deep
+             curve swinging down into the lacing — see DESIGN.md §3.1. Decorative throughout: the
+             container carries aria-hidden, so nothing here needs a title or a label. -->
         <svg viewBox="0 0 60 150">
-          <path d="M30 3 C48 3 55 20 54 42 C53 62 50 78 47 98 C46 110 43 122 36 133 C33 138 27 138 24 133 C17 122 14 110 13 98 C10 78 7 62 6 42 C5 20 12 3 30 3 Z" fill="var(--color-accent)" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M30 3 C48 3 55 20 54 42 Q30 54 6 42 C5 20 12 3 30 3 Z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
-          <ellipse cx="30" cy="118" rx="9" ry="14" fill="#1a1a1a" stroke="#000" stroke-width="1"/>
-          <g stroke="#fff" stroke-width="2.5" stroke-linecap="round">
-            <line x1="17" y1="48" x2="42" y2="62"/>
-            <line x1="43" y1="48" x2="18" y2="62"/>
-            <line x1="18" y1="62" x2="41" y2="76"/>
-            <line x1="42" y1="62" x2="19" y2="76"/>
-            <line x1="19" y1="76" x2="40" y2="90"/>
-            <line x1="41" y1="76" x2="20" y2="90"/>
-            <line x1="20" y1="90" x2="39" y2="104"/>
-            <line x1="40" y1="90" x2="21" y2="104"/>
-          </g>
-          <g fill="#000">
-            <circle cx="17" cy="48" r="2"/><circle cx="43" cy="48" r="2"/>
-            <circle cx="18" cy="62" r="2"/><circle cx="42" cy="62" r="2"/>
-            <circle cx="19" cy="76" r="2"/><circle cx="41" cy="76" r="2"/>
-            <circle cx="20" cy="90" r="2"/><circle cx="40" cy="90" r="2"/>
-            <circle cx="21" cy="104" r="2"/><circle cx="39" cy="104" r="2"/>
-          </g>
+          <defs>
+            <g id="hero-shoe">
+              <path d="M30 6 C41 6 50 11 53 22 C54.6 30 55 38 55 46 C55 68 46 78 46 92 C46 106 49 115 48 125 C47 136 39 141 30 141 C21 141 13 136 12 125 C11 115 14 106 14 92 C14 78 5 68 5 46 C5 38 5.4 30 7 22 C10 11 19 6 30 6 Z"
+                    fill="var(--color-accent)" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M30 6 C41 6 50 11 53 22 C53.7 25.6 54.2 29.2 54.5 32.8 Q30 35 5.5 32.8 C5.8 29.2 6.3 25.6 7 22 C10 11 19 6 30 6 Z"
+                    fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
+              <ellipse cx="30" cy="117" rx="12" ry="13" fill="#22302a" stroke="#000" stroke-width="1.5"/>
+              <g stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+                <line x1="17" y1="44" x2="42" y2="57"/>
+                <line x1="43" y1="44" x2="18" y2="57"/>
+                <line x1="18" y1="57" x2="41" y2="70"/>
+                <line x1="42" y1="57" x2="19" y2="70"/>
+                <line x1="19" y1="70" x2="40.5" y2="83"/>
+                <line x1="41" y1="70" x2="19.5" y2="83"/>
+                <line x1="19.5" y1="83" x2="40" y2="96"/>
+                <line x1="40.5" y1="83" x2="20" y2="96"/>
+              </g>
+              <g fill="#000">
+                <circle cx="17" cy="44" r="2"/><circle cx="43" cy="44" r="2"/>
+                <circle cx="18" cy="57" r="2"/><circle cx="42" cy="57" r="2"/>
+                <circle cx="19" cy="70" r="2"/><circle cx="41" cy="70" r="2"/>
+                <circle cx="19.5" cy="83" r="2"/><circle cx="40.5" cy="83" r="2"/>
+                <circle cx="20" cy="96" r="2"/><circle cx="40" cy="96" r="2"/>
+              </g>
+            </g>
+          </defs>
+          <use href="#hero-shoe"/>
         </svg>
-        <svg viewBox="0 0 60 150">
-          <path d="M30 3 C48 3 55 20 54 42 C53 62 50 78 47 98 C46 110 43 122 36 133 C33 138 27 138 24 133 C17 122 14 110 13 98 C10 78 7 62 6 42 C5 20 12 3 30 3 Z" fill="var(--color-accent)" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
-          <path d="M30 3 C48 3 55 20 54 42 Q30 54 6 42 C5 20 12 3 30 3 Z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
-          <ellipse cx="30" cy="118" rx="9" ry="14" fill="#1a1a1a" stroke="#000" stroke-width="1"/>
-          <g stroke="#fff" stroke-width="2.5" stroke-linecap="round">
-            <line x1="17" y1="48" x2="42" y2="62"/>
-            <line x1="43" y1="48" x2="18" y2="62"/>
-            <line x1="18" y1="62" x2="41" y2="76"/>
-            <line x1="42" y1="62" x2="19" y2="76"/>
-            <line x1="19" y1="76" x2="40" y2="90"/>
-            <line x1="41" y1="76" x2="20" y2="90"/>
-            <line x1="20" y1="90" x2="39" y2="104"/>
-            <line x1="40" y1="90" x2="21" y2="104"/>
-          </g>
-          <g fill="#000">
-            <circle cx="17" cy="48" r="2"/><circle cx="43" cy="48" r="2"/>
-            <circle cx="18" cy="62" r="2"/><circle cx="42" cy="62" r="2"/>
-            <circle cx="19" cy="76" r="2"/><circle cx="41" cy="76" r="2"/>
-            <circle cx="20" cy="90" r="2"/><circle cx="40" cy="90" r="2"/>
-            <circle cx="21" cy="104" r="2"/><circle cx="39" cy="104" r="2"/>
-          </g>
-        </svg>
+        <svg viewBox="0 0 60 150"><use href="#hero-shoe"/></svg>
       </div>
     </div>
     <p class="hero__description">
@@ -259,9 +250,12 @@
 
     <div class="info-bar" id="info-bar" hidden></div>
 
-    <nav class="room-index" aria-labelledby="room-index-heading">
-      <h3 id="room-index-heading" tabindex="-1">Everything in this house</h3>
-      <div class="room-index__grid">
+    <details class="disclosure room-index">
+      <summary>
+        Everything in this house
+        <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-disclosure"/></svg>
+      </summary>
+      <nav class="disclosure__body room-index__grid" aria-label="Everything in this house">
         <div class="room-index__room">
           <h4>Entry and porch</h4>
           <ul>
@@ -292,7 +286,7 @@
         <div class="room-index__room">
           <h4>Kitchen</h4>
           <ul>
-            <li><a href="learn/read-your-bill/">The bill on the fridge: read it (start here)</a></li>
+            <li><a href="learn/read-your-bill/">The bill on the fridge: read what is driving it</a></li>
             <li><a href="improvements/led-lighting-swaps/">Light fixture: switch to LEDs</a></li>
           </ul>
         </div>
@@ -303,8 +297,8 @@
             <li><a href="learn/find-your-drafts/">Rim joist and attic hatch: find where heat escapes</a></li>
           </ul>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </details>
   </section>
 
 </main>
@@ -344,22 +338,32 @@
 <footer class="site-footer">
   <div class="page-shell site-footer__inner">
     <div class="footer-credit">
-      <img src="assets/img/sh-logo.webp" alt="Sustainable Hanover" width="150" height="52" loading="lazy">
-      <p>
-        Project created in partnership with Sustainable Hanover, a committee of the Town of
-        Hanover, New Hampshire.
-        <a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a>
-        · <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a>
-      </p>
+      <a class="footer-logo" href="https://sustainablehanovernh.org/">
+        <img src="assets/img/sh-logo.webp" alt="Sustainable Hanover" width="300" height="103" loading="lazy">
+      </a>
+      <div>
+        <p>
+          Project created in partnership with Sustainable Hanover, a committee of the Town of
+          Hanover, New Hampshire.
+        </p>
+        <ul class="footer-contact">
+          <li><a href="https://sustainablehanovernh.org/">sustainablehanovernh.org</a></li>
+          <li><a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a></li>
+        </ul>
+      </div>
     </div>
     <div class="footer-links">
       <a href="accessibility/">Accessibility statement</a>
+      <a href="https://github.com/meganklu/rental-energy-hanover">
+        <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-code"/></svg>
+        View the source code
+      </a>
       <label class="switch">
         <input type="checkbox" class="reduce-motion-input visually-hidden">
         <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
         <span class="switch__label">Reduce motion</span>
       </label>
-      <p class="footer-meta">Site content last reviewed 2026-08-19.</p>
+      <p class="footer-meta">Site content last reviewed 2026-08-21.</p>
     </div>
   </div>
 </footer>

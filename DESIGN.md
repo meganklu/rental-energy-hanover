@@ -88,7 +88,7 @@ Sustainable Hanover page cannot do.
 │   └── /improvements/:slug      One improvement: cost, permission, reversibility, steps, sources
 ├── /learn                       Deleted 2026-08-20 (§3.4) — no hub page any more. Its two
 │                                 explainers below keep their URLs, now surfaced from
-│                                 /improvements' "Rental basics" instead of a /learn index
+│                                 /improvements' "Renter basics" instead of a /learn index
 │   ├── /learn/read-your-bill    Enabler. kWh, rate, what is actually driving the bill
 │   ├── /learn/find-your-drafts  Enabler. Guided walkthrough of where heat escapes
 │   ├── /learn/heating-systems   Enabler. What kind of heat you have and what it means for
@@ -646,7 +646,7 @@ one uses it, so a page title looks the same everywhere on the site.
 **"Renter basics," moved to the top, added 2026-08-20, renamed 2026-08-21.** The two explainer topics
 (`read-your-bill`, `find-your-drafts`) previously sat in a "Learn" section below the main grid,
 titled "Learn" with a "Short explainers that correct one wrong idea at a time" subhead and a
-per-card "Start here" / "Enabler" tag. Renamed "Rental basics," moved above the main grid in its
+per-card "Start here" / "Enabler" tag. Renamed and moved above the main grid in its
 own `theme-brand` tinted band so it reads as a distinct, secondary entry point rather than
 competing with the improvement cards for attention, and the section-level label and per-card tags
 are dropped — the heading already says what the section is without a subhead restating it, and the
@@ -669,7 +669,7 @@ would be redundant until the section holds enough items that it stops being true
 
 **The `/learn` hub page is deleted, added 2026-08-20.** Its own nav slot was already removed
 2026-08-19 (§2); the page itself sat unlinked from anywhere on the site until this revision
-surfaced its two explainers through "Rental basics" instead. `/learn/read-your-bill/` and
+surfaced its two explainers through "Renter basics" instead. `/learn/read-your-bill/` and
 `/learn/find-your-drafts/` are not deleted — only the index that listed them — so their URLs are
 unchanged, and their breadcrumbs, which read "Learn / Read your bill" against the now-gone hub,
 now read "Improvements / Read your bill" against the section that actually surfaces them.

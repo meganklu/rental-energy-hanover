@@ -199,7 +199,7 @@ a:hover {
   z-index: 100;
   padding: var(--space-2) var(--space-4);
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-text-on-dark);
   border-radius: var(--radius-sm);
   text-decoration: none;
   font-family: var(--font-display);
@@ -253,7 +253,7 @@ a:hover {
 }
 
 .theme-dark a:hover {
-  color: #fff;
+  color: var(--color-text-on-dark);
 }
 
 /* ---------- Layout primitives ---------- */

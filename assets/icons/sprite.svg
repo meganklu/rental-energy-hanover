@@ -203,4 +203,12 @@
     <circle cx="16" cy="21" r="2" fill="var(--color-bg, #fff)"/>
   </symbol>
 
+  <!-- Angle brackets, added 2026-08-21 for the footer's "View the source code" link. Deliberately
+       not a GitHub mark: that is a third-party logo this project has no license to place, and
+       the destination happens to be GitHub rather than being about GitHub. -->
+  <symbol id="icon-code" viewBox="0 0 24 24">
+    <polyline points="8.5 6.5 3 12 8.5 17.5"/>
+    <polyline points="15.5 6.5 21 12 15.5 17.5"/>
+  </symbol>
+
 </svg>
