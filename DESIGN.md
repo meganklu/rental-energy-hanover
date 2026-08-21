@@ -291,12 +291,19 @@ mat — earlier language that called the whole hero band the mat was imprecise. 
      "slightly smaller" turned out to mean. Its inner edge, the one facing the laces, is close to
      straight — the request asked for that directly, and it is kept flat here even though the icon
      curves that edge down toward the tongue, because the instruction is the more specific source.
-   - **The lacing is a ladder,** two rails with three rungs across them and the ends trailing off
-     past the heel. It was crossed laces over eyelet dots. This is the single most recognizable
-     thing about the reference and the first pass missed it entirely.
+   **Where the icon was followed and then un-followed: the lacing.** The reference laces as a
+   ladder, two rails with three rungs across them and the ends trailing past the heel, and it is
+   the most recognizable thing about that drawing. It was ported over faithfully, and then reverted
+   the same day to the crossed laces and eyelet dots it replaced. The reason is scale. This shoe
+   renders at about 85px wide. At 400% zoom the ladder is clearly a ladder; at 85px it is a row of
+   hash marks, while a crossed lace still reads as a lace because the X shape carries it rather
+   than the rung spacing. The dark heel opening came back for the same reason: without it the lower
+   half of the shoe is an undifferentiated green field at that size.
 
-   The collar opening at the heel is gone with it. It was drawn as a dark ellipse, read as a blob at
-   mat size, and the reference does not draw one — the trailing lace ends occupy that space instead.
+   **The rule this leaves behind:** check a decorative drawing at the size it actually renders, not
+   at the zoom it was drawn at. The ladder pass was only ever checked at 400%, which is how
+   something more faithful to the source shipped as something harder to recognize. Where fidelity
+   to a reference and legibility at display size disagree, legibility wins.
 
    **The walk, added 2026-08-21.** Scrolling down out of the hero walks the pair across the mat.
    The container carries the forward travel and each shoe carries its own step — lift, swing, set
