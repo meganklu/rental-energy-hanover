@@ -2569,6 +2569,22 @@ body:has(.motion-loop) .motion-fab__pause {
   margin-bottom: var(--space-4);
 }
 
+/* Vertical rhythm inside a plain reading column, added 2026-08-21. base.css resets every heading
+   and paragraph to zero margin, so prose has to opt back in — the same rule `.improvement-body`
+   already carries, now shared by the pages that are mostly prose (about, rights, programs and the
+   rest). An h2 starts a new named section rather than the next paragraph, so it gets more room. */
+.content-column > * + * {
+  margin-top: var(--space-5);
+}
+
+.content-column > h2 {
+  margin-top: var(--space-8);
+}
+
+.content-column > h3 {
+  margin-top: var(--space-6);
+}
+
 /* ---------- Page head, added 2026-08-21 ----------
    The block every page opens with, so a page title looks the same everywhere on the site instead
    of each page inventing its own. Centered, at display size (§4) — one step above h1, because a

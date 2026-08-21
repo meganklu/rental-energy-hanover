@@ -293,8 +293,13 @@ a:hover {
   overflow-wrap: anywhere;
 }
 
+/* Centered, revised 2026-08-21. It was left-aligned, which under the centered page title
+   (`.page-head`, components.css) read as a column that had failed to line up rather than as a
+   deliberate measure — the improvement pages get away with left-aligning because an illustration
+   fills the other side, and these prose pages have nothing there. */
 .content-column {
   max-width: var(--measure);
+  margin-inline: auto;
 }
 
 .visually-hidden-focusable:not(:focus):not(:focus-within) {
