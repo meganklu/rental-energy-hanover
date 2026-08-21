@@ -59,8 +59,17 @@ Effort: `Low` (under 1 hr) · `Med` (an afternoon) · `High` (multi-day or needs
 | 17 | Phantom load and plug loads | Any | $ | Low | No | Yes | Low | Could |
 | 18 | What to check before you sign — a viewing checklist | Hunting | Free | Low | n/a | n/a | Med | Could |
 | 19 | Where to get this stuff — fare-free bus to West Lebanon, or order online | Pre-winter | Free | Low | n/a | n/a | Enabler | Must |
+| 20 | What kind of heat do I have — radiator, baseboard, forced air, heat pump | Move-in | Free | Low | n/a | n/a | Enabler | Must |
 
 Priority scale: **Must** / **Should** / **Could** / **Won't (this release)**
+
+Added 2026-08-21: **#20** was implied by the site rather than written down. The situation
+selector's first question asks a student which kind of heat they have, and personalization across
+the whole site keys off that answer, so the site was already treating it as the most important
+thing a renter knows about their apartment while offering nothing that taught it. A student who
+cannot answer picks "I am not sure," which widens results instead of narrowing them. It is an
+enabler for the same reason #5 (read your bill) is: it saves nothing on its own and it is the
+prerequisite for most of what does.
 
 **Sequencing note:** #1, #5, #6 and #19 enable a student to make the other changes. They should
 ship first even though they save no energy on their own. Information about financing and grant options will be provided (#10). However, because these programs often requires significant time investment, the information will not be prioritized as much as the simpler upgrades that a renter can implement immediately. 

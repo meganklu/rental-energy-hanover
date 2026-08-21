@@ -228,6 +228,7 @@ Improvements page:
 Renter basics section:
 - I've accidentally used a mixed of "Rental basics" and "Renter basics". Switch it all to "Renter basics".
 - The "Renter basics" label does not need to be shown on the Improvements page because it is already under the section label
+- When using the "Renter basics" pill label, make the color the color of the section background (light green)
 
 Footer:
 - I would like to add a link/button to view the source code. This will lead to the GitHub repo at https://github.com/meganklu/rental-energy-hanover
@@ -239,3 +240,10 @@ I will continue editing these pages, but begin to make the pages for the website
 
 Additional pages:
 - I think there should be a renter basics page on understanding heating/HVAC systems. For this, I would like to use information from this article: https://www.hgtv.com/how-to/home-improvement/types-of-hvac-systems. I would also like to use the animations, visualizations, etc. that I created for this website: https://meganklu.github.io/heat-pumps-hanover/benefits.html (full repo: https://github.com/meganklu/heat-pumps-hanover). 
+
+As always, add to documentation before implementing. Also, please update README for the status of the project
+
+### 2026-08-21
+
+Footer:
+- Remove the reduce motion toggle from the footer since it is now a FAB
