@@ -7,9 +7,11 @@ efficiency of their rentals. In partnership with Sustainable Hanover.
 > rather than a home page with stubs behind it. The nav, hero, doll house, situation selector and
 > improvements library (F1, F2) are live, the animated explainer diagrams (F4) are drawn, and the
 > supporting pages exist: about, accessibility, rights, programs, glossary, where to get it, and
-> before you sign. Every link in the nav and the footer resolves. Renter basics now holds three
-> explainers, the newest being an illustrated guide to telling one kind of heating system from
-> another, which is the question the situation selector has always opened with.
+> before you sign. Every link in the nav and the footer resolves, and rights and programs are now
+> two entries rather than one label pointing at one of them. Renter basics holds three explainers,
+> the newest being an illustrated guide to telling one kind of heating system from another, which
+> is the question the situation selector has always opened with. All three have a spot in the doll
+> house, which is up to eleven hotspots.
 >
 > What is still open: 8 of the ~20 improvements in the topic inventory are written, and the rest
 > come next now that the styling is settled. Flip-card myth busters (F3) are built as a component
