@@ -264,7 +264,31 @@ Improvements page:
 Navigation bar:
 - Separate the rights page and programs page. These should be separate links on the top bar
 
-### 2026-08-21 Finish Adding Content and Minor 
+### 2026-08-21 Adding More Content and Images
+
+Images:
+- Instead of the animations on the article pages, I would like to have a real picture. Some of the animations are a bit unclear or too simplified
+- Keep animations that are essential for understanding the website content, such as the heat pump diagram
+- Find free images on https://unsplash.com/ and https://www.pexels.com/. Do not generate new images. Select images based on relevance to the topic and aesthetics (in line with the style and design of the website)
+- Credit all images appropriately
+- Add images to the other sections on the website where it could help break up dense text and provide additional information
+
+Improvement page:
+- The carousal for the renter basics articles should focus on one article at a time by making this one larger and in the center. See the cards under "Why this is especially relevant here" on https://meganklu.github.io/heat-pumps-hanover/split-incentives.html for some reference. I would like to be able to see more of the card in the background than this one though. This change will make the next and previous buttons actually do something
+
+Set your situation:
+- Have a button to reset to default on the selections made on this menu
+- Reformat this window (can increase width/size of the window) so the whole thing can be seen on most computers without scrolling
 
 Disclaimers:
-- Make the disclaimer cards (legal, safety, etc.) consistent in color and design.
+- Make the disclaimer cards (legal, safety, etc.) consistent in color and design
+
+About page:
+- Explain the split incentives problem as the why for the project (first section of the page). Use the design from the heat pumps website https://meganklu.github.io/heat-pumps-hanover/split-incentives.html. In this design, the screen is split and half and the user can hover over either side to expand it. The background continues as it moves down to more information about how the problem can be approached/additional reasons for the website. It ends with an arrow of the two sides coming together. Sections are still distinct using various approaches (cards/backgrounds, page spacing, layout, etc.)
+- Cite AI usage for the website on this page
+
+Other questions:
+- How is the where to get it page accessed? I cannot find a link anywhere on the website
+- Are there any other parts of the website that are difficult to access or now obsolete? 
+
+Clean up the code and styling. Then, complete the remaining improvements pages

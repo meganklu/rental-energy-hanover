@@ -575,6 +575,17 @@ off, there is no way to set a situation in the first place, so every hotspot and
 simply stays visible — the same fail-open behavior the rest of this file already leans on (a
 missing content-index fetch falls back to the hotspot's own plain link, for instance).
 
+**The filter threw on every explainer, fixed 2026-08-21.** `matchesFilters` read
+`item.appliesToHeat.includes(...)` directly, and an explainer has neither applicability field —
+[docs/content-strategy.md](docs/content-strategy.md) §6 requires them of improvements only. So the
+moment a student set a heat type, the house's filtering pass threw part-way through hiding
+hotspots: some hidden, some not, `TOTAL` never updated, the "Everything in this house" list never
+filtered, and no error the student could see. The library never hit it, because its grid holds
+improvements and nothing else, which is why it survived a build and a half unnoticed. Both missing
+fields now read as "any", which is also what they mean: an explainer about reading a bill applies
+whatever is heating the room. Found while adding the third explainer hotspot (above), and covered
+by a test in `tools/filter-logic.test.mjs` so the shape stays exercised.
+
 **A way back, added 2026-08-20.** Every page a hotspot links to — the eight improvement pages and
 the two explainers — now carries a plain "Back to the house" link next to its breadcrumb,
 `../../index.html#house`. It is wayfinding, not page content, so it sits outside the article

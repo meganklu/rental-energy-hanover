@@ -7,14 +7,22 @@ export const TIME_RANK = { under30min: 0, "1to2hr": 1, afternoon: 2, contractor:
 
 export function matchesFilters(item, filters) {
   if (!item) return false;
+  // Explainers carry neither applicability field — content-strategy.md §6 requires them of
+  // improvements only — and an explainer applies to every student whatever heat they have and
+  // whoever pays for it. A missing field reads as "any". Fixed 2026-08-21: this used to reach
+  // straight for `.includes` and threw on the first explainer it met, which the doll house's
+  // personalization hit as soon as a student set a heat type, part-way through hiding hotspots.
+  // The library never saw it because its grid holds improvements only.
+  const appliesToHeat = item.appliesToHeat || ["any"];
+  const appliesToPayer = item.appliesToPayer || "any";
   if (
     filters.heat !== "any" &&
-    !item.appliesToHeat.includes(filters.heat) &&
-    !item.appliesToHeat.includes("any")
+    !appliesToHeat.includes(filters.heat) &&
+    !appliesToHeat.includes("any")
   ) {
     return false;
   }
-  if (filters.payer !== "any" && item.appliesToPayer !== filters.payer && item.appliesToPayer !== "any") {
+  if (filters.payer !== "any" && appliesToPayer !== filters.payer && appliesToPayer !== "any") {
     return false;
   }
   if (filters.permission !== "any" && item.landlordPermission !== filters.permission) {

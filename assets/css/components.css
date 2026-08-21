@@ -1518,34 +1518,56 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* The container keeps its resting -8deg through the whole walk, so the pair stays tilted the way a
-   kicked-off pair landed. translateX runs along that rotated axis, which is also the axis the toes
-   point down, and it sends the pair up the mat slightly as they cross it. 270% of the container's
-   own width lands them just inside the mat's right edge. */
+/* The pair keeps its resting -8deg through the whole walk, so it stays tilted the way a kicked-off
+   pair landed. The translate is written *before* the rotate, which applies it in the mat's own
+   coordinates rather than along the tilted axis: written the other way round the pair climbs as it
+   crosses, and around the middle of the scroll range it is walking through the middle of the
+   `<h1>`. Along the bottom of the mat there is nothing to walk over. 270% of the pair's own length
+   lands them at the far border. Change this and the stride amplitude below has to change with
+   it. */
 @keyframes shoes-walk {
-  from { transform: rotate(-8deg) translateX(0); }
-  to { transform: rotate(-8deg) translateX(270%); }
+  from { transform: translateX(0) rotate(-8deg); }
+  to { transform: translateX(270%) rotate(-8deg); }
 }
 
 /* The stride, and why these numbers are not taste. The two keyframe sets below are the same walk
    half a cycle apart, three cycles across the scroll range. One cycle is 33.333% of the range and
-   the container advances 90% of a shoe's length in it, so half a cycle advances 45%. A foot that
-   is planted has to stay still against the ground while that happens, which means drifting exactly
-   -45% relative to the container: hence ±22.5% around the mean, and hence the other foot covering
-   90% against the ground in its half, at twice the container's speed. Change the travel above and
-   these have to move with it or the planted foot starts skidding, which is the thing the first
-   pass got wrong. `scale` stands in for the lift at the middle of each swing — from directly
-   overhead a raised foot reads as a nearer one, and there is no other axis to show it on. */
+   the pair advances 90% of a shoe's length in it, so half a cycle advances 45%. A planted foot has
+   to stay still against the ground while that happens, which means drifting exactly -45% relative
+   to the pair: hence ±22.5% around the mean through stance, and hence the other foot covering 90%
+   against the ground in its half, at twice the pair's speed. Get this wrong and the planted foot
+   skids, which is what the first pass looked like.
+
+   Both start the range at 0 so the pair rests level, side by side, the way a pair left at a door
+   sits — one of them mid-stance and the other mid-swing, which is the only phase where that is
+   true of both at once. `scale` stands in for the lift at the middle of each swing: from directly
+   overhead a raised foot reads as a nearer one, and there is no other axis to show it on. It is
+   also why the near shoe is the fractionally larger of the two at rest. */
 @keyframes shoe-step-lead {
-  0%, 33.333%, 66.667%, 100% { transform: translateX(22.5%) scale(1); }
-  16.667%, 50%, 83.333% { transform: translateX(-22.5%) scale(1); }
-  25%, 58.333%, 91.667% { transform: translateX(0) scale(1.06); }
+  0% { transform: translateX(0) scale(1); }
+  8.333% { transform: translateX(-22.5%) scale(1); }
+  16.667% { transform: translateX(0) scale(1.06); }
+  25% { transform: translateX(22.5%) scale(1); }
+  41.667% { transform: translateX(-22.5%) scale(1); }
+  50% { transform: translateX(0) scale(1.06); }
+  58.333% { transform: translateX(22.5%) scale(1); }
+  75% { transform: translateX(-22.5%) scale(1); }
+  83.333% { transform: translateX(0) scale(1.06); }
+  91.667% { transform: translateX(22.5%) scale(1); }
+  100% { transform: translateX(0) scale(1); }
 }
 
 @keyframes shoe-step-follow {
-  0%, 33.333%, 66.667%, 100% { transform: translateX(-22.5%) scale(1); }
-  16.667%, 50%, 83.333% { transform: translateX(22.5%) scale(1); }
-  8.333%, 41.667%, 75% { transform: translateX(0) scale(1.06); }
+  0% { transform: translateX(0) scale(1.06); }
+  8.333% { transform: translateX(22.5%) scale(1); }
+  25% { transform: translateX(-22.5%) scale(1); }
+  33.333% { transform: translateX(0) scale(1.06); }
+  41.667% { transform: translateX(22.5%) scale(1); }
+  58.333% { transform: translateX(-22.5%) scale(1); }
+  66.667% { transform: translateX(0) scale(1.06); }
+  75% { transform: translateX(22.5%) scale(1); }
+  91.667% { transform: translateX(-22.5%) scale(1); }
+  100% { transform: translateX(0) scale(1.06); }
 }
 
 /* Only this border and what's inside it is "the mat" proper. Inset by a fixed margin (not
