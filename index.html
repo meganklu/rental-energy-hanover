@@ -54,41 +54,33 @@
         <p class="hero__note">*Rental home</p>
       </div>
       <div class="hero__shoes" aria-hidden="true">
-        <!-- Drawn once, used twice. Bird's-eye view: the shoe has the three widths a foot seen
-             from above actually has (a wide ball, a waist at the arch, a smaller heel bulge), and
-             the white toe cap is a short panel with a nearly flat inner edge rather than a deep
-             curve swinging down into the lacing — see DESIGN.md §3.1. Decorative throughout: the
-             container carries aria-hidden, so nothing here needs a title or a label. -->
-        <svg viewBox="0 0 60 150">
+        <!-- Drawn once, used twice. Bird's-eye view, drawn against the reference sneaker icon in
+             DESIGN.md §3.1: a smooth capsule outline rather than a pinched waist, a toe cap inset
+             from the sides with a nearly flat inner edge, and ladder lacing (two rails, three
+             rungs, ends trailing off the heel) rather than crossed laces with eyelets. Decorative
+             throughout: the container carries aria-hidden, so nothing here needs a title. -->
+        <svg viewBox="0 0 60 140">
           <defs>
             <g id="hero-shoe">
-              <path d="M30 6 C41 6 50 11 53 22 C54.6 30 55 38 55 46 C55 68 46 78 46 92 C46 106 49 115 48 125 C47 136 39 141 30 141 C21 141 13 136 12 125 C11 115 14 106 14 92 C14 78 5 68 5 46 C5 38 5.4 30 7 22 C10 11 19 6 30 6 Z"
+              <path d="M30 7 C44 7 55 17 56.5 33 C57.5 48 57 64 55.5 82 C54 100 52 112 48.5 122 C46 131 38.5 135 30 135 C21.5 135 14 131 11.5 122 C8 112 6 100 4.5 82 C3 64 2.5 48 3.5 33 C5 17 16 7 30 7 Z"
                     fill="var(--color-accent)" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
-              <path d="M30 6 C41 6 50 11 53 22 C53.7 25.6 54.2 29.2 54.5 32.8 Q30 35 5.5 32.8 C5.8 29.2 6.3 25.6 7 22 C10 11 19 6 30 6 Z"
-                    fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="round"/>
-              <ellipse cx="30" cy="117" rx="12" ry="13" fill="#22302a" stroke="#000" stroke-width="1.5"/>
-              <g stroke="#fff" stroke-width="2.5" stroke-linecap="round">
-                <line x1="17" y1="44" x2="42" y2="57"/>
-                <line x1="43" y1="44" x2="18" y2="57"/>
-                <line x1="18" y1="57" x2="41" y2="70"/>
-                <line x1="42" y1="57" x2="19" y2="70"/>
-                <line x1="19" y1="70" x2="40.5" y2="83"/>
-                <line x1="41" y1="70" x2="19.5" y2="83"/>
-                <line x1="19.5" y1="83" x2="40" y2="96"/>
-                <line x1="40.5" y1="83" x2="20" y2="96"/>
-              </g>
-              <g fill="#000">
-                <circle cx="17" cy="44" r="2"/><circle cx="43" cy="44" r="2"/>
-                <circle cx="18" cy="57" r="2"/><circle cx="42" cy="57" r="2"/>
-                <circle cx="19" cy="70" r="2"/><circle cx="41" cy="70" r="2"/>
-                <circle cx="19.5" cy="83" r="2"/><circle cx="40.5" cy="83" r="2"/>
-                <circle cx="20" cy="96" r="2"/><circle cx="40" cy="96" r="2"/>
+              <path d="M30 19 C41.5 19 49 28 49 41 L49 54 Q30 58 11 54 L11 41 C11 28 18.5 19 30 19 Z"
+                    fill="#fff" stroke="#000" stroke-width="2.5" stroke-linejoin="round"/>
+              <g fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round">
+                <line x1="24" y1="62" x2="24" y2="108"/>
+                <line x1="36" y1="62" x2="36" y2="108"/>
+                <line x1="18" y1="72" x2="42" y2="72"/>
+                <line x1="18" y1="85" x2="42" y2="85"/>
+                <line x1="18" y1="98" x2="42" y2="98"/>
+                <path d="M24 108 Q30 120 36 108"/>
+                <path d="M24 101 Q18 110 14 114"/>
+                <path d="M36 101 Q42 110 46 114"/>
               </g>
             </g>
           </defs>
           <use href="#hero-shoe"/>
         </svg>
-        <svg viewBox="0 0 60 150"><use href="#hero-shoe"/></svg>
+        <svg viewBox="0 0 60 140"><use href="#hero-shoe"/></svg>
       </div>
     </div>
     <p class="hero__description">

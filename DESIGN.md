@@ -279,14 +279,24 @@ mat — earlier language that called the whole hero band the mat was imprecise. 
    reads as proportionate to the mat rather than a small accent in its corner. Decorative and
    `aria-hidden` throughout — nothing here is informational, so nothing needs an accessible name.
 
-   **Shape, revised 2026-08-21.** The outline was a single taper from a wide toe down to a narrow
-   heel, which reads as a slipper rather than a sneaker. It now has the three widths a shoe seen
-   from above actually has: a wide ball, a waist pulled in at the arch, and a second, smaller
-   bulge at the heel. The white toe cap changed twice over: it is shorter, ending at roughly a
-   quarter of the shoe's length instead of a third, and its inner edge — the one facing the laces —
-   is close to straight where it used to swing down in a deep curve into the middle of the lacing.
-   Both come from the reference sneaker the request pointed at, where the toe cap is a small, nearly
-   flat-topped panel and the laces get most of the upper.
+   **Shape, revised 2026-08-21, twice.** The first pass reshaped the outline from memory into a
+   waisted foot silhouette — wide ball, pinched arch, heel bulge — and shortened the toe cap. The
+   second pass redrew it against the reference sneaker the request actually pointed at, which was
+   worth doing because the icon differs from the guess in three ways that matter:
+
+   - **The outline is a smooth capsule,** not a waisted foot. Roughly 2.3:1 long to wide, blunt at
+     both ends, with only a gentle taper toward the heel. The waist made it read as a slipper.
+   - **The toe cap is inset on every side,** a separate panel with the upper's color visible all
+     the way around it, rather than a band spanning the full width of the toe. This is most of what
+     "slightly smaller" turned out to mean. Its inner edge, the one facing the laces, is close to
+     straight — the request asked for that directly, and it is kept flat here even though the icon
+     curves that edge down toward the tongue, because the instruction is the more specific source.
+   - **The lacing is a ladder,** two rails with three rungs across them and the ends trailing off
+     past the heel. It was crossed laces over eyelet dots. This is the single most recognizable
+     thing about the reference and the first pass missed it entirely.
+
+   The collar opening at the heel is gone with it. It was drawn as a dark ellipse, read as a blob at
+   mat size, and the reference does not draw one — the trailing lace ends occupy that space instead.
 
    **The walk, added 2026-08-21.** Scrolling down out of the hero walks the pair across the mat.
    The container carries the forward travel and each shoe carries its own step — lift, swing, set
