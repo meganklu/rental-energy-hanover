@@ -82,6 +82,7 @@
   body:not(:has(.reduce-motion-input:checked)) .fab:hover,
   body:not(:has(.reduce-motion-input:checked)) .scroll-cue:hover,
   body:not(:has(.reduce-motion-input:checked)) .card:hover,
+  body:not(:has(.reduce-motion-input:checked)) .carousel__slide:hover,
   body:not(:has(.reduce-motion-input:checked)) .filter-chip:hover,
   body:not(:has(.reduce-motion-input:checked)) .carousel__nav:hover,
   body:not(:has(.reduce-motion-input:checked)) .situation-dialog__close:hover,
@@ -2128,19 +2129,35 @@ body:has(.motion-loop) .motion-fab__pause {
   gap: var(--space-4);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: var(--space-2);
+  /* Block padding on both edges, not just the bottom: the track is a scroll container, and a
+     slide growing on hover (below) would otherwise be clipped at the top by the container it
+     sits in. */
+  padding-block: var(--space-2);
   margin: 0;
   list-style: none;
   scrollbar-width: thin;
 }
 
+/* `position: relative` is load-bearing, fixed 2026-08-21. A slide reuses `.card__title`, whose
+   link stretches an invisible `::after` across its card to make the whole card clickable. Without
+   a positioned slide that overlay resolved against `.carousel` instead, so every slide's link
+   covered the entire component — three stacked sheets, the last one in the markup winning — and
+   the whole section navigated to the last article while the Previous and Next controls underneath
+   them took no clicks at all. DESIGN.md §3.4. */
 .carousel__slide {
+  position: relative;
   scroll-snap-align: start;
   flex: 0 0 min(85%, 22rem);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-4);
   background: var(--color-bg);
+  transition: transform var(--motion-duration-base) var(--motion-ease),
+    border-color var(--motion-duration-base) var(--motion-ease);
+}
+
+.carousel__slide:hover {
+  border-color: var(--color-border-strong);
 }
 
 /* Peek variant, added 2026-08-20 for the Improvements page's "Renter basics" row: each slide

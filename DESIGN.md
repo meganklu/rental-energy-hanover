@@ -1139,8 +1139,8 @@ bar (§3.2), and the price dollar scale now has one mapping read by the cards, t
 improvement pages (§4) instead of three renderings of the same idea.
 
 **Tactile hover, added 2026-08-19.** Every button-like control (`.btn`, hotspots, the FAB, the
-scroll cue, cards, filter chips, carousel controls, the dialog close button) grows slightly on
-hover, a `transform: scale()` response transition under the same `--motion-duration-base` token
+scroll cue, cards, carousel slides, filter chips, carousel controls, the dialog close button)
+grows slightly on hover, a `transform: scale()` response transition under the same `--motion-duration-base` token
 and reduced-motion gating as everything else in §7 — held still, not merely slowed, when motion is
 reduced. It is additive to whatever color or border change that component already had on hover,
 never a replacement for it, since scale alone is easy to miss for a student skimming quickly.
