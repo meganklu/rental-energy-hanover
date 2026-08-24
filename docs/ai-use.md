@@ -264,7 +264,7 @@ Improvements page:
 Navigation bar:
 - Separate the rights page and programs page. These should be separate links on the top bar
 
-### 2026-08-21 Adding More Content and Images
+### 2026-08-24 Adding Content and Images
 
 Images:
 - Instead of the animations on the article pages, I would like to have a real picture. Some of the animations are a bit unclear or too simplified
@@ -289,6 +289,6 @@ About page:
 
 Other questions:
 - How is the where to get it page accessed? I cannot find a link anywhere on the website
-- Are there any other parts of the website that are difficult to access or now obsolete? 
+- Are there any other parts of the website that are difficult to access or now obsolete? If you find this, ask me whether these should be deleted, linked to, or adapted.
 
-Clean up the code and styling. Then, complete the remaining improvements pages
+Clean up the code and styling. Then, complete the remaining improvements pages. Lastly, go through the Sustainable Hanover website. Adapt information from here (with citations) to improvement articles, about page, etc.

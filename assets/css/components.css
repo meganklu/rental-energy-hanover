@@ -29,9 +29,9 @@
   font-size: var(--text-body);
   text-decoration: none;
   cursor: pointer;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .btn--primary {
@@ -83,7 +83,6 @@
   body:not(:has(.reduce-motion-input:checked)) .scroll-cue:hover,
   body:not(:has(.reduce-motion-input:checked)) .card:hover,
   body:not(:has(.reduce-motion-input:checked)) .carousel__slide:hover,
-  body:not(:has(.reduce-motion-input:checked)) .filter-chip:hover,
   body:not(:has(.reduce-motion-input:checked)) .carousel__nav:hover,
   body:not(:has(.reduce-motion-input:checked)) .situation-dialog__close:hover,
   body:not(:has(.reduce-motion-input:checked)) .help-icon:hover,
@@ -281,7 +280,7 @@
 }
 
 .disclosure > summary .icon {
-  transition: transform var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease);
 }
 
 .disclosure[open] > summary .icon {
@@ -353,110 +352,88 @@
   justify-content: center;
 }
 
-.improvement-illustration {
+/* ---------- Improvement page photo, added 2026-08-24 ----------
+   Replaces the hand-drawn SVG illustration each improvement page carried until 2026-08-24. The
+   drawings were flat enough that several read as ambiguous — a shrink-film kit and a pane of
+   glass are the same two rectangles — so every improvement and explainer now leads with a
+   photograph of the real object instead. The diagrams that teach a mechanism rather than name an
+   object (the heat pump and furnace cutaways, the draft and bill figures) stayed, since a
+   photograph cannot show refrigerant moving. DESIGN.md §3.5.
+
+   Fixed aspect so a row of pages does not jump about between one photo and the next, and the
+   crop is baked into the file at build time rather than being left to the browser. */
+.photo {
+  display: block;
   width: 100%;
-  max-width: 22rem;
   height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
 }
 
-/* Matches the doll house / icon-set pen (DESIGN.md §4 Iconography): flat fills, 2px-equivalent
-   strokes, round caps and joins, no gradients, no shadows. Scaled up from the 24x24 icon spec's
-   proportions rather than reusing it directly, since these illustrations carry a little more
-   scene (a clearance zone, an arrow, a before/after) than a single glyph. */
-.improvement-illustration .stroke {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.improvement-intro__media .photo {
+  max-width: 28rem;
 }
 
-.improvement-illustration .fill-brand {
-  fill: var(--color-brand);
-  stroke: none;
+/* Credit line, per docs/content-strategy.md §7. Every photograph on the site carries one, naming
+   the photographer and linking to the page the file came from. Small and muted so it reads as a
+   caption rather than as body copy, but never hidden — the license asks for the credit and the
+   project's own sourcing rule (AGENTS.md) is that nothing appears without a traceable origin. */
+.photo-credit {
+  margin-top: var(--space-2);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
 }
 
-.improvement-illustration .fill-surface {
-  fill: var(--color-surface);
-  stroke: var(--color-border-strong);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.photo-credit a {
+  color: inherit;
 }
 
-.improvement-illustration .muted {
-  stroke: var(--color-border-strong);
+/* A photograph set into a reading column to break up a long stretch of prose. Keeps the column's
+   measure rather than bleeding wide, so the eye returns to the same left edge afterwards. */
+.prose-figure {
+  margin: var(--space-7) 0;
+  max-width: var(--measure);
 }
 
-.improvement-illustration .dash {
-  stroke-dasharray: 4 4;
+/* A photograph that runs the full window width as a band between two sections. The image is
+   deliberately short and wide — it is punctuation between blocks of text, not an illustration to
+   study — and the credit sits under it inside the page shell rather than floating on the photo. */
+.photo-band {
+  margin-block: var(--space-8);
 }
 
-/* ---------- Improvement illustration loops, added 2026-08-21 ----------
-   Each illustration gets one small, meaningful loop instead of sitting static — rising heat, a
-   dripping showerhead, a moving draft, a glowing bulb, a marching-dash arrow. `.motion-loop` is
-   the shared marker: it reads --motion-state, so OS preference, the reduce-motion toggle and the
-   floating pause button (below) all stop it exactly like every other ambient animation on the
-   site, and its mere presence on a page is what makes the floating pause button visible at all
-   (see `.motion-fab__pause`). No scroll-gate like the learn-page diagrams below — an illustration
-   sits in the intro, already in the viewport on load, so it can read --motion-state directly. */
+.photo-band .photo {
+  aspect-ratio: 3 / 1;
+  border-radius: 0;
+  border-inline: none;
+  max-width: none;
+}
+
+.photo-band .photo-credit {
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+@media (max-width: 620px) {
+  .photo-band .photo {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* The shared marker for an animation that loops. It reads --motion-state, so OS preference, the
+   reduce-motion toggle and the floating pause button all stop it exactly like every other ambient
+   animation on the site, and its presence on a page is what makes the floating pause button
+   visible at all (see `.motion-fab__pause`). Only the explainer diagrams carry it now that the
+   improvement pages lead with photographs. */
 .motion-loop {
   animation-play-state: var(--motion-state);
   animation-iteration-count: infinite;
   animation-timing-function: var(--motion-ease);
-}
-
-@keyframes illo-rise {
-  0%, 100% { transform: translateY(0); opacity: 0.85; }
-  50% { transform: translateY(-6px); opacity: 0.3; }
-}
-
-.illo-rise {
-  animation-name: illo-rise;
-  animation-duration: 2.6s;
-}
-
-@keyframes illo-drip {
-  0%, 20% { transform: translateY(0); opacity: 0.6; }
-  70% { transform: translateY(10px); opacity: 0.15; }
-  71%, 100% { transform: translateY(0); opacity: 0; }
-}
-
-.illo-drip {
-  animation-name: illo-drip;
-  animation-duration: 2.2s;
-}
-
-@keyframes illo-glow {
-  0%, 100% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.08); }
-}
-
-.illo-glow {
-  animation-name: illo-glow;
-  animation-duration: 2.4s;
-  transform-origin: center;
-}
-
-@keyframes illo-flow {
-  to { stroke-dashoffset: -16; }
-}
-
-.illo-flow {
-  animation-name: illo-flow;
-  animation-duration: 1.6s;
-  animation-timing-function: linear;
-}
-
-.illo-drift-in {
-  animation-name: drift-in;
-  animation-duration: 3.2s;
-}
-
-.illo-drift-out {
-  animation-name: drift-out;
-  animation-duration: 3.2s;
-  animation-delay: 0.3s;
 }
 
 .improvement-body {
@@ -669,7 +646,7 @@
   text-decoration: none;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--motion-duration-base) var(--motion-ease);
+  transition: opacity var(--motion-base) var(--motion-ease);
   z-index: 30;
 }
 
@@ -696,8 +673,8 @@
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  transition: transform var(--motion-duration-base) var(--motion-ease),
-    border-color var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease);
 }
 
 .card:hover {
@@ -895,34 +872,6 @@
   margin-top: var(--space-6);
 }
 
-.filter-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-block: var(--space-4);
-}
-
-.filter-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-height: 36px;
-  padding: var(--space-1) var(--space-4);
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--color-border-strong);
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-size: var(--text-small);
-  transition: transform var(--motion-duration-base) var(--motion-ease);
-  cursor: pointer;
-}
-
-.filter-chip[aria-pressed="true"] {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-text-on-dark);
-}
-
 /* Added 2026-08-20, replacing the on-page filter form: just the result count and the sort
    control share a row above the card grid, now that filtering itself happens entirely through
    the "Personalize your recommendations" FAB (DESIGN.md §3.3) rather than a second, on-page
@@ -1080,8 +1029,8 @@
   font-weight: 600;
   box-shadow: var(--shadow-raised);
   scroll-margin-bottom: 80px;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 /* Darken and grow on hover — never fade. Text stays full-strength white throughout, so the
@@ -1141,9 +1090,9 @@
   height: var(--target-min);
   border-radius: 50%;
   cursor: pointer;
-  transition: color var(--motion-duration-base) var(--motion-ease),
-    border-color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: color var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 body:has(.motion-loop) .motion-fab__pause {
@@ -1243,8 +1192,8 @@ body:has(.motion-loop) .motion-fab__pause {
   background: transparent;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .situation-dialog__close:hover {
@@ -1310,7 +1259,7 @@ body:has(.motion-loop) .motion-fab__pause {
   border-radius: var(--radius-sm);
   background: var(--color-text-on-dark);
   padding: var(--space-2);
-  transition: transform var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease);
 }
 
 .footer-logo img {
@@ -1384,7 +1333,7 @@ body:has(.motion-loop) .motion-fab__pause {
   flex-shrink: 0;
   border-radius: var(--radius-pill);
   background: var(--switch-track);
-  transition: background var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease);
 }
 
 .switch__thumb {
@@ -1395,7 +1344,7 @@ body:has(.motion-loop) .motion-fab__pause {
   height: 20px;
   border-radius: 50%;
   background: var(--color-text-on-dark);
-  transition: transform var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease);
 }
 
 .switch input:checked ~ .switch__track {
@@ -1635,9 +1584,9 @@ body:has(.motion-loop) .motion-fab__pause {
   color: var(--color-mat-border);
   text-decoration: none;
   font-weight: 600;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .scroll-cue:hover {
@@ -1696,8 +1645,8 @@ body:has(.motion-loop) .motion-fab__pause {
   background: transparent;
   color: var(--color-text-muted);
   cursor: help;
-  transition: color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .help-icon:hover,
@@ -1725,7 +1674,7 @@ body:has(.motion-loop) .motion-fab__pause {
   text-align: left;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--motion-duration-base) var(--motion-ease);
+  transition: opacity var(--motion-base) var(--motion-ease);
   z-index: 30;
 }
 
@@ -1811,8 +1760,8 @@ body:has(.motion-loop) .motion-fab__pause {
   text-decoration: none;
   font-size: var(--text-small);
   font-weight: 600;
-  transition: transform var(--motion-duration-base) var(--motion-ease),
-    background var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease),
+    background var(--motion-base) var(--motion-ease);
 }
 
 .hotspot:hover {
@@ -1903,7 +1852,7 @@ body:has(.motion-loop) .motion-fab__pause {
   padding: var(--space-4);
   border-color: var(--color-accent);
   border-width: 3px;
-  transition: min-height var(--motion-duration-room) var(--motion-ease);
+  transition: min-height var(--motion-room) var(--motion-ease);
 }
 
 .dollhouse:has(.room:target) .room:target .room__heading {
@@ -1988,7 +1937,7 @@ body:has(.motion-loop) .motion-fab__pause {
   width: var(--progress, 0%);
   background: var(--color-accent);
   border-radius: var(--radius-pill);
-  transition: width var(--motion-duration-base) var(--motion-ease);
+  transition: width var(--motion-base) var(--motion-ease);
 }
 
 .progress-bar__tooltip {
@@ -2005,7 +1954,7 @@ body:has(.motion-loop) .motion-fab__pause {
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--motion-duration-base) var(--motion-ease);
+  transition: opacity var(--motion-base) var(--motion-ease);
 }
 
 .progress-bar:hover .progress-bar__tooltip,
@@ -2029,9 +1978,9 @@ body:has(.motion-loop) .motion-fab__pause {
   background: var(--color-bg);
   color: var(--color-text-muted);
   cursor: pointer;
-  transition: color var(--motion-duration-base) var(--motion-ease),
-    border-color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: color var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .progress-reset:hover {
@@ -2129,8 +2078,8 @@ body:has(.motion-loop) .motion-fab__pause {
 }
 
 .flip-card__front {
-  transition: transform var(--motion-duration-flip) var(--motion-ease),
-    box-shadow var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-flip) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease);
   transform-style: preserve-3d;
 }
 
@@ -2197,8 +2146,8 @@ body:has(.motion-loop) .motion-fab__pause {
   border-radius: var(--radius-md);
   padding: var(--space-4);
   background: var(--color-bg);
-  transition: transform var(--motion-duration-base) var(--motion-ease),
-    border-color var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease);
 }
 
 .carousel__slide:hover {
@@ -2239,7 +2188,7 @@ body:has(.motion-loop) .motion-fab__pause {
   border: 1px solid var(--color-border-strong);
   text-decoration: none;
   color: var(--color-text);
-  transition: transform var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease);
 }
 
 .carousel__nav:hover {
@@ -2402,8 +2351,8 @@ body:has(.motion-loop) .motion-fab__pause {
   font-size: var(--text-small);
   font-weight: 600;
   cursor: pointer;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    color var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease);
 }
 
 .season-toggle input:checked + label {
