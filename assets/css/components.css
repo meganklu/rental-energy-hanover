@@ -371,12 +371,14 @@
   max-width: var(--measure);
 }
 
+/* A column, not a row: the figure holds an image and its credit line, and `display: flex` with the
+   default row direction put the caption alongside the photograph rather than under it. */
 .improvement-intro__media {
   grid-area: media;
   margin: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 /* ---------- Improvement page photo, added 2026-08-24 ----------
@@ -401,7 +403,12 @@
 }
 
 .improvement-intro__media .photo {
-  max-width: 28rem;
+  max-width: 30rem;
+}
+
+.improvement-intro__media .photo-credit {
+  align-self: stretch;
+  max-width: 30rem;
 }
 
 /* Credit line, per docs/content-strategy.md §7. Every photograph on the site carries one, naming
@@ -907,7 +914,7 @@
 .question {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--space-4);
+  padding: var(--space-3) var(--space-4);
   margin: 0;
 }
 
@@ -962,7 +969,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
 }
 
 /* Added 2026-08-20, replacing the on-page filter form: just the result count and the sort
@@ -1275,7 +1282,7 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .situation-dialog__inner {
   position: relative;
-  padding: var(--space-5) var(--space-6) var(--space-6);
+  padding: var(--space-5) var(--space-6);
   max-height: inherit;
   overflow-y: auto;
 }
@@ -2276,10 +2283,22 @@ body:has(.motion-loop) .motion-fab__pause {
    assets/js/carousel.js adds once it can actually track which slide is centered. Without the
    script every slide renders at full size and full contrast, which is the honest fallback — a
    dimmed card with nothing able to un-dim it would be worse than no effect at all. */
+.carousel--peek {
+  /* One slide width, in units that do not depend on the track's own content box. A percentage
+     here cannot work: percentage `flex-basis` resolves against the flex container's content box,
+     percentage `padding-inline` shrinks that same content box, and asking for "a slide half the
+     leftover width" with both at once has no solution short of 50% padding and a zero-width
+     content box. A length breaks the loop, and the gutter is then just half the leftover. */
+  --peek-slide: min(34rem, 72vw);
+}
+
+/* The gutter that lets the first and last slides reach the middle. Percentage padding resolves
+   against the track's own width rather than its content box, so this is exactly half the space a
+   slide does not occupy — which is what `scroll-snap-align: center` needs in order to center the
+   slides at either end as well as the ones in the middle. */
 .carousel--peek .carousel__track {
   gap: var(--space-3);
-  padding-inline: 20%;
-  scroll-padding-inline: 20%;
+  padding-inline: calc(50% - var(--peek-slide) / 2);
   /* The neighbours scale up to 1 as they become current, and a scroll container clips at its
      padding box, so the block padding has to leave room for the taller state. */
   padding-block: var(--space-4);
@@ -2287,8 +2306,7 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .carousel--peek .carousel__slide {
   scroll-snap-align: center;
-  flex-basis: 58%;
-  max-width: 30rem;
+  flex: 0 0 var(--peek-slide);
   transition: transform var(--motion-base) var(--motion-ease),
     opacity var(--motion-base) var(--motion-ease),
     border-color var(--motion-base) var(--motion-ease),
@@ -2313,17 +2331,6 @@ body:has(.motion-loop) .motion-fab__pause {
 .carousel--peek.is-enhanced .carousel__slide:focus-within {
   transform: scale(1);
   opacity: 1;
-}
-
-@media (max-width: 700px) {
-  .carousel--peek .carousel__track {
-    padding-inline: 8%;
-    scroll-padding-inline: 8%;
-  }
-
-  .carousel--peek .carousel__slide {
-    flex-basis: 84%;
-  }
 }
 
 .carousel__controls {
