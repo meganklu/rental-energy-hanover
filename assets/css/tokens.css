@@ -36,6 +36,13 @@
   --color-border: #C9D4C6;
   --color-border-strong: #6F8272;
 
+  /* The About page's split-incentive panels only. Added 2026-08-24, see DESIGN.md §3.6. Two sides
+     of one lease have to read as two distinct places and every green on this site is one family,
+     so the owner's side borrows a deep slate instead. Both carry --color-text-on-dark: 14.5:1 on
+     the tenant side, 9.3:1 on the owner side. */
+  --color-split-tenant: #06301F;
+  --color-split-owner: #1B4B6B;
+
   /* Hero welcome mat only. Added 2026-08-19, see DESIGN.md §4. */
   --color-mat: #D9BE8A;
   --color-mat-border: #000000;

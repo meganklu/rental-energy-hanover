@@ -2716,6 +2716,271 @@ body:has(.motion-loop) .motion-fab__pause {
   font-weight: 600;
 }
 
+/* ---------- Split incentive, added 2026-08-24 ----------
+   The About page opens on the problem the whole site exists because of: in a rental the person
+   who would pay for an efficiency improvement is not the person who would save from it. The
+   two-sided treatment is adapted from the same project team's earlier heat pump site (S25).
+
+   One colour field runs behind everything from the page title down to the converging arrow, split
+   down the middle. Hovering or focusing either side widens that side's share of the whole field,
+   not just its own panel, so the emphasis reads as one lease tilting rather than two boxes
+   resizing. That shift is done with `:has()` rather than script, matching how the reduce-motion
+   switch and the carousel already work in this file.
+
+   Nothing is hidden in the narrow state. Both panels carry all of their text at 50/50, and the
+   widening is emphasis alone — which is what makes it safe for it to be a hover effect at all,
+   since a reader who never hovers and never focuses misses nothing. */
+.split-continuum {
+  position: relative;
+  isolation: isolate;
+  color: var(--color-text-on-dark);
+}
+
+.split-continuum__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+  overflow: hidden;
+}
+
+.split-continuum__bg span {
+  display: block;
+  width: 50%;
+  transition: width var(--motion-base) var(--motion-ease);
+}
+
+.split-continuum__bg span:first-child {
+  background: var(--color-split-tenant);
+}
+
+.split-continuum__bg span:last-child {
+  background: var(--color-split-owner);
+}
+
+.split-continuum:has(.split-side--tenant:hover) .split-continuum__bg span:first-child,
+.split-continuum:has(.split-side--tenant:focus-within) .split-continuum__bg span:first-child {
+  width: 58%;
+}
+
+.split-continuum:has(.split-side--owner:hover) .split-continuum__bg span:first-child,
+.split-continuum:has(.split-side--owner:focus-within) .split-continuum__bg span:first-child {
+  width: 42%;
+}
+
+.split-continuum h1,
+.split-continuum h2,
+.split-continuum h3 {
+  color: var(--color-text-on-dark);
+}
+
+.split-continuum a {
+  color: var(--color-text-on-dark);
+}
+
+/* Beats `.page-head .lede` further down this file, which sets the muted body colour and would
+   otherwise win on equal specificity by being declared later. On a dark field that rule renders
+   the lede in near-invisible grey-green. */
+.split-continuum .page-head .lede,
+.split-continuum .lede {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* The opening block is laid out across the seam on purpose: the title sits on the tenant's side,
+   the sentence that names the problem on the owner's. Centering it instead put both across the
+   join, where a single text colour has to work on two different fields at once and the smaller
+   type stopped being readable on one of them. */
+.split-hero {
+  display: grid;
+  gap: var(--space-5);
+  text-align: left;
+  margin-bottom: var(--space-7);
+}
+
+@media (min-width: 900px) {
+  .split-hero {
+    grid-template-columns: 1.05fr 1fr;
+    gap: var(--space-8);
+    align-items: end;
+  }
+}
+
+.split-hero h1 {
+  margin: 0;
+}
+
+.split-hero .lede {
+  margin: 0;
+  max-width: var(--measure);
+  font-size: var(--text-h4);
+}
+
+/* The eyebrow above the page title. Small, spaced capitals, so it reads as a label on the section
+   rather than as the first line of the sentence underneath it. */
+.eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+  margin-bottom: var(--space-2);
+}
+
+.split-sides {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.split-side {
+  flex: 1 1 20rem;
+  display: flex;
+  transition: flex-grow var(--motion-base) var(--motion-ease);
+}
+
+@media (min-width: 860px) {
+  .split-side:hover,
+  .split-side:focus-within {
+    flex-grow: 1.25;
+  }
+}
+
+/* Each panel's text keeps a readable measure and hugs the centre line, so the two columns read as
+   one spread rather than as two pages that happen to be adjacent. */
+.split-side__inner {
+  max-width: 34rem;
+  padding: var(--space-7) var(--space-5);
+  margin-inline: auto;
+}
+
+.split-side__tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.18);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+}
+
+.split-side__inner h2 {
+  margin-bottom: var(--space-5);
+}
+
+.split-side__inner h3 {
+  font-size: var(--text-h4);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: var(--text-small);
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: var(--space-3);
+}
+
+.split-side__inner ul {
+  margin: 0 0 var(--space-6);
+  padding-left: var(--space-5);
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.split-side__inner ul:last-child {
+  margin-bottom: 0;
+}
+
+.split-side__inner li + li {
+  margin-top: var(--space-2);
+}
+
+/* Below the point where the two panels can sit side by side they stack, and a background split
+   down the vertical middle would then run straight through the middle of each stacked panel. The
+   field is dropped at that width and each part carries its own colour instead: the continuum takes
+   the tenant's, and the owner's panel keeps its own. Stated as an explicit breakpoint rather than
+   left to flex-wrap, so the colour change and the reflow happen at the same width. */
+@media (max-width: 859px) {
+  .split-continuum {
+    background: var(--color-split-tenant);
+  }
+
+  .split-continuum__bg {
+    display: none;
+  }
+
+  .split-sides {
+    display: block;
+  }
+
+  .split-side {
+    display: block;
+  }
+
+  .split-side--owner {
+    background: var(--color-split-owner);
+  }
+}
+
+/* A light card lifted out of the colour field, for the sentence that names the problem. */
+.split-card {
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+  padding: var(--space-6);
+  max-width: 46rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.split-card h2 {
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.split-card p {
+  margin-inline: auto;
+}
+
+/* The three approaches, sitting directly on the colour field rather than in cards, so the field
+   stays continuous behind them. Bordered in translucent white to keep them separable. */
+.split-approach {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  margin-top: var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+.split-approach li {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+
+.split-approach h3 {
+  margin-bottom: var(--space-2);
+}
+
+.split-approach p {
+  color: rgba(255, 255, 255, 0.9);
+  max-width: none;
+}
+
+/* The two sides meeting. Ends the coloured stretch and hands the page back to the ordinary white
+   background, which is the point being made: the two halves have somewhere to meet. */
+.split-converge {
+  line-height: 0;
+}
+
+.split-converge svg {
+  display: block;
+  width: 100%;
+  height: clamp(4rem, 9vw, 8.5rem);
+}
+
 /* ---------- Utility layout ---------- */
 .section {
   padding-block: var(--space-7);
