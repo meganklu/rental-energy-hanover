@@ -207,51 +207,78 @@
 }
 
 /* ---------- Callouts ---------- */
+/* The disclaimer cards, unified 2026-08-24. They had drifted: the permission note on one
+   improvement page carried no icon at all, both legal notes borrowed the safety warning triangle,
+   and one legal note on /your-rights was wearing the red safety variant outright. Every variant
+   now shares one card — same padding, radius, gap, icon size, type size and 4px leading rule — and
+   differs only in the rule colour and the icon.
+
+   Safety is the single variant that keeps a tinted background, and that is a content decision
+   rather than a style one: AGENTS.md treats space heaters, carbon monoxide and electrical load as
+   a category that must not read as one more caveat. It is still the same card, and the word
+   "Safety" carries the meaning on its own for anyone who cannot see the colour. */
 .callout {
+  --callout-rule: var(--color-accent);
+  --callout-bg: var(--color-surface);
+  --callout-border: var(--color-border);
   display: flex;
   gap: var(--space-3);
-  padding: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--callout-bg);
+  color: var(--color-text);
+  font-size: var(--text-small);
+  border: 1px solid var(--callout-border);
+  border-left: 4px solid var(--callout-rule);
   border-radius: var(--radius-md);
-  margin-block: var(--space-4);
+  margin-block: var(--space-5);
 }
 
 .callout .icon {
   flex-shrink: 0;
   margin-top: 0.15em;
+  color: var(--callout-rule);
 }
 
-.callout p {
+.callout > div > * + * {
+  margin-top: var(--space-2);
+}
+
+.callout p,
+.callout ul {
   margin: 0;
   max-width: none;
 }
 
-.callout--safety {
-  background: var(--color-danger-bg);
-  color: var(--color-danger-text);
-  border: 1px solid currentColor;
+.callout ul {
+  padding-left: var(--space-5);
 }
 
-/* Added 2026-08-20: on an improvement page with a safety note, the note now runs the full
-   page-shell width below the two-column intro (title/badges/facts beside the illustration),
-   rather than being squeezed into the text column next to the illustration — safety is the one
-   thing on the page that should never compete for space. The background band is genuinely full
-   width; the text inside still keeps a readable measure per DESIGN.md §4. */
+.callout li + li {
+  margin-top: var(--space-2);
+}
+
+.callout strong {
+  color: var(--callout-rule);
+}
+
+.callout--safety {
+  --callout-rule: var(--color-danger-text);
+  --callout-bg: var(--color-danger-bg);
+  --callout-border: var(--color-danger-text);
+}
+
+/* Added 2026-08-20: on an improvement page with a safety note, the note runs the full page-shell
+   width below the two-column intro (title/badges/facts beside the photograph) rather than being
+   squeezed into the text column beside it — safety is the one thing on the page that should never
+   compete for space. The background band is genuinely full width; the text inside still keeps a
+   readable measure per DESIGN.md §4. */
 .callout--safety-full {
   margin-block: var(--space-7);
-  padding: var(--space-5);
+  padding: var(--space-5) var(--space-6);
 }
 
 .callout--safety-full > div {
   max-width: var(--measure);
-}
-
-.callout--legal,
-.callout--savings,
-.callout--permission {
-  background: var(--color-surface);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  font-size: var(--text-small);
 }
 
 /* ---------- Disclosure bar ---------- */
@@ -423,6 +450,37 @@
   .photo-band .photo {
     aspect-ratio: 16 / 9;
   }
+}
+
+/* A photograph and a short block of text side by side inside a tinted band, added 2026-08-24.
+   Used where a page needs to point somewhere else without a wall of prose doing it: the
+   "Where to get this stuff" pointer at the foot of the improvements library, and the program
+   pointers on /programs. Photo first in the DOM on purpose — it is the thing that makes the
+   panel visible at a glance, and on a narrow screen it should arrive before the heading it
+   illustrates. */
+.info-panel {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+@media (min-width: 780px) {
+  .info-panel {
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-7);
+  }
+
+  .info-panel--reverse .info-panel__media {
+    order: 2;
+  }
+}
+
+.info-panel__media {
+  margin: 0;
+}
+
+.info-panel__text > * + * {
+  margin-top: var(--space-4);
 }
 
 /* The shared marker for an animation that loops. It reads --motion-state, so OS preference, the
@@ -826,10 +884,24 @@
 }
 
 /* ---------- Filter / situation form ---------- */
+/* Revised 2026-08-24: three explicit columns rather than auto-fit, with the one long question
+   (nine lifecycle phases) spanning the full row and laying its own options out in columns
+   underneath. Auto-fit put four fieldsets of wildly different heights into two ragged columns,
+   which is what made the dialog taller than a laptop screen. See `.situation-dialog`. */
 .question-set {
   display: grid;
-  gap: var(--space-5);
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+  .question-set {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .question--wide {
+    grid-column: 1 / -1;
+  }
 }
 
 .question {
@@ -848,8 +920,23 @@
 .question__options {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  margin-top: var(--space-2);
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+/* The lifecycle question's nine options, wrapped into columns so the fieldset stays about as tall
+   as the three beside it. `column-count` rather than a grid: the options are a plain list whose
+   order matters and whose rows are all one line, which is exactly what multi-column flow is for. */
+@media (min-width: 700px) {
+  .question__options--columns {
+    display: block;
+    column-count: 3;
+    column-gap: var(--space-5);
+  }
+
+  .question__options--columns label {
+    break-inside: avoid;
+  }
 }
 
 .question__options label {
@@ -866,10 +953,16 @@
   accent-color: var(--color-accent);
 }
 
-/* The submit button sits apart from the question-set rather than reading as part of the last
-   fieldset. Added 2026-08-19. */
-.question-set + p {
-  margin-top: var(--space-6);
+/* The buttons sit apart from the question-set rather than reading as part of the last fieldset.
+   Added 2026-08-19, made a real row 2026-08-24 when Reset joined Submit. Reset is a plain
+   `type="reset"`, so it restores the "I am not sure" defaults with no script at all; the script
+   only adds the part markup cannot do, which is forgetting the saved situation as well as the
+   shown one (assets/js/situation.js). */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
 }
 
 /* Added 2026-08-20, replacing the on-page filter form: just the result count and the sort
@@ -1159,13 +1252,20 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
+/* Widened 2026-08-24 from 40rem. At the old width the four questions stacked into two ragged
+   columns and the dialog ran past the bottom of a laptop screen, so the last question and the
+   submit button were both below the fold on the one screen whose whole job is to be filled in
+   and dismissed. At 62rem the three short questions sit in a row with the long one beneath them
+   (`.question-set`), which fits without scrolling down to about a 700px-tall viewport.
+   `max-height` stays, and the inner element stays scrollable, because a short window or a large
+   text size can still overflow and a dialog that clips is worse than one that scrolls. */
 .situation-dialog {
   border: none;
   border-radius: var(--radius-md);
   padding: 0;
-  max-width: 40rem;
-  width: min(90vw, 40rem);
-  max-height: 85vh;
+  max-width: 62rem;
+  width: min(94vw, 62rem);
+  max-height: 92vh;
   box-shadow: var(--shadow-raised);
 }
 
@@ -1175,8 +1275,15 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .situation-dialog__inner {
   position: relative;
-  padding: var(--space-6);
+  padding: var(--space-5) var(--space-6) var(--space-6);
+  max-height: inherit;
   overflow-y: auto;
+}
+
+/* The close button is absolutely positioned in the top-right corner, so the heading needs to stop
+   short of it rather than run underneath. */
+#situation-dialog-heading {
+  padding-right: var(--target-min);
 }
 
 .situation-dialog__close {
@@ -1202,6 +1309,10 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .situation-dialog__body form {
   margin-top: var(--space-4);
+}
+
+.situation-dialog__body .question-set {
+  margin-top: 0;
 }
 
 /* ---------- Footer ---------- */
@@ -2154,20 +2265,65 @@ body:has(.motion-loop) .motion-fab__pause {
   border-color: var(--color-border-strong);
 }
 
-/* Peek variant, added 2026-08-20 for the Improvements page's "Renter basics" row: each slide
-   centers as it snaps, with enough side padding on the track that the next slide stays partly
-   visible rather than fully off-screen — "focuses on one at a time, but the others are visible
-   in the background." Same track/slide markup and scroll-snap mechanics as the plain carousel
-   above, no JavaScript required for the scrolling itself either way. */
+/* Peek variant, added 2026-08-20 for the Improvements page's "Renter basics" row, rebuilt
+   2026-08-24 to focus one card at a time. The track is still a scroll-snap row of real slides, so
+   it swipes, scrolls and tabs with no JavaScript at all and Previous/Next stay ordinary anchors to
+   slide IDs. What changed is the geometry and the emphasis: a slide is 58% of the track and the
+   track carries a 20% gutter each side, which is what lets the centered slide sit in the middle
+   with roughly a third of each neighbour showing either side of it. DESIGN.md §3.4.
+
+   The scale-down of the neighbours is applied only under `.is-enhanced`, a class
+   assets/js/carousel.js adds once it can actually track which slide is centered. Without the
+   script every slide renders at full size and full contrast, which is the honest fallback — a
+   dimmed card with nothing able to un-dim it would be worse than no effect at all. */
 .carousel--peek .carousel__track {
-  padding-inline: 12%;
-  scroll-padding-inline: 12%;
+  gap: var(--space-3);
+  padding-inline: 20%;
+  scroll-padding-inline: 20%;
+  /* The neighbours scale up to 1 as they become current, and a scroll container clips at its
+     padding box, so the block padding has to leave room for the taller state. */
+  padding-block: var(--space-4);
 }
 
 .carousel--peek .carousel__slide {
   scroll-snap-align: center;
-  flex-basis: 76%;
-  max-width: 26rem;
+  flex-basis: 58%;
+  max-width: 30rem;
+  transition: transform var(--motion-base) var(--motion-ease),
+    opacity var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease);
+}
+
+.carousel--peek.is-enhanced .carousel__slide {
+  transform: scale(0.9);
+  opacity: 0.72;
+}
+
+.carousel--peek.is-enhanced .carousel__slide.is-current {
+  transform: scale(1);
+  opacity: 1;
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-raised);
+}
+
+/* A neighbour is dimmed, not hidden, and its link is still a real link. Anything reached by
+   keyboard pulls itself to the middle rather than being read at 72% contrast: the browser scrolls
+   a focused element into view, the scroll listener sees the new center, and the class moves. */
+.carousel--peek.is-enhanced .carousel__slide:focus-within {
+  transform: scale(1);
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .carousel--peek .carousel__track {
+    padding-inline: 8%;
+    scroll-padding-inline: 8%;
+  }
+
+  .carousel--peek .carousel__slide {
+    flex-basis: 84%;
+  }
 }
 
 .carousel__controls {

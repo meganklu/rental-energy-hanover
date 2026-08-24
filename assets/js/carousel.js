@@ -2,8 +2,9 @@
 // at all — it is a scroll-snap row of real slides — and the Previous/Next controls are ordinary
 // anchor links to slide IDs, so they move the track natively too. Everything here is the optional
 // half: retargeting those two links at the slides either side of wherever the reader currently is,
-// and keeping the "2 of 3" counter honest. With this file absent, Previous goes to the first slide
-// and Next to the last, which is still a working control rather than a dead one.
+// keeping the "2 of 3" counter honest, and marking which slide is centered so the peek variant can
+// bring it forward. With this file absent, Previous goes to the first slide and Next to the last,
+// and every slide renders at full size, which is a working component rather than a dead one.
 
 const carousels = document.querySelectorAll(".carousel:has([data-carousel-count])");
 
@@ -18,8 +19,13 @@ carousels.forEach((carousel) => {
   const total = slides.length;
   let current = 0;
 
+  // Only now is the dimmed/scaled peek treatment safe to apply: something on the page can move
+  // the emphasis as the reader scrolls. See the `.is-enhanced` note in components.css.
+  carousel.classList.add("is-enhanced");
+
   function render() {
     count.textContent = `${current + 1} of ${total}`;
+    slides.forEach((slide, i) => slide.classList.toggle("is-current", i === current));
     // Clamped rather than wrapped: at either end the control points at the slide you are already
     // on, and is marked as unavailable, instead of silently jumping to the far end.
     const back = slides[Math.max(0, current - 1)];
@@ -57,6 +63,26 @@ carousels.forEach((carousel) => {
     requestAnimationFrame(() => {
       queued = false;
       measure();
+    });
+  });
+
+  // The href alone would work, but following it moves the document's scroll position as well as
+  // the track's and leaves a fragment in the address bar for a control that is not a destination.
+  // Scrolling the track directly keeps the page where it is. The href stays on the element as the
+  // no-JS path and as the thing a middle-click or a screen reader announces.
+  [prev, next].forEach((control) => {
+    control.addEventListener("click", (event) => {
+      if (control.hasAttribute("aria-disabled")) {
+        event.preventDefault();
+        return;
+      }
+      const target = document.getElementById(control.getAttribute("href").slice(1));
+      if (!target) return;
+      event.preventDefault();
+      track.scrollTo({
+        left: target.offsetLeft - (track.clientWidth - target.offsetWidth) / 2,
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      });
     });
   });
 
