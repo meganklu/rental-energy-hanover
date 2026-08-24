@@ -30,7 +30,7 @@ written as a page instead.
 | F1 | Doll house walkthrough | A spatial way into every improvement. Click the room, click the thing, get the answer | High (illustration) | **Must** |
 | F2 | Situation selector and filtering | Every list on the site narrowed to their heat type, who pays, lease length and phase | Medium | **Must** |
 | F3 | Flip-card myth busters | A wrong belief corrected by their own action, on the explainer pages | Low (code), Medium (copy) | **Must** |
-| F4 | Animated explainer diagrams | A mechanism they cannot see, shown moving. Where heat leaves, what setback does | Low (code), High (illustration) | **Must** |
+| F4 | Animated explainer diagrams | A mechanism they cannot see, shown moving. Where heat leaves, how a heat pump runs both ways | Low (code), High (illustration) | **Must** |
 | F5 | Progress through the house | A count of spots viewed, and a suggested order for someone who does not know where to start | Low | **Should** (part of F1) |
 | F6 | Generated winter checklist | A phase-specific list they can print or send to roommates | Medium | **Won't (v1)** |
 | F7 | Space heater cost-per-hour tool | The real hourly cost of the most expensive misconception in the topic inventory | Low (code), blocked on sourcing | **Won't (v1)** |
@@ -53,6 +53,15 @@ Priority: **Must** / **Should** / **Could** / **Won't (v1)**
   [DESIGN.md](../DESIGN.md) §3.1 it is optional and reachable from the header chip, so it narrows
   the site for students who want that and blocks nobody who does not.
 - **F3 and F4** carry the explainer pages. Together they are the reason `/learn` is not prose.
+
+  **F4's scope narrowed 2026-08-24.** It had spread to every content page: each improvement carried
+  a small drawn illustration with its own loop. Most of those were drawing a noun, not a mechanism,
+  and at icon weight several were ambiguous about which noun. Photographs replaced them
+  ([DESIGN.md](../DESIGN.md) §3.6). F4 now covers three figures, and the test for adding a fourth is
+  whether a photograph could carry the same point: the heat pump and furnace cutaways, air moving
+  both ways through a gap, and which figure on a bill is the one that moves. A useful side effect is
+  that `.motion-loop` appears on three pages instead of eleven, so the floating Pause button (WCAG
+  2.2.2) stops appearing on pages with nothing to pause.
   Their code cost is close to zero, since both are CSS on markup that already exists.
 - **F5** is a few lines on top of F1 and it is the difference between a house a student pokes at
   twice and one they finish.

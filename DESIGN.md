@@ -78,7 +78,7 @@ Sustainable Hanover page cannot do.
 
 ```
 /                                Hero, then the doll house
-│   /#house                      The doll house. Front-open view, six rooms, eleven hotspots.
+│   /#house                      The doll house. Front-open view, six rooms, sixteen hotspots.
 │                                The scroll arrow's target
 │   /#kitchen /#basement …       A room, enlarged. Real fragments, so a room is linkable and
 │                                works with JavaScript off
@@ -93,14 +93,23 @@ Sustainable Hanover page cannot do.
 │   ├── /learn/find-your-drafts  Enabler. Guided walkthrough of where heat escapes
 │   ├── /learn/heating-systems   Enabler. What kind of heat you have and what it means for
 │   │                             you as a renter. Added 2026-08-21, §3.5
-│   ├── /learn/who-pays-for-what Enabler. Finding it in the lease. Not yet built
-│   └── /learn/:slug             Remaining explainers, not yet built
+│   ├── /learn/whats-in-your-lease  Enabler. Who pays for what, and where the lease says so.
+│   │                             Added 2026-08-24. Topic #6
+│   ├── /learn/ask-your-landlord Enabler. What goes in the email, and what to do at a no.
+│   │                             Added 2026-08-24. Topic #9
+│   └── /learn/move-out-restore  Enabler. What to take down and photograph. Added 2026-08-24.
+│                                 Topic #16
 ├── /checklist                   v2. Generated checklist for the student's phase and situation
-├── /before-you-sign             Hunting and signing. Viewing checklist, what to ask
+├── /before-you-sign             Hunting and signing. Viewing checklist, what to ask. Reached
+│                                 from Renter basics, decided 2026-08-24 — it had no inbound
+│                                 link at all until then
 ├── /your-rights                 NH heat standard, habitability, who to call. Legal disclaimer
 ├── /programs                    NHSaves and assistance a renter can actually use
-├── /where-to-get-it             Materials sourcing. Online, or fare-free bus to West Lebanon
-├── /glossary                    Plain-language definitions, linked from first use
+├── /where-to-get-it             Materials sourcing. Online, or fare-free bus to West Lebanon.
+│                                 Reached from a panel at the foot of /improvements and from
+│                                 every improvement page, decided 2026-08-24
+├── /glossary                    Plain-language definitions, linked from first use. Reached from
+│                                 the footer, decided 2026-08-24 — it had no inbound link at all
 ├── /about                       Credits Sustainable Hanover, contact, site-wide last-reviewed
 └── /accessibility               Public accessibility statement
 ```
@@ -115,6 +124,16 @@ West Lebanon), rather than a separate trailing paragraph lower on the page — s
 belongs with the materials list a student is already reading, not after the steps. This is a short
 inline pointer, not a duplicate of the shared page: `/where-to-get-it` remains the fuller reference
 once it is built, per §8 of content-strategy.md.
+
+**How those three pages are reached, decided 2026-08-24.** An audit of inbound links found
+`/before-you-sign` and `/glossary` with no inbound link from anywhere on the site, and
+`/where-to-get-it` reachable only from body text inside five improvement pages. All three are real
+content that a reader had no route to. `/where-to-get-it` now has a photo-and-text panel at the
+foot of `/improvements` as well as a pointer inside every improvement page, including the free
+ones, where the line reads "nothing to buy for this one" and points at the page for when something
+is. `/before-you-sign` joins the Renter basics carousel as its first card, which is also where it
+belongs in the renter's own timeline. `/glossary` goes in the footer, since it is reference
+material rather than a destination.
 
 **Two routes for website navigation.** The doll house is the guided route. It suits a student who does
 not yet know what to ask for, and it hands out information in graduated tiers as they explore. The
@@ -691,6 +710,23 @@ Improvements library row of §3's key-screens table. There is no second, separat
 same four-question page as always, which still submits as a plain GET with JavaScript off. The
 dialog is pure enhancement on top of that link, not a replacement for it.
 
+**Sized to fit, revised 2026-08-24.** The dialog was 40rem wide with the four fieldsets in an
+`auto-fit` grid. Four questions of very different heights (five options, three, five, and nine)
+fell into two ragged columns, and the result was taller than a laptop screen: the last question and
+the submit button both sat below the fold on the one screen whose entire job is to be filled in and
+dismissed. It is 62rem now, with the three short questions in a row and the nine-option lifecycle
+question spanning the full width beneath them, its own options flowed into three columns. That fits
+without scrolling down to about a 700px-tall viewport. `max-height` and the scrollable inner element
+stay, because a short window or a large text size can still overflow and a dialog that clips is
+worse than one that scrolls.
+
+**Reset to defaults, added 2026-08-24.** A plain `<button type="reset">` beside the submit button.
+The browser's own reset restores the radios to their HTML defaults, which are the four "I am not
+sure" options, so the control works with no script at all. The script adds the one thing markup
+cannot: clearing the saved situation as well as the shown one, and announcing `situationchange` so
+the doll house and the library re-check it. Without that, a reader who reset and closed the dialog
+would find the old answers still narrowing the list behind it.
+
 ### 3.4 The improvements library (revised 2026-08-20)
 
 `/improvements` carried a second, on-page filter form (heat type, who pays, landlord permission)
@@ -779,6 +815,32 @@ disappear, it silently grows.
 cards. The track picks up matching padding on both block edges so a slide growing at the top is not
 clipped by the scroll container it sits in.
 
+**Focused on one card, rebuilt 2026-08-24.** The peek variant showed all three slides at roughly
+equal weight, which meant Previous and Next moved a track that already showed everything and so
+appeared to do nothing. A slide is now 58% of the track and the track carries a matching gutter each
+side, which puts the current card in the middle at full size with roughly a third of each neighbour
+showing either side of it. Neighbours drop to `scale(0.9)` and 72% opacity; the current card takes
+the accent border and the raised shadow.
+
+Two things about how that is built are worth keeping. **The slide width is a length, not a
+percentage.** Percentage `flex-basis` resolves against the flex container's content box, percentage
+`padding-inline` shrinks that same content box, and asking for "a slide centred in the leftover
+space" with both at once has no solution short of 50% padding and a zero-width content box. The
+first attempt did exactly that and the focused card sat left of centre. A length breaks the loop and
+the gutter is then simply half the leftover.
+
+**The scale-down only applies under `.is-enhanced`**, a class `assets/js/carousel.js` adds once it
+can actually track which slide is centred. With the script absent every slide renders at full size
+and full contrast, which is the honest fallback: a dimmed card with nothing able to un-dim it would
+be worse than no effect at all. The controls also stop following their own `href` and scroll the
+track directly, so pressing Next moves the row without moving the document or leaving a fragment in
+the address bar. The `href` stays on the element as the no-JS path.
+
+**Seven cards, 2026-08-24.** Three new explainers (§3.6's topic list) plus `/before-you-sign`, which
+had no inbound link anywhere on the site until it joined this row. Ordered along the renter's own
+timeline: before you sign, who pays for what, what heat you have, reading the bill, finding drafts,
+asking your landlord, putting it back at move-out.
+
 **The `/learn` hub page is deleted, added 2026-08-20.** Its own nav slot was already removed
 2026-08-19 (§2); the page itself sat unlinked from anywhere on the site until this revision
 surfaced its two explainers through "Renter basics" instead. `/learn/read-your-bill/` and
@@ -834,6 +896,70 @@ this project exists to not be ([docs/project-brief.md](docs/project-brief.md)). 
 because some Hanover rentals already have them and a student needs to recognize one, and because
 the "ask your landlord" path in `/programs` is where that conversation actually belongs.
 
+### 3.6 Photographs in place of illustrations, added 2026-08-24
+
+Until 2026-08-24 every improvement page opened with a hand-drawn SVG of the thing it was about,
+drawn in the icon pen of §4 and given a small looping animation. Several of them did not survive
+contact with a reader. At icon weight a shrink-film kit and a bare pane of glass are the same two
+rectangles, a door sweep and a skirting board are the same line, and a power strip is a rectangle
+with dots on it. The drawings were legible as decoration and ambiguous as information, which is the
+wrong way round for the one image on the page.
+
+**Every improvement page and the heating-systems intro now lead with a photograph** of the real
+object. The rule for what stays drawn is whether the image teaches a mechanism or names an object.
+A photograph cannot show refrigerant carrying heat the wrong way down a temperature gradient, air
+moving both directions through the same gap, or which figure on a bill is the one that moves. Those
+three stayed: the heat pump and furnace cutaways on `/learn/heating-systems` (§3.5), the draft
+figure on `/learn/find-your-drafts`, and the bill figure on `/learn/read-your-bill`. Everything that
+was drawing a noun became a photograph.
+
+**Consequences worth noting.** `.motion-loop` now appears on three pages instead of eleven, so the
+floating Pause button (§7) correctly stops appearing on pages with nothing to pause. The
+`.improvement-illustration` rules and the five `illo-*` keyframes went with the drawings.
+
+**Sourcing and credit.** Photographs come from Unsplash, chosen for what they show rather than for
+how they look, and downloaded and committed rather than hotlinked, because AGENTS.md rule 6 means
+nothing on the published site may load from another origin. Each is cropped to 4:3 (3:1 for a
+full-width band), converted to WebP and held under about 200KB. Every one carries a visible credit
+naming the photographer and linking to the page the file came from, which is both the licence
+courtesy and this project's own rule that nothing appears without a traceable origin. The registry
+is [docs/image-credits.md](docs/image-credits.md). No image on this site is AI-generated, and
+`/about` says so.
+
+### 3.7 The About page and the split incentive, added 2026-08-24
+
+`/about` used to open with "Why this site exists" as three paragraphs of prose. The reason is a
+structural one and prose was the wrong shape for it: in a rental the person who would pay for an
+efficiency improvement is not the person who would save from it, so the improvement often does not
+happen. Two parties, two ledgers, one building.
+
+**The treatment.** One colour field runs behind everything from the page title down to a converging
+arrow: the tenant's side in the site's own dark green, the owner's in a deep slate that is
+deliberately not another green, because two sides of one lease have to read as two places. Hovering
+or focusing either side widens that side's share of the whole field rather than just its own panel,
+so the emphasis reads as the lease tilting. The pattern is adapted from `split-incentives.html` on
+the same team's heat pump site (S25), rebuilt in this site's tokens.
+
+**Why it is safe as a hover effect.** Both panels carry all of their text at 50/50. The widening is
+emphasis and nothing else, so a reader who never hovers and never focuses misses nothing. That is
+what lets the whole thing be CSS: `:has()` on the container moves the field, matching how the
+reduce-motion switch and the carousel already work, with no script involved. Below 860px the panels
+stack and each takes its own colour, since a vertical split would otherwise run down the middle of
+each stacked panel.
+
+**The opening block is laid across the seam on purpose.** Title on the tenant's side, the sentence
+that names the problem on the owner's. Centring it instead put the smaller type across the join,
+where one text colour has to work on two fields at once and the eyebrow stopped being readable on
+one of them.
+
+**"How AI was used" lives on this page**, added 2026-08-24. It names the model, says what it wrote,
+and states the three things held back from it: facts, which come from named sources and are gated by
+`tools/check-content.mjs`; legal and safety content, which a person reviews; and the photographs,
+which are existing work by named photographers rather than generated images. It links the full
+prompt record in [docs/ai-use.md](docs/ai-use.md) and the standing rules in
+[AGENTS.md](AGENTS.md). Disclosure belongs where a reader deciding whether to trust the page will
+look, which is the page that already says who made it and how it is sourced.
+
 ## 4. Visual system
 
 ### Color
@@ -873,6 +999,8 @@ interactive work.
 | `--color-mat` | `#D9BE8A` | Added 2026-08-19. The hero's welcome-mat background. Used nowhere else | ☑ 9.3:1 with `--color-text` |
 | `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
 | `--color-hero-ground` | `#94A0A7` | Added 2026-08-19. The hero section's own background, behind the mat. A bluestone grey, used nowhere else | ☑ 6.3:1 with `--color-text`, 7.9:1 with `--color-mat-border` |
+| `--color-split-tenant` | `#06301F` | Added 2026-08-24. The tenant's half of the About page's split field (§3.7). The same value as `--color-surface-dark`, named separately because it is one of a pair | ☑ 14.5:1 with white |
+| `--color-split-owner` | `#1B4B6B` | Added 2026-08-24. The owner's half of the same field. Deliberately not another green: two sides of one lease have to read as two places, and every other colour here is one family | ☑ 9.3:1 with white |
 
 - **Dark mode:** ☐ Supported ☑ Not in v1. The token structure supports adding one later
   without touching component code.
@@ -1107,11 +1235,28 @@ to be better than.
 | Personalize dialog (added 2026-08-19) | `<dialog>` holding the situation form, opened by the FAB | closed, open, focus-trapped, no JavaScript (FAB is a plain link to `/start` instead) |
 | Callout, safety | Renders `safety` above steps, never below, never collapsed | single variant, `--color-danger` |
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
+| Photograph | A credited photo, `4:3` in a page, `3:1` as a full-width band (§3.6) | inline, intro, band |
+| Info panel | A photo and a short block of text side by side inside a tinted band | default, reverse |
 | Source and last-reviewed block | "How we know this". Links plus an ISO date | open by default on detail pages, collapsed to a count on cards |
 | Glossary term | Inline definition on first use. Hover over the underlined term to view the definition. | closed, open, focus-visible |
 | Program card | An NHSaves or assistance program | NH, out-of-state (explicitly labeled), eligibility unknown |
 | Button | Primary, secondary, text | default, hover, focus-visible, active, disabled, loading |
 | Skip link | First focusable element on every page | hidden, focused |
+
+**One card for every disclaimer, unified 2026-08-24.** The callout variants had drifted apart in a
+way that only shows up when you look at them all at once. A permission note on one improvement page
+carried no icon at all. Both legal notes borrowed the safety warning triangle, which is the one icon
+on the site that should mean "this could hurt you". A legal note on `/your-rights` was wearing the
+red safety variant outright. Every variant now shares one card: same padding, radius, gap, icon
+size, type size, and a 4px leading rule. They differ in the rule colour and the icon, and the icon
+per kind is now legal → document, safety → warning triangle, savings → gauge, permission → speech
+bubble.
+
+Safety is the one variant that keeps a tinted background, and that is a content decision rather than
+a style one. AGENTS.md rule 3 treats space heaters, carbon monoxide and electrical load as a
+category that must not read as one more caveat. It is still the same card, and the word "Safety"
+carries the meaning on its own for a reader who cannot see the colour, so the tint is reinforcement
+and never the only signal (§4).
 
 **Every interactive component must define:** default, hover, focus-visible, active, disabled,
 loading, error, empty.

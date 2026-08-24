@@ -18,7 +18,7 @@
 | 1. Research | Ryan and Katharine | 2026-08-12 | Round 1 interviews done; audience.md rewritten from evidence | ☐ |
 | 2. Content | Megan | 2026-08-12 | Topic inventory prioritized; v1 content drafted and sourced | ☑ |
 | 3. Design | Megan | 2026-08-12 | IA settled; key screens layout planned; tokens contrast-checked | ☑ |
-| 4. Build | Megan | 2026-08-19 | Must-have features meet acceptance criteria | ◐ F1, F2, F4 done. F3 (flip-card myth busters) partially built and needs its myth/correction pairs through content review |
+| 4. Build | Megan | 2026-08-19 | Must-have features meet acceptance criteria | ◐ F1, F2, F4, F5 done, and all 20 topics in [content-strategy.md](content-strategy.md) §3 are written. F3 (flip-card myth busters) partially built and needs its myth/correction pairs through content review. Two of the last pages, `/learn/whats-in-your-lease` and `/learn/move-out-restore`, need legal review before publishing |
 | 5. Test | Ryan and Katharine | 2026-08-26 | Usability round 2 done; the v1 accessibility floor in [accessibility.md](accessibility.md) §5 passes. Screen reader and audit passes are v2 | ☐ |
 | 6. Review & sign-off | All | 2026-08-26 | Partner approval on all content | ☐ |
 | 7. Launch | All | 2026-08-26 | Live; distribution channels notified | ☐ |
@@ -35,7 +35,7 @@
 | M6 | Establish [design and style guide](DESIGN.md) | Megan | 2026-08-12 | M1 | ☑ |
 | M7 | Plan layout and webpages; update [features.md](features.md) and [content-strategy.md](content-strategy.md)  | Megan | 2026-08-12 | M6 | ☑ |
 | M8 | Initial website build  | Megan | 2026-08-19 | M7 | ☑ |
-| M9 | Website design edits  | Megan | 2026-08-23 | M8 | ☐ |
+| M9 | Website design edits  | Megan | 2026-08-23 | M8 | ☑ |
 | M10 | Website content edits  | All | 2026-08-26 | M8 | ☐ |
 
 ## 4. What gets cut first

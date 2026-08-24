@@ -3,21 +3,26 @@
 An interactive guide helping student renters in Hanover, New Hampshire improve the energy
 efficiency of their rentals. In partnership with Sustainable Hanover.
 
-> **Status: build, every page now stands up.** As of 2026-08-21 the site is complete end to end
-> rather than a home page with stubs behind it. The nav, hero, doll house, situation selector and
-> improvements library (F1, F2) are live, the animated explainer diagrams (F4) are drawn, and the
-> supporting pages exist: about, accessibility, rights, programs, glossary, where to get it, and
-> before you sign. Every link in the nav and the footer resolves, and rights and programs are now
-> two entries rather than one label pointing at one of them. Renter basics holds three explainers,
-> the newest being an illustrated guide to telling one kind of heating system from another, which
-> is the question the situation selector has always opened with. All three have a spot in the doll
-> house, which is up to eleven hotspots.
+> **Status: build, all twenty topics written.** As of 2026-08-24 every topic in the inventory
+> ([docs/content-strategy.md](docs/content-strategy.md) §3) has a page. Ten improvements, six
+> explainers, and the standalone pages for programs, rights, pre-lease and materials. The doll
+> house tour is sixteen spots, ordered as a sequence rather than a list: understand the bill and
+> the lease, find where the heat goes, seal it, control it, then ask, then leave.
 >
-> What is still open: 8 of the ~20 improvements in the topic inventory are written, and the rest
-> come next now that the styling is settled. Flip-card myth busters (F3) are built as a component
-> but still need their myth-and-correction pairs through content review. Accessibility
-> verification — screen reader passes, the full zoom matrix, a formal audit — is deferred to v2 and
-> the accessibility statement says so plainly.
+> The 2026-08-24 pass replaced the drawn illustration on every improvement page with a credited
+> photograph, keeping the three diagrams that teach a mechanism a photograph cannot show. It
+> rebuilt the Renter basics carousel to focus one card at a time, widened the situation dialog so
+> it fits a laptop screen without scrolling and gave it a Reset button, and unified the disclaimer
+> cards onto one design. `/about` now opens on the split-incentive problem the project exists
+> because of, and states how AI was used to build the site. Three pages that had no inbound link
+> anywhere — the glossary, the pre-lease checklist and the materials page — now have routes to
+> them.
+>
+> What is still open: flip-card myth busters (F3) are built as a component but still need their
+> myth-and-correction pairs through content review. `/learn/whats-in-your-lease` and
+> `/learn/move-out-restore` touch leases and deposits and need human review before publishing, per
+> [AGENTS.md](AGENTS.md) rule 2. Accessibility verification — screen reader passes, the full zoom
+> matrix, a formal audit — is deferred to v2 and the accessibility statement says so plainly.
 >
 > See [docs/roadmap.md](docs/roadmap.md) for phase status and [docs/features.md](docs/features.md)
 > for what each feature covers.
@@ -47,6 +52,7 @@ Other group members added to a [Google Doc version of the documentation](https:/
 | [DESIGN.md](DESIGN.md) | Information architecture, visual system, components |
 | [AGENTS.md](AGENTS.md) | Instructions for AI coding agents working in this repo |
 | [docs/ai-use.md](docs/ai-use.md) | Every prompt used to build this site, in order |
+| [docs/image-credits.md](docs/image-credits.md) | Every photograph, its photographer, and its licence |
 
 ## License
 
