@@ -292,3 +292,41 @@ Other questions:
 - Are there any other parts of the website that are difficult to access or now obsolete? If you find this, ask me whether these should be deleted, linked to, or adapted.
 
 Clean up the code and styling. Then, complete the remaining improvements pages. Lastly, go through the Sustainable Hanover website. Adapt information from here (with citations) to improvement articles, about page, etc.
+
+### 2026-08-24 Fixing Interactivity
+
+Home page:
+- Make the shoes look more like they are walking forward in steps rather than sliding for the animation. This means resizing them appropriately for each step
+- What is some improvement that can be added as a spot in the bathroom? Are there any improvements in the sources/information documents that has not been added that could be relevant here?
+- The width of the help pop-up for instructions about how to use the house still does not look as expected. It should be wider
+
+Improvements page:
+- The opening animation for the hero section of the improvements page should be a front door of a house opening. Improvements is on the door. As the user scrolls, the door opens and reveals the "Renter basics" section
+
+About page:
+- The moving split halves effect is not working. When hovering over one side, that color should expand
+- Change the colors to match the style theme of this website
+
+Change other parts/sections/cards of the website to use the interactive features that have already been created, such as the story bars on the article pages and the carousel for the renter basics. Avoid long stretches of text/paragraphs that are the same style and overwhelming. Add animations and interactivity where it would enhance the website goals of creating a visually interesting and useful way to learn about these improvements.
+
+### 2026-08-24 Fixing Interactivity
+
+Home page:
+- Make the shoes look more like they are walking forward in steps rather than sliding for the animation. This means resizing them appropriately for each step
+- What is some improvement that can be added as a spot in the bathroom? Are there any improvements in the sources/information documents that has not been added that could be relevant here?
+- The width of the help pop-up for instructions about how to use the house still does not look as expected. It should be wider
+
+Improvements page:
+- The opening animation for the hero section of the improvements page should be a front door of a house opening. Improvements is on the door. As the user scrolls, the door opens and reveals the "Renter basics" section
+
+About page:
+- The moving split halves effect is not working. When hovering over one side, that color should expand
+- Change the colors to match the style theme of this website
+
+Change other parts/sections/cards of the website to use the interactive features that have already been created, such as the story bars on the article pages and the carousel for the renter basics. Avoid long stretches of text/paragraphs that are the same style and overwhelming. Add animations and interactivity where it would enhance the website goals of creating a visually interesting and useful way to learn about these improvements.
+
+### 2026-08-25 Interactivity and Animations
+
+Article pages:
+- The story bars should have more animation. When scrolling, they should briefly stick to the top of the screen and stack on top of each other until the screen is full. After, the user can scroll past and get to the contents below.
+- Why does "Hang thermal curtains" have $$$ and $25 to $75 when "Use a space heater..." has the same price range but $$? 

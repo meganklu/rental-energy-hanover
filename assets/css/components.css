@@ -1548,6 +1548,18 @@ body:has(.motion-loop) .motion-fab__pause {
   width: 100%;
   height: auto;
   flex-shrink: 0;
+  filter: var(--shoe-shadow-down);
+}
+
+/* Three stages of one shadow, added 2026-08-24 for the walk below. Seen from directly overhead, a
+   foot that has left the ground reads almost entirely through its shadow: planted, the shadow is
+   tight, close and dark; lifted, it is offset, spread and faint. Scale alone was carrying the whole
+   lift before this and 6% of it was not enough to read as a step. These are `filter` values rather
+   than `box-shadow` because the shape being lifted is an SVG outline, not a box. */
+.hero__shoes {
+  --shoe-shadow-down: drop-shadow(0 1px 1px rgba(20, 32, 26, 0.55));
+  --shoe-shadow-mid: drop-shadow(0 5px 5px rgba(20, 32, 26, 0.4));
+  --shoe-shadow-up: drop-shadow(0 10px 9px rgba(20, 32, 26, 0.26));
 }
 
 /* The walk, added 2026-08-21, rebuilt the same day (DESIGN.md §3.1). Scroll-progress driven, not
@@ -1605,36 +1617,55 @@ body:has(.motion-loop) .motion-fab__pause {
    against the ground in its half, at twice the pair's speed. Get this wrong and the planted foot
    skids, which is what the first pass looked like.
 
-   Both start the range at 0 so the pair rests level, side by side, the way a pair left at a door
-   sits — one of them mid-stance and the other mid-swing, which is the only phase where that is
-   true of both at once. `scale` stands in for the lift at the middle of each swing: from directly
-   overhead a raised foot reads as a nearer one, and there is no other axis to show it on. It is
-   also why the near shoe is the fractionally larger of the two at rest. */
+   Both start the range at translateX(0) scale(1) with the planted shadow, so the pair rests level
+   and side by side, the way a pair left at a door sits. The cycle picks up from there, which costs
+   the follow shoe a quarter-cycle of catching up in the first few percent of scroll and is not
+   visible at that speed. The alternative was letting the resting frame show one shoe mid-swing,
+   which at the lift size below would have read as a mistake rather than as a stride.
+
+   Revised 2026-08-24: the lift is what makes this read as walking rather than sliding, and it was
+   far too small. `scale` ran 1 to 1.06 and nothing else moved. It now runs 0.94 planted to 1.16 at
+   the top of the swing, with a keyframe either side of the peak so the foot rises and falls instead
+   of popping, and the drop shadow above spreads and fades across the same three stages. From
+   directly overhead those two are the only axes there are: a raised foot is a nearer one, and its
+   shadow has further to fall. */
 @keyframes shoe-step-lead {
-  0% { transform: translateX(0) scale(1); }
-  8.333% { transform: translateX(-22.5%) scale(1); }
-  16.667% { transform: translateX(0) scale(1.06); }
-  25% { transform: translateX(22.5%) scale(1); }
-  41.667% { transform: translateX(-22.5%) scale(1); }
-  50% { transform: translateX(0) scale(1.06); }
-  58.333% { transform: translateX(22.5%) scale(1); }
-  75% { transform: translateX(-22.5%) scale(1); }
-  83.333% { transform: translateX(0) scale(1.06); }
-  91.667% { transform: translateX(22.5%) scale(1); }
-  100% { transform: translateX(0) scale(1); }
+  0% { transform: translateX(0) scale(1); filter: var(--shoe-shadow-down); }
+  8.333% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  12.5% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  16.667% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  20.833% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  25% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  41.667% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  45.833% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  50% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  54.167% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  58.333% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  75% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  79.167% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  83.333% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  87.5% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  91.667% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  100% { transform: translateX(0) scale(0.94); filter: var(--shoe-shadow-down); }
 }
 
 @keyframes shoe-step-follow {
-  0% { transform: translateX(0) scale(1.06); }
-  8.333% { transform: translateX(22.5%) scale(1); }
-  25% { transform: translateX(-22.5%) scale(1); }
-  33.333% { transform: translateX(0) scale(1.06); }
-  41.667% { transform: translateX(22.5%) scale(1); }
-  58.333% { transform: translateX(-22.5%) scale(1); }
-  66.667% { transform: translateX(0) scale(1.06); }
-  75% { transform: translateX(22.5%) scale(1); }
-  91.667% { transform: translateX(-22.5%) scale(1); }
-  100% { transform: translateX(0) scale(1.06); }
+  0% { transform: translateX(0) scale(1); filter: var(--shoe-shadow-down); }
+  4.167% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  8.333% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  25% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  29.167% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  33.333% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  37.5% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  41.667% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  58.333% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  62.5% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  66.667% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  70.833% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  75% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  91.667% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
+  95.833% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  100% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
 }
 
 /* Only this border and what's inside it is "the mat" proper. Inset by a fixed margin (not
@@ -1778,12 +1809,15 @@ body:has(.motion-loop) .motion-fab__pause {
   left: 0;
   margin-top: var(--space-2);
   width: max-content;
-  /* Widened 2026-08-21: the 20rem cap broke a two-sentence instruction into four short lines and
-     made a callout read as a column of text. The `100%` half is what keeps it inside a narrow
+  /* Widened 2026-08-21 from a 20rem cap that broke a two-sentence instruction into four short
+     lines, and again 2026-08-24: 34rem still wrapped it to three. The instruction is about 82
+     characters, which wants roughly 40rem at this type size, so the cap is 48rem and the callout
+     sits on one line at any normal window width. The `100%` half is what keeps it inside a narrow
      window, and it is measured against .section-heading-row rather than the button, per the note
-     above. */
-  max-width: min(34rem, 100%);
-  padding: var(--space-2) var(--space-3);
+     above. Padding is a callout's rather than a tooltip's, since at this width it reads as a
+     panel. */
+  max-width: min(48rem, 100%);
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
   color: var(--color-text-on-dark);
@@ -2727,13 +2761,34 @@ body:has(.motion-loop) .motion-fab__pause {
    resizing. That shift is done with `:has()` rather than script, matching how the reduce-motion
    switch and the carousel already work in this file.
 
+   **One variable drives everything**, rebuilt 2026-08-24. The first pass set the two background
+   halves to 58% and 50% and let flex sort it out. Flex items shrink to fit by default, so a pair
+   with bases summing to 108% both shrank and the seam moved about 3.7% instead of 8% — a shift too
+   small to notice, which is why the effect read as broken. Worse, the panels themselves moved on a
+   separate `flex-grow` rule, so the colour and the text it sat behind travelled different
+   distances. Both now read `--split-pos` off the container, so the seam and the text move together
+   and by the same amount, and the shift is large enough to see.
+
    Nothing is hidden in the narrow state. Both panels carry all of their text at 50/50, and the
-   widening is emphasis alone — which is what makes it safe for it to be a hover effect at all,
+   widening is emphasis alone, which is what makes it safe for it to be a hover effect at all,
    since a reader who never hovers and never focuses misses nothing. */
 .split-continuum {
+  --split-pos: 50%;
   position: relative;
   isolation: isolate;
   color: var(--color-text-on-dark);
+}
+
+@media (min-width: 860px) {
+  .split-continuum:has(.split-side--tenant:hover),
+  .split-continuum:has(.split-side--tenant:focus-within) {
+    --split-pos: 62%;
+  }
+
+  .split-continuum:has(.split-side--owner:hover),
+  .split-continuum:has(.split-side--owner:focus-within) {
+    --split-pos: 38%;
+  }
 }
 
 .split-continuum__bg {
@@ -2744,28 +2799,19 @@ body:has(.motion-loop) .motion-fab__pause {
   overflow: hidden;
 }
 
-.split-continuum__bg span {
-  display: block;
-  width: 50%;
+/* `flex: none` on the first half and `flex: 1` on the second: the width below is a hard size, and
+   the other half simply takes what is left. Left to the default `flex-shrink: 1` the two would
+   negotiate, which is the bug this replaced. */
+.split-continuum__bg span:first-child {
+  flex: none;
+  width: var(--split-pos);
+  background: var(--color-split-tenant);
   transition: width var(--motion-base) var(--motion-ease);
 }
 
-.split-continuum__bg span:first-child {
-  background: var(--color-split-tenant);
-}
-
 .split-continuum__bg span:last-child {
+  flex: 1;
   background: var(--color-split-owner);
-}
-
-.split-continuum:has(.split-side--tenant:hover) .split-continuum__bg span:first-child,
-.split-continuum:has(.split-side--tenant:focus-within) .split-continuum__bg span:first-child {
-  width: 58%;
-}
-
-.split-continuum:has(.split-side--owner:hover) .split-continuum__bg span:first-child,
-.split-continuum:has(.split-side--owner:focus-within) .split-continuum__bg span:first-child {
-  width: 42%;
 }
 
 .split-continuum h1,
@@ -2836,13 +2882,23 @@ body:has(.motion-loop) .motion-fab__pause {
 .split-side {
   flex: 1 1 20rem;
   display: flex;
-  transition: flex-grow var(--motion-base) var(--motion-ease);
 }
 
+/* Above the stacking breakpoint the panels track the same `--split-pos` the colour field does, so
+   the text boundary and the colour boundary are the same line and move as one. */
 @media (min-width: 860px) {
-  .split-side:hover,
-  .split-side:focus-within {
-    flex-grow: 1.25;
+  .split-side {
+    flex-wrap: nowrap;
+    transition: width var(--motion-base) var(--motion-ease);
+  }
+
+  .split-side--tenant {
+    flex: none;
+    width: var(--split-pos);
+  }
+
+  .split-side--owner {
+    flex: 1;
   }
 }
 
@@ -2884,7 +2940,7 @@ body:has(.motion-loop) .motion-fab__pause {
 .split-side__inner ul {
   margin: 0 0 var(--space-6);
   padding-left: var(--space-5);
-  color: rgba(255, 255, 255, 0.94);
+  color: var(--color-text-on-dark);
 }
 
 .split-side__inner ul:last-child {
