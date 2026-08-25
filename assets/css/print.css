@@ -18,9 +18,36 @@
 .back-to-house,
 .nav-todo,
 .todo-toolbar,
+.todo-add-all,
+.program-filter,
+.program__more > summary,
 .todo-item__links,
 .todo-shared {
   display: none !important;
+}
+
+/* On paper a carousel is a stack. There is no scrolling a sheet of paper sideways, and the
+   programs list is a carousel now, so without this a page prints as its first card and a sliver of
+   the second. The height cap and the peek carousel's scale-down come off for the same reason: both
+   are answers to a window, and paper is not one. */
+.carousel__track {
+  display: block !important;
+  overflow: visible !important;
+  padding-inline: 0 !important;
+}
+
+.carousel__slide {
+  max-height: none !important;
+  overflow: visible !important;
+  transform: none !important;
+  opacity: 1 !important;
+  break-inside: avoid;
+  margin-bottom: var(--space-4);
+}
+
+/* Every card the height of the tallest one wastes most of a sheet. Paper has no rows to line up. */
+.card-grid {
+  grid-auto-rows: auto !important;
 }
 
 /* The list page on paper: an empty box to tick by hand, and no link furniture. */

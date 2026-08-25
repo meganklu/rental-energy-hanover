@@ -1070,12 +1070,10 @@
 }
 
 /* ---------- Programs page, revised 2026-08-25 (DESIGN.md §3.9) ---------- */
-/* The filter row. Same `.sort-control` label shape the library toolbar uses, so the two pages ask
-   their questions in the same voice. Centred under the centred heading, with the count on its own
-   line once the row wraps. */
-/* Mobile-first: the label sits above its select and the select fills the column, because at 360px
-   "What it helps with" beside a select wraps to four words on four lines. Above 620px there is room
-   for the label and the select on one line, and the row centres under the centred heading. */
+/* The filter row, in the same `.sort-control` label shape the library toolbar uses so the two pages
+   ask their questions in the same voice. Mobile-first: the label sits above its select and the
+   select fills the column, because at 360px "What it helps with" beside a select wraps to four
+   words on four lines. Above 620px both fit on one line and the row centres under the heading. */
 .program-filter {
   display: flex;
   flex-direction: column;
@@ -1127,11 +1125,11 @@
    paragraphs and six definition pairs, taller than a laptop screen on its own, and a carousel
    taller than the window is one whose controls you cannot see while you read it. `<details>` rather
    than a scripted panel, per AGENTS.md, so it opens with no JavaScript and find-in-page still
-   reaches what is inside it. */
-/* Not the boxed `.disclosure` treatment the site uses for a section-sized panel. This one is a
-   control inside a card that already has a frame, so it reads as a link with a chevron rather than
-   as a second bordered box drawn across the card. `overflow: visible` puts back what `.disclosure`
-   hides, so the focus ring is not clipped. */
+   reaches what is inside it.
+
+   Not the boxed `.disclosure` treatment, though: this one sits inside a card that already has a
+   frame, so it reads as a link with a chevron rather than a second box drawn across the card.
+   `overflow: visible` puts back what `.disclosure` hides, so the focus ring is not clipped. */
 .program__more {
   margin-block: var(--space-3);
   border: 0;
