@@ -68,10 +68,20 @@
       </div>
     </div>
 
-    <p class="empty-state" data-todo-empty hidden>
-      Nothing on your list yet. Open <a href="../improvements/">Improvements</a> and add the ones
-      that apply to your place. Everything stays in this browser.
-    </p>
+    <div class="empty-state" data-todo-empty hidden>
+      <svg class="icon empty-state__icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-list"/></svg>
+      <p>
+        Nothing on your list yet. Add the improvements that apply to your place and they will
+        appear here, sorted into what to buy, what to ask about, and what to do. Everything stays
+        in this browser.
+      </p>
+      <p>
+        <a class="btn btn--primary" href="../improvements/">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          Browse improvements
+        </a>
+      </p>
+    </div>
 
     <div class="todo-toolbar" data-todo-toolbar>
       <button type="button" class="btn btn--secondary" data-todo-print>
