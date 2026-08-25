@@ -572,13 +572,29 @@
 @media (min-width: 900px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
   body:not(:has(.reduce-motion-input:checked)) .story-stack {
     --stack-step: 4.5rem;
-    padding-bottom: 30vh;
+    padding-bottom: 25vh;
   }
 
+  /* A screen each. The bar is the section while it is on screen, so its content centres in the
+     window rather than sitting wherever the flow left it. */
   body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar {
     position: sticky;
     top: var(--stack-top, 0px);
     margin-block: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar > .story-bar__inner {
+    width: 100%;
+  }
+
+  /* The gap the bars start apart by. Sticky closes it as the reader scrolls, which is the coming
+     together: without it the second bar is already touching the first and arrives on the stack with
+     nothing having visibly happened. */
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar + .story-bar {
+    margin-top: 25vh;
   }
 
   body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(2) {
@@ -593,7 +609,8 @@
     --stack-top: calc(var(--stack-step) * 3);
   }
 
-  /* A stack of one has nothing to stack against, so it neither pins nor reserves the dwell. */
+  /* A stack of one has nothing to stack against, so it neither pins nor reserves the dwell. It
+     still takes the screen, because that is the section treatment rather than the stacking. */
   body:not(:has(.reduce-motion-input:checked)) .story-stack:not(:has(.story-bar + .story-bar)) {
     padding-bottom: 0;
   }
@@ -687,15 +704,19 @@
     body:not(:has(.reduce-motion-input:checked)) .story-bar__body {
       animation: story-bar-in linear both;
       animation-timeline: view();
-      animation-range: entry 0% cover 35%;
+      /* Longer than the old `cover 35%`, so the move plays out over enough scroll to be watched
+         rather than being finished before the bar is properly on screen. */
+      animation-range: entry 0% cover 55%;
     }
 
     body:not(:has(.reduce-motion-input:checked)) .story-bar__heading {
-      animation-name: story-bar-in-from-left;
+      animation-name: story-bar-heading-in-from-left;
+      transform-origin: left center;
     }
 
     body:not(:has(.reduce-motion-input:checked)) .story-bar--reverse .story-bar__heading {
-      animation-name: story-bar-in-from-right;
+      animation-name: story-bar-heading-in-from-right;
+      transform-origin: right center;
     }
 
     body:not(:has(.reduce-motion-input:checked)) .story-bar__body {
@@ -708,14 +729,29 @@
   }
 }
 
+/* Revised 2026-08-25: 14px was a nudge nobody saw. The offset is 3.5rem now and the heading takes a
+   scale as well, which at display size is the half of it that actually reads. Still transform-only,
+   for the reason in the note above: a `view()` timeline that never advances leaves the element stuck
+   wherever the range started, and a transform stuck anywhere still leaves fully legible,
+   full-contrast text. Opacity would not. */
 @keyframes story-bar-in-from-left {
-  from { transform: translateX(-14px); }
+  from { transform: translateX(-3.5rem); }
   to { transform: translateX(0); }
 }
 
 @keyframes story-bar-in-from-right {
-  from { transform: translateX(14px); }
+  from { transform: translateX(3.5rem); }
   to { transform: translateX(0); }
+}
+
+@keyframes story-bar-heading-in-from-left {
+  from { transform: translateX(-3.5rem) scale(0.9); }
+  to { transform: translateX(0) scale(1); }
+}
+
+@keyframes story-bar-heading-in-from-right {
+  from { transform: translateX(3.5rem) scale(0.9); }
+  to { transform: translateX(0) scale(1); }
 }
 
 /* ---------- Glossary term ---------- */
@@ -2859,19 +2895,18 @@ body:has(.motion-loop) .motion-fab__pause {
    top quarter with grilles radiating from the sill, two panels above the lock rail and two below,
    and a brickmould casing around the frame. The greens are the site's; the white trim and grilles
    are the reference's. */
+/* The scene is an ordinary one-screen section by default, and only becomes three viewports of
+   scroll with a pinned stage inside the same gate the animation itself sits behind (below). Pinning
+   the view is only worth anything if something is happening while it is pinned: with the animation
+   off, a reader who has asked for less movement, or a browser without scroll timelines, would
+   otherwise get three screens of scrolling past a door that never moves. */
 .door-scene {
   position: relative;
-  /* Three viewports of scroll for one viewport of view. The first two thirds swing the door, the
-     last third floods the colour out. Collapses to a single screen without scroll-timeline support
-     or under reduced motion (below), where there is nothing to scrub through. */
-  height: 300vh;
 }
 
 .door-scene__stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
   min-height: 34rem;
+  padding-block: var(--space-7);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3078,6 +3113,19 @@ body:has(.motion-loop) .motion-fab__pause {
    on with the title flat and legible, and the flood never appears. */
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    body:not(:has(.reduce-motion-input:checked)) .door-scene {
+      height: 300vh;
+    }
+
+    /* Three viewports of scroll for one viewport of view: the first two thirds swing the door, the
+       last third floods the colour out. */
+    body:not(:has(.reduce-motion-input:checked)) .door-scene__stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding-block: 0;
+    }
+
     body:not(:has(.reduce-motion-input:checked)) .door-hero__door,
     body:not(:has(.reduce-motion-input:checked)) .door-scene__flood {
       animation-timing-function: linear;
@@ -3095,16 +3143,6 @@ body:has(.motion-loop) .motion-fab__pause {
       animation-range: 150vh 215vh;
     }
   }
-}
-
-@media not all and (min-width: 600px) {
-  .door-scene { height: auto; }
-  .door-scene__stage { position: static; height: auto; padding-block: var(--space-7); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .door-scene { height: auto; }
-  .door-scene__stage { position: static; height: auto; padding-block: var(--space-7); }
 }
 
 /* Stops at 74 degrees rather than swinging flat to 90: past about 75 the door is edge-on, the sign
