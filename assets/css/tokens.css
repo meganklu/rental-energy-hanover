@@ -58,23 +58,40 @@
   --color-door-glass: #CBE2EF;
   --color-door-handle: #7A5230;
 
-  /* The furnished doll house only. Added 2026-08-25, see DESIGN.md §3.2. The surfaces a room is
-     drawn out of: the wall behind, the floor under, and the line that draws the
-     baseboard, the floorboards and every piece of furniture standing on them. They are
-     deliberately close to each other in tone, because the scenery's job is to be the field that
-     the pressable objects stand out from rather than to compete with them. None of them ever
-     carries text, and none of them is the only signal for anything. */
-  --color-room-wall: #FAFBF7;
-  --color-room-floor: #E7DCC8;
-  --color-room-line: #A9B8A6;
-  /* The plate a name sits on, and the plate under an object being hovered. Near-opaque rather than
-     solid, so a drawing behind it is still faintly there and the plate reads as paper on a wall
-     rather than as a hole cut in one. */
-  --color-room-plate: rgba(255, 255, 255, 0.88);
+  /* The furnished doll house only. Added 2026-08-25, see DESIGN.md §3.2. The palette is taken from
+     the Calico Critters houses in docs/ai-use.md: cream walls throughout, warm mid-brown floors,
+     heavier beams where one story sits on the next, and light natural wood furniture carrying soft
+     fabric pastels. The color lives in the furniture, not in the walls — a room that is pink from
+     wall to wall leaves nothing for a pink chair to be.
 
-  /* The halo on whichever spot the guide is pointing at. Accent at low alpha, so it reads as a
-     glow around the object rather than as a second border competing with its own. */
-  --color-guide-halo: rgba(4, 102, 72, 0.18);
+     Decorative throughout. Not one of these ever carries text, and not one is the only signal for
+     anything: every object a reader can press also carries its name.
+
+     They sit outside the site's own palette on purpose. This is a toy drawn at toy scale, and the
+     greens and grays that make a page of advice legible make a doll house look like a wireframe of
+     one. The roof stays the site's green, since the brief scopes the toy reference to the interior. */
+  --toy-outline: #7A5C40;
+  --toy-wall: #F5EDE0;
+  --toy-wall-print: #E8DCC8;
+  --toy-floor: #D8AE7E;
+  --toy-floor-dark: #B08355;
+  --toy-beam: #8B5E3C;
+
+  --toy-wood: #DFB07C;
+  --toy-wood-dark: #B07E4C;
+  --toy-wood-light: #EFD3AE;
+  --toy-cream: #FBF4E7;
+  --toy-white: #FFFFFF;
+
+  --toy-rose: #E7A2A8;
+  --toy-rose-soft: #F6D3D6;
+  --toy-sage: #9CC4A8;
+  --toy-sage-soft: #CDE4D5;
+  --toy-sky: #A9CDE3;
+  --toy-sky-soft: #DCEBF4;
+  --toy-butter: #F4D98B;
+  --toy-slate: #9AA8B2;
+  --toy-slate-soft: #CFD8DE;
 
   /* Hero welcome mat only. Added 2026-08-19, see DESIGN.md §4. */
   --color-mat: #D9BE8A;
