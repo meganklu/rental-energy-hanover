@@ -133,13 +133,30 @@
 
     <div class="dollhouse" id="dollhouse">
       <div class="dollhouse__roof" aria-hidden="true"></div>
+      <!-- Furnished rooms, 2026-08-25 (DESIGN.md §3.2). Each room is a cutaway box seen from the
+           front: a back wall, a floor, and things standing on or against them. Two kinds of thing
+           are in a room and they are told apart by shape rather than by colour. A `.room-prop` is
+           scenery — a bed, a sofa, a tub — flat, unlabelled, `aria-hidden`, and not focusable. A
+           `.hotspot` is a real link with a border, an icon and a visible name, and it is the only
+           kind of object that carries a label at all, which is what says "this is the one you can
+           press" without depending on colour.
+
+           `--x` and `--y` place an object's centre in its room, as a percentage of the room. They
+           are inline because they are per-object placement rather than a style: the same reason a
+           chart's data is not in a stylesheet. Every one is chosen so an object sits where it
+           would in a real room — the radiator under the window, the outlet near the floor, the
+           light fixture at the ceiling — and so no two labels overlap at the smallest size a room
+           is drawn at. -->
       <ul class="room-list">
 
         <li>
           <section id="bedroom" class="room room--bedroom" aria-labelledby="bedroom-h">
             <h3 id="bedroom-h"><a class="room-open" href="#bedroom">Bedroom</a></h3>
-            <div class="room-hotspots">
+            <div class="room-hotspots room-scene">
+              <span class="room-prop room-prop--bed" style="--x: 78%; --y: 78%; --w: 40%; --h: 26%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--pane" style="--x: 24%; --y: 24%; --w: 24%; --h: 28%" aria-hidden="true"></span>
               <a href="improvements/dont-block-your-radiator-or-baseboard/" class="hotspot"
+                 style="--x: 24%; --y: 54%"
                  data-hotspot-id="bedroom-radiator" data-slug="dont-block-your-radiator-or-baseboard"
                  data-room="Bedroom" data-label="Radiator or baseboard" data-order="9"
                  aria-label="Bedroom radiator or baseboard: Keep it clear so heat can actually reach the room.">
@@ -147,6 +164,7 @@
                 <span class="hotspot__label">Radiator or baseboard</span>
               </a>
               <a href="improvements/space-heaters-real-cost-and-safety/" class="hotspot"
+                 style="--x: 56%; --y: 84%"
                  data-hotspot-id="bedroom-space-heater" data-slug="space-heaters-real-cost-and-safety"
                  data-room="Bedroom" data-label="Space heater" data-order="10"
                  aria-label="Bedroom space heater: Costs more to run than central heat, and needs safe clearance from anything flammable.">
@@ -154,6 +172,7 @@
                 <span class="hotspot__label">Space heater</span>
               </a>
               <a href="improvements/winter-break-shutdown/" class="hotspot"
+                 style="--x: 76%; --y: 44%"
                  data-hotspot-id="bedroom-break" data-slug="winter-break-shutdown"
                  data-room="Bedroom" data-label="Packed for a break" data-order="16"
                  aria-label="Bedroom: what to set and what to unplug before you leave for a break.">
@@ -167,8 +186,12 @@
         <li>
           <section id="bathroom" class="room room--bathroom" aria-labelledby="bathroom-h">
             <h3 id="bathroom-h"><a class="room-open" href="#bathroom">Bathroom</a></h3>
-            <div class="room-hotspots">
+            <div class="room-hotspots room-scene">
+              <span class="room-prop room-prop--tub" style="--x: 30%; --y: 82%; --w: 46%; --h: 20%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--toilet" style="--x: 62%; --y: 86%; --w: 13%; --h: 15%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--sink" style="--x: 84%; --y: 64%; --w: 18%; --h: 13%" aria-hidden="true"></span>
               <a href="improvements/low-flow-showerhead/" class="hotspot"
+                 style="--x: 30%; --y: 38%"
                  data-hotspot-id="bathroom-showerhead" data-slug="low-flow-showerhead"
                  data-room="Bathroom" data-label="Shower head" data-order="12"
                  aria-label="Bathroom shower head: it unscrews by hand, and less hot water through it is less fuel burned heating it.">
@@ -182,8 +205,11 @@
         <li>
           <section id="entry" class="room room--porch" aria-labelledby="entry-h">
             <h3 id="entry-h"><a class="room-open" href="#entry">Entry and porch</a></h3>
-            <div class="room-hotspots">
+            <div class="room-hotspots room-scene">
+              <span class="room-prop room-prop--door" style="--x: 32%; --y: 58%; --w: 40%; --h: 72%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--mat" style="--x: 32%; --y: 95%; --w: 44%; --h: 6%" aria-hidden="true"></span>
               <a href="improvements/door-sweeps-and-weatherstripping/" class="hotspot"
+                 style="--x: 34%; --y: 62%"
                  data-hotspot-id="entry-door" data-slug="door-sweeps-and-weatherstripping"
                  data-room="Entry" data-label="Exterior door" data-order="7"
                  aria-label="Entry door: Sealing gaps around the door frame stops drafts, usually without a contractor.">
@@ -191,6 +217,7 @@
                 <span class="hotspot__label">Exterior door</span>
               </a>
               <a href="learn/ask-your-landlord/" class="hotspot"
+                 style="--x: 76%; --y: 26%"
                  data-hotspot-id="entry-ask" data-slug="ask-your-landlord"
                  data-room="Entry" data-label="Asking your landlord" data-order="15"
                  aria-label="Entry: how to ask your landlord for an improvement so the request goes somewhere.">
@@ -198,6 +225,7 @@
                 <span class="hotspot__label">Asking your landlord</span>
               </a>
               <a href="learn/move-out-restore/" class="hotspot"
+                 style="--x: 76%; --y: 74%"
                  data-hotspot-id="entry-keys" data-slug="move-out-restore"
                  data-room="Entry" data-label="Keys on the way out" data-order="17"
                  aria-label="Entry: what to take down and photograph before you hand the keys back.">
@@ -211,8 +239,13 @@
         <li>
           <section id="living-room" class="room room--living" aria-labelledby="living-room-h">
             <h3 id="living-room-h"><a class="room-open" href="#living-room">Living room</a></h3>
-            <div class="room-hotspots">
+            <div class="room-hotspots room-scene">
+              <span class="room-prop room-prop--pane" style="--x: 18%; --y: 26%; --w: 24%; --h: 30%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--drape" style="--x: 44%; --y: 42%; --w: 10%; --h: 48%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--sofa" style="--x: 32%; --y: 84%; --w: 40%; --h: 22%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--rug" style="--x: 72%; --y: 94%; --w: 28%; --h: 6%" aria-hidden="true"></span>
               <a href="improvements/seal-your-windows-with-film/" class="hotspot"
+                 style="--x: 18%; --y: 26%"
                  data-hotspot-id="living-room-window" data-slug="seal-your-windows-with-film"
                  data-room="Living room" data-label="Window" data-order="5"
                  aria-label="Living room window: Sealing gaps here improves energy efficiency significantly.">
@@ -220,6 +253,7 @@
                 <span class="hotspot__label">Window</span>
               </a>
               <a href="improvements/thermal-curtains/" class="hotspot"
+                 style="--x: 44%; --y: 50%"
                  data-hotspot-id="living-room-curtains" data-slug="thermal-curtains"
                  data-room="Living room" data-label="Curtains" data-order="6"
                  aria-label="Living room curtains: a lined curtain closed at dusk puts still air between you and a cold window.">
@@ -227,6 +261,7 @@
                 <span class="hotspot__label">Curtains</span>
               </a>
               <a href="improvements/thermostat-setback/" class="hotspot"
+                 style="--x: 72%; --y: 24%"
                  data-hotspot-id="living-room-thermostat" data-slug="thermostat-setback"
                  data-room="Living room" data-label="Thermostat" data-order="8"
                  aria-label="Living room thermostat: Setting it back for a stretch of time typically uses less energy than holding one temperature all day.">
@@ -234,6 +269,7 @@
                 <span class="hotspot__label">Thermostat</span>
               </a>
               <a href="improvements/phantom-load-and-plug-loads/" class="hotspot"
+                 style="--x: 78%; --y: 74%"
                  data-hotspot-id="living-room-outlets" data-slug="phantom-load-and-plug-loads"
                  data-room="Living room" data-label="Outlets and plugs" data-order="14"
                  aria-label="Living room outlets: Devices plugged in but off still draw a small amount of power around the clock.">
@@ -247,8 +283,12 @@
         <li>
           <section id="kitchen" class="room room--kitchen" aria-labelledby="kitchen-h">
             <h3 id="kitchen-h"><a class="room-open" href="#kitchen">Kitchen</a></h3>
-            <div class="room-hotspots">
+            <div class="room-hotspots room-scene">
+              <span class="room-prop room-prop--fridge" style="--x: 21%; --y: 60%; --w: 26%; --h: 58%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--table" style="--x: 50%; --y: 80%; --w: 26%; --h: 5%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--counter" style="--x: 72%; --y: 86%; --w: 52%; --h: 16%" aria-hidden="true"></span>
               <a href="learn/read-your-bill/" class="hotspot"
+                 style="--x: 22%; --y: 44%"
                  data-hotspot-id="kitchen-bill" data-slug="read-your-bill"
                  data-room="Kitchen" data-label="The bill" data-order="1"
                  aria-label="The bill on the fridge: start here to learn what is actually driving your electric bill.">
@@ -256,6 +296,7 @@
                 <span class="hotspot__label">The bill<span class="hotspot__badge-flag" data-flag="start">Start here</span></span>
               </a>
               <a href="learn/whats-in-your-lease/" class="hotspot"
+                 style="--x: 52%; --y: 70%"
                  data-hotspot-id="kitchen-lease" data-slug="whats-in-your-lease"
                  data-room="Kitchen" data-label="The lease on the table" data-order="2"
                  aria-label="Kitchen table: find the lines in your lease that say which bills arrive in your name.">
@@ -263,6 +304,7 @@
                 <span class="hotspot__label">The lease on the table</span>
               </a>
               <a href="improvements/led-lighting-swaps/" class="hotspot"
+                 style="--x: 78%; --y: 22%"
                  data-hotspot-id="kitchen-light" data-slug="led-lighting-swaps"
                  data-room="Kitchen" data-label="Light fixture" data-order="13"
                  aria-label="Kitchen light fixture: Swapping to LED bulbs cuts the electricity a light uses.">
@@ -276,8 +318,13 @@
         <li>
           <section id="basement" class="room room--basement" aria-labelledby="basement-h">
             <h3 id="basement-h"><a class="room-open" href="#basement">Basement</a></h3>
-            <div class="room-hotspots">
+            <div class="room-hotspots room-scene">
+              <span class="room-prop room-prop--joists" style="--x: 50%; --y: 7%; --w: 96%; --h: 9%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--boiler" style="--x: 26%; --y: 64%; --w: 13%; --h: 30%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--tank" style="--x: 52%; --y: 64%; --w: 11%; --h: 32%" aria-hidden="true"></span>
+              <span class="room-prop room-prop--stairs" style="--x: 6%; --y: 58%; --w: 11%; --h: 68%" aria-hidden="true"></span>
               <a href="learn/heating-systems/" class="hotspot"
+                 style="--x: 26%; --y: 56%"
                  data-hotspot-id="basement-heating-system" data-slug="heating-systems"
                  data-room="Basement" data-label="Heating system" data-order="3"
                  aria-label="Basement heating system: What kind of heat your rental has, and what it means for your bill.">
@@ -285,6 +332,7 @@
                 <span class="hotspot__label">Heating system</span>
               </a>
               <a href="improvements/hot-water-showers-and-laundry/" class="hotspot"
+                 style="--x: 52%; --y: 56%"
                  data-hotspot-id="basement-water-heater" data-slug="hot-water-showers-and-laundry"
                  data-room="Basement" data-label="Water heater" data-order="11"
                  aria-label="Basement water heater: Shower length and wash temperature both affect your bill.">
@@ -292,6 +340,7 @@
                 <span class="hotspot__label">Water heater</span>
               </a>
               <a href="learn/find-your-drafts/" class="hotspot"
+                 style="--x: 78%; --y: 34%"
                  data-hotspot-id="basement-rim-joist" data-slug="find-your-drafts"
                  data-room="Basement" data-label="Rim joist and attic hatch" data-order="4"
                  aria-label="Basement rim joist: This is where a lot of a rental's heat actually escapes.">

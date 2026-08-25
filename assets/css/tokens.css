@@ -58,6 +58,21 @@
   --color-door-glass: #CBE2EF;
   --color-door-handle: #7A5230;
 
+  /* The furnished doll house only. Added 2026-08-25, see DESIGN.md §3.2. Four values for the
+     scenery a room is drawn out of: the wall behind, the floor under, the line where they meet
+     and the furniture standing on it. None of them ever carries text, and none of them is the
+     only signal for anything — every object a reader can press carries a border, an icon and a
+     name on top of this. They are deliberately low-contrast against each other, because the
+     scenery's job is to be the background the pressable objects stand out from. */
+  --color-room-wall: #F7F9F4;
+  --color-room-floor: #EBE2D2;
+  --color-room-line: #C9D4C6;
+  --color-room-prop: #DCE5D8;
+
+  /* The halo on whichever spot the guide is pointing at. Accent at low alpha, so it reads as a
+     glow around the object rather than as a second border competing with its own. */
+  --color-guide-halo: rgba(4, 102, 72, 0.18);
+
   /* Hero welcome mat only. Added 2026-08-19, see DESIGN.md §4. */
   --color-mat: #D9BE8A;
   --color-mat-border: #000000;

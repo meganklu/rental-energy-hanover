@@ -429,6 +429,48 @@ from.
 
 The centerpiece. Everything else on the site can be reached from it.
 
+**Furnished rooms, an experiment on `feature/dollhouse-furniture`, 2026-08-25.** The rooms held a
+row of chips, which meant the house was a house in name and a list of buttons in fact, and it meant
+opening a room bought you nothing except bigger buttons. This branch draws each room as a cutaway
+seen from the front — a wall, a floor, and things standing on and against them — and puts each spot
+where its object actually is. The radiator under the window, the outlet near the floor, the bill on
+the fridge, the joists over the basement.
+
+**Two kinds of object, told apart by shape.** A prop is scenery: a bed, a sofa, a tub, a run of
+stairs. Flat fill, no border, no label, `aria-hidden`, not focusable. A spot is the same `.hotspot`
+link it always was, with a border, an icon and its name. Only spots carry a name, and only spots
+carry a frame, so "which of these can I press" is answered twice over without either answer being a
+colour. Where a spot names something big enough to draw — the door, the window, the fridge — the
+prop is drawn behind it and the spot sits on it, which is what makes the spot read as a label on an
+object rather than a button floating on a wall.
+
+**Placement is `--x`/`--y` in the markup**, as a percentage of the room. Inline, because it is
+per-object placement rather than a style, the same reason a chart's data does not live in a
+stylesheet. That also keeps the whole experiment in two files: the placement in `index.html` and one
+marked block in `components.css` that reverts by deletion.
+
+**Guidance needed no JavaScript.** `dollhouse.js` already flags the next unvisited spot with "Start
+here" or "Next"; the branch only restyles that flag into a tag above the object with an arrowhead
+pointing down at it, and `:has()` puts a halo on whichever spot is carrying it. Three signals for
+one thing: the words, the pointer's shape, the colour. The tag nods once every five seconds so the
+eye finds it among seventeen objects, gated off under reduced motion, where the words and the arrow
+still do the whole job.
+
+**What it costs, and this is the finding.** A spot's label is sized in text and text does not shrink
+with the room; the placement is a percentage and does. Below about 1000px the two stop agreeing:
+labels collide with each other and run off the wall. Measured across 640 to 1440, not guessed. So
+the furnished scene is a wide-screen treatment, and everything narrower drops back to the chip rows
+it replaced, which were designed for that width and lose nothing — the same links, the same names,
+the same guide flag, in a row instead of on a wall. Below 600px the drawing is hidden entirely and
+the plain "Everything in this house" list takes over, unchanged.
+
+**Is it worth it.** The strongest argument for it is the enlarged room, which is where the request
+started. Opening a room used to give you the same chips at a larger size. It now gives you a room
+you can read: the window with its curtain beside it, the sofa under them, the outlet by the floor.
+The strongest argument against it is that it is a second layout to maintain for one breakpoint band
+and one page, and that seventeen hand-placed coordinates have to be re-checked whenever a spot's
+name changes length. Not merged. See `docs/ai-use.md` for the request this answers.
+
 **How to play is a callout, not a paragraph, added 2026-08-19.** "Click a room to open it. Click
 each highlighted spot to see what you can do about it." moved off the page by default and into a
 hover/focus callout, opened from a help icon (a question mark in a circle) sitting next to the
@@ -1463,6 +1505,7 @@ to be better than.
 | Room box | One room in the house, and the enlarged view of it | small (in the house), enlarged (`:target`), focused, empty (no hotspots apply to this student) |
 | Next spot control | Carries the guided order from one info bar to the next | default, focus-visible, last spot, removed once all spots are seen (revised 2026-08-19, was a relabeled state) |
 | Back to the house | Returns from an enlarged room to the full view | default, focus-visible |
+| Room prop (experiment, 2026-08-25) | Scenery inside a furnished room: bed, sofa, tub, counter, stairs, joists. No label, no border, `aria-hidden`, never focusable — the absence of all three is what says it is not the thing to press | single state |
 | Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker), hidden (does not apply to the student's situation — reversed 2026-08-20, was dimmed with a text reason, see §3.2), 44px hit area |
 | Info bar | Opens under the drawing with the short answer | closed, opening, open, empty, error, no JavaScript (becomes a link) |
 | Flip card | Flashcards for myths and definitions | front, back, focus-visible, reduced motion. Spec in §5.1 |
