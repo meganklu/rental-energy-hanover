@@ -1614,10 +1614,9 @@ body:has(.motion-loop) .motion-fab__pause {
    is informational. */
 .hero__shoes {
   position: absolute;
-  /* Left of the wordmark's centre so the pair walks up beside "Welcome" rather than straight
-     through the middle of it. Revised 2026-08-25 from the bottom-left corner it started in when
-     the walk went across the mat. */
-  left: 16%;
+  /* Bottom-right corner of the mat, where a pair actually gets kicked off, and where they sat
+     before the walk turned upward. They walk up from there. */
+  right: 10%;
   bottom: 3%;
   /* A row, revised 2026-08-25. The shoe points up now (see the markup), and from above a pair
      facing away from you sits side by side across the screen rather than one in front of the
@@ -2889,14 +2888,39 @@ body:has(.motion-loop) .motion-fab__pause {
   perspective-origin: 62% 50%;
 }
 
-/* The brickmould casing, sitting outside the opening on all four sides. Part of the frame rather
-   than the door, so it stays put while the door swings. */
+/* The casing, sitting outside the opening on all four sides. Part of the frame rather than the
+   door, so it stays put while the door swings. Three layers stand in for a moulded architrave: the
+   flat casing board itself, a bead line inset from its edge, and a pediment capping the head. All
+   decorative, all on the frame, none of it on the leaf that moves. */
 .door-hero__frame {
   position: absolute;
-  inset: -3.5%;
-  border-radius: var(--radius-sm);
+  inset: -6% -7%;
+  border-radius: 2px;
   background: var(--color-bg);
-  box-shadow: 0 0 0 3px var(--color-border-strong), var(--shadow-raised);
+  box-shadow: 0 0 0 2px var(--color-border-strong), var(--shadow-raised);
+}
+
+/* The bead: a second line inside the casing, which is what separates a moulding from a border. */
+.door-hero__frame::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 1px;
+}
+
+/* The pediment over the head of the frame: a wider cap with its own shadow line under it. */
+.door-hero__frame::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  bottom: calc(100% - 2px);
+  height: 5%;
+  min-height: 12px;
+  border-radius: 2px 2px 0 0;
+  background: var(--color-bg);
+  box-shadow: 0 0 0 2px var(--color-border-strong), 0 4px 6px rgba(20, 32, 26, 0.18);
 }
 
 .door-hero__opening {
@@ -2932,7 +2956,7 @@ body:has(.motion-loop) .motion-fab__pause {
 }
 
 .door-face__glass path {
-  fill: var(--color-surface-brand);
+  fill: var(--color-door-glass);
 }
 
 .door-face__grille path,
@@ -2958,9 +2982,12 @@ body:has(.motion-loop) .motion-fab__pause {
    reaches. */
 .door-hero__title {
   position: absolute;
-  left: 8%;
-  right: 8%;
-  top: 55%;
+  left: 10%;
+  right: 10%;
+  /* The rail between the glass and the upper panels, which is where a door plate goes and, more to
+     the point, is not where the handle is. Sharing the lock rail with it put the two on top of each
+     other. */
+  top: 33%;
   transform: translateY(-50%);
   margin: 0;
   padding: var(--space-2) var(--space-4);
@@ -2991,16 +3018,31 @@ body:has(.motion-loop) .motion-fab__pause {
 .door-hero__title::before { left: 6px; }
 .door-hero__title::after { right: 6px; }
 
+/* A brass lever on a backplate, rather than the round knob it started as. The plate is what makes
+   it read as hardware at this size instead of as a dot. */
 .door-hero__knob {
   position: absolute;
-  right: 6%;
-  top: 55%;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--color-brand);
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
+  right: 5%;
+  top: 65%;
+  width: 9px;
+  height: 26px;
+  border-radius: 2px;
+  background: var(--color-door-handle);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
   transform: translateY(-50%);
+}
+
+.door-hero__knob::after {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 16px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 3px 0 0 3px;
+  background: var(--color-door-handle);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
 }
 
 .door-hero__hint {
