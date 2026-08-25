@@ -332,7 +332,9 @@ Article pages:
 - Why does "Hang thermal curtains" have $$$ and $25 to $75 when "Use a space heater..." has the same price range but $$? 
 
 Improvements page:
-- The screen should be held at the door until it is fully opened to the renters basics section. The opening goes with the scrolling.  Once it is fully opened, the light green will expand gradually out to fill the screen to show the rest of the section as it is now. 
+- The screen should be held at the door until it is fully opened to the renters basics section. The opening goes with the scrolling.  Once it is fully opened, the light green will expand gradually out to fill the screen to show the rest of the section as it is now
+- Make the "Improvements" heading look like it is signage/decoration on the door
+- Please match the design of this door with the windows, rectangle details, and trim: https://www.wayfair.com/home-improvement/pdp/mmi-door-quarter-fan-lite-4-panel-clear-glass-fiberglass-painted-prehung-entry-door-vron3362.html?piid=45369195%2C45369196%2C45369203. Also match the colors for the most part, but use a green that is part of the style guide
 
 Home page:
 - The same kind of hold on the hero section should happen on the home page so that the animation of the shoes can be seen while scrolling. Because the screen is stuck here while scrolling, the full animation can be viewed and the shoes can be shown walking forward (to the top of the door mat) rather than to the right side
@@ -343,3 +345,28 @@ Renter basics articles:
 
 About page:
 - Make the sliding between colors smoother like it is on the heat pumps website
+
+### 2026-08-25 Interactivity and Animations
+
+Article pages:
+- The story bars should have more animation. When scrolling, they should briefly stick to the top of the screen and stack on top of each other until the screen is full. After, the user can scroll past and get to the contents below.
+- Why does "Hang thermal curtains" have $$$ and $25 to $75 when "Use a space heater..." has the same price range but $$?
+
+Improvements page:
+- The screen should be held at the door until it is fully opened to the renters basics section. The opening goes with the scrolling. Once it is fully opened, the light green will expand gradually out to fill the screen to show the rest of the section as it is now
+- Make the "Improvements" heading look like it is signage/decoration on the door
+- Please match the design of this door with the windows, rectangle details, and trim: https://www.wayfair.com/home-improvement/pdp/mmi-door-quarter-fan-lite-4-panel-clear-glass-fiberglass-painted-prehung-entry-door-vron3362.html. Also match the colors for the most part, but use a green that is part of the style guide
+
+Home page:
+- The same kind of hold on the hero section should happen on the home page so that the animation of the shoes can be seen while scrolling. Because the screen is stuck here while scrolling, the full animation can be viewed and the shoes can be shown walking forward (to the top of the door mat) rather than to the right side
+
+Renter basics articles:
+- Make these articles follow the layout of the improvement articles. There should be breadcrumb links to show how to get there and the same format.
+- When clicking back on the breadcrumb link, it should bring you back to the appropriate section on the improvements page. For example, it should go back to the renters basic section for a renter basics article and the card list for the improvement articles
+
+About page:
+- Make the sliding between colors smoother like it is on the heat pumps website
+
+### 2026-08-25 To Do List Feature
+
+Let's add a feature where a user can add an improvement to their to do list. This will be like a shopping cart/purchasing an item. They can then click on their to do list to get a full compiled/custom version of what they need to purchase, ask their landlord about, and complete. Please follow typical user interface interaction principles for purchasing to make this feature easy to use.

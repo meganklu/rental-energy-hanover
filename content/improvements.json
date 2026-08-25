@@ -89,9 +89,10 @@
     "phase": "pre-winter",
     "sources": [
       "S10",
-      "S22"
+      "S22",
+      "S29"
     ],
-    "lastReviewed": "2026-08-19"
+    "lastReviewed": "2026-08-25"
   },
   {
     "type": "explainer",
@@ -246,9 +247,10 @@
     "appliesToPayer": "tenant",
     "phase": "move-in",
     "sources": [
-      "S3"
+      "S3",
+      "S29"
     ],
-    "lastReviewed": "2026-08-18"
+    "lastReviewed": "2026-08-25"
   },
   {
     "type": "improvement",

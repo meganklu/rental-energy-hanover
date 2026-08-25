@@ -107,6 +107,11 @@
   --motion-flip: 260ms;
   --motion-room: 240ms;
   --motion-loop: 5s;
+  /* A longer, gentler move for something large and continuous, added 2026-08-25. The About page's
+     colour field is most of the screen, and --motion-base's 200ms with a sharp-out curve made a
+     half-page of colour snap rather than slide. */
+  --motion-slow: 450ms;
+  --motion-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);
 
   /* Focus ring: one token, everywhere. Never removed, including on mouse click. */

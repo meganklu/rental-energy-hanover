@@ -545,6 +545,65 @@
   margin-inline: calc(50% - 50vw);
 }
 
+/* ---------- Story stack, added 2026-08-25 ----------
+   A run of adjacent story bars pins to the top of the window one after another and builds a stack,
+   then the whole stack scrolls away together. The wrapper is what makes it work: `position: sticky`
+   is bounded by the element's containing block, so without `.story-stack` the first bar would pin
+   at the top of the window and stay there for the rest of the article, sitting over the steps the
+   reader had moved on to.
+
+   Every child of the stack is a story bar, which is why `nth-of-type` can index them here and could
+   not have out in the article, where the bars are siblings of the body columns and every one of
+   them is a `div`. Four offsets is the depth any page on this site actually reaches.
+
+   `padding-bottom` is the dwell: the last bar in a stack has nothing below it inside the stack, so
+   without it the stack's bottom edge arrives the moment the bar does and it releases without ever
+   holding. The padding gives the finished stack a stretch of scrolling to be looked at before it
+   leaves.
+
+   Gated on width, on height, and on both reduced-motion controls. Pinned full-width bands on a
+   short window are bands covering the thing the reader is trying to read, and a reader who has
+   asked for less movement has asked for exactly this. Outside the gate the bars are ordinary
+   stacked bands with their own margins, which is what they were before. */
+.story-stack > .story-bar + .story-bar {
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 900px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  body:not(:has(.reduce-motion-input:checked)) .story-stack {
+    --stack-step: 4.5rem;
+    padding-bottom: 30vh;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar {
+    position: sticky;
+    top: var(--stack-top, 0px);
+    margin-block: 0;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(2) {
+    --stack-top: var(--stack-step);
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(3) {
+    --stack-top: calc(var(--stack-step) * 2);
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(4) {
+    --stack-top: calc(var(--stack-step) * 3);
+  }
+
+  /* A stack of one has nothing to stack against, so it neither pins nor reserves the dwell. */
+  body:not(:has(.reduce-motion-input:checked)) .story-stack:not(:has(.story-bar + .story-bar)) {
+    padding-bottom: 0;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack:not(:has(.story-bar + .story-bar)) > .story-bar {
+    position: static;
+    margin-block: var(--space-8);
+  }
+}
+
 .story-bar {
   margin-block: var(--space-8);
   background: var(--color-surface);
@@ -2944,7 +3003,7 @@ body:has(.motion-loop) .motion-fab__pause {
   flex: none;
   width: var(--split-pos);
   background: var(--color-split-tenant);
-  transition: width var(--motion-base) var(--motion-ease);
+  transition: width var(--motion-slow) var(--motion-ease-smooth);
 }
 
 .split-continuum__bg span:last-child {
@@ -3027,7 +3086,7 @@ body:has(.motion-loop) .motion-fab__pause {
 @media (min-width: 860px) {
   .split-side {
     flex-wrap: nowrap;
-    transition: width var(--motion-base) var(--motion-ease);
+    transition: width var(--motion-slow) var(--motion-ease-smooth);
   }
 
   .split-side--tenant {
