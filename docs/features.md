@@ -32,7 +32,7 @@ written as a page instead.
 | F3 | Flip-card myth busters | A wrong belief corrected by their own action, on the explainer pages | Low (code), Medium (copy) | **Must** |
 | F4 | Animated explainer diagrams | A mechanism they cannot see, shown moving. Where heat leaves, how a heat pump runs both ways | Low (code), High (illustration) | **Must** |
 | F5 | Progress through the house | A count of spots viewed, and a suggested order for someone who does not know where to start | Low | **Should** (part of F1) |
-| F6 | Generated winter checklist | A phase-specific list they can print or send to roommates | Medium | **Won't (v1)** |
+| F6 | My list | Improvements they picked, sorted into buy / ask / do, printable and shareable | Medium | **Shipped 2026-08-25** |
 | F7 | Space heater cost-per-hour tool | The real hourly cost of the most expensive misconception in the topic inventory | Low (code), blocked on sourcing | **Won't (v1)** |
 | F8 | Bill estimator | An explanation of what is driving a specific bill | High | **Won't (v1)** |
 | F9 | Landlord request letter generator | Wording for an ask they are nervous about making | Medium | **Won't (v1)** |
@@ -43,7 +43,7 @@ Priority: **Must** / **Should** / **Could** / **Won't (v1)**
 
 ## 3. Prioritization rationale
 
-**In v1: F1, F2, F3, F4, and F5 as part of F1.**
+**In v1: F1, F2, F3, F4, F5 as part of F1, and F6 as of 2026-08-25.**
 
 - **F1** is the site. Everything else is reachable from it, and it is the only feature that answers
   "where do I even start" without asking the student to phrase a question.
@@ -68,10 +68,14 @@ Priority: **Must** / **Should** / **Could** / **Won't (v1)**
 
 **Cut from v1:**
 
-- **F6, the checklist,** is the largest cut and the first thing back in v2. It needs `localStorage`
-  handling, a print stylesheet, a copy-as-text path, and a checklist item component with five
-  states. That is a day of work that F1 needs more. Recorded in
-  [roadmap.md](roadmap.md) §5.
+- **F6 shipped 2026-08-25**, and it was indeed the first thing back. It came in narrower than the
+  original spec in one way and wider in another. Narrower: it is not phase-generated. The site does
+  not decide what belongs on the list, the reader does, which removed the hardest part of the
+  original design and is also more honest about who knows their own apartment. Wider: it sorts into
+  buy, ask and do rather than being one flat checklist, and it shares by link as well as printing.
+  The five checklist item states the original spec called for came down to two, done and not done,
+  because the other three were describing the item rather than the reader's progress and the
+  improvement page already carries those. See [DESIGN.md](../DESIGN.md) §3.8.
 - **F7 and F8** are blocked by sourcing rather than by effort.
   [content-strategy.md](content-strategy.md) §4 bars unsourced numbers, and the Liberty Utilities
   residential rate is not yet in [sources.md](sources.md). A cost-per-hour figure with no citation

@@ -33,6 +33,13 @@ efficiency of their rentals. In partnership with Sustainable Hanover.
 > layout, and every breadcrumb now returns to the section it came from rather than to the top of
 > the page.
 >
+> The 2026-08-25 revision pass brought back F6, cut from v1 as "the largest cut and the first thing
+> back". `/checklist` is a shopping cart for improvements: add from an article or a card, watch the
+> count in the header, then open the list to find what you picked sorted into what to buy, what to
+> ask your landlord, and what to do. It prints, downloads as text, and shares to a roommate as a
+> link. The same pass gave glossary terms a hover definition with a route into the full entry, put
+> the programs list in a carousel, and gave every story bar a screen of its own.
+>
 > What is still open: flip-card myth busters (F3) are built as a component but still need their
 > myth-and-correction pairs through content review. `/learn/whats-in-your-lease` and
 > `/learn/move-out-restore` touch leases and deposits and need human review before publishing, per

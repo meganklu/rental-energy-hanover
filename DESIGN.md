@@ -99,7 +99,8 @@ Sustainable Hanover page cannot do.
 │   │                             Added 2026-08-24. Topic #9
 │   └── /learn/move-out-restore  Enabler. What to take down and photograph. Added 2026-08-24.
 │                                 Topic #16
-├── /checklist                   v2. Generated checklist for the student's phase and situation
+├── /checklist                   "Your list". F6, shipped 2026-08-25 (§3.8). What the student
+│                                 added, sorted into buy / ask / do. Prints, downloads, shares
 ├── /before-you-sign             Hunting and signing. Viewing checklist, what to ask. Reached
 │                                 from Renter basics, decided 2026-08-24 — it had no inbound
 │                                 link at all until then
@@ -873,6 +874,13 @@ be worse than no effect at all. The controls also stop following their own `href
 track directly, so pressing Next moves the row without moving the document or leaving a fragment in
 the address bar. The `href` stays on the element as the no-JS path.
 
+**The carousel is reused on `/programs`, 2026-08-25.** Seven program entries were seven tall cards
+to scroll past. The peek treatment suits a long entry better than a short one: you read the one in
+front of you and the next is visibly waiting. It takes a wider slide than the Renter basics row,
+since a program entry is a heading, two paragraphs and a definition list, and it sits outside the
+reading column rather than inside it. At 40rem the column was narrower than the slide, which sent
+the track's gutter calculation negative and clipped the cards.
+
 **Seven cards, 2026-08-24.** Three new explainers (§3.6's topic list) plus `/before-you-sign`, which
 had no inbound link anywhere on the site until it joined this row. Ordered along the renter's own
 timeline: before you sign, who pays for what, what heat you have, reading the bill, finding drafts,
@@ -1057,6 +1065,51 @@ which are existing work by named photographers rather than generated images. It 
 prompt record in [docs/ai-use.md](docs/ai-use.md) and the standing rules in
 [AGENTS.md](AGENTS.md). Disclosure belongs where a reader deciding whether to trust the page will
 look, which is the page that already says who made it and how it is sourced.
+
+### 3.8 My list, added 2026-08-25
+
+F6 in [docs/features.md](docs/features.md), cut from v1 as "the largest cut and the first thing back
+in v2".
+
+**It is a shopping cart, on purpose.** Not because the site sells anything, but because that is the
+one multi-step selection interaction every student already knows without being taught. The pattern
+brings its own rules and they are the reason it works:
+
+- **The control lives on the item**, not in a separate mode. An add button sits under the facts on
+  each improvement page and on each library card.
+- **Pressing it does not navigate away.** Adding a second improvement should cost one click from
+  where you already are. A cart that jumps you to the checkout after every item is the thing
+  everyone complains about.
+- **The count is in the header and never moves.** It is a control rather than a section, so it sits
+  outside the nav list and is shaped like a button.
+- **The state is on the button.** `aria-pressed` plus a label that changes, because a pressed state
+  nobody can see is not a state. One page-level live region announces the change, since a card
+  button pressed with a mouse otherwise gives nothing back and "did that work" is the question a
+  cart has to answer instantly.
+- **Only one control is destructive**, and it is the only one that asks before acting.
+
+**The list sorts by what the reader has to do**, not by what they picked. Buy this, ask your
+landlord, do this. The buy list is the materials off every chosen improvement, each saying which one
+it is for, so a trip to West Lebanon is one list rather than a page of prose. The ask list is only
+the improvements needing permission, pointing at the email guide. The do list is a real checkbox
+each, at 24px, because this is the one place on the site a reader ticks something off.
+
+**Every improvement is in the page as markup**, and the script hides what is not on the list. Same
+rule as the library (§3.4): the page carries its content and the script filters. With the script off
+`/checklist` is the complete list of everything the site covers, which is still a usable thing to
+print and take to the shop.
+
+**Sharing is slugs in a query string.** No done flags, because what a roommate needs is which
+improvements and not how far along you are, and the shorter the link the better it survives being
+pasted into a message. Nothing personal is in it because there is nothing personal to put in it.
+
+**A shared list is shown but not saved.** Opening a roommate's link is not a request to have your
+own list replaced, so the page renders theirs, says so, and offers a Save button as the consent.
+Saving merges rather than overwrites.
+
+**Copy falls back twice.** Clipboard access can be refused and is absent over plain HTTP, so it
+tries the share sheet next and a prompt after that, rather than leaving a button that looks like it
+worked.
 
 ## 4. Visual system
 
@@ -1336,6 +1389,8 @@ to be better than.
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
 | Photograph | A credited photo, `4:3` in a page, `3:1` as a full-width band (§3.6) | inline, intro, band |
 | Story stack | A run of adjacent story bars that pins and stacks as the reader scrolls | default only |
+| Add to list | The cart control on an improvement page and on a library card (§3.8) | article, card |
+| List row | One item on `/checklist`, with its own checkbox | buy, ask, do |
 | Info panel | A photo and a short block of text side by side inside a tinted band | default, reverse |
 | Source and last-reviewed block | "How we know this". Links plus an ISO date | open by default on detail pages, collapsed to a count on cards |
 | Glossary term | Inline definition on first use. Hover over the underlined term to view the definition. | closed, open, focus-visible |
