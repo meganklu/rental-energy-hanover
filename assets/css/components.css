@@ -2814,7 +2814,7 @@ body:has(.motion-loop) .motion-fab__pause {
   background: var(--color-surface-dark);
   /* The recessed panel a front door has, drawn rather than added as an element. One, low, so it
      sits under the lettering rather than competing with it. */
-  background-image: linear-gradient(var(--color-split-owner), var(--color-split-owner));
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
   background-repeat: no-repeat;
   background-position: 50% 84%;
   background-size: 62% 26%;
