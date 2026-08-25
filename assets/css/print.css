@@ -15,8 +15,24 @@
 .motion-fab,
 .situation-dialog,
 .site-footer form,
-.back-to-house {
+.back-to-house,
+.nav-todo,
+.todo-toolbar,
+.todo-item__links,
+.todo-shared {
   display: none !important;
+}
+
+/* The list page on paper: an empty box to tick by hand, and no link furniture. */
+.todo-item {
+  break-inside: avoid;
+}
+
+.todo-item__check {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #000;
 }
 
 * {

@@ -417,3 +417,7 @@ Let's add a feature where a user can add an improvement to their to do list. Thi
 
 Home page:
 - I meant bottom left for the start area of the shoes
+
+Improvements page:
+- The new door trim is blocking the label about scrolling to open the door
+- Make all of the improvement article cards a consistent size/height with the add to list button at the same position for each card (bottom)

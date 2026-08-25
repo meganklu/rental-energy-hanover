@@ -1166,6 +1166,16 @@
   background: var(--color-bg);
 }
 
+/* Added 2026-08-25 with the cart: the nav takes the space it needs and the cart keeps its own,
+   rather than the two competing and the cart wrapping under the brand. */
+.site-header__inner > .primary-nav {
+  margin-inline-start: auto;
+}
+
+.site-header__inner > .nav-todo {
+  flex-shrink: 0;
+}
+
 .site-header__inner {
   display: flex;
   flex-wrap: wrap;
@@ -1244,6 +1254,204 @@
 .primary-nav a:hover,
 .primary-nav a[aria-current="page"] {
   color: var(--color-accent);
+}
+
+/* ---------- My list, added 2026-08-25 ----------
+   F6 in features.md. The interaction is a shopping cart's, because that is the one every student
+   already knows: a control on the item that flips the moment it is pressed, a count in the header
+   that never moves, and one link from that count to the whole list. DESIGN.md §3.8. */
+
+/* The header's cart. Deliberately not a sixth nav item: it is a control rather than a section, so
+   it sits outside the nav list and is shaped like a button. */
+.nav-todo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  padding-inline: var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-small);
+  white-space: nowrap;
+  transition: border-color var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
+}
+
+.nav-todo:hover,
+.nav-todo:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.nav-todo[aria-current="page"] {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.nav-todo__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding-inline: 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+  font-size: 0.8125rem;
+  line-height: 1;
+}
+
+/* The add control, on an article and on a card. `aria-pressed` carries the state rather than a
+   swapped class, so the button is one toggle rather than two buttons pretending to be one, and the
+   label changes with it because a pressed state nobody can see is not a state. */
+.improvement-actions {
+  margin-top: var(--space-5);
+}
+
+.todo-add[aria-pressed="true"] {
+  background: var(--color-success-bg);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* A card's title link stretches an invisible overlay across the whole card (§3.4), which would
+   otherwise swallow this button along with everything else on it. */
+.todo-add--card {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--space-4);
+  align-self: flex-start;
+}
+
+/* ---------- The list page ---------- */
+.todo-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-block: var(--space-6);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* The one destructive control here, pushed away from the three that are not. */
+.todo-toolbar__clear {
+  margin-inline-start: auto;
+  color: var(--color-danger-text);
+  border-color: var(--color-danger-text);
+}
+
+.todo-section + .todo-section {
+  margin-top: var(--space-8);
+}
+
+.todo-section > h2 {
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--color-surface-brand);
+}
+
+.todo-buy,
+.todo-ask,
+.todo-do {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-4);
+}
+
+.todo-buy__item,
+.todo-ask__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.todo-buy__what {
+  font-weight: 600;
+}
+
+.todo-buy__why {
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+}
+
+.todo-item {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* A real checkbox at a real size. This is the only place on the site a reader ticks something off,
+   and a 20px box is the difference between a list you use and a list you look at. */
+.todo-item__check {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-top: var(--space-1);
+  accent-color: var(--color-accent);
+}
+
+.todo-item__body > * + * {
+  margin-top: var(--space-2);
+}
+
+.todo-item__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-h4);
+}
+
+.todo-item__title label {
+  cursor: pointer;
+}
+
+/* Ticked items stay in place and stay legible. Striking them out and dropping them to 40% would
+   make the finished half of the list the hard half to read, which is backwards. */
+.todo-item.is-done .todo-item__title {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.todo-item__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: var(--text-small);
+}
+
+.todo-item__remove {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.todo-item__remove:hover,
+.todo-item__remove:focus-visible {
+  color: var(--color-danger-text);
+}
+
+.todo-shared {
+  margin-block: var(--space-5);
+}
+
+@media (max-width: 720px) {
+  .todo-toolbar__clear {
+    margin-inline-start: 0;
+  }
 }
 
 /* ---------- Personalize FAB and dialog ---------- */
