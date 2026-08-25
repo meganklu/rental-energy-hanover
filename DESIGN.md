@@ -78,7 +78,7 @@ Sustainable Hanover page cannot do.
 
 ```
 /                                Hero, then the doll house
-│   /#house                      The doll house. Front-open view, six rooms, sixteen hotspots.
+│   /#house                      The doll house. Front-open view, six rooms, seventeen hotspots.
 │                                The scroll arrow's target
 │   /#kitchen /#basement …       A room, enlarged. Real fragments, so a room is linkable and
 │                                works with JavaScript off
@@ -380,6 +380,16 @@ jumps instantly when motion is reduced. An arrow with no label is not a control 
 
 **What it must not do.** It must not become the reason a student never finds the house. The 85svh
 cap, the arrow, and the peeking top edge of the next section are all there for that.
+
+**The stride, revised 2026-08-24.** The shoes read as sliding rather than stepping. The cause was
+that the lift was carried entirely by `scale`, running 1 to 1.06, and 6% is not a step. Seen from
+directly overhead there are only two axes available to say a foot has left the ground: it is nearer,
+so it is larger, and its shadow has further to fall, so the shadow spreads and fades. Both now run
+across three stages, 0.94 planted to 1.16 at the top of the swing, with a keyframe either side of
+the peak so the foot rises and falls instead of popping between states. The resting frame is held at
+`scale(1)` with the planted shadow for both shoes, so the pair still sits level and side by side
+before any scroll happens; the follow shoe catches up a quarter cycle in the first few percent of
+scroll, which is not visible at that speed.
 
 ### 3.2 The doll house
 
@@ -861,6 +871,28 @@ none !important; }` reset, and the one-off `.info-bar` rule is removed as redund
 semantically, for every element on the site, rather than patching each component rule that sets
 `display` one at a time as each one happens to get caught by it.
 
+**The page opens on a door, added 2026-08-24.** `/improvements` opened on a centred page title on a
+white band, which said nothing the nav had not already said one line above it. It opens on a front
+door now, with the title on the door, and the door swings on its hinge as the reader scrolls until
+the Renter basics band behind it is what they are looking at. The metaphor is the site's own: the
+home page is a doll house you look into, and this is the door you go in through.
+
+The doorway behind the door is filled with `--color-surface-brand`, the same green as the Renter
+basics band below it, so the light coming through the opening is the colour of the thing being
+revealed rather than an arbitrary panel. Scroll-progress driven rather than timed, the same
+mechanism as the hero shoes (§3.1): scroll position is the animation's progress, so it reverses
+when the reader scrolls back, stops when they stop, and needs no Pause button because nothing moves
+on its own.
+
+Gated the three ways the site's other scroll motion is (§7): `@supports`, because scroll-driven
+animation is an enhancement; `prefers-reduced-motion` and the reduce-motion switch; and a 600px
+floor, since a door swinging in a phone-width column is a door filling the screen. Under any of
+those it stays shut and square on, with the title flat and fully legible, which is the state that
+has to work anyway. The swing stops at 72 degrees rather than going flat to 90: past about 75 the
+door is edge-on, the title is a line, and the reader loses what they were reading. The title sits in
+the door's upper half rather than centred, which is where lettering on a real door goes and which
+keeps it clear of the knob at the middle right.
+
 ### 3.5 The heating systems explainer, added 2026-08-21
 
 `/learn/heating-systems`. The third Renter basics page, and the one the other two point at when a
@@ -947,6 +979,23 @@ reduce-motion switch and the carousel already work, with no script involved. Bel
 stack and each takes its own colour, since a vertical split would otherwise run down the middle of
 each stacked panel.
 
+**One variable drives both halves, fixed 2026-08-24.** The first build set the two background halves
+to 58% and 50% and let flex resolve it. Flex items shrink to fit by default, so a pair whose bases
+sum to 108% both shrink, and the seam moved about 3.7% instead of 8%: small enough that the effect
+read as broken rather than as subtle. The panels moved separately again, on their own `flex-grow`,
+so the colour boundary and the text boundary travelled different distances. Both now read
+`--split-pos` off the container, at 50% at rest and 62% or 38% on hover, so the seam and the text
+are the same line and move as one.
+
+**The colour, decided the same day.** The owner's side opened as a deep slate blue on the reasoning
+that two sides of one lease should read as two distinct places. It read as a different website. The
+constraint that decides this is that the page title, the lede, the float card and the three approach
+cards all cross the seam, and one element cannot take two text colours depending on which half it
+sits over. Both halves therefore have to carry white text, which rules out pairing the dark green
+with the light `--color-surface-brand`. It is the site's dark green against its mid green, 2.3:1
+between the fields, which is enough to separate two large adjacent areas without either of them
+leaving the palette.
+
 **The opening block is laid across the seam on purpose.** Title on the tenant's side, the sentence
 that names the problem on the owner's. Centring it instead put the smaller type across the join,
 where one text colour has to work on two fields at once and the eyebrow stopped being readable on
@@ -1000,7 +1049,7 @@ interactive work.
 | `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
 | `--color-hero-ground` | `#94A0A7` | Added 2026-08-19. The hero section's own background, behind the mat. A bluestone grey, used nowhere else | ☑ 6.3:1 with `--color-text`, 7.9:1 with `--color-mat-border` |
 | `--color-split-tenant` | `#06301F` | Added 2026-08-24. The tenant's half of the About page's split field (§3.7). The same value as `--color-surface-dark`, named separately because it is one of a pair | ☑ 14.5:1 with white |
-| `--color-split-owner` | `#1B4B6B` | Added 2026-08-24. The owner's half of the same field. Deliberately not another green: two sides of one lease have to read as two places, and every other colour here is one family | ☑ 9.3:1 with white |
+| `--color-split-owner` | `#0A6E4B` | Added 2026-08-24 as a deep slate blue, changed the same day. Both halves have to carry white text, since the title, the lede, the float card and the approach cards all cross the seam and one element cannot take two text colours, so pairing the dark green with the light `--color-surface-brand` was out. This is the site's mid green instead, 2.3:1 against the tenant's half | ☑ 6.3:1 with white |
 
 - **Dark mode:** ☐ Supported ☑ Not in v1. The token structure supports adding one later
   without touching component code.

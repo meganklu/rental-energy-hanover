@@ -330,3 +330,16 @@ Change other parts/sections/cards of the website to use the interactive features
 Article pages:
 - The story bars should have more animation. When scrolling, they should briefly stick to the top of the screen and stack on top of each other until the screen is full. After, the user can scroll past and get to the contents below.
 - Why does "Hang thermal curtains" have $$$ and $25 to $75 when "Use a space heater..." has the same price range but $$? 
+
+Improvements page:
+- The screen should be held at the door until it is fully opened to the renters basics section. The opening goes with the scrolling.  Once it is fully opened, the light green will expand gradually out to fill the screen to show the rest of the section as it is now. 
+
+Home page:
+- The same kind of hold on the hero section should happen on the home page so that the animation of the shoes can be seen while scrolling. Because the screen is stuck here while scrolling, the full animation can be viewed and the shoes can be shown walking forward (to the top of the door mat) rather than to the right side
+
+Renter basics articles:
+- Make these articles follow the layout of the improvement articles. There should be breadcrumb links to show how to get there and the same format.
+- When clicking back on the breadcrumb link, it should bring you back to the appropriate section on the improvements page. For example, it should go back to the renters basic section for a renter basics article and the card list for the improvement articles
+
+About page:
+- Make the sliding between colors smoother like it is on the heat pumps website

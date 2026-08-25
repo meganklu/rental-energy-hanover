@@ -50,6 +50,7 @@ and every `<img>` carries explicit `width` and `height` so nothing reflows as im
 | `power-strip.webp` | Babak Eshaghian | [dh4tcWXPlUc](https://unsplash.com/photos/dh4tcWXPlUc) | 51 KB | `/improvements/phantom-load-and-plug-loads/` |
 | `radiator-room.webp` | e24 | [N6KVqGA44ZI](https://unsplash.com/photos/N6KVqGA44ZI) | 24 KB | `/improvements/dont-block-your-radiator-or-baseboard/` |
 | `showerhead.webp` | Igal Ness | [RxaCpvl3N0E](https://unsplash.com/photos/RxaCpvl3N0E) | 38 KB | `/improvements/hot-water-showers-and-laundry/` |
+| `showerhead-fixture.webp` | Clay Banks | [e4GP7d-uyag](https://unsplash.com/photos/e4GP7d-uyag) | 21 KB | `/improvements/low-flow-showerhead/` |
 | `space-heater.webp` | Donald Teel | [Pab6RD90F00](https://unsplash.com/photos/Pab6RD90F00) | 34 KB | `/improvements/space-heaters-real-cost-and-safety/` |
 | `thermostat.webp` | Erik Mclean | [fSLI8RdCdyk](https://unsplash.com/photos/fSLI8RdCdyk) | 12 KB | `/improvements/thermostat-setback/` |
 | `window-frost.webp` | Kelly Sikkema | [hSPVuakrJqs](https://unsplash.com/photos/hSPVuakrJqs) | 166 KB | `/improvements/seal-your-windows-with-film/` |
