@@ -435,9 +435,12 @@
     <circle cx="21" cy="8" r="1.5" style="fill: var(--toy-slate-soft)"/>
   </symbol>
 
+  <!-- A band on the floor with fringed ends. The first pass put a white panel inside the outline
+       and at the size a rug renders that read as a fluorescent tube lying in the room. -->
   <symbol id="prop-rug" viewBox="0 0 120 14" style="stroke: var(--toy-outline)">
-    <rect x="2" y="3" width="116" height="8" rx="3" style="fill: var(--toy-sky-soft)"/>
-    <rect x="14" y="5" width="92" height="4" rx="2" style="fill: var(--toy-white)"/>
+    <rect x="8" y="3" width="104" height="8" rx="3" style="fill: var(--toy-sky-soft)"/>
+    <path d="M8 5 L2 5 M8 9 L2 9 M112 5 L118 5 M112 9 L118 9" style="fill: none"/>
+    <path d="M20 3 L20 11 M100 3 L100 11" style="fill: none"/>
   </symbol>
 
   <symbol id="prop-mirror" viewBox="0 0 22 22" style="stroke: var(--toy-outline)">

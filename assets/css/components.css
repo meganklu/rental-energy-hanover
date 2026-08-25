@@ -2686,8 +2686,14 @@ body:has(.motion-loop) .motion-fab__pause {
   position: absolute;
   left: var(--x);
   bottom: var(--b);
-  width: var(--w);
-  height: auto;
+  /* Sized off the room's height, not its width, and this is the whole scaling rule. Height is what
+     maps to a real dimension: a bed is about a metre tall in a room about two and a half metres
+     tall, whatever the room's width happens to be. Sizing by width share was the first pass, and
+     because the enlarged room is a different aspect from the room in the house, every piece came
+     out around forty percent larger against the room once it opened. Width follows the symbol's
+     own viewBox, so a sofa stays sofa-shaped. */
+  height: var(--h);
+  width: auto;
   transform: translateX(-50%);
   fill: none;
   /* Constant in device pixels. At furniture size a stroke that scales with the drawing comes out as
@@ -2709,11 +2715,9 @@ body:has(.motion-loop) .motion-fab__pause {
   display: block;
   left: var(--x);
   top: var(--y);
-  width: var(--w);
-  /* The site's 44px floor still applies. An object drawn smaller than that keeps its drawing and
-     gains padding around it rather than being scaled up out of proportion with the room. */
-  min-width: var(--target-min);
-  min-height: var(--target-min);
+  /* Same rule as the scenery above: height off the room, width off the drawing. */
+  height: var(--h);
+  width: auto;
   /* Centered across the room but not down it: `--y` is how far below the ceiling the piece hangs,
      measured to its top edge, and `--b` is how far above the floor it stands, measured to its feet.
      Centering on the vertical too was the first pass and it meant a ceiling light placed near the
@@ -2726,6 +2730,20 @@ body:has(.motion-loop) .motion-fab__pause {
   z-index: 1;
 }
 
+/* The site's 44px floor, kept without inflating the drawing. A thermostat drawn to scale in a room
+   this size is about twenty pixels across, and scaling it up to forty-four would make it the size
+   of a picture frame. This is an invisible box centred on the piece, at least 44px each way, which
+   takes the press without changing what is drawn (DESIGN.md §6). */
+.room-scene .hotspot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, var(--target-min));
+  height: max(100%, var(--target-min));
+  transform: translate(-50%, -50%);
+}
+
 /* An object that stands on the floor is placed by its feet, same as the scenery. A radiator sits at
    the skirting and a space heater sits out on the floor, and neither of those is a statement about
    where its middle is. */
@@ -2736,8 +2754,8 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .room-scene .hotspot .icon {
   display: block;
-  width: 100%;
-  height: auto;
+  height: 100%;
+  width: auto;
   fill: none;
   stroke-width: 1.6;
   stroke-linecap: round;
@@ -2909,8 +2927,15 @@ body:has(.motion-loop) .motion-fab__pause {
 /* Enlarged, the scene is the point rather than a thumbnail of one, so it gets real height and the
    names get their normal size back. Everything in it is sized as a share of the room, so the
    furniture grows with it on its own. */
+/* Enlarged, the room keeps the proportion it has in the house rather than just getting wider.
+   Furniture is sized off the room's height, so a room that grows in width alone spreads the same
+   furniture over more wall and reads as a half-empty room. Three by two is the house room's own
+   shape. `max-height` is the escape hatch on a short window, where the aspect gives way rather
+   than pushing the controls off the screen. */
 .dollhouse:has(.room:target) .room:target .room-scene {
-  min-height: min(62vh, 480px);
+  min-height: 0;
+  aspect-ratio: 3 / 2;
+  max-height: 72vh;
 }
 
 .dollhouse:has(.room:target) .room:target .room-scene .hotspot__label {
@@ -2945,10 +2970,15 @@ body:has(.motion-loop) .motion-fab__pause {
     display: none;
   }
 
+  .room-scene .hotspot::after {
+    content: none;
+  }
+
   .room-scene .hotspot,
   .room-scene .hotspot--stands {
     position: static;
     display: inline-flex;
+    height: auto;
     flex-direction: row;
     align-items: center;
     gap: var(--space-1);
@@ -2976,6 +3006,7 @@ body:has(.motion-loop) .motion-fab__pause {
   .room-scene .hotspot .icon {
     width: 1.3em;
     height: 1.3em;
+    flex-shrink: 0;
     stroke: currentColor;
     stroke-width: 2;
     vector-effect: none;

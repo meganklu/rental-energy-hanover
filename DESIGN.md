@@ -451,11 +451,35 @@ color, carrying its name under it, and lifting off the wall under the pointer. O
 name, and that is the signal that does not depend on color. The button frame came off: a bordered
 pill standing on a wall is exactly what this is trying to stop looking like.
 
-**Everything is placed against the floor line.** `--x` across the room, `--w` wide, and then either
-`--b` up from the floor to a piece's feet or `--y` down from the ceiling to its top edge. Placing by
-edges rather than by centers is not a detail: the first pass centered on both axes, and a ceiling
-light placed near the top of the wall hung off the top of the room by half its own height. A piece
+**Everything is placed against the floor line.** `--x` across the room, and then either `--b` up
+from the floor to a piece's feet or `--y` down from the ceiling to its top edge. Placing by edges
+rather than by centers is not a detail: the first pass centered on both axes, and a ceiling light
+placed near the top of the wall hung off the top of the room by half its own height. A piece
 standing on the floor takes its name above it, since there is no wall under a bed to put a name on.
+
+**Only three things hang from the ceiling**, revised 2026-08-25: the pendant light, the curtain rail
+and the floor joists over the basement. Everything else in a house is fixed a set distance up from
+the floor, and anchoring it to the ceiling instead means it drifts away from the furniture it
+belongs with as the room's height changes. The bill floated a foot clear of the fridge in the
+enlarged kitchen for exactly this reason. Wall pieces now sit at the heights they sit at in a
+2.5-metre room: a thermostat and a set of key hooks at 1.4m, a window sill at 1.0m, a shower head at
+1.65m, and the bill on the fridge's own upper door.
+
+**Size is a share of the room's height, not its width.** This is the whole scaling rule, and getting
+it wrong is what made the enlarged room look off. Height is the dimension that maps to a real one: a
+bed is about a metre tall in a room about two and a half metres tall, whatever the room's width
+happens to be. Sizing by width share was the first pass, and because the enlarged room is a
+different aspect from the room in the house, every piece came out around forty percent larger
+against the room the moment it opened. Width follows each symbol's own viewBox, so a sofa stays
+sofa-shaped. The enlarged room also holds three by two now, the house room's own proportion, since a
+room that grows in width alone spreads the same furniture over more wall and reads as half empty.
+
+**The 44px press target is an invisible box, not a bigger drawing.** A thermostat drawn to scale in
+a room this size is about twenty pixels across, and inflating it to the site's 44px floor would make
+it the size of a picture frame on the wall next to it. The floor is held by a transparent
+pseudo-element centered on the piece, at least 44px each way, which takes the press without
+changing what is drawn. Verified by hit-testing the center of every drawing and confirming it
+resolves to its own link.
 
 **The bug that made the whole thing look broken.** An outer `<svg>` with no `viewBox` has no
 intrinsic aspect ratio, so `height: auto` fell back to CSS's default 150px and every drawing sat
@@ -479,6 +503,12 @@ finds it among seventeen pieces of furniture, gated off under reduced motion. Th
 animation is load-bearing rather than tidiness: the keyframes set `translateX(-50%)` on every frame,
 a running animation beats a declared `transform`, and below the gate the flag would sit pulled half
 its own width over the name it belongs to.
+
+**Labels are checked by hit-testing, not by eye.** Fifteen points across each name's box are asked
+what is painted on top of them; anything that comes back other than the name itself is something
+covering it. That plus the overflow and overlap checks is what the placement numbers are tuned
+against, at 1150, 1280 and 1440. Eyeballing a screenshot missed a label sitting ninety pixels from
+its own drawing for two passes.
 
 **What it costs, and this is the finding.** A piece's name is sized in text and text does not shrink
 with the room; the placement is a percentage and does. Below about 1150px the two stop agreeing:
