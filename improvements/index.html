@@ -169,15 +169,24 @@
   <section class="section page-shell" id="improvements-list">
     <div class="library-toolbar">
       <p class="results-count" id="results-count" aria-live="polite"></p>
-      <label class="sort-control">
-        Sort by
-        <select id="sort-select">
-          <option value="recommended">Recommended</option>
-          <option value="costLow">Lowest cost</option>
-          <option value="timeShort">Shortest time</option>
-          <option value="impactHigh">Highest impact</option>
-        </select>
-      </label>
+      <div class="library-toolbar__controls">
+        <!-- Hidden in the markup and revealed by assets/js/library.js, which is what knows how many
+             improvements are showing and can put the number in the label. With the script off there
+             is no personalized set and no count, so there is nothing for this to say. -->
+        <button type="button" class="btn btn--secondary todo-add-all" id="add-all" hidden>
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-add-all-label>Add all to my list</span>
+        </button>
+        <label class="sort-control">
+          Sort by
+          <select id="sort-select">
+            <option value="recommended">Recommended</option>
+            <option value="costLow">Lowest cost</option>
+            <option value="timeShort">Shortest time</option>
+            <option value="impactHigh">Highest impact</option>
+          </select>
+        </label>
+      </div>
     </div>
 
     <ul class="card-grid" id="card-grid">
@@ -415,9 +424,13 @@
 
     </ul>
 
-    <p class="empty-state" id="empty-state" hidden>
-      Nothing matches your situation yet. Open "Personalize your recommendations" to change it.
-    </p>
+    <div class="empty-state" id="empty-state" hidden>
+      <svg class="icon empty-state__icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
+      <p>
+        Nothing matches your situation yet. Open "Personalize your recommendations" and change an
+        answer, or clear it to see everything again.
+      </p>
+    </div>
   </section>
 
   <section class="theme-light full-bleed">

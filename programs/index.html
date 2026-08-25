@@ -84,12 +84,44 @@
     </div>
 
     <div class="content-column">
-      <h2>Programs to look at</h2>
+      <h2 id="programs-to-look-at">Programs to look at</h2>
     </div>
 
-    <div class="carousel carousel--peek carousel--wide">
+    <!-- Hidden in the markup and revealed by assets/js/programs.js. There is no server to submit
+         this to, so with the script off a filter form would be a control that does nothing; all
+         seven programs are in the page either way. -->
+    <form class="program-filter" id="program-filter" aria-labelledby="programs-to-look-at" hidden>
+      <label class="sort-control">
+        Who has to sign
+        <select name="permission">
+          <option value="any">Anyone</option>
+          <option value="none">Nobody, you can start it</option>
+          <option value="ask">Your landlord approves it</option>
+          <option value="required">Your landlord applies</option>
+        </select>
+      </label>
+      <label class="sort-control">
+        What it helps with
+        <select name="topic">
+          <option value="any">Anything</option>
+          <option value="weatherization">Weatherizing the building</option>
+          <option value="bills">Paying the bill</option>
+          <option value="equipment">Borrowing equipment</option>
+          <option value="supply">Choosing your electricity supply</option>
+        </select>
+      </label>
+      <button type="reset" class="btn btn--text">Show all</button>
+      <p class="results-count" data-program-count aria-live="polite"></p>
+    </form>
+
+    <p class="empty-state" data-program-empty hidden>
+      No program matches both answers. Change one of them, or press "Show all".
+    </p>
+
+    <div class="full-bleed program-carousel" data-program-carousel>
+      <div class="carousel carousel--peek carousel--wide">
         <ul class="program-list carousel__track" tabindex="0" aria-label="Programs to look at">
-        <li class="program carousel__slide" id="prog-income-eligible-energy-assistance-pr">
+        <li class="program carousel__slide" id="prog-income-eligible-energy-assistance-pr" data-program-permission="ask" data-program-topic="weatherization">
           <div class="badge-row">
             <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>Renters can use this</span>
             <span class="badge badge--permission-required"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-key"/></svg>Your landlord has to approve it</span>
@@ -100,18 +132,27 @@
             unit. Not a discount and not a rebate you claim back later. Your local Community Action
             Agency determines eligibility and runs the work.
           </p>
-          <dl>
-            <dt>Who runs it</dt>
-            <dd>NHSaves, the utility coalition, through Community Action Agencies</dd>
-            <dt>Eligibility</dt>
-            <dd>Based on household income. The Community Action Agency decides, not the utility and not your landlord</dd>
-            <dt>What your landlord signs</dt>
-            <dd>Approval for the work, since it changes the building</dd>
-          </dl>
+          <details class="disclosure program__more">
+            <summary>
+              <span class="program__more-shut">Show more</span>
+              <span class="program__more-open">Show less</span>
+              <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
+            </summary>
+            <div class="disclosure__body">
+              <dl>
+                <dt>Who runs it</dt>
+                <dd>NHSaves, the utility coalition, through Community Action Agencies</dd>
+                <dt>Eligibility</dt>
+                <dd>Based on household income. The Community Action Agency decides, not the utility and not your landlord</dd>
+                <dt>What your landlord signs</dt>
+                <dd>Approval for the work, since it changes the building</dd>
+              </dl>
+            </div>
+          </details>
           <p><a href="https://nhsaves.com/residential/income-eligible-energy-assistance-program/">Income-Eligible Energy Assistance Program</a></p>
         </li>
 
-        <li class="program carousel__slide" id="prog-fuel-and-electric-assistance-through">
+        <li class="program carousel__slide" id="prog-fuel-and-electric-assistance-through" data-program-permission="none" data-program-topic="bills">
           <div class="badge-row">
             <span class="badge badge--permission-ask"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-ask"/></svg>Check the current income limits</span>
           </div>
@@ -121,18 +162,27 @@
             of New Hampshire's state median income, and the limits are set for each year and each
             household size, so read them fresh rather than from memory.
           </p>
-          <dl>
-            <dt>Who runs it</dt>
-            <dd>New Hampshire Department of Energy, through Community Action Agencies</dd>
-            <dt>Eligibility</dt>
-            <dd>An income threshold that scales with household size, updated each year</dd>
-            <dt>What your landlord signs</dt>
-            <dd>Nothing, if the bill is in your name</dd>
-          </dl>
+          <details class="disclosure program__more">
+            <summary>
+              <span class="program__more-shut">Show more</span>
+              <span class="program__more-open">Show less</span>
+              <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
+            </summary>
+            <div class="disclosure__body">
+              <dl>
+                <dt>Who runs it</dt>
+                <dd>New Hampshire Department of Energy, through Community Action Agencies</dd>
+                <dt>Eligibility</dt>
+                <dd>An income threshold that scales with household size, updated each year</dd>
+                <dt>What your landlord signs</dt>
+                <dd>Nothing, if the bill is in your name</dd>
+              </dl>
+            </div>
+          </details>
           <p><a href="https://www.energy.nh.gov/consumers/help-energy-and-utility-bills/assistance-programs-eligibility">Assistance program eligibility</a></p>
         </li>
 
-        <li class="program carousel__slide" id="prog-home-energy-performance-through-nhsa">
+        <li class="program carousel__slide" id="prog-home-energy-performance-through-nhsa" data-program-permission="required" data-program-topic="weatherization">
           <div class="badge-row">
             <span class="badge badge--permission-required"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-key"/></svg>Your landlord applies, not you</span>
           </div>
@@ -143,16 +193,25 @@
             an unsecured loan at a reduced rate, which depends on the utility serving the building.
             Funding is time-limited, so the terms are worth checking before anyone counts on them.
           </p>
-          <dl>
-            <dt>Who runs it</dt>
-            <dd>NHSaves, the coalition of Eversource, Liberty, New Hampshire Electric Co-op and Unitil</dd>
-            <dt>What it is useful for as a renter</dt>
-            <dd>Something concrete to send a landlord who says the work is unaffordable</dd>
-          </dl>
+          <details class="disclosure program__more">
+            <summary>
+              <span class="program__more-shut">Show more</span>
+              <span class="program__more-open">Show less</span>
+              <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
+            </summary>
+            <div class="disclosure__body">
+              <dl>
+                <dt>Who runs it</dt>
+                <dd>NHSaves, the coalition of Eversource, Liberty, New Hampshire Electric Co-op and Unitil</dd>
+                <dt>What it is useful for as a renter</dt>
+                <dd>Something concrete to send a landlord who says the work is unaffordable</dd>
+              </dl>
+            </div>
+          </details>
           <p><a href="https://nhsaves.com/residential/weatherization/">Energy audits and weatherization</a></p>
         </li>
 
-        <li class="program carousel__slide" id="prog-window-inserts-through-sustainable-h">
+        <li class="program carousel__slide" id="prog-window-inserts-through-sustainable-h" data-program-permission="none" data-program-topic="weatherization">
           <div class="badge-row">
             <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>Renters can use this</span>
           </div>
@@ -163,31 +222,40 @@
             front of the glass, and foam weatherstripping around the edge seals it to the frame. It
             is held in by friction alone.
           </p>
-          <p>
-            That last detail is what makes this the one committee program aimed squarely at a
-            rental. Nothing is screwed, glued or nailed to the window, so nothing has to be put
-            right at move-out, and the inserts pull out in seconds if you need the window open in a
-            hurry. Sustainable Hanover's own page notes that some landlords buy inserts for their
-            tenants, which is worth knowing if yours is the one paying for the heat.
-          </p>
-          <dl>
-            <dt>Who runs it</dt>
-            <dd>Sustainable Hanover, with the Norwich and Lyme energy committees, using the WindowDressers approach</dd>
-            <dt>Eligibility</dt>
-            <dd>Hanover residents and employees living within 30 minutes of Hanover. You sign up, then trained volunteers come and measure</dd>
-            <dt>Cost</dt>
-            <dd>Custom priced per window, since every insert is built to a specific opening. Ask for a quote rather than budgeting from a figure</dd>
-            <dt>Subsidies</dt>
-            <dd>Priority and subsidies go to low-income households qualifying for fuel assistance or using Listen, The Haven, COVER or the Town Welfare Office</dd>
-            <dt>When</dt>
-            <dd>Builds run in rounds rather than year-round. The 2026 Community Build is 1 to 7 October at the Church of Christ at Dartmouth College. Check the page for the current round before counting on a date</dd>
-            <dt>What your landlord signs</dt>
-            <dd>Nothing, since nothing is fixed to the building. Tell them anyway</dd>
-          </dl>
+          <details class="disclosure program__more">
+            <summary>
+              <span class="program__more-shut">Show more</span>
+              <span class="program__more-open">Show less</span>
+              <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
+            </summary>
+            <div class="disclosure__body">
+              <p>
+                That last detail is what makes this the one committee program aimed squarely at a
+                rental. Nothing is screwed, glued or nailed to the window, so nothing has to be put
+                right at move-out, and the inserts pull out in seconds if you need the window open in a
+                hurry. Sustainable Hanover's own page notes that some landlords buy inserts for their
+                tenants, which is worth knowing if yours is the one paying for the heat.
+              </p>
+              <dl>
+                <dt>Who runs it</dt>
+                <dd>Sustainable Hanover, with the Norwich and Lyme energy committees, using the WindowDressers approach</dd>
+                <dt>Eligibility</dt>
+                <dd>Hanover residents and employees living within 30 minutes of Hanover. You sign up, then trained volunteers come and measure</dd>
+                <dt>Cost</dt>
+                <dd>Custom priced per window, since every insert is built to a specific opening. Ask for a quote rather than budgeting from a figure</dd>
+                <dt>Subsidies</dt>
+                <dd>Priority and subsidies go to low-income households qualifying for fuel assistance or using Listen, The Haven, COVER or the Town Welfare Office</dd>
+                <dt>When</dt>
+                <dd>Builds run in rounds rather than year-round. The 2026 Community Build is 1 to 7 October at the Church of Christ at Dartmouth College. Check the page for the current round before counting on a date</dd>
+                <dt>What your landlord signs</dt>
+                <dd>Nothing, since nothing is fixed to the building. Tell them anyway</dd>
+              </dl>
+            </div>
+          </details>
           <p><a href="https://sustainablehanovernh.org/windows">Window Inserts</a></p>
         </li>
 
-        <li class="program carousel__slide" id="prog-the-library-of-things-at-howe-librar">
+        <li class="program carousel__slide" id="prog-the-library-of-things-at-howe-librar" data-program-permission="none" data-program-topic="equipment">
           <div class="badge-row">
             <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>Renters can use this</span>
           </div>
@@ -199,24 +267,33 @@
             before buying six of them; and an electricity usage monitor, which tells you what a
             given device really draws.
           </p>
-          <p>
-            Free, needs nobody's permission, and it turns two pages on this site from advice into
-            measurement. <a href="../learn/find-your-drafts/">Find your drafts</a> is much easier
-            with the camera, and <a href="../improvements/phantom-load-and-plug-loads/">cutting
-            phantom load</a> stops being guesswork with the monitor.
-          </p>
-          <dl>
-            <dt>Who runs it</dt>
-            <dd>Howe Library, Hanover</dd>
-            <dt>Eligibility</dt>
-            <dd>Library borrowing. Loan periods for these items are not listed, so ask at the desk or call 603-643-4120</dd>
-            <dt>What your landlord signs</dt>
-            <dd>Nothing</dd>
-          </dl>
+          <details class="disclosure program__more">
+            <summary>
+              <span class="program__more-shut">Show more</span>
+              <span class="program__more-open">Show less</span>
+              <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
+            </summary>
+            <div class="disclosure__body">
+              <p>
+                Free, needs nobody's permission, and it turns two pages on this site from advice into
+                measurement. <a href="../learn/find-your-drafts/">Find your drafts</a> is much easier
+                with the camera, and <a href="../improvements/phantom-load-and-plug-loads/">cutting
+                phantom load</a> stops being guesswork with the monitor.
+              </p>
+              <dl>
+                <dt>Who runs it</dt>
+                <dd>Howe Library, Hanover</dd>
+                <dt>Eligibility</dt>
+                <dd>Library borrowing. Loan periods for these items are not listed, so ask at the desk or call 603-643-4120</dd>
+                <dt>What your landlord signs</dt>
+                <dd>Nothing</dd>
+              </dl>
+            </div>
+          </details>
           <p><a href="https://www.thehowe.org/library-of-things">Library of Things</a></p>
         </li>
 
-        <li class="program carousel__slide" id="prog-hanover-community-power">
+        <li class="program carousel__slide" id="prog-hanover-community-power" data-program-permission="none" data-program-topic="supply bills">
           <div class="badge-row">
             <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>Renters can use this</span>
             <span class="badge badge--permission-ask"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-ask"/></svg>Only if the electric bill is in your name</span>
@@ -228,22 +305,31 @@
             and the choice of supply tier is yours rather than your landlord's. Liberty still
             delivers the power, handles outages and sends the bill.
           </p>
-          <p>
-            Tiers differ in price and in how much renewable content they carry, and rates change
-            roughly every six months, so read the current ones rather than any figure quoted
-            second-hand. Opting up, opting down and opting out are all possible. New Hampshire
-            Electric Co-op customers are not enrolled automatically and have to opt in.
-          </p>
-          <dl>
-            <dt>Who runs it</dt>
-            <dd>The Town of Hanover, through the Community Power Coalition of New Hampshire</dd>
-            <dt>What your landlord signs</dt>
-            <dd>Nothing, if the bill is in your name. If it is in theirs, this is their choice and not yours</dd>
-          </dl>
+          <details class="disclosure program__more">
+            <summary>
+              <span class="program__more-shut">Show more</span>
+              <span class="program__more-open">Show less</span>
+              <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
+            </summary>
+            <div class="disclosure__body">
+              <p>
+                Tiers differ in price and in how much renewable content they carry, and rates change
+                roughly every six months, so read the current ones rather than any figure quoted
+                second-hand. Opting up, opting down and opting out are all possible. New Hampshire
+                Electric Co-op customers are not enrolled automatically and have to opt in.
+              </p>
+              <dl>
+                <dt>Who runs it</dt>
+                <dd>The Town of Hanover, through the Community Power Coalition of New Hampshire</dd>
+                <dt>What your landlord signs</dt>
+                <dd>Nothing, if the bill is in your name. If it is in theirs, this is their choice and not yours</dd>
+              </dl>
+            </div>
+          </details>
           <p><a href="https://sustainablehanovernh.org/communitypower">Hanover Community Power</a></p>
         </li>
 
-        <li class="program carousel__slide" id="prog-weatherize-through-sustainable-hanov">
+        <li class="program carousel__slide" id="prog-weatherize-through-sustainable-hanov" data-program-permission="required" data-program-topic="weatherization">
           <div class="badge-row">
             <span class="badge badge--permission-required"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-key"/></svg>Your landlord applies, not you</span>
           </div>
@@ -255,17 +341,26 @@
             replacing windows does, which is a useful thing to have in writing when an owner
             proposes new windows instead.
           </p>
-          <dl>
-            <dt>Who runs it</dt>
-            <dd>Sustainable Hanover, pointing at NHSaves-approved and BPI-certified contractors</dd>
-            <dt>What it is useful for as a renter</dt>
-            <dd>The page to send a landlord who asks what weatherizing actually involves</dd>
-          </dl>
+          <details class="disclosure program__more">
+            <summary>
+              <span class="program__more-shut">Show more</span>
+              <span class="program__more-open">Show less</span>
+              <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
+            </summary>
+            <div class="disclosure__body">
+              <dl>
+                <dt>Who runs it</dt>
+                <dd>Sustainable Hanover, pointing at NHSaves-approved and BPI-certified contractors</dd>
+                <dt>What it is useful for as a renter</dt>
+                <dd>The page to send a landlord who asks what weatherizing actually involves</dd>
+              </dl>
+            </div>
+          </details>
           <p><a href="https://sustainablehanovernh.org/weatherize">Weatherize</a></p>
         </li>
 
         </ul>
-        <div class="carousel__controls">
+        <div class="carousel__controls page-shell">
           <a class="carousel__nav" href="#prog-income-eligible-energy-assistance-pr" data-carousel-prev>
             <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-previous"/></svg>
             Previous
@@ -275,6 +370,7 @@
             Next
             <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-next"/></svg>
           </a>
+        </div>
       </div>
     </div>
 
@@ -414,5 +510,6 @@
 <!-- /shell:footer -->
 
 <script type="module" src="../assets/js/carousel.js"></script>
+<script type="module" src="../assets/js/programs.js"></script>
 </body>
 </html>

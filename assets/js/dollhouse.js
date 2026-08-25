@@ -225,6 +225,19 @@ if (dollhouseEl && infoBar) {
     const next = nextHotspot(hotspot.dataset.order);
     const allSeen = visited.size >= TOTAL;
 
+    // Added 2026-08-25 (DESIGN.md §3.8). This bar is the card version of an improvement page — same
+    // badges, same cost, time and impact — and it was the one place the site stated those facts
+    // without offering the action on them. Improvements only: an explainer is not something you put
+    // on a shopping list, and /checklist carries markup for the eleven improvements and nothing
+    // else, so a slug from anywhere else would be filtered straight back out of the store.
+    const addButton =
+      item.type === "improvement"
+        ? `<button type="button" class="btn btn--secondary todo-add" data-todo-slug="${item.slug}" data-todo-title="${item.title}" aria-pressed="false">
+             <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-plus"/></svg>
+             <span data-todo-label>Add to my list</span>
+           </button>`
+        : "";
+
     infoBar.innerHTML = `
       <p class="eyebrow">${room} · ${label}</p>
       <h3 class="info-bar__heading" tabindex="-1">${item.title}</h3>
@@ -233,6 +246,7 @@ if (dollhouseEl && infoBar) {
       <p>${item.summary}</p>
       <div class="info-bar__actions">
         <a class="btn btn--primary" href="${hotspot.getAttribute("href")}">Learn more</a>
+        ${addButton}
         ${
           allSeen
             ? ""
@@ -243,6 +257,12 @@ if (dollhouseEl && infoBar) {
     `;
 
     infoBar.hidden = false;
+
+    // The add button above is written with the not-added state in it, which is wrong for an
+    // improvement already on the list. assets/js/todo.js owns that state and delegates its clicks,
+    // so all this has to do is ask it to re-read the list; the alternative is a second copy of the
+    // label, icon and aria-pressed handling living here and drifting away from the first.
+    if (addButton) window.dispatchEvent(new CustomEvent("todochange"));
 
     const heading = infoBar.querySelector(".info-bar__heading");
     if (moveFocus && heading) heading.focus();

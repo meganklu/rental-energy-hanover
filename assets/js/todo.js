@@ -10,10 +10,14 @@
 
 import { read, toggle } from "./todo-store.mjs";
 
-const buttons = [...document.querySelectorAll("[data-todo-slug]")];
+// Re-queried on every render rather than captured once, and clicks are delegated from the document,
+// both added 2026-08-25. The doll house info bar (assets/js/dollhouse.js) builds its own copy of
+// this control after load, and a control built later has to behave like the ones in the markup
+// rather than each caller reimplementing the label, the icon and `aria-pressed` for itself.
+const buttonsIn = () => [...document.querySelectorAll("[data-todo-slug]")];
 const counts = [...document.querySelectorAll("[data-todo-count]")];
 
-if (buttons.length || counts.length) {
+if (buttonsIn().length || counts.length) {
   // One live region for the whole page rather than one per button. A button whose label changes
   // under the pointer is announced by most screen readers on focus, but a card button pressed by
   // mouse gives nothing back, and "did that work" is the question a cart has to answer instantly.
@@ -26,7 +30,7 @@ if (buttons.length || counts.length) {
     const list = read();
     const slugs = new Set(list.map((entry) => entry.slug));
 
-    buttons.forEach((button) => {
+    buttonsIn().forEach((button) => {
       const on = slugs.has(button.dataset.todoSlug);
       button.setAttribute("aria-pressed", String(on));
       const label = button.querySelector("[data-todo-label]");
@@ -57,14 +61,14 @@ if (buttons.length || counts.length) {
     });
   }
 
-  buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const added = toggle(button.dataset.todoSlug);
-      const name = button.dataset.todoTitle || "This improvement";
-      status.textContent = added
-        ? `${name} added to your list.`
-        : `${name} removed from your list.`;
-    });
+  document.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-todo-slug]");
+    if (!button) return;
+    const added = toggle(button.dataset.todoSlug);
+    const name = button.dataset.todoTitle || "This improvement";
+    status.textContent = added
+      ? `${name} added to your list.`
+      : `${name} removed from your list.`;
   });
 
   window.addEventListener("todochange", render);
