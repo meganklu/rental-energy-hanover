@@ -104,34 +104,34 @@ img, picture, svg {
         current document): a per-page, session-local override, not an accessibility preference. */
 :root {
   --motion-state: running;
-  --motion-duration-flip: var(--motion-flip);
-  --motion-duration-room: var(--motion-room);
-  --motion-duration-base: var(--motion-base);
+  --motion-flip: var(--motion-flip);
+  --motion-room: var(--motion-room);
+  --motion-base: var(--motion-base);
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
     --motion-state: paused;
-    --motion-duration-flip: 1ms;
-    --motion-duration-room: 1ms;
-    --motion-duration-base: 1ms;
+    --motion-flip: 1ms;
+    --motion-room: 1ms;
+    --motion-base: 1ms;
   }
 }
 
 body:has(.reduce-motion-input:checked) {
   --motion-state: paused;
-  --motion-duration-flip: 1ms;
-  --motion-duration-room: 1ms;
-  --motion-duration-base: 1ms;
+  --motion-flip: 1ms;
+  --motion-room: 1ms;
+  --motion-base: 1ms;
 }
 
 /* Higher specificity than the media-query block above, so it wins when present. Added only
    by assets/js/motion.js, only after an explicit prior choice to force motion on. */
 :root.motion-forced-on {
   --motion-state: running;
-  --motion-duration-flip: var(--motion-flip);
-  --motion-duration-room: var(--motion-room);
-  --motion-duration-base: var(--motion-base);
+  --motion-flip: var(--motion-flip);
+  --motion-room: var(--motion-room);
+  --motion-base: var(--motion-base);
 }
 
 /* The motion-fab's Pause button (assets/js/motion.js). Set on `body`, a descendant of the `:root`
@@ -140,9 +140,9 @@ body:has(.reduce-motion-input:checked) {
    the two states above is active, including "forced on". */
 body.motion-paused {
   --motion-state: paused;
-  --motion-duration-flip: 1ms;
-  --motion-duration-room: 1ms;
-  --motion-duration-base: 1ms;
+  --motion-flip: 1ms;
+  --motion-room: 1ms;
+  --motion-base: 1ms;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -223,7 +223,7 @@ a:hover {
   text-decoration: none;
   font-family: var(--font-display);
   font-weight: 600;
-  transition: top var(--motion-duration-base) var(--motion-ease);
+  transition: top var(--motion-base) var(--motion-ease);
 }
 
 .skip-link:focus-visible {

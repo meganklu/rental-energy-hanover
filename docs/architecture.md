@@ -129,11 +129,11 @@ behavior already specified in [DESIGN.md](../DESIGN.md).
 | Glossary term on first use | `<details>` and `<summary>`, no script | None | Yes |
 | Hero parallax (`/`) | CSS scroll-linked animation on background layers inside an `@supports (animation-timeline: scroll())` guard. No scroll listener | None | Yes. Layers render static |
 | Looping diagrams (`/learn`) | CSS animation on inline SVG. The pause control is a checkbox that CSS reads, so pausing needs no script | None | Yes, including the pause control |
-| Reduce motion toggle | A checkbox in the footer that CSS reads through `:has()`. JavaScript only mirrors it to `localStorage` so the choice survives navigation | `localStorage` key `motion`, no identifiers | Yes on the current page. The choice does not persist across pages without JavaScript |
+| Reduce motion toggle | A checkbox in the bottom-left floating control that CSS reads through `:has()`. JavaScript only mirrors it to `localStorage` so the choice survives navigation | `localStorage` key `motion`, no identifiers | Yes on the current page. The choice does not persist across pages without JavaScript |
 | Doll house (`/`) | One inline SVG of six room boxes. A room enlarges on `:target`, so CSS alone switches rooms. Every hotspot is a link to its improvement page | The enlarged room is the URL fragment | Yes. Hotspots navigate to the improvement pages, and the room-by-room link list under the drawing carries every one of them |
 | Hotspot info bar | JavaScript intercepts the hotspot link and opens a panel built from `content/improvements.json`, then moves focus to it | Fragment only | Yes. Without JavaScript the link goes to the full improvement page, which is the same content |
 | Flip cards (`/learn`) | `<details>` with a CSS flip on `[open]`. No script at all | None | Yes |
-| Carousel | Scroll-snap row of real slides. Previous and next are anchor links to slide IDs | None | Yes |
+| Carousel | Scroll-snap row of real slides. Previous and next are anchor links to slide IDs. JavaScript only retargets those links at the neighbours of whichever slide is centered, and keeps the counter honest | None | Yes. Previous goes to the first slide and next to the last |
 | Sticky progress bar | `position: sticky` in CSS. JavaScript only counts spots visited | `sessionStorage`, no identifiers | Yes. Shows a static label instead of a count |
 | Scroll-expanding diagram bands | CSS `animation-timeline: scroll()` inside an `@supports` guard. No scroll listener | None | Yes. Renders in the finished state |
 

@@ -27,6 +27,14 @@ export function saveToStorage(situation) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(situation));
 }
 
+// Added 2026-08-24 for the form's Reset button. `type="reset"` already restores what is on screen
+// to the "I am not sure" defaults with no script at all; forgetting the saved answers too is the
+// part markup cannot do, and without it a reader who resets and closes the dialog would find the
+// old answers still narrowing the list behind it.
+export function clearStorage() {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
 export function situationFromForm(formEl) {
   const data = new FormData(formEl);
   const situation = {};

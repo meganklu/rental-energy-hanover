@@ -78,7 +78,7 @@ Sustainable Hanover page cannot do.
 
 ```
 /                                Hero, then the doll house
-│   /#house                      The doll house. Front-open view, six rooms, ten hotspots.
+│   /#house                      The doll house. Front-open view, six rooms, sixteen hotspots.
 │                                The scroll arrow's target
 │   /#kitchen /#basement …       A room, enlarged. Real fragments, so a room is linkable and
 │                                works with JavaScript off
@@ -93,14 +93,23 @@ Sustainable Hanover page cannot do.
 │   ├── /learn/find-your-drafts  Enabler. Guided walkthrough of where heat escapes
 │   ├── /learn/heating-systems   Enabler. What kind of heat you have and what it means for
 │   │                             you as a renter. Added 2026-08-21, §3.5
-│   ├── /learn/who-pays-for-what Enabler. Finding it in the lease. Not yet built
-│   └── /learn/:slug             Remaining explainers, not yet built
+│   ├── /learn/whats-in-your-lease  Enabler. Who pays for what, and where the lease says so.
+│   │                             Added 2026-08-24. Topic #6
+│   ├── /learn/ask-your-landlord Enabler. What goes in the email, and what to do at a no.
+│   │                             Added 2026-08-24. Topic #9
+│   └── /learn/move-out-restore  Enabler. What to take down and photograph. Added 2026-08-24.
+│                                 Topic #16
 ├── /checklist                   v2. Generated checklist for the student's phase and situation
-├── /before-you-sign             Hunting and signing. Viewing checklist, what to ask
+├── /before-you-sign             Hunting and signing. Viewing checklist, what to ask. Reached
+│                                 from Renter basics, decided 2026-08-24 — it had no inbound
+│                                 link at all until then
 ├── /your-rights                 NH heat standard, habitability, who to call. Legal disclaimer
 ├── /programs                    NHSaves and assistance a renter can actually use
-├── /where-to-get-it             Materials sourcing. Online, or fare-free bus to West Lebanon
-├── /glossary                    Plain-language definitions, linked from first use
+├── /where-to-get-it             Materials sourcing. Online, or fare-free bus to West Lebanon.
+│                                 Reached from a panel at the foot of /improvements and from
+│                                 every improvement page, decided 2026-08-24
+├── /glossary                    Plain-language definitions, linked from first use. Reached from
+│                                 the footer, decided 2026-08-24 — it had no inbound link at all
 ├── /about                       Credits Sustainable Hanover, contact, site-wide last-reviewed
 └── /accessibility               Public accessibility statement
 ```
@@ -116,6 +125,16 @@ belongs with the materials list a student is already reading, not after the step
 inline pointer, not a duplicate of the shared page: `/where-to-get-it` remains the fuller reference
 once it is built, per §8 of content-strategy.md.
 
+**How those three pages are reached, decided 2026-08-24.** An audit of inbound links found
+`/before-you-sign` and `/glossary` with no inbound link from anywhere on the site, and
+`/where-to-get-it` reachable only from body text inside five improvement pages. All three are real
+content that a reader had no route to. `/where-to-get-it` now has a photo-and-text panel at the
+foot of `/improvements` as well as a pointer inside every improvement page, including the free
+ones, where the line reads "nothing to buy for this one" and points at the page for when something
+is. `/before-you-sign` joins the Renter basics carousel as its first card, which is also where it
+belongs in the renter's own timeline. `/glossary` goes in the footer, since it is reference
+material rather than a destination.
+
 **Two routes for website navigation.** The doll house is the guided route. It suits a student who does
 not yet know what to ask for, and it hands out information in graduated tiers as they explore. The
 navigation, the situation selector and the library are the direct route. They suit a student who
@@ -126,9 +145,15 @@ library.
 
 ### Navigation
 
-- **Primary nav items:** Home · Improvements · Rights and programs · About. Revised 2026-08-19:
+- **Primary nav items:** Home · Improvements · Your rights · Programs · About. Revised 2026-08-19:
   "The house" is renamed "Home" and "What you can change" is renamed "Improvements," matching the
-  shorter, plainer vocabulary a student arriving from a link would use. `/learn` no longer has its
+  shorter, plainer vocabulary a student arriving from a link would use. Revised 2026-08-21:
+  "Rights and programs" is split into two entries. It was one label pointing at one of the two
+  pages it named, so `/programs` was reachable from the top bar only by first landing on
+  `/your-rights` and finding the link in its prose, and a student who wanted the rebate page had
+  no way to tell from the nav that it existed. The two are separate subjects with separate pages
+  and now separate slots. `/your-rights` is retitled "Your rights" to match, which also settles a
+  page whose `<h1>` claimed content that lives on the other page. The slugs are unchanged. `/learn` no longer has its
   own top-bar slot; its two explainers are reached from `/improvements` instead, in the "Rental
   basics" section (§3.4, renamed from "Learn" 2026-08-20), alongside `/before-you-sign`,
   `/where-to-get-it` and `/glossary`, which were already reached from context rather than the top
@@ -250,7 +275,11 @@ mat — earlier language that called the whole hero band the mat was imprecise. 
    edge and there is no full-width or full-height line marking the 320px repeat. Generated once by
    `tools/ashlar.mjs` and pasted into `components.css` as a static data URI, so the published site
    still ships a plain CSS background and no build step (AGENTS.md rule 8) — the tool exists to
-   regenerate the pattern by hand, not to run at deploy.
+   regenerate the pattern by hand, not to run at deploy. Scaled up 2026-08-21: the tile is 480px
+   rather than 320px, so a unit is 60px and slabs run 60px to 180px. The dissection itself is
+   untouched — same seed, same 8×8 grid, same slab layout, same derived joints — because the
+   pattern's shape was right and only its scale was not. The joint stroke stays 2px rather than
+   scaling with the tile, so larger stones do not come with heavier mortar lines.
 2. The mat rectangle: a `--color-mat` (tan) box, centered in the hero. Revised 2026-08-19: sized
    larger overall (a real doormat is a substantial object on the page, not a small card), on a
    fixed `aspect-ratio` so its proportions are exact and reproducible rather than an incidental
@@ -305,15 +334,34 @@ mat — earlier language that called the whole hero band the mat was imprecise. 
    something more faithful to the source shipped as something harder to recognize. Where fidelity
    to a reference and legibility at display size disagree, legibility wins.
 
-   **The walk, added 2026-08-21.** Scrolling down out of the hero walks the pair across the mat.
-   The container carries the forward travel and each shoe carries its own step — lift, swing, set
-   down — with the two shoes half a stride out of phase, so it reads as a gait rather than as two
-   shoes sliding sideways together. It is a scroll-progress animation, not a timed one: the
-   position in the walk *is* the scroll position, so scrolling back up walks them back, and
-   stopping stops them. Gated exactly like the story-bar drift in §7 — behind an `@supports` check
-   for `animation-timeline`, off under `prefers-reduced-motion`, off with the reduce-motion switch,
-   and off below 600px with the rest of the site's scroll motion. With any of those in force the
-   shoes simply sit where they started, which is the state the hero has always shipped.
+   **The walk, added 2026-08-21, rebuilt the same day.** Scrolling down out of the hero walks the
+   pair across the mat. It is a scroll-progress animation, not a timed one: the position in the
+   walk *is* the scroll position, so scrolling back up walks them back, and stopping stops them.
+   Gated exactly like the story-bar drift in §7 — behind an `@supports` check for
+   `animation-timeline`, off under `prefers-reduced-motion`, off with the reduce-motion switch, and
+   off below 600px with the rest of the site's scroll motion. With any of those in force the shoes
+   sit where they started, which is the state the hero has always shipped.
+
+   The first pass did not read as walking, for two reasons worth writing down.
+
+   - **They were pointing the wrong way.** The shoe is drawn from above with its toe at the top of
+     its own viewBox, so the pair faced up the page while the animation carried them to the right.
+     A shoe travelling sideways to the direction it points is a shoe being slid, whatever its feet
+     are doing. The drawing is now rotated a quarter turn inside the `<svg>` (the `<g>` itself
+     carries `translate(140 0) rotate(90)`, one place rather than two `<use>` sites) so the toe
+     points along the direction of travel, and `.hero__shoes` stacks the two as a flex column,
+     which from above is what a pair side by side actually looks like when it is facing right.
+   - **Both feet were moving at once.** Each shoe alternated between two offsets, so at every
+     moment both were sliding. In a real gait one foot is planted and still while the other swings
+     past it. The stride is now built from that constraint rather than eyeballed: over one cycle
+     the container advances 90% of a shoe's length, so each foot spends half the cycle drifting
+     backward 45% relative to the container — which is exactly stationary against the ground — and
+     the other half swinging forward 45%, covering 90% against the ground at double the container's
+     speed. Amplitude is not a taste value here; it is whatever makes the planted foot stop.
+
+   Three cycles run across the scroll range, half a cycle out of phase between the two shoes. A
+   small `scale(1.06)` at the midpoint of each swing stands in for the lift, since from directly
+   above a raised foot reads as a nearer one and there is no other axis to show it on.
 3. The black border: a `--color-mat-border` rule, inset from the tan rectangle's edges by a fixed
    margin on all four sides (`inset:`, not padding) so a strip of tan shows *outside* the border
    all the way around and the border keeps close to the tan rectangle's own aspect ratio rather
@@ -348,6 +396,11 @@ the DOM either way — this is instructions for a novel interaction, not load-be
 hiding it by default is a legibility win as long as finding it stays a single, obvious step next
 to the heading it explains.
 
+**Width, fixed 2026-08-21.** The callout capped at 20rem, which broke a two-sentence instruction
+into four short lines stacked under the heading and made a tooltip read as a column of text. The
+cap is 34rem now, still bounded by `.section-heading-row`'s own width so it cannot run off a narrow
+window, and the same instruction lands in two lines on a desktop viewport.
+
 **Fixed 2026-08-20: the open tooltip was rendering behind the roof.** The tooltip carries its own
 `z-index`, but the roof it was losing to (`.dollhouse__roof`) is drawn with `clip-path`, which
 establishes a stacking context of its own the moment it's set — confirmed empirically (stripping
@@ -378,7 +431,7 @@ based on context and the simplified illustration.
 
 **Rooms (6):** Entry and porch · Living room · Bedroom · Kitchen · Bathroom · Basement.
 
-**Hotspots (10 in v1),** each mapping to an existing content item so the house adds a way in rather
+**Hotspots (11 in v1),** each mapping to an existing content item so the house adds a way in rather
 than a new body of content:
 
 | Hotspot | Room | Goes to |
@@ -388,12 +441,23 @@ than a new body of content:
 | Thermostat | Living room | Thermostat setback |
 | Radiator or baseboard | Living room, Bedroom | Do not block or cover it |
 | Space heater | Bedroom | Real cost per hour, and the safety note |
+| Heating system | Basement | Understanding your heating system |
 | Water heater | Basement | Hot water, showers, laundry temperature |
 | Outlets and plugs | Living room | Phantom load |
 | Light fixture | Kitchen | LED swaps, keep the originals in a box |
 | Rim joist and attic hatch | Basement | Where the heat actually goes, and the programs page |
 | The bill on the fridge | Kitchen | Read your bill. Marked "Start here" |
 
+**Every Renter basics article is in the house, added 2026-08-21.** Two of the three explainers had
+hotspots (the bill in the kitchen, the drafts walkthrough in the basement) and the third,
+`/learn/heating-systems` (§3.5), reached the site through `/improvements` alone. A guided route
+that skips one of three articles is not the guided route to the site's content, it is the guided
+route to most of it. "Heating system" now sits in the basement, on `icon-vent` rather than a second
+`icon-radiator` — the bedroom hotspot already owns that glyph, and repeating it would say the two
+spots are the same thing. It takes second place in the guided order, directly after the bill:
+knowing what kind of heat is in the unit is what the thermostat, the radiator and the space heater
+spots all quietly assume, and it is the one answer the situation form (§3.3) asks for and never
+taught.
 **Graduated depth.** Information arrives in three tiers, and a student can stop at any of them.
 
 | Tier | Where it lives | How much | Example |
@@ -418,8 +482,9 @@ undifferentiated house.
 Added 2026-08-19: whichever hotspot the guided order would take the student to next carries a
 "Next" badge, the same pill style as "Start here" — so the guidance is visible on the drawing
 itself, not only inside whichever info bar happens to be open. Exactly one hotspot carries it at a
-time, recomputed after each spot is opened. It never doubles up with "Start here" on the bill
-hotspot before anything has been visited; that badge already does the same job there.
+time, recomputed after each spot is opened. It never appears alongside "Start here"; the two
+divide the drawing's guidance between them by state, per "Start here ends when the tour begins"
+below.
 
 **"Start here" moves when personalization takes it away, added 2026-08-21.** The badge lives in
 the markup on the bill hotspot, which was fine while the house always showed everything. Since
@@ -427,9 +492,27 @@ personalization began hiding hotspots (below), a student whose situation rules t
 the badge entirely and got back exactly the undifferentiated house the badge exists to prevent.
 The badge is now placed rather than fixed: it stays on the bill hotspot whenever that hotspot is
 showing, and moves to the lowest-numbered spot in the guided order that is both showing and
-unvisited whenever it is not. Only one hotspot ever carries it, and if every showing spot has
-already been visited it goes away, same as before — there is no "start" left to point at. Nothing
-about this reaches the no-JavaScript path, which never filters and so never loses the badge.
+unvisited whenever it is not. Nothing about this reaches the no-JavaScript path, which never
+filters and so never loses the badge.
+
+**"Start here" ends when the tour begins, corrected 2026-08-21.** The placement rule above was
+written for the case where personalization hides the badge's home, and it was then also applied
+after every visit, which produced a badge that hopped to a new spot the moment the student opened
+the one it was on. That reads as the tour restarting somewhere else, and it competes with "Next",
+which is the badge that is supposed to carry the guidance from that point on. The two badges now
+divide the job cleanly by state rather than by position:
+
+| State | Badge on the drawing |
+|---|---|
+| Nothing visited yet | "Start here", on the bill, or on the lowest-numbered showing spot if the bill is filtered out |
+| Something visited | "Next", on the spot the guided order goes to after the last one opened |
+| Everything showing has been visited | Neither. There is nothing left to point at |
+
+One hotspot carries a badge at a time, in every state, so the two can never appear together and
+the "does this double up with Start here" check the "Next" badge used to make is gone with the
+case it guarded. Reset (below) puts the student back in the first row. A reload mid-tour lands in
+the second: the visited set survives in `sessionStorage` but the last spot opened does not, so
+"Next" falls back to the lowest-numbered showing spot that is still unvisited.
 
 A visited hotspot is shown at reduced opacity rather than with a flag icon, revised 2026-08-19 —
 simpler, and it reads at a glance without needing a legend. This is one of the three ways a visited
@@ -510,6 +593,17 @@ a page reload: the personalize dialog (§3.3) saves and closes in place, so it f
 off, there is no way to set a situation in the first place, so every hotspot and every list entry
 simply stays visible — the same fail-open behavior the rest of this file already leans on (a
 missing content-index fetch falls back to the hotspot's own plain link, for instance).
+
+**The filter threw on every explainer, fixed 2026-08-21.** `matchesFilters` read
+`item.appliesToHeat.includes(...)` directly, and an explainer has neither applicability field —
+[docs/content-strategy.md](docs/content-strategy.md) §6 requires them of improvements only. So the
+moment a student set a heat type, the house's filtering pass threw part-way through hiding
+hotspots: some hidden, some not, `TOTAL` never updated, the "Everything in this house" list never
+filtered, and no error the student could see. The library never hit it, because its grid holds
+improvements and nothing else, which is why it survived a build and a half unnoticed. Both missing
+fields now read as "any", which is also what they mean: an explainer about reading a bill applies
+whatever is heating the room. Found while adding the third explainer hotspot (above), and covered
+by a test in `tools/filter-logic.test.mjs` so the shape stays exercised.
 
 **A way back, added 2026-08-20.** Every page a hotspot links to — the eight improvement pages and
 the two explainers — now carries a plain "Back to the house" link next to its breadcrumb,
@@ -616,6 +710,23 @@ Improvements library row of §3's key-screens table. There is no second, separat
 same four-question page as always, which still submits as a plain GET with JavaScript off. The
 dialog is pure enhancement on top of that link, not a replacement for it.
 
+**Sized to fit, revised 2026-08-24.** The dialog was 40rem wide with the four fieldsets in an
+`auto-fit` grid. Four questions of very different heights (five options, three, five, and nine)
+fell into two ragged columns, and the result was taller than a laptop screen: the last question and
+the submit button both sat below the fold on the one screen whose entire job is to be filled in and
+dismissed. It is 62rem now, with the three short questions in a row and the nine-option lifecycle
+question spanning the full width beneath them, its own options flowed into three columns. That fits
+without scrolling down to about a 700px-tall viewport. `max-height` and the scrollable inner element
+stay, because a short window or a large text size can still overflow and a dialog that clips is
+worse than one that scrolls.
+
+**Reset to defaults, added 2026-08-24.** A plain `<button type="reset">` beside the submit button.
+The browser's own reset restores the radios to their HTML defaults, which are the four "I am not
+sure" options, so the control works with no script at all. The script adds the one thing markup
+cannot: clearing the saved situation as well as the shown one, and announcing `situationchange` so
+the doll house and the library re-check it. Without that, a reader who reset and closed the dialog
+would find the old answers still narrowing the list behind it.
+
 ### 3.4 The improvements library (revised 2026-08-20)
 
 `/improvements` carried a second, on-page filter form (heat type, who pays, landlord permission)
@@ -680,9 +791,55 @@ that mixes explainers in with improvements — which is where it is actually doi
 Built as `.carousel--peek`: each slide scroll-snaps to center with the track padded so a
 neighboring slide stays partly visible — "focused on one, the others visible in the background,"
 scrollable with no JavaScript needed for the scrolling itself, same mechanism as the `.carousel`
-component §5.1 already specifies. Prev/next controls and a "1 of 2" counter are deferred: with
-only two slides, both already show at least partially via the peek at once, so a separate control
-would be redundant until the section holds enough items that it stops being true.
+component §5.1 already specifies. Prev/next controls and a counter were deferred while the section
+held two slides, both of which showed at once through the peek; the third article (§3.5) is what
+made a control worth having, and it shipped with one 2026-08-21.
+
+**The whole section was one link, fixed 2026-08-21.** Every slide went to "Find your drafts" no
+matter which title was clicked, and Previous and Next did nothing at all. One missing declaration
+caused both. A card's title link stretches an invisible `::after` across its whole card to make the
+card clickable, which works because `.card` is `position: relative` and the overlay resolves
+against it. `.carousel__slide` reuses `.card__title` and was not positioned, so all three overlays
+resolved against `.carousel` instead: three full-size sheets stacked over the entire component, the
+last one in the markup on top, covering its two siblings and the controls underneath it. The slide
+is `position: relative` now.
+
+The lesson is about the pattern, not this component. A stretched `::after` is a link that reaches
+as far as the nearest positioned ancestor, which means it is only safe when the element it is meant
+to cover is the one establishing that ancestor. Reusing a class that carries a stretched overlay
+means inheriting that requirement, and nothing warns when it goes unmet — the overlay does not
+disappear, it silently grows.
+
+**Hover, added the same day.** The slides now take the same tactile hover the library cards have
+(§5, `scale(1.05)` plus a stronger border), which they had been left out of despite reading as
+cards. The track picks up matching padding on both block edges so a slide growing at the top is not
+clipped by the scroll container it sits in.
+
+**Focused on one card, rebuilt 2026-08-24.** The peek variant showed all three slides at roughly
+equal weight, which meant Previous and Next moved a track that already showed everything and so
+appeared to do nothing. A slide is now 58% of the track and the track carries a matching gutter each
+side, which puts the current card in the middle at full size with roughly a third of each neighbour
+showing either side of it. Neighbours drop to `scale(0.9)` and 72% opacity; the current card takes
+the accent border and the raised shadow.
+
+Two things about how that is built are worth keeping. **The slide width is a length, not a
+percentage.** Percentage `flex-basis` resolves against the flex container's content box, percentage
+`padding-inline` shrinks that same content box, and asking for "a slide centred in the leftover
+space" with both at once has no solution short of 50% padding and a zero-width content box. The
+first attempt did exactly that and the focused card sat left of centre. A length breaks the loop and
+the gutter is then simply half the leftover.
+
+**The scale-down only applies under `.is-enhanced`**, a class `assets/js/carousel.js` adds once it
+can actually track which slide is centred. With the script absent every slide renders at full size
+and full contrast, which is the honest fallback: a dimmed card with nothing able to un-dim it would
+be worse than no effect at all. The controls also stop following their own `href` and scroll the
+track directly, so pressing Next moves the row without moving the document or leaving a fragment in
+the address bar. The `href` stays on the element as the no-JS path.
+
+**Seven cards, 2026-08-24.** Three new explainers (§3.6's topic list) plus `/before-you-sign`, which
+had no inbound link anywhere on the site until it joined this row. Ordered along the renter's own
+timeline: before you sign, who pays for what, what heat you have, reading the bill, finding drafts,
+asking your landlord, putting it back at move-out.
 
 **The `/learn` hub page is deleted, added 2026-08-20.** Its own nav slot was already removed
 2026-08-19 (§2); the page itself sat unlinked from anywhere on the site until this revision
@@ -739,6 +896,70 @@ this project exists to not be ([docs/project-brief.md](docs/project-brief.md)). 
 because some Hanover rentals already have them and a student needs to recognize one, and because
 the "ask your landlord" path in `/programs` is where that conversation actually belongs.
 
+### 3.6 Photographs in place of illustrations, added 2026-08-24
+
+Until 2026-08-24 every improvement page opened with a hand-drawn SVG of the thing it was about,
+drawn in the icon pen of §4 and given a small looping animation. Several of them did not survive
+contact with a reader. At icon weight a shrink-film kit and a bare pane of glass are the same two
+rectangles, a door sweep and a skirting board are the same line, and a power strip is a rectangle
+with dots on it. The drawings were legible as decoration and ambiguous as information, which is the
+wrong way round for the one image on the page.
+
+**Every improvement page and the heating-systems intro now lead with a photograph** of the real
+object. The rule for what stays drawn is whether the image teaches a mechanism or names an object.
+A photograph cannot show refrigerant carrying heat the wrong way down a temperature gradient, air
+moving both directions through the same gap, or which figure on a bill is the one that moves. Those
+three stayed: the heat pump and furnace cutaways on `/learn/heating-systems` (§3.5), the draft
+figure on `/learn/find-your-drafts`, and the bill figure on `/learn/read-your-bill`. Everything that
+was drawing a noun became a photograph.
+
+**Consequences worth noting.** `.motion-loop` now appears on three pages instead of eleven, so the
+floating Pause button (§7) correctly stops appearing on pages with nothing to pause. The
+`.improvement-illustration` rules and the five `illo-*` keyframes went with the drawings.
+
+**Sourcing and credit.** Photographs come from Unsplash, chosen for what they show rather than for
+how they look, and downloaded and committed rather than hotlinked, because AGENTS.md rule 6 means
+nothing on the published site may load from another origin. Each is cropped to 4:3 (3:1 for a
+full-width band), converted to WebP and held under about 200KB. Every one carries a visible credit
+naming the photographer and linking to the page the file came from, which is both the licence
+courtesy and this project's own rule that nothing appears without a traceable origin. The registry
+is [docs/image-credits.md](docs/image-credits.md). No image on this site is AI-generated, and
+`/about` says so.
+
+### 3.7 The About page and the split incentive, added 2026-08-24
+
+`/about` used to open with "Why this site exists" as three paragraphs of prose. The reason is a
+structural one and prose was the wrong shape for it: in a rental the person who would pay for an
+efficiency improvement is not the person who would save from it, so the improvement often does not
+happen. Two parties, two ledgers, one building.
+
+**The treatment.** One colour field runs behind everything from the page title down to a converging
+arrow: the tenant's side in the site's own dark green, the owner's in a deep slate that is
+deliberately not another green, because two sides of one lease have to read as two places. Hovering
+or focusing either side widens that side's share of the whole field rather than just its own panel,
+so the emphasis reads as the lease tilting. The pattern is adapted from `split-incentives.html` on
+the same team's heat pump site (S25), rebuilt in this site's tokens.
+
+**Why it is safe as a hover effect.** Both panels carry all of their text at 50/50. The widening is
+emphasis and nothing else, so a reader who never hovers and never focuses misses nothing. That is
+what lets the whole thing be CSS: `:has()` on the container moves the field, matching how the
+reduce-motion switch and the carousel already work, with no script involved. Below 860px the panels
+stack and each takes its own colour, since a vertical split would otherwise run down the middle of
+each stacked panel.
+
+**The opening block is laid across the seam on purpose.** Title on the tenant's side, the sentence
+that names the problem on the owner's. Centring it instead put the smaller type across the join,
+where one text colour has to work on two fields at once and the eyebrow stopped being readable on
+one of them.
+
+**"How AI was used" lives on this page**, added 2026-08-24. It names the model, says what it wrote,
+and states the three things held back from it: facts, which come from named sources and are gated by
+`tools/check-content.mjs`; legal and safety content, which a person reviews; and the photographs,
+which are existing work by named photographers rather than generated images. It links the full
+prompt record in [docs/ai-use.md](docs/ai-use.md) and the standing rules in
+[AGENTS.md](AGENTS.md). Disclosure belongs where a reader deciding whether to trust the page will
+look, which is the page that already says who made it and how it is sourced.
+
 ## 4. Visual system
 
 ### Color
@@ -778,6 +999,8 @@ interactive work.
 | `--color-mat` | `#D9BE8A` | Added 2026-08-19. The hero's welcome-mat background. Used nowhere else | ☑ 9.3:1 with `--color-text` |
 | `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
 | `--color-hero-ground` | `#94A0A7` | Added 2026-08-19. The hero section's own background, behind the mat. A bluestone grey, used nowhere else | ☑ 6.3:1 with `--color-text`, 7.9:1 with `--color-mat-border` |
+| `--color-split-tenant` | `#06301F` | Added 2026-08-24. The tenant's half of the About page's split field (§3.7). The same value as `--color-surface-dark`, named separately because it is one of a pair | ☑ 14.5:1 with white |
+| `--color-split-owner` | `#1B4B6B` | Added 2026-08-24. The owner's half of the same field. Deliberately not another green: two sides of one lease have to read as two places, and every other colour here is one family | ☑ 9.3:1 with white |
 
 - **Dark mode:** ☐ Supported ☑ Not in v1. The token structure supports adding one later
   without touching component code.
@@ -1012,11 +1235,28 @@ to be better than.
 | Personalize dialog (added 2026-08-19) | `<dialog>` holding the situation form, opened by the FAB | closed, open, focus-trapped, no JavaScript (FAB is a plain link to `/start` instead) |
 | Callout, safety | Renders `safety` above steps, never below, never collapsed | single variant, `--color-danger` |
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
+| Photograph | A credited photo, `4:3` in a page, `3:1` as a full-width band (§3.6) | inline, intro, band |
+| Info panel | A photo and a short block of text side by side inside a tinted band | default, reverse |
 | Source and last-reviewed block | "How we know this". Links plus an ISO date | open by default on detail pages, collapsed to a count on cards |
 | Glossary term | Inline definition on first use. Hover over the underlined term to view the definition. | closed, open, focus-visible |
 | Program card | An NHSaves or assistance program | NH, out-of-state (explicitly labeled), eligibility unknown |
 | Button | Primary, secondary, text | default, hover, focus-visible, active, disabled, loading |
 | Skip link | First focusable element on every page | hidden, focused |
+
+**One card for every disclaimer, unified 2026-08-24.** The callout variants had drifted apart in a
+way that only shows up when you look at them all at once. A permission note on one improvement page
+carried no icon at all. Both legal notes borrowed the safety warning triangle, which is the one icon
+on the site that should mean "this could hurt you". A legal note on `/your-rights` was wearing the
+red safety variant outright. Every variant now shares one card: same padding, radius, gap, icon
+size, type size, and a 4px leading rule. They differ in the rule colour and the icon, and the icon
+per kind is now legal → document, safety → warning triangle, savings → gauge, permission → speech
+bubble.
+
+Safety is the one variant that keeps a tinted background, and that is a content decision rather than
+a style one. AGENTS.md rule 3 treats space heaters, carbon monoxide and electrical load as a
+category that must not read as one more caveat. It is still the same card, and the word "Safety"
+carries the meaning on its own for a reader who cannot see the colour, so the tint is reinforcement
+and never the only signal (§4).
 
 **Every interactive component must define:** default, hover, focus-visible, active, disabled,
 loading, error, empty.
@@ -1044,8 +1284,9 @@ times. Five things merged:
   what actually differs — the tint, and Renter basics' clipped point.
 - **`.page-head`.** Every page opened its title differently. One block now: centered `<h1>` at
   display size, optional lede under it.
-- **The switch track color** is a token with a footer override, rather than one hard-coded
-  translucent white serving both a dark footer and a light floating control. See §7.
+- **The switch track color** is a token rather than one hard-coded translucent white serving both a
+  dark footer and a light floating control. The footer switch has since been removed, so the token
+  has one value again. See §7.
 - **Hard-coded `#fff`** in component rules is `--color-text-on-dark` where it means "text on a dark
   surface". The token existed and half the rules were already using it.
 
@@ -1054,8 +1295,8 @@ bar (§3.2), and the price dollar scale now has one mapping read by the cards, t
 improvement pages (§4) instead of three renderings of the same idea.
 
 **Tactile hover, added 2026-08-19.** Every button-like control (`.btn`, hotspots, the FAB, the
-scroll cue, cards, filter chips, carousel controls, the dialog close button) grows slightly on
-hover, a `transform: scale()` response transition under the same `--motion-duration-base` token
+scroll cue, cards, carousel slides, filter chips, carousel controls, the dialog close button)
+grows slightly on hover, a `transform: scale()` response transition under the same `--motion-duration-base` token
 and reduced-motion gating as everything else in §7 — held still, not merely slowed, when motion is
 reduced. It is additive to whatever color or border change that component already had on hover,
 never a replacement for it, since scale alone is easy to miss for a student skimming quickly.
@@ -1181,7 +1422,7 @@ as a distinct band against the plain-white "What you need"/Steps sections around
   rather than two separate bars with a gap.
 - **Parallax/entrance drift, gated exactly like every other ambient motion in this document
   (§7):** behind `@supports (animation-timeline: view())`, since `view()` timelines are a
-  progressive enhancement; off under `prefers-reduced-motion: reduce` or the footer switch; off
+  progressive enhancement; off under `prefers-reduced-motion: reduce` or the reduce-motion switch; off
   below 600px, alongside the rest of the site's parallax (§6). Each side drifts in from a slight
   horizontal offset (opposite offsets on the two sides) as the bar crosses the viewport — a few
   pixels of travel, well under the 20% cap §7 sets for a continuously-running scroll-linked layer,
@@ -1317,13 +1558,16 @@ student gets a way to turn that off.
 does not cover the student on a borrowed laptop, or the one who is fine with motion everywhere else
 and not here. So the site carries its own control.
 
-- **Where:** revised 2026-08-21. It sits in a floating control of its own, fixed to the
-  bottom-left corner of every page, paired with the Pause button (below). It is also still in the
-  footer, which is where it shipped and which is the copy a student reaches by tabbing to the end
-  of a page. Both carry `.reduce-motion-input`, and `assets/js/motion.js` keeps them in sync, so a
-  page showing both never disagrees with itself. Labeled "Reduce motion" with a visible text label,
-  never an icon alone, except in the compact form below 640px where the label goes visually hidden
-  and the accessible name carries it.
+- **Where:** revised 2026-08-21, twice. It sits in a floating control of its own, fixed to the
+  bottom-left corner of every page, paired with the Pause button (below). The footer copy it
+  shipped with is gone: the floating control is on screen at every scroll position, including the
+  bottom of the page, so the second switch was a duplicate of a control the student could already
+  see, and two switches for one setting is one more thing to keep in agreement than the setting is
+  worth. `assets/js/motion.js` still holds every `.reduce-motion-input` on a page in sync, since
+  that is what makes a page with more than one copy safe, and nothing about the rule depends on
+  there being exactly one today. Labeled "Reduce motion" with a visible text label, never an icon
+  alone, except in the compact form below 640px where the label goes visually hidden and the
+  accessible name carries it.
 - **Default:** follows the operating system. A student who has already asked for reduced motion
   gets it without touching anything.
 - **How it works:** the control is a checkbox, revised 2026-08-19 to be styled as an actual
@@ -1355,13 +1599,16 @@ Personalize FAB opposite it at bottom-right — which clears the header and the 
 construction rather than by a `top` offset tuned per breakpoint. Below 640px both controls collapse
 to plain 44px circles and the Personalize FAB is capped in width so the two never meet.
 
-**Contrast, fixed 2026-08-21.** The switch track was drawn in translucent white, which is correct
+**Contrast, fixed 2026-08-21.** The switch track was drawn in translucent white, which was correct
 in the dark footer it was built for and nearly invisible once the same switch appeared on the light
-floating control. The track color is now a token that the footer overrides, rather than one value
-serving both places: `--color-border-strong` by default (4.1:1, over the 3:1 WCAG 1.4.11 asks of a
-control boundary) and translucent white inside `.site-footer`. The floating control also takes a
-`--color-border-strong` border and full-strength `--color-text` labels, so it reads as a control
-sitting on the page rather than a pale shape floating over it.
+floating control. The track color became a token so one value did not have to serve both places:
+`--color-border-strong` (4.1:1, over the 3:1 WCAG 1.4.11 asks of a control boundary), with
+`.site-footer` overriding it back to translucent white. The footer switch was removed later the
+same day and the override went with it, leaving the token with a single value. It stays a token
+rather than folding back into the rule, because the reason it became one — a control that appears
+on surfaces of different lightness — is a property of the switch, not of the footer. The floating
+control also takes a `--color-border-strong` border and full-strength `--color-text` labels, so it
+reads as a control sitting on the page rather than a pale shape floating over it.
 
 **What reduced motion changes,** whether it came from the operating system or from the toggle,
 specified per pattern rather than as a blanket rule: parallax layers hold still, looping diagrams
@@ -1465,13 +1712,13 @@ so "Learn more" reads as "more about the thing just named" rather than as an unl
 | Home, above the drawing | "Click a room to open it. Click each highlighted spot to see what you can do about it." |
 | Room prompt | "The living room" |
 | Room, enlarged | "The living room" |
-| Guided start | "Start here" on the bill hotspot |
+| Guided start | "Start here" on the bill hotspot, until the first spot is opened |
 | Next spot control | "Next spot: the thermostat" |
-| Last spot | "That is all ten spots. View everything in one list." |
+| Last spot | "That is all eleven spots. View everything in one list." |
 | Back control | "Back to the house" |
 | Hotspot accessible name | "Living room window: Sealing gaps here improves energy efficiency significantly" |
 | Hotspot, does not apply | "Your landlord pays for heat, so this one saves them money and not you." |
-| Progress bar | "You have viewed 3 of 10 spots." |
+| Progress bar | "You have viewed 3 of 11 spots." |
 | Visited hotspot | Shown at reduced opacity (revised 2026-08-19, no flag icon), and "Viewed" added to the accessible name |
 | Looping diagram controls | "Pause" · "Play" |
 | Reduce motion toggle | "Reduce motion" |
@@ -1566,6 +1813,17 @@ credit has to survive that move.
   wants to see how a claim on this site was built should not have to be told the URL. It carries a
   new `icon-code` glyph drawn to the §4 spec — angle brackets — rather than a GitHub mark, which
   would be a third-party logo the project has no license to place.
+- **Footer links, revised 2026-08-21.** "Accessibility statement" and "View the source code" sat a
+  full line apart, because each carried the site's 44px `--target-min` as a `min-height` and the
+  column added a gap on top of that. Two related links reading as two unrelated blocks. They sit at
+  ordinary line spacing now, as a pair. The touch target does not go away with the `min-height`:
+  the column is a list of links one after another, which is the case WCAG 2.5.8's inline exception
+  covers, and each link still clears the 24px AA floor on its own through the row's padding. The
+  site's own 44px commitment (§6) stays where it applies, on standalone controls rather than on a
+  run of text links.
+- **Reduce motion leaves the footer, 2026-08-21.** The switch had a copy here and a copy in the
+  bottom-left floating control. The floating control is visible at the bottom of the page too, so
+  the footer copy duplicated a control already on screen. See §7.
 - **About page:** Full credit to the SIP project team from
   [docs/project-brief.md](docs/project-brief.md) §8 and the partnership description.
 - **Logo asset:** Using wordmark from the current Sustainable Hanover website.
@@ -1582,7 +1840,7 @@ credit has to survive that move.
 | The hero mat is a flat tan with a black border. Does it stay this plain, or get a woven coir texture (CSS repeating-gradient crosshatch, no image asset) later? | Keep it flat / add a woven texture pass | Tried the crosshatch 2026-08-20, reverted the same day — read as noise at the mat's actual size. Flat tan, plus `--shadow-mat` and a pair of shoes at the corner (§3.1) | 2026-08-20 |
 | The doll house is an example residence, and nothing on the page says so. Do students read it as a generic teaching house, or do they expect it to match their own unit? | Leave it implicit, as specified, and watch for the misread in usability round 2 / add a line under the drawing if it confuses anyone / draw a second, apartment-shaped arrangement | Implicit, carried by context and the simplified illustration | 2026-08-19 |
 | Is the guided order advisory or does anything enforce it? | Advisory, as specified. Nothing locks / gate tier 3 until tier 2 is seen | Advisory | 2026-08-18 |
-| Ten hotspots in v1, or fewer done better? | 10 as listed in §3.2 / 6 covering only the Must topics | | |
+| Ten hotspots in v1, or fewer done better? | 10 as listed in §3.2 / 6 covering only the Must topics | Eleven, after the heating systems explainer got one 2026-08-21 (§3.2) | 2026-08-21 |
 | Does a hotspot that does not apply to the student's situation dim, disappear, or stay with a reason? | Dim with a text reason, as specified / hide / no change | Hide — reversed 2026-08-20, see §3.2 | 2026-08-20 |
 | Mobile layouts are deferred to v2, and [docs/audience.md](docs/audience.md) §8, context of use, is still unwritten. If interviews show students reach this at 11pm on a phone, does the v2 date need to move ahead of everything else in the backlog? | Hold the deferral and revisit after Round 1 interviews / pull basic mobile layouts into v1 and cut a feature to pay for it | Deferred, pending §8 of audience.md | 2026-08-19 |
 | When the doll house does get a phone design in v2, does it become a two-column grid of room boxes or stay the room list? | Two-column grid / room list below 400px / test both | | |

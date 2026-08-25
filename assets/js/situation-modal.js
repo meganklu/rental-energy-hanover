@@ -3,7 +3,7 @@
 // instead of navigating away. There is exactly one copy of the form's markup, on the /start
 // page itself — this fetches it rather than duplicating the fieldsets into every page's shell.
 
-import { readFromStorage, saveToStorage, situationFromForm, applyToForm } from "./situation-store.mjs";
+import { readFromStorage, saveToStorage, clearStorage, situationFromForm, applyToForm } from "./situation-store.mjs";
 
 const fab = document.getElementById("situation-fab");
 const dialog = document.getElementById("situation-dialog");
@@ -35,6 +35,14 @@ if (fab && dialog && body && "showModal" in dialog) {
         // The dialog saves and closes without navigating away, so anything on the current page
         // that reads the stored situation (the doll house, the library) needs its own signal to
         // re-check it rather than waiting for a reload that never comes.
+        window.dispatchEvent(new CustomEvent("situationchange"));
+      });
+
+      // Reset clears the saved answers as well as the shown ones, and leaves the dialog open so
+      // the reader can start again from the defaults rather than being thrown back to the page.
+      // The radios themselves are restored by the browser's own reset handling.
+      sourceForm.addEventListener("reset", () => {
+        clearStorage();
         window.dispatchEvent(new CustomEvent("situationchange"));
       });
 

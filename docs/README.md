@@ -32,6 +32,8 @@ Fill them roughly in this order — later documents depend on decisions made in 
 | 11 | [roadmap.md](roadmap.md) | Milestones against the academic calendar | ● Complete |
 | 12 | [sources.md](sources.md) | Living bibliography, review cadence, verification log | ● Complete |
 | 13 | [glossary.md](glossary.md) | Plain-language definitions used site-wide | ● Complete |
+| 14 | [image-credits.md](image-credits.md) | Every photograph on the site, its photographer, and its licence | ● Complete |
+| 15 | [ai-use.md](ai-use.md) | Every prompt used to build this site, in order | ● Complete |
 
 Update the Status column as you go: ☐ Not started → ◐ Draft → ● Complete.
 

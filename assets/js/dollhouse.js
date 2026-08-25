@@ -15,9 +15,9 @@ const progressFill = document.getElementById("progress-fill");
 if (dollhouseEl && infoBar) {
   const hotspots = [...dollhouseEl.querySelectorAll(".hotspot")];
   // Captured now, at load, before any visiting can happen — the one reliable point at which the
-  // "Start here" badge is guaranteed to still be exactly where the markup put it. updateStartBadge
+  // "Start here" badge is guaranteed to still be exactly where the markup put it. updateGuideBadges
   // (below) treats this as the badge's home and only moves it elsewhere when this hotspot is not
-  // available, so it needs a record of where "here" was that survives everything clicked since.
+  // showing, so it needs a record of where "here" was that survives everything clicked since.
   const startBadgeHotspot = hotspots.find((h) => h.querySelector('.hotspot__badge-flag[data-flag="start"]'));
   let TOTAL = hotspots.length;
   const VISITED_KEY = "visitedSpots";
@@ -78,31 +78,31 @@ if (dollhouseEl && infoBar) {
   const clearFlag = (flag) =>
     hotspots.forEach((h) => h.querySelector(`.hotspot__badge-flag[data-flag="${flag}"]`)?.remove());
 
-  // "Start here" is placed rather than fixed, revised 2026-08-21 (DESIGN.md §3.2). It stays on
-  // the hotspot the markup put it on for as long as that hotspot is showing and unvisited, and
-  // moves to the lowest-numbered spot in the guided order that is showing and unvisited whenever
-  // it is not. Personalization is what made this necessary: it can hide the bill hotspot, and a
-  // student whose situation does that used to lose the badge entirely, leaving them the
-  // undifferentiated house the badge exists to prevent. Once every showing spot has been visited
-  // there is no "start" left to point at, so no hotspot carries it.
-  function updateStartBadge() {
-    clearFlag("start");
-    const available = (h) => !h.hidden && !visited.has(h.dataset.hotspotId);
-    const target =
-      startBadgeHotspot && available(startBadgeHotspot)
-        ? startBadgeHotspot
-        : hotspots.filter(available).sort((a, b) => a.dataset.order - b.dataset.order)[0];
-    setFlag(target, "start", "Start here");
-  }
+  const byOrder = (list) => [...list].sort((a, b) => a.dataset.order - b.dataset.order);
 
-  // Whichever hotspot the guided order would go to next carries a "Next" badge on the drawing
-  // itself, added 2026-08-19. Never doubles up with "Start here", wherever that currently sits,
-  // so this has to run after updateStartBadge.
-  function updateNextBadge(from) {
+  // Two badges doing one job, divided by state rather than by position (DESIGN.md §3.2). Before
+  // anything has been opened the drawing carries "Start here"; from the first spot onward it
+  // carries "Next", and "Start here" does not come back until Reset. Revised 2026-08-21: the
+  // badge used to be re-placed after every visit, so it hopped to a different spot the moment the
+  // student opened the one it was on, which reads as the tour starting over somewhere else rather
+  // than continuing. Its placement rule — stay on the hotspot the markup put it on, fall back to
+  // the lowest-numbered showing spot when personalization hides that one — now applies only while
+  // the tour has not begun, which is the case it was written for.
+  function updateGuideBadges(from) {
+    clearFlag("start");
     clearFlag("next");
-    const next = nextHotspot(from.dataset.order);
-    if (!next || next.querySelector('.hotspot__badge-flag[data-flag="start"]')) return;
-    setFlag(next, "next", "Next");
+    const unvisited = byOrder(hotspots.filter((h) => !h.hidden && !visited.has(h.dataset.hotspotId)));
+    if (visited.size === 0) {
+      const home = startBadgeHotspot && !startBadgeHotspot.hidden ? startBadgeHotspot : unvisited[0];
+      setFlag(home, "start", "Start here");
+      return;
+    }
+    // Nothing showing is unvisited, so there is no next to point at — the same condition that
+    // drops the info bar's own "Next" button.
+    if (unvisited.length === 0) return;
+    // `from` is absent on a reload part-way through: sessionStorage remembers which spots were
+    // visited, not which was opened last, so the order picks up at its own next unvisited spot.
+    setFlag(from ? nextHotspot(from.dataset.order) : unvisited[0], "next", "Next");
   }
 
   async function loadContent() {
@@ -170,8 +170,7 @@ if (dollhouseEl && infoBar) {
     saveVisited();
     refreshVisitedStyling();
     updateProgress();
-    updateStartBadge();
-    updateNextBadge(hotspot);
+    updateGuideBadges(hotspot);
     lastTrigger = hotspot;
 
     hotspots.forEach((h) => h.classList.toggle("hotspot--selected", h === hotspot));
@@ -353,8 +352,9 @@ if (dollhouseEl && infoBar) {
 
     TOTAL = hotspots.filter((h) => !h.hidden).length || hotspots.length;
     updateProgress();
-    // Hiding a hotspot can take "Start here" off the drawing entirely, so it is re-placed here.
-    updateStartBadge();
+    // Hiding a hotspot can take whichever badge is showing off the drawing entirely, and can also
+    // hide the spot "Next" was pointing at, so both are re-placed here.
+    updateGuideBadges(lastTrigger);
 
     // A stale info bar for a hotspot the new situation just hid would be confusing left open.
     if (!infoBar.hidden && lastTrigger?.hidden) closeInfoBar();
@@ -365,7 +365,10 @@ if (dollhouseEl && infoBar) {
   window.addEventListener("situationchange", applyPersonalization);
 
   // Reset, added 2026-08-20: puts every spot back to unvisited and restores the "Start here"
-  // badge, undoing refreshVisitedStyling's own changes rather than reloading the page.
+  // badge, undoing refreshVisitedStyling's own changes rather than reloading the page. Clearing
+  // lastTrigger is part of that — the tour has no last-opened spot again — and it also leaves
+  // focus on the Reset button the student just pressed, rather than closeInfoBar sending it back
+  // to a hotspot they are no longer partway through.
   resetBtn?.addEventListener("click", () => {
     visited.clear();
     saveVisited();
@@ -376,14 +379,14 @@ if (dollhouseEl && infoBar) {
         delete h.dataset.baseLabel;
       }
     });
-    clearFlag("next");
-    updateStartBadge();
+    lastTrigger = null;
+    updateGuideBadges();
     if (!infoBar.hidden) closeInfoBar();
     updateProgress();
   });
 
   refreshVisitedStyling();
-  updateStartBadge();
+  updateGuideBadges();
   updateProgress();
   applyPersonalization();
 }

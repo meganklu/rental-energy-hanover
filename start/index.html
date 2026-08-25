@@ -34,7 +34,8 @@
       <ul>
         <li><a href="../index.html">Home</a></li>
         <li><a href="../improvements/">Improvements</a></li>
-        <li><a href="../your-rights/">Rights and programs</a></li>
+        <li><a href="../your-rights/">Your rights</a></li>
+        <li><a href="../programs/">Programs</a></li>
         <li><a href="../about/">About</a></li>
       </ul>
     </nav>
@@ -92,9 +93,9 @@
           </div>
         </fieldset>
 
-        <fieldset class="question">
+        <fieldset class="question question--wide">
           <legend>Where are you in the year?</legend>
-          <div class="question__options">
+          <div class="question__options question__options--columns">
             <label><input type="radio" name="phase" value="hunting"> Still looking for a place</label>
             <label><input type="radio" name="phase" value="signing"> Signing a lease</label>
             <label><input type="radio" name="phase" value="move-in"> Just moved in</label>
@@ -109,7 +110,10 @@
 
       </div>
 
-      <p><button type="submit" class="btn btn--primary">Show what I can do</button></p>
+      <div class="form-actions">
+        <button type="submit" class="btn btn--primary">Show what I can do</button>
+        <button type="reset" class="btn btn--secondary">Reset to defaults</button>
+      </div>
     </form>
   </section>
 </main>
@@ -164,17 +168,13 @@
       </div>
     </div>
     <div class="footer-links">
+      <a href="../glossary/">Glossary</a>
       <a href="../accessibility/">Accessibility statement</a>
       <a href="https://github.com/meganklu/rental-energy-hanover">
         <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-code"/></svg>
         View the source code
       </a>
-      <label class="switch">
-        <input type="checkbox" class="reduce-motion-input visually-hidden">
-        <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
-        <span class="switch__label">Reduce motion</span>
-      </label>
-      <p class="footer-meta">Site content last reviewed 2026-08-21.</p>
+      <p class="footer-meta">Site content last reviewed 2026-08-24.</p>
     </div>
   </div>
 </footer>

@@ -243,7 +243,52 @@ Additional pages:
 
 As always, add to documentation before implementing. Also, please update README for the status of the project
 
-### 2026-08-21
+### 2026-08-21 Bugs and Minor Edits
 
 Footer:
 - Remove the reduce motion toggle from the footer since it is now a FAB
+- Put the links for "Accessibility statement" and source code closer together (regular line spacing)
+
+Home page:
+- Have the shoes walk forward in a natural walking motion/stride
+- Make the tiles larger for the bluestone pattern. The shape/design of the pattern looks good otherwise
+- After selecting the spot labeled start here, start here moves around instead of becoming a next label
+- Put all of the articles, including the understanding heating systems one, into the house
+- The width of the help question mark (hover over to get instructions about the doll house) is too narrow
+
+Improvements page:
+- The carousel for renter basics does not work as intended
+- Only the drafts article is shown, even when clicking a different renter basics article
+- The animation for the cards when hovering is not there for the renter basics articles
+
+Navigation bar:
+- Separate the rights page and programs page. These should be separate links on the top bar
+
+### 2026-08-24 Adding Content and Images
+
+Images:
+- Instead of the animations on the article pages, I would like to have a real picture. Some of the animations are a bit unclear or too simplified
+- Keep animations that are essential for understanding the website content, such as the heat pump diagram
+- Find free images on https://unsplash.com/ and https://www.pexels.com/. Do not generate new images. Select images based on relevance to the topic and aesthetics (in line with the style and design of the website)
+- Credit all images appropriately
+- Add images to the other sections on the website where it could help break up dense text and provide additional information
+
+Improvement page:
+- The carousal for the renter basics articles should focus on one article at a time by making this one larger and in the center. See the cards under "Why this is especially relevant here" on https://meganklu.github.io/heat-pumps-hanover/split-incentives.html for some reference. I would like to be able to see more of the card in the background than this one though. This change will make the next and previous buttons actually do something
+
+Set your situation:
+- Have a button to reset to default on the selections made on this menu
+- Reformat this window (can increase width/size of the window) so the whole thing can be seen on most computers without scrolling
+
+Disclaimers:
+- Make the disclaimer cards (legal, safety, etc.) consistent in color and design
+
+About page:
+- Explain the split incentives problem as the why for the project (first section of the page). Use the design from the heat pumps website https://meganklu.github.io/heat-pumps-hanover/split-incentives.html. In this design, the screen is split and half and the user can hover over either side to expand it. The background continues as it moves down to more information about how the problem can be approached/additional reasons for the website. It ends with an arrow of the two sides coming together. Sections are still distinct using various approaches (cards/backgrounds, page spacing, layout, etc.)
+- Cite AI usage for the website on this page
+
+Other questions:
+- How is the where to get it page accessed? I cannot find a link anywhere on the website
+- Are there any other parts of the website that are difficult to access or now obsolete? If you find this, ask me whether these should be deleted, linked to, or adapted.
+
+Clean up the code and styling. Then, complete the remaining improvements pages. Lastly, go through the Sustainable Hanover website. Adapt information from here (with citations) to improvement articles, about page, etc.

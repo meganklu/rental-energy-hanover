@@ -57,6 +57,15 @@ test("matchesFilters: a missing item (unknown slug) never matches", () => {
   assert.equal(matchesFilters(undefined, NONE), false);
 });
 
+// An explainer carries neither applicability field. It is in the index the doll house filters
+// against (dollhouse.js), so this shape has to survive an active filter rather than throw on it.
+test("matchesFilters: an explainer with no applicability fields matches every filter", () => {
+  const explainer = { slug: "heating-systems", type: "explainer" };
+  assert.equal(matchesFilters(explainer, NONE), true);
+  assert.equal(matchesFilters(explainer, { ...NONE, heat: "heat-pump" }), true);
+  assert.equal(matchesFilters(explainer, { ...NONE, payer: "included" }), true);
+});
+
 test("compareItems: enablers sort before any ranked impact", () => {
   assert.ok(compareItems(drafts, windowFilm) < 0);
 });

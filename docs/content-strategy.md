@@ -61,6 +61,18 @@ Effort: `Low` (under 1 hr) · `Med` (an afternoon) · `High` (multi-day or needs
 | 19 | Where to get this stuff — fare-free bus to West Lebanon, or order online | Pre-winter | Free | Low | n/a | n/a | Enabler | Must |
 | 20 | What kind of heat do I have — radiator, baseboard, forced air, heat pump | Move-in | Free | Low | n/a | n/a | Enabler | Must |
 
+**Status, 2026-08-24: all twenty are built.** Ten are improvements under `/improvements`, six are
+explainers under `/learn`, and four are standalone pages (`/programs`, `/your-rights`,
+`/before-you-sign`, `/where-to-get-it`). Topics 6, 9 and 16 became explainers rather than
+improvements: all three carry "n/a" for permission or reversibility in the table above, and the
+improvement content model requires a real value for both, which is the model telling you the item
+is not an improvement.
+
+Two of the last five need human review before publishing, per §5 and AGENTS.md rule 2.
+`/learn/whats-in-your-lease` touches leases and `/learn/move-out-restore` touches deposits. Both are
+written as procedural checklists that make no legal assertion and route every legal question to
+`/your-rights`, and both carry an uncollapsed legal disclaimer, but neither has been signed off.
+
 Priority scale: **Must** / **Should** / **Could** / **Won't (this release)**
 
 Added 2026-08-21: **#20** was implied by the site rather than written down. The situation
@@ -184,11 +196,30 @@ or doesn't render at all.
 
 ## 7. Media
 
-- **Photos:** Prefer original photos of real Hanover-area rentals.
-- **Illustrations/diagrams:** SVG images generated for this site. Use animation and dynamic visuals when possible.
+**Revised 2026-08-24.** The original policy asked for an SVG illustration on every content page and
+preferred original photography where it existed. In practice no original photography existed, and
+the drawings turned out to be the weaker half of the pair: at icon weight a shrink-film kit and a
+bare pane of glass are the same two rectangles. The rule is now about what an image is doing.
+
+- **Photographs name a thing.** Every improvement page and every explainer leads with a photograph
+  of the real object. Original photographs of Hanover-area rentals are still the first preference
+  and would replace these on sight. Until then they come from Unsplash, chosen for what they show
+  before how they look.
+- **Diagrams teach a mechanism.** Keep a drawing only where a photograph cannot carry the point: the
+  heat pump and furnace cutaways, air moving both ways through a gap, which figure on a bill is the
+  one that moves. Animate a diagram only where the movement is the content.
+- **No generated imagery.** No image on this site is AI-generated, and `/about` states that. A
+  drawing of a heating system that nobody checked is a factual claim nobody sourced.
+- **Nothing hotlinks.** Every image file is downloaded and committed. AGENTS.md rule 6 means the
+  published site loads nothing from another origin, and it also means an image cannot change or
+  disappear underneath the page.
+- **Credit every photograph.** A visible caption naming the photographer and linking to the page the
+  file came from. Registry in [image-credits.md](image-credits.md).
 - **Alt text policy:** Every image has alt text describing what matters energy-wise and the
   scene. "Gap under a door with daylight visible", not "a photo of a door." Decorative images
   get `alt=""`. See [accessibility.md](accessibility.md) §2.
+- **Weight:** crop to a fixed aspect at build time rather than in the browser, convert to WebP, and
+  keep a file under about 200KB.
 - **Video:** Out of scope for v1.
 
 ## 8. Localization of the "local"

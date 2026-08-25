@@ -1,5 +1,27 @@
 [
   {
+    "type": "explainer",
+    "slug": "ask-your-landlord",
+    "title": "Ask your landlord",
+    "summary": "A specific written request with a program attached gets further than a complaint about the cold.",
+    "question": "How do I ask my landlord for an improvement without it going nowhere?",
+    "misconception": "There is no point asking, because they will say no.",
+    "impact": "enabler",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "any",
+    "phase": "pre-winter",
+    "sources": [
+      "S8",
+      "S5",
+      "S27",
+      "S26",
+      "S29"
+    ],
+    "lastReviewed": "2026-08-24"
+  },
+  {
     "type": "improvement",
     "slug": "dont-block-your-radiator-or-baseboard",
     "title": "Keep your radiator or baseboard clear",
@@ -138,6 +160,25 @@
     "lastReviewed": "2026-08-19"
   },
   {
+    "type": "explainer",
+    "slug": "move-out-restore",
+    "title": "Put it back at move-out",
+    "summary": "Everything on this site comes off again. Here is the order to take it down in, and what to photograph.",
+    "question": "What do I take down before I hand the keys back?",
+    "misconception": "Anything I added is fine to leave behind.",
+    "impact": "enabler",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "any",
+    "phase": "move-out",
+    "sources": [
+      "S9",
+      "S13"
+    ],
+    "lastReviewed": "2026-08-24"
+  },
+  {
     "type": "improvement",
     "slug": "phantom-load-and-plug-loads",
     "title": "Cut phantom load",
@@ -239,6 +280,35 @@
   },
   {
     "type": "improvement",
+    "slug": "thermal-curtains",
+    "title": "Hang thermal curtains",
+    "summary": "A lined curtain closed at dusk puts a still layer of air between you and a cold window.",
+    "cost": "25to75",
+    "time": "1to2hr",
+    "difficulty": "easy",
+    "landlordPermission": "ask",
+    "reversible": "mostly",
+    "impact": "medium",
+    "impactNote": null,
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "tenant",
+    "phase": "pre-winter",
+    "materials": [
+      "thermal or lined curtains",
+      "tension rod or curtain rod"
+    ],
+    "safety": null,
+    "sources": [
+      "S26",
+      "S27",
+      "S10"
+    ],
+    "lastReviewed": "2026-08-24"
+  },
+  {
+    "type": "improvement",
     "slug": "thermostat-setback",
     "title": "Set your thermostat back",
     "summary": "Turning the heat down while you are out or asleep typically uses less energy than holding one temperature all day.",
@@ -261,5 +331,51 @@
       "S22"
     ],
     "lastReviewed": "2026-08-19"
+  },
+  {
+    "type": "explainer",
+    "slug": "whats-in-your-lease",
+    "title": "Who pays for what",
+    "summary": "Before you sign, find the lines in the lease that say which bills arrive in your name.",
+    "question": "Who pays for the heat, and where does the lease say so?",
+    "misconception": "Rent is the whole cost of living there.",
+    "impact": "enabler",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "any",
+    "phase": "signing",
+    "sources": [
+      "S6a",
+      "S13"
+    ],
+    "lastReviewed": "2026-08-24"
+  },
+  {
+    "type": "improvement",
+    "slug": "winter-break-shutdown",
+    "title": "Shut down before a break",
+    "summary": "An empty apartment still costs money to heat. Turn it down without turning it off.",
+    "cost": "free",
+    "time": "under30min",
+    "difficulty": "easy",
+    "landlordPermission": "ask",
+    "reversible": "fully",
+    "impact": "medium",
+    "impactNote": "DOE estimates setback while away or asleep can save about 10% a year on heating and cooling costs",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "any",
+    "phase": "break",
+    "materials": [],
+    "safety": "Leave the heat on and set no lower than 55F when away in cold weather (American Red Cross). A frozen pipe can burst. Never thaw a pipe with a torch (U.S. EPA). Tell the landlord you are away and ask what they want the heat set to.",
+    "sources": [
+      "S31",
+      "S32",
+      "S22",
+      "S9"
+    ],
+    "lastReviewed": "2026-08-24"
   }
 ]

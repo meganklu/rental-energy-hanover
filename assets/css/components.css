@@ -29,9 +29,9 @@
   font-size: var(--text-body);
   text-decoration: none;
   cursor: pointer;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .btn--primary {
@@ -74,7 +74,7 @@
    Added 2026-08-19, DESIGN.md §5. Every button-like control grows slightly on hover, additive to
    whatever color/border change it already has. A response transition, so it is held still (not
    merely slowed) under the same reduced-motion gating as everything else — the OS setting, or
-   the footer switch. Each target already declares `transition: transform ...` on its own base
+   the reduce-motion switch. Each target already declares `transition: transform ...` on its own base
    rule; this block only supplies the actual scale, so it stays in one place. */
 @media (prefers-reduced-motion: no-preference) {
   body:not(:has(.reduce-motion-input:checked)) .btn:hover,
@@ -82,7 +82,7 @@
   body:not(:has(.reduce-motion-input:checked)) .fab:hover,
   body:not(:has(.reduce-motion-input:checked)) .scroll-cue:hover,
   body:not(:has(.reduce-motion-input:checked)) .card:hover,
-  body:not(:has(.reduce-motion-input:checked)) .filter-chip:hover,
+  body:not(:has(.reduce-motion-input:checked)) .carousel__slide:hover,
   body:not(:has(.reduce-motion-input:checked)) .carousel__nav:hover,
   body:not(:has(.reduce-motion-input:checked)) .situation-dialog__close:hover,
   body:not(:has(.reduce-motion-input:checked)) .help-icon:hover,
@@ -207,51 +207,78 @@
 }
 
 /* ---------- Callouts ---------- */
+/* The disclaimer cards, unified 2026-08-24. They had drifted: the permission note on one
+   improvement page carried no icon at all, both legal notes borrowed the safety warning triangle,
+   and one legal note on /your-rights was wearing the red safety variant outright. Every variant
+   now shares one card — same padding, radius, gap, icon size, type size and 4px leading rule — and
+   differs only in the rule colour and the icon.
+
+   Safety is the single variant that keeps a tinted background, and that is a content decision
+   rather than a style one: AGENTS.md treats space heaters, carbon monoxide and electrical load as
+   a category that must not read as one more caveat. It is still the same card, and the word
+   "Safety" carries the meaning on its own for anyone who cannot see the colour. */
 .callout {
+  --callout-rule: var(--color-accent);
+  --callout-bg: var(--color-surface);
+  --callout-border: var(--color-border);
   display: flex;
   gap: var(--space-3);
-  padding: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--callout-bg);
+  color: var(--color-text);
+  font-size: var(--text-small);
+  border: 1px solid var(--callout-border);
+  border-left: 4px solid var(--callout-rule);
   border-radius: var(--radius-md);
-  margin-block: var(--space-4);
+  margin-block: var(--space-5);
 }
 
 .callout .icon {
   flex-shrink: 0;
   margin-top: 0.15em;
+  color: var(--callout-rule);
 }
 
-.callout p {
+.callout > div > * + * {
+  margin-top: var(--space-2);
+}
+
+.callout p,
+.callout ul {
   margin: 0;
   max-width: none;
 }
 
-.callout--safety {
-  background: var(--color-danger-bg);
-  color: var(--color-danger-text);
-  border: 1px solid currentColor;
+.callout ul {
+  padding-left: var(--space-5);
 }
 
-/* Added 2026-08-20: on an improvement page with a safety note, the note now runs the full
-   page-shell width below the two-column intro (title/badges/facts beside the illustration),
-   rather than being squeezed into the text column next to the illustration — safety is the one
-   thing on the page that should never compete for space. The background band is genuinely full
-   width; the text inside still keeps a readable measure per DESIGN.md §4. */
+.callout li + li {
+  margin-top: var(--space-2);
+}
+
+.callout strong {
+  color: var(--callout-rule);
+}
+
+.callout--safety {
+  --callout-rule: var(--color-danger-text);
+  --callout-bg: var(--color-danger-bg);
+  --callout-border: var(--color-danger-text);
+}
+
+/* Added 2026-08-20: on an improvement page with a safety note, the note runs the full page-shell
+   width below the two-column intro (title/badges/facts beside the photograph) rather than being
+   squeezed into the text column beside it — safety is the one thing on the page that should never
+   compete for space. The background band is genuinely full width; the text inside still keeps a
+   readable measure per DESIGN.md §4. */
 .callout--safety-full {
   margin-block: var(--space-7);
-  padding: var(--space-5);
+  padding: var(--space-5) var(--space-6);
 }
 
 .callout--safety-full > div {
   max-width: var(--measure);
-}
-
-.callout--legal,
-.callout--savings,
-.callout--permission {
-  background: var(--color-surface);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  font-size: var(--text-small);
 }
 
 /* ---------- Disclosure bar ---------- */
@@ -280,7 +307,7 @@
 }
 
 .disclosure > summary .icon {
-  transition: transform var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease);
 }
 
 .disclosure[open] > summary .icon {
@@ -344,118 +371,134 @@
   max-width: var(--measure);
 }
 
+/* A column, not a row: the figure holds an image and its credit line, and `display: flex` with the
+   default row direction put the caption alongside the photograph rather than under it. */
 .improvement-intro__media {
   grid-area: media;
   margin: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
-.improvement-illustration {
+/* ---------- Improvement page photo, added 2026-08-24 ----------
+   Replaces the hand-drawn SVG illustration each improvement page carried until 2026-08-24. The
+   drawings were flat enough that several read as ambiguous — a shrink-film kit and a pane of
+   glass are the same two rectangles — so every improvement and explainer now leads with a
+   photograph of the real object instead. The diagrams that teach a mechanism rather than name an
+   object (the heat pump and furnace cutaways, the draft and bill figures) stayed, since a
+   photograph cannot show refrigerant moving. DESIGN.md §3.5.
+
+   Fixed aspect so a row of pages does not jump about between one photo and the next, and the
+   crop is baked into the file at build time rather than being left to the browser. */
+.photo {
+  display: block;
   width: 100%;
-  max-width: 22rem;
   height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
 }
 
-/* Matches the doll house / icon-set pen (DESIGN.md §4 Iconography): flat fills, 2px-equivalent
-   strokes, round caps and joins, no gradients, no shadows. Scaled up from the 24x24 icon spec's
-   proportions rather than reusing it directly, since these illustrations carry a little more
-   scene (a clearance zone, an arrow, a before/after) than a single glyph. */
-.improvement-illustration .stroke {
-  fill: none;
-  stroke: var(--color-accent);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.improvement-intro__media .photo {
+  max-width: 30rem;
 }
 
-.improvement-illustration .fill-brand {
-  fill: var(--color-brand);
-  stroke: none;
+.improvement-intro__media .photo-credit {
+  align-self: stretch;
+  max-width: 30rem;
 }
 
-.improvement-illustration .fill-surface {
-  fill: var(--color-surface);
-  stroke: var(--color-border-strong);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+/* Credit line, per docs/content-strategy.md §7. Every photograph on the site carries one, naming
+   the photographer and linking to the page the file came from. Small and muted so it reads as a
+   caption rather than as body copy, but never hidden — the license asks for the credit and the
+   project's own sourcing rule (AGENTS.md) is that nothing appears without a traceable origin. */
+.photo-credit {
+  margin-top: var(--space-2);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
 }
 
-.improvement-illustration .muted {
-  stroke: var(--color-border-strong);
+.photo-credit a {
+  color: inherit;
 }
 
-.improvement-illustration .dash {
-  stroke-dasharray: 4 4;
+/* A photograph set into a reading column to break up a long stretch of prose. Keeps the column's
+   measure rather than bleeding wide, so the eye returns to the same left edge afterwards. */
+.prose-figure {
+  margin: var(--space-7) 0;
+  max-width: var(--measure);
 }
 
-/* ---------- Improvement illustration loops, added 2026-08-21 ----------
-   Each illustration gets one small, meaningful loop instead of sitting static — rising heat, a
-   dripping showerhead, a moving draft, a glowing bulb, a marching-dash arrow. `.motion-loop` is
-   the shared marker: it reads --motion-state, so OS preference, the reduce-motion toggle and the
-   floating pause button (below) all stop it exactly like every other ambient animation on the
-   site, and its mere presence on a page is what makes the floating pause button visible at all
-   (see `.motion-fab__pause`). No scroll-gate like the learn-page diagrams below — an illustration
-   sits in the intro, already in the viewport on load, so it can read --motion-state directly. */
+/* A photograph that runs the full window width as a band between two sections. The image is
+   deliberately short and wide — it is punctuation between blocks of text, not an illustration to
+   study — and the credit sits under it inside the page shell rather than floating on the photo. */
+.photo-band {
+  margin-block: var(--space-8);
+}
+
+.photo-band .photo {
+  aspect-ratio: 3 / 1;
+  border-radius: 0;
+  border-inline: none;
+  max-width: none;
+}
+
+.photo-band .photo-credit {
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+@media (max-width: 620px) {
+  .photo-band .photo {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* A photograph and a short block of text side by side inside a tinted band, added 2026-08-24.
+   Used where a page needs to point somewhere else without a wall of prose doing it: the
+   "Where to get this stuff" pointer at the foot of the improvements library, and the program
+   pointers on /programs. Photo first in the DOM on purpose — it is the thing that makes the
+   panel visible at a glance, and on a narrow screen it should arrive before the heading it
+   illustrates. */
+.info-panel {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+@media (min-width: 780px) {
+  .info-panel {
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-7);
+  }
+
+  .info-panel--reverse .info-panel__media {
+    order: 2;
+  }
+}
+
+.info-panel__media {
+  margin: 0;
+}
+
+.info-panel__text > * + * {
+  margin-top: var(--space-4);
+}
+
+/* The shared marker for an animation that loops. It reads --motion-state, so OS preference, the
+   reduce-motion toggle and the floating pause button all stop it exactly like every other ambient
+   animation on the site, and its presence on a page is what makes the floating pause button
+   visible at all (see `.motion-fab__pause`). Only the explainer diagrams carry it now that the
+   improvement pages lead with photographs. */
 .motion-loop {
   animation-play-state: var(--motion-state);
   animation-iteration-count: infinite;
   animation-timing-function: var(--motion-ease);
-}
-
-@keyframes illo-rise {
-  0%, 100% { transform: translateY(0); opacity: 0.85; }
-  50% { transform: translateY(-6px); opacity: 0.3; }
-}
-
-.illo-rise {
-  animation-name: illo-rise;
-  animation-duration: 2.6s;
-}
-
-@keyframes illo-drip {
-  0%, 20% { transform: translateY(0); opacity: 0.6; }
-  70% { transform: translateY(10px); opacity: 0.15; }
-  71%, 100% { transform: translateY(0); opacity: 0; }
-}
-
-.illo-drip {
-  animation-name: illo-drip;
-  animation-duration: 2.2s;
-}
-
-@keyframes illo-glow {
-  0%, 100% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.08); }
-}
-
-.illo-glow {
-  animation-name: illo-glow;
-  animation-duration: 2.4s;
-  transform-origin: center;
-}
-
-@keyframes illo-flow {
-  to { stroke-dashoffset: -16; }
-}
-
-.illo-flow {
-  animation-name: illo-flow;
-  animation-duration: 1.6s;
-  animation-timing-function: linear;
-}
-
-.illo-drift-in {
-  animation-name: drift-in;
-  animation-duration: 3.2s;
-}
-
-.illo-drift-out {
-  animation-name: drift-out;
-  animation-duration: 3.2s;
-  animation-delay: 0.3s;
 }
 
 .improvement-body {
@@ -570,7 +613,7 @@
 
 /* Parallax/entrance drift, gated exactly like every other ambient motion on the site (DESIGN.md
    §7): behind an @supports check since view-timeline animation is a progressive enhancement, off
-   under prefers-reduced-motion or the footer switch, and off below 600px alongside the rest of
+   under prefers-reduced-motion or the reduce-motion switch, and off below 600px alongside the rest of
    the site's parallax (§6). Each side drifts in from a slight horizontal offset as the bar
    crosses the viewport, at opposite starting offsets, which is what reads as "interactive
    scrolling" rather than a plain fade. Revised 2026-08-20: opacity dropped from the keyframes
@@ -668,7 +711,7 @@
   text-decoration: none;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--motion-duration-base) var(--motion-ease);
+  transition: opacity var(--motion-base) var(--motion-ease);
   z-index: 30;
 }
 
@@ -695,8 +738,8 @@
   background: var(--color-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  transition: transform var(--motion-duration-base) var(--motion-ease),
-    border-color var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease);
 }
 
 .card:hover {
@@ -848,16 +891,30 @@
 }
 
 /* ---------- Filter / situation form ---------- */
+/* Revised 2026-08-24: three explicit columns rather than auto-fit, with the one long question
+   (nine lifecycle phases) spanning the full row and laying its own options out in columns
+   underneath. Auto-fit put four fieldsets of wildly different heights into two ragged columns,
+   which is what made the dialog taller than a laptop screen. See `.situation-dialog`. */
 .question-set {
   display: grid;
-  gap: var(--space-5);
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+  .question-set {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .question--wide {
+    grid-column: 1 / -1;
+  }
 }
 
 .question {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--space-4);
+  padding: var(--space-3) var(--space-4);
   margin: 0;
 }
 
@@ -870,8 +927,23 @@
 .question__options {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  margin-top: var(--space-2);
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+}
+
+/* The lifecycle question's nine options, wrapped into columns so the fieldset stays about as tall
+   as the three beside it. `column-count` rather than a grid: the options are a plain list whose
+   order matters and whose rows are all one line, which is exactly what multi-column flow is for. */
+@media (min-width: 700px) {
+  .question__options--columns {
+    display: block;
+    column-count: 3;
+    column-gap: var(--space-5);
+  }
+
+  .question__options--columns label {
+    break-inside: avoid;
+  }
 }
 
 .question__options label {
@@ -888,38 +960,16 @@
   accent-color: var(--color-accent);
 }
 
-/* The submit button sits apart from the question-set rather than reading as part of the last
-   fieldset. Added 2026-08-19. */
-.question-set + p {
-  margin-top: var(--space-6);
-}
-
-.filter-chips {
+/* The buttons sit apart from the question-set rather than reading as part of the last fieldset.
+   Added 2026-08-19, made a real row 2026-08-24 when Reset joined Submit. Reset is a plain
+   `type="reset"`, so it restores the "I am not sure" defaults with no script at all; the script
+   only adds the part markup cannot do, which is forgetting the saved situation as well as the
+   shown one (assets/js/situation.js). */
+.form-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-block: var(--space-4);
-}
-
-.filter-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-height: 36px;
-  padding: var(--space-1) var(--space-4);
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--color-border-strong);
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-size: var(--text-small);
-  transition: transform var(--motion-duration-base) var(--motion-ease);
-  cursor: pointer;
-}
-
-.filter-chip[aria-pressed="true"] {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-text-on-dark);
+  gap: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 /* Added 2026-08-20, replacing the on-page filter form: just the result count and the sort
@@ -1079,8 +1129,8 @@
   font-weight: 600;
   box-shadow: var(--shadow-raised);
   scroll-margin-bottom: 80px;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 /* Darken and grow on hover — never fade. Text stays full-strength white throughout, so the
@@ -1140,9 +1190,9 @@
   height: var(--target-min);
   border-radius: 50%;
   cursor: pointer;
-  transition: color var(--motion-duration-base) var(--motion-ease),
-    border-color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: color var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 body:has(.motion-loop) .motion-fab__pause {
@@ -1209,13 +1259,20 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
+/* Widened 2026-08-24 from 40rem. At the old width the four questions stacked into two ragged
+   columns and the dialog ran past the bottom of a laptop screen, so the last question and the
+   submit button were both below the fold on the one screen whose whole job is to be filled in
+   and dismissed. At 62rem the three short questions sit in a row with the long one beneath them
+   (`.question-set`), which fits without scrolling down to about a 700px-tall viewport.
+   `max-height` stays, and the inner element stays scrollable, because a short window or a large
+   text size can still overflow and a dialog that clips is worse than one that scrolls. */
 .situation-dialog {
   border: none;
   border-radius: var(--radius-md);
   padding: 0;
-  max-width: 40rem;
-  width: min(90vw, 40rem);
-  max-height: 85vh;
+  max-width: 62rem;
+  width: min(94vw, 62rem);
+  max-height: 92vh;
   box-shadow: var(--shadow-raised);
 }
 
@@ -1225,8 +1282,15 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .situation-dialog__inner {
   position: relative;
-  padding: var(--space-6);
+  padding: var(--space-5) var(--space-6);
+  max-height: inherit;
   overflow-y: auto;
+}
+
+/* The close button is absolutely positioned in the top-right corner, so the heading needs to stop
+   short of it rather than run underneath. */
+#situation-dialog-heading {
+  padding-right: var(--target-min);
 }
 
 .situation-dialog__close {
@@ -1242,8 +1306,8 @@ body:has(.motion-loop) .motion-fab__pause {
   background: transparent;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .situation-dialog__close:hover {
@@ -1252,6 +1316,10 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .situation-dialog__body form {
   margin-top: var(--space-4);
+}
+
+.situation-dialog__body .question-set {
+  margin-top: 0;
 }
 
 /* ---------- Footer ---------- */
@@ -1309,7 +1377,7 @@ body:has(.motion-loop) .motion-fab__pause {
   border-radius: var(--radius-sm);
   background: var(--color-text-on-dark);
   padding: var(--space-2);
-  transition: transform var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease);
 }
 
 .footer-logo img {
@@ -1340,10 +1408,16 @@ body:has(.motion-loop) .motion-fab__pause {
   margin-top: var(--space-1);
 }
 
+/* The two links read as a pair at ordinary line spacing, revised 2026-08-21. Each carried the
+   site's 44px --target-min as a min-height with a column gap stacked on top, which set two
+   closely related links a full line apart. The 4px block padding here still leaves each link
+   about 33px tall, over the 24px WCAG 2.5.8 floor that applies to a link inside a run of links;
+   the site's own 44px commitment (DESIGN.md §6) stays where it belongs, on standalone controls.
+   The last-reviewed line keeps its distance with its own margin, so the pair above it is the
+   only thing reading as a group. */
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
   font-size: var(--text-small);
   align-items: flex-start;
 }
@@ -1352,12 +1426,13 @@ body:has(.motion-loop) .motion-fab__pause {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: var(--target-min);
+  padding-block: var(--space-1);
 }
 
 .footer-meta {
   font-size: var(--text-small);
   opacity: 0.85;
+  margin-top: var(--space-4);
 }
 
 /* ---------- Reduce motion switch ---------- */
@@ -1376,14 +1451,7 @@ body:has(.motion-loop) .motion-fab__pause {
   flex-shrink: 0;
   border-radius: var(--radius-pill);
   background: var(--switch-track);
-  transition: background var(--motion-duration-base) var(--motion-ease);
-}
-
-/* The dark footer is the one place a translucent white track is the readable choice. Everywhere
-   else --switch-track's default (a solid --color-border-strong) is, which is the whole reason it
-   is a token. Added 2026-08-21, DESIGN.md §7. */
-.site-footer {
-  --switch-track: rgba(255, 255, 255, 0.45);
+  transition: background var(--motion-base) var(--motion-ease);
 }
 
 .switch__thumb {
@@ -1394,7 +1462,7 @@ body:has(.motion-loop) .motion-fab__pause {
   height: 20px;
   border-radius: 50%;
   background: var(--color-text-on-dark);
-  transition: transform var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease);
 }
 
 .switch input:checked ~ .switch__track {
@@ -1416,8 +1484,10 @@ body:has(.motion-loop) .motion-fab__pause {
    `node tools/ashlar.mjs` and pasted here as a static data URI — see DESIGN.md §3.1 for why the
    joints are derived from a dissection rather than drawn by hand (the two earlier passes drew
    them, and both had joints that stopped short of a slab's edge), and for how slabs straddling
-   the tile edge are what keeps the 320px repeat from showing. No image asset, no build step.
-   Kept subtle (16% opacity). */
+   the tile edge are what keeps the repeat from showing. No image asset, no build step. Kept
+   subtle (16% opacity). Scaled up 2026-08-21: a 480px tile rather than 320px, so the stones read
+   as proportionate to the mat sitting on them. Same dissection, same seed, and the joint stroke
+   stays 2px rather than scaling with the tile. */
 .hero {
   min-height: 85svh;
   display: flex;
@@ -1427,8 +1497,8 @@ body:has(.motion-loop) .motion-fab__pause {
   gap: var(--space-5);
   padding: var(--space-7) var(--space-5);
   background-color: var(--color-hero-ground);
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27320%27%20height%3D%27320%27%20viewBox%3D%270%200%20320%20320%27%3E%3Cpath%20fill%3D%27none%27%20stroke%3D%27rgba(20%2C32%2C26%2C0.16)%27%20stroke-width%3D%272%27%20d%3D%27M40%20120V200M80%200V40M80%2080V320M120%2040V280M160%20280V320M200%200V160M200%20240V280M240%200V240M240%20280V320M280%200V200M280%20280V320M320%2040V80M0%2040V80M320%20120V160M0%20120V160M320%20200V280M0%20200V280M0%2040H320M0%2080H120M240%2080H320M0%20120H80M280%20120H320M0%20160H40M80%20160H240M280%20160H320M0%20200H80M240%20200H320M120%20240H320M0%20280H320M80%20320H280M80%200H280%27%2F%3E%3C%2Fsvg%3E");
-  background-size: 320px 320px;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27480%27%20height%3D%27480%27%20viewBox%3D%270%200%20480%20480%27%3E%3Cpath%20fill%3D%27none%27%20stroke%3D%27rgba(20%2C32%2C26%2C0.16)%27%20stroke-width%3D%272%27%20d%3D%27M60%20180V300M120%200V60M120%20120V480M180%2060V420M240%20420V480M300%200V240M300%20360V420M360%200V360M360%20420V480M420%200V300M420%20420V480M480%2060V120M0%2060V120M480%20180V240M0%20180V240M480%20300V420M0%20300V420M0%2060H480M0%20120H180M360%20120H480M0%20180H120M420%20180H480M0%20240H60M120%20240H360M420%20240H480M0%20300H120M360%20300H480M180%20360H480M0%20420H480M120%20480H420M120%200H420%27%2F%3E%3C%2Fsvg%3E");
+  background-size: 480px 480px;
   text-align: center;
 }
 
@@ -1449,40 +1519,45 @@ body:has(.motion-loop) .motion-fab__pause {
 /* A pair of shoes left at the door, added 2026-08-20, redrawn the same day as a bird's-eye pair
    (was a side-profile silhouette) — dark green (--color-accent) with a black outline and white
    laces, the site's primary interactive color used decoratively here rather than --color-brand,
-   per the request to move off the lighter green. The two sit in a plain flex row inside one
-   rotated container, so they are strictly parallel to each other (zero rotation between them)
-   while the pair as a whole sits at a slight shared angle to the mat, the way a kicked-off pair
-   actually lands rather than being squared up to the border. Anchored to the mat's own
-   bottom-left corner (the mat is `position: relative`). Revised 2026-08-21: sized up again (was
-   15%) so the pair reads as proportionate to the mat rather than a small accent. Decorative:
-   `aria-hidden`, no accessible name needed since nothing here is informational. */
+   per the request to move off the lighter green. The two sit in one rotated container, so they are
+   strictly parallel to each other (zero rotation between them) while the pair as a whole sits at a
+   slight shared angle to the mat, the way a kicked-off pair actually lands rather than being
+   squared up to the border. Anchored to the mat's own bottom-left corner (the mat is
+   `position: relative`). Revised 2026-08-21: sized up again (was 15%) so the pair reads as
+   proportionate to the mat rather than a small accent, and turned to face the direction it walks
+   (see the walk below). Decorative: `aria-hidden`, no accessible name needed since nothing here
+   is informational. */
 .hero__shoes {
   position: absolute;
   left: -4%;
   bottom: -4%;
   display: flex;
-  gap: 3%;
-  width: 24%;
+  /* A column, revised 2026-08-21. The shoe is turned to point right (see the markup), and from
+     above, a pair facing right sits one shoe in front of the other on the screen's vertical axis.
+     `width` now measures the shoe's length rather than its width, so it grew from 24% to 27% to
+     land the pair at the same rendered size it had before the turn. */
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 27%;
   transform: rotate(-8deg);
   transform-origin: bottom left;
   pointer-events: none;
 }
 
 .hero__shoes svg {
-  width: 48%;
+  width: 100%;
   height: auto;
   flex-shrink: 0;
 }
 
-/* The walk, added 2026-08-21 (DESIGN.md §3.1). Scroll-progress driven, not timed: the container
-   carries the forward travel while each shoe alternates between ahead of it and behind it, half a
-   stride apart, which is what reads as a gait rather than as two shoes sliding sideways together.
-   Because scroll position *is* the animation's progress, it reverses when the student scrolls back
-   and stops when they stop — nothing here moves on its own, so unlike the site's loops it needs no
+/* The walk, added 2026-08-21, rebuilt the same day (DESIGN.md §3.1). Scroll-progress driven, not
+   timed: the container carries the forward travel and each shoe carries its own step. Because
+   scroll position *is* the animation's progress, it reverses when the student scrolls back and
+   stops when they stop — nothing here moves on its own, so unlike the site's loops it needs no
    Pause button (§7). Gated the same three ways as the story-bar drift below: @supports, because
    scroll-driven animation is a progressive enhancement; prefers-reduced-motion and the
    reduce-motion switch; and min-width 600px, with the rest of the site's scroll motion (§6). Under
-   any of those the shoes hold the position they ship in, which is the first keyframe. */
+   any of those the shoes hold the position the markup gives them, side by side and level. */
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
     /* Sub-properties, not the `animation` shorthand: the shorthand would reset
@@ -1510,22 +1585,56 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* The container keeps its resting -8deg through the whole walk, so the pair stays tilted the way
-   a kicked-off pair landed. translateX runs along that rotated axis, which sends them up the mat
-   slightly as they cross it rather than straight sideways. */
+/* The pair keeps its resting -8deg through the whole walk, so it stays tilted the way a kicked-off
+   pair landed. The translate is written *before* the rotate, which applies it in the mat's own
+   coordinates rather than along the tilted axis: written the other way round the pair climbs as it
+   crosses, and around the middle of the scroll range it is walking through the middle of the
+   `<h1>`. Along the bottom of the mat there is nothing to walk over. 270% of the pair's own length
+   lands them at the far border. Change this and the stride amplitude below has to change with
+   it. */
 @keyframes shoes-walk {
-  from { transform: rotate(-8deg) translateX(0); }
-  to { transform: rotate(-8deg) translateX(300%); }
+  from { transform: translateX(0) rotate(-8deg); }
+  to { transform: translateX(270%) rotate(-8deg); }
 }
 
+/* The stride, and why these numbers are not taste. The two keyframe sets below are the same walk
+   half a cycle apart, three cycles across the scroll range. One cycle is 33.333% of the range and
+   the pair advances 90% of a shoe's length in it, so half a cycle advances 45%. A planted foot has
+   to stay still against the ground while that happens, which means drifting exactly -45% relative
+   to the pair: hence ±22.5% around the mean through stance, and hence the other foot covering 90%
+   against the ground in its half, at twice the pair's speed. Get this wrong and the planted foot
+   skids, which is what the first pass looked like.
+
+   Both start the range at 0 so the pair rests level, side by side, the way a pair left at a door
+   sits — one of them mid-stance and the other mid-swing, which is the only phase where that is
+   true of both at once. `scale` stands in for the lift at the middle of each swing: from directly
+   overhead a raised foot reads as a nearer one, and there is no other axis to show it on. It is
+   also why the near shoe is the fractionally larger of the two at rest. */
 @keyframes shoe-step-lead {
-  0%, 25%, 50%, 75%, 100% { transform: translate(20%, -4%) rotate(4deg); }
-  12.5%, 37.5%, 62.5%, 87.5% { transform: translate(-16%, 0) rotate(-3deg); }
+  0% { transform: translateX(0) scale(1); }
+  8.333% { transform: translateX(-22.5%) scale(1); }
+  16.667% { transform: translateX(0) scale(1.06); }
+  25% { transform: translateX(22.5%) scale(1); }
+  41.667% { transform: translateX(-22.5%) scale(1); }
+  50% { transform: translateX(0) scale(1.06); }
+  58.333% { transform: translateX(22.5%) scale(1); }
+  75% { transform: translateX(-22.5%) scale(1); }
+  83.333% { transform: translateX(0) scale(1.06); }
+  91.667% { transform: translateX(22.5%) scale(1); }
+  100% { transform: translateX(0) scale(1); }
 }
 
 @keyframes shoe-step-follow {
-  0%, 25%, 50%, 75%, 100% { transform: translate(-16%, 0) rotate(-3deg); }
-  12.5%, 37.5%, 62.5%, 87.5% { transform: translate(20%, -4%) rotate(4deg); }
+  0% { transform: translateX(0) scale(1.06); }
+  8.333% { transform: translateX(22.5%) scale(1); }
+  25% { transform: translateX(-22.5%) scale(1); }
+  33.333% { transform: translateX(0) scale(1.06); }
+  41.667% { transform: translateX(22.5%) scale(1); }
+  58.333% { transform: translateX(-22.5%) scale(1); }
+  66.667% { transform: translateX(0) scale(1.06); }
+  75% { transform: translateX(22.5%) scale(1); }
+  91.667% { transform: translateX(-22.5%) scale(1); }
+  100% { transform: translateX(0) scale(1.06); }
 }
 
 /* Only this border and what's inside it is "the mat" proper. Inset by a fixed margin (not
@@ -1593,9 +1702,9 @@ body:has(.motion-loop) .motion-fab__pause {
   color: var(--color-mat-border);
   text-decoration: none;
   font-weight: 600;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .scroll-cue:hover {
@@ -1654,8 +1763,8 @@ body:has(.motion-loop) .motion-fab__pause {
   background: transparent;
   color: var(--color-text-muted);
   cursor: help;
-  transition: color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .help-icon:hover,
@@ -1669,7 +1778,11 @@ body:has(.motion-loop) .motion-fab__pause {
   left: 0;
   margin-top: var(--space-2);
   width: max-content;
-  max-width: min(20rem, 100%);
+  /* Widened 2026-08-21: the 20rem cap broke a two-sentence instruction into four short lines and
+     made a callout read as a column of text. The `100%` half is what keeps it inside a narrow
+     window, and it is measured against .section-heading-row rather than the button, per the note
+     above. */
+  max-width: min(34rem, 100%);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
@@ -1679,7 +1792,7 @@ body:has(.motion-loop) .motion-fab__pause {
   text-align: left;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--motion-duration-base) var(--motion-ease);
+  transition: opacity var(--motion-base) var(--motion-ease);
   z-index: 30;
 }
 
@@ -1765,8 +1878,8 @@ body:has(.motion-loop) .motion-fab__pause {
   text-decoration: none;
   font-size: var(--text-small);
   font-weight: 600;
-  transition: transform var(--motion-duration-base) var(--motion-ease),
-    background var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease),
+    background var(--motion-base) var(--motion-ease);
 }
 
 .hotspot:hover {
@@ -1857,7 +1970,7 @@ body:has(.motion-loop) .motion-fab__pause {
   padding: var(--space-4);
   border-color: var(--color-accent);
   border-width: 3px;
-  transition: min-height var(--motion-duration-room) var(--motion-ease);
+  transition: min-height var(--motion-room) var(--motion-ease);
 }
 
 .dollhouse:has(.room:target) .room:target .room__heading {
@@ -1942,7 +2055,7 @@ body:has(.motion-loop) .motion-fab__pause {
   width: var(--progress, 0%);
   background: var(--color-accent);
   border-radius: var(--radius-pill);
-  transition: width var(--motion-duration-base) var(--motion-ease);
+  transition: width var(--motion-base) var(--motion-ease);
 }
 
 .progress-bar__tooltip {
@@ -1959,7 +2072,7 @@ body:has(.motion-loop) .motion-fab__pause {
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--motion-duration-base) var(--motion-ease);
+  transition: opacity var(--motion-base) var(--motion-ease);
 }
 
 .progress-bar:hover .progress-bar__tooltip,
@@ -1983,9 +2096,9 @@ body:has(.motion-loop) .motion-fab__pause {
   background: var(--color-bg);
   color: var(--color-text-muted);
   cursor: pointer;
-  transition: color var(--motion-duration-base) var(--motion-ease),
-    border-color var(--motion-duration-base) var(--motion-ease),
-    transform var(--motion-duration-base) var(--motion-ease);
+  transition: color var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
 }
 
 .progress-reset:hover {
@@ -2083,8 +2196,8 @@ body:has(.motion-loop) .motion-fab__pause {
 }
 
 .flip-card__front {
-  transition: transform var(--motion-duration-flip) var(--motion-ease),
-    box-shadow var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-flip) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease);
   transform-style: preserve-3d;
 }
 
@@ -2128,35 +2241,96 @@ body:has(.motion-loop) .motion-fab__pause {
   gap: var(--space-4);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: var(--space-2);
+  /* Block padding on both edges, not just the bottom: the track is a scroll container, and a
+     slide growing on hover (below) would otherwise be clipped at the top by the container it
+     sits in. */
+  padding-block: var(--space-2);
   margin: 0;
   list-style: none;
   scrollbar-width: thin;
 }
 
+/* `position: relative` is load-bearing, fixed 2026-08-21. A slide reuses `.card__title`, whose
+   link stretches an invisible `::after` across its card to make the whole card clickable. Without
+   a positioned slide that overlay resolved against `.carousel` instead, so every slide's link
+   covered the entire component — three stacked sheets, the last one in the markup winning — and
+   the whole section navigated to the last article while the Previous and Next controls underneath
+   them took no clicks at all. DESIGN.md §3.4. */
 .carousel__slide {
+  position: relative;
   scroll-snap-align: start;
   flex: 0 0 min(85%, 22rem);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-4);
   background: var(--color-bg);
+  transition: transform var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease);
 }
 
-/* Peek variant, added 2026-08-20 for the Improvements page's "Renter basics" row: each slide
-   centers as it snaps, with enough side padding on the track that the next slide stays partly
-   visible rather than fully off-screen — "focuses on one at a time, but the others are visible
-   in the background." Same track/slide markup and scroll-snap mechanics as the plain carousel
-   above, no JavaScript required for the scrolling itself either way. */
+.carousel__slide:hover {
+  border-color: var(--color-border-strong);
+}
+
+/* Peek variant, added 2026-08-20 for the Improvements page's "Renter basics" row, rebuilt
+   2026-08-24 to focus one card at a time. The track is still a scroll-snap row of real slides, so
+   it swipes, scrolls and tabs with no JavaScript at all and Previous/Next stay ordinary anchors to
+   slide IDs. What changed is the geometry and the emphasis: a slide is 58% of the track and the
+   track carries a 20% gutter each side, which is what lets the centered slide sit in the middle
+   with roughly a third of each neighbour showing either side of it. DESIGN.md §3.4.
+
+   The scale-down of the neighbours is applied only under `.is-enhanced`, a class
+   assets/js/carousel.js adds once it can actually track which slide is centered. Without the
+   script every slide renders at full size and full contrast, which is the honest fallback — a
+   dimmed card with nothing able to un-dim it would be worse than no effect at all. */
+.carousel--peek {
+  /* One slide width, in units that do not depend on the track's own content box. A percentage
+     here cannot work: percentage `flex-basis` resolves against the flex container's content box,
+     percentage `padding-inline` shrinks that same content box, and asking for "a slide half the
+     leftover width" with both at once has no solution short of 50% padding and a zero-width
+     content box. A length breaks the loop, and the gutter is then just half the leftover. */
+  --peek-slide: min(34rem, 72vw);
+}
+
+/* The gutter that lets the first and last slides reach the middle. Percentage padding resolves
+   against the track's own width rather than its content box, so this is exactly half the space a
+   slide does not occupy — which is what `scroll-snap-align: center` needs in order to center the
+   slides at either end as well as the ones in the middle. */
 .carousel--peek .carousel__track {
-  padding-inline: 12%;
-  scroll-padding-inline: 12%;
+  gap: var(--space-3);
+  padding-inline: calc(50% - var(--peek-slide) / 2);
+  /* The neighbours scale up to 1 as they become current, and a scroll container clips at its
+     padding box, so the block padding has to leave room for the taller state. */
+  padding-block: var(--space-4);
 }
 
 .carousel--peek .carousel__slide {
   scroll-snap-align: center;
-  flex-basis: 76%;
-  max-width: 26rem;
+  flex: 0 0 var(--peek-slide);
+  transition: transform var(--motion-base) var(--motion-ease),
+    opacity var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease);
+}
+
+.carousel--peek.is-enhanced .carousel__slide {
+  transform: scale(0.9);
+  opacity: 0.72;
+}
+
+.carousel--peek.is-enhanced .carousel__slide.is-current {
+  transform: scale(1);
+  opacity: 1;
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-raised);
+}
+
+/* A neighbour is dimmed, not hidden, and its link is still a real link. Anything reached by
+   keyboard pulls itself to the middle rather than being read at 72% contrast: the browser scrolls
+   a focused element into view, the scroll listener sees the new center, and the class moves. */
+.carousel--peek.is-enhanced .carousel__slide:focus-within {
+  transform: scale(1);
+  opacity: 1;
 }
 
 .carousel__controls {
@@ -2177,7 +2351,7 @@ body:has(.motion-loop) .motion-fab__pause {
   border: 1px solid var(--color-border-strong);
   text-decoration: none;
   color: var(--color-text);
-  transition: transform var(--motion-duration-base) var(--motion-ease);
+  transition: transform var(--motion-base) var(--motion-ease);
 }
 
 .carousel__nav:hover {
@@ -2340,8 +2514,8 @@ body:has(.motion-loop) .motion-fab__pause {
   font-size: var(--text-small);
   font-weight: 600;
   cursor: pointer;
-  transition: background var(--motion-duration-base) var(--motion-ease),
-    color var(--motion-duration-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease);
 }
 
 .season-toggle input:checked + label {
@@ -2540,6 +2714,271 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .data-table tbody th {
   font-weight: 600;
+}
+
+/* ---------- Split incentive, added 2026-08-24 ----------
+   The About page opens on the problem the whole site exists because of: in a rental the person
+   who would pay for an efficiency improvement is not the person who would save from it. The
+   two-sided treatment is adapted from the same project team's earlier heat pump site (S25).
+
+   One colour field runs behind everything from the page title down to the converging arrow, split
+   down the middle. Hovering or focusing either side widens that side's share of the whole field,
+   not just its own panel, so the emphasis reads as one lease tilting rather than two boxes
+   resizing. That shift is done with `:has()` rather than script, matching how the reduce-motion
+   switch and the carousel already work in this file.
+
+   Nothing is hidden in the narrow state. Both panels carry all of their text at 50/50, and the
+   widening is emphasis alone — which is what makes it safe for it to be a hover effect at all,
+   since a reader who never hovers and never focuses misses nothing. */
+.split-continuum {
+  position: relative;
+  isolation: isolate;
+  color: var(--color-text-on-dark);
+}
+
+.split-continuum__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: flex;
+  overflow: hidden;
+}
+
+.split-continuum__bg span {
+  display: block;
+  width: 50%;
+  transition: width var(--motion-base) var(--motion-ease);
+}
+
+.split-continuum__bg span:first-child {
+  background: var(--color-split-tenant);
+}
+
+.split-continuum__bg span:last-child {
+  background: var(--color-split-owner);
+}
+
+.split-continuum:has(.split-side--tenant:hover) .split-continuum__bg span:first-child,
+.split-continuum:has(.split-side--tenant:focus-within) .split-continuum__bg span:first-child {
+  width: 58%;
+}
+
+.split-continuum:has(.split-side--owner:hover) .split-continuum__bg span:first-child,
+.split-continuum:has(.split-side--owner:focus-within) .split-continuum__bg span:first-child {
+  width: 42%;
+}
+
+.split-continuum h1,
+.split-continuum h2,
+.split-continuum h3 {
+  color: var(--color-text-on-dark);
+}
+
+.split-continuum a {
+  color: var(--color-text-on-dark);
+}
+
+/* Beats `.page-head .lede` further down this file, which sets the muted body colour and would
+   otherwise win on equal specificity by being declared later. On a dark field that rule renders
+   the lede in near-invisible grey-green. */
+.split-continuum .page-head .lede,
+.split-continuum .lede {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* The opening block is laid out across the seam on purpose: the title sits on the tenant's side,
+   the sentence that names the problem on the owner's. Centering it instead put both across the
+   join, where a single text colour has to work on two different fields at once and the smaller
+   type stopped being readable on one of them. */
+.split-hero {
+  display: grid;
+  gap: var(--space-5);
+  text-align: left;
+  margin-bottom: var(--space-7);
+}
+
+@media (min-width: 900px) {
+  .split-hero {
+    grid-template-columns: 1.05fr 1fr;
+    gap: var(--space-8);
+    align-items: end;
+  }
+}
+
+.split-hero h1 {
+  margin: 0;
+}
+
+.split-hero .lede {
+  margin: 0;
+  max-width: var(--measure);
+  font-size: var(--text-h4);
+}
+
+/* The eyebrow above the page title. Small, spaced capitals, so it reads as a label on the section
+   rather than as the first line of the sentence underneath it. */
+.eyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+  margin-bottom: var(--space-2);
+}
+
+.split-sides {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.split-side {
+  flex: 1 1 20rem;
+  display: flex;
+  transition: flex-grow var(--motion-base) var(--motion-ease);
+}
+
+@media (min-width: 860px) {
+  .split-side:hover,
+  .split-side:focus-within {
+    flex-grow: 1.25;
+  }
+}
+
+/* Each panel's text keeps a readable measure and hugs the centre line, so the two columns read as
+   one spread rather than as two pages that happen to be adjacent. */
+.split-side__inner {
+  max-width: 34rem;
+  padding: var(--space-7) var(--space-5);
+  margin-inline: auto;
+}
+
+.split-side__tag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.18);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-4);
+}
+
+.split-side__inner h2 {
+  margin-bottom: var(--space-5);
+}
+
+.split-side__inner h3 {
+  font-size: var(--text-h4);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: var(--text-small);
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: var(--space-3);
+}
+
+.split-side__inner ul {
+  margin: 0 0 var(--space-6);
+  padding-left: var(--space-5);
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.split-side__inner ul:last-child {
+  margin-bottom: 0;
+}
+
+.split-side__inner li + li {
+  margin-top: var(--space-2);
+}
+
+/* Below the point where the two panels can sit side by side they stack, and a background split
+   down the vertical middle would then run straight through the middle of each stacked panel. The
+   field is dropped at that width and each part carries its own colour instead: the continuum takes
+   the tenant's, and the owner's panel keeps its own. Stated as an explicit breakpoint rather than
+   left to flex-wrap, so the colour change and the reflow happen at the same width. */
+@media (max-width: 859px) {
+  .split-continuum {
+    background: var(--color-split-tenant);
+  }
+
+  .split-continuum__bg {
+    display: none;
+  }
+
+  .split-sides {
+    display: block;
+  }
+
+  .split-side {
+    display: block;
+  }
+
+  .split-side--owner {
+    background: var(--color-split-owner);
+  }
+}
+
+/* A light card lifted out of the colour field, for the sentence that names the problem. */
+.split-card {
+  background: var(--color-bg);
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-raised);
+  padding: var(--space-6);
+  max-width: 46rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.split-card h2 {
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.split-card p {
+  margin-inline: auto;
+}
+
+/* The three approaches, sitting directly on the colour field rather than in cards, so the field
+   stays continuous behind them. Bordered in translucent white to keep them separable. */
+.split-approach {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  margin-top: var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+.split-approach li {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+}
+
+.split-approach h3 {
+  margin-bottom: var(--space-2);
+}
+
+.split-approach p {
+  color: rgba(255, 255, 255, 0.9);
+  max-width: none;
+}
+
+/* The two sides meeting. Ends the coloured stretch and hands the page back to the ordinary white
+   background, which is the point being made: the two halves have somewhere to meet. */
+.split-converge {
+  line-height: 0;
+}
+
+.split-converge svg {
+  display: block;
+  width: 100%;
+  height: clamp(4rem, 9vw, 8.5rem);
 }
 
 /* ---------- Utility layout ---------- */
