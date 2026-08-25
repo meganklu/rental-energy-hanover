@@ -160,6 +160,34 @@
     "lastReviewed": "2026-08-19"
   },
   {
+    "type": "improvement",
+    "slug": "low-flow-showerhead",
+    "title": "Swap in a low-flow showerhead",
+    "summary": "A showerhead unscrews by hand. Less hot water through it is less oil or electricity burned heating it.",
+    "cost": "under25",
+    "time": "under30min",
+    "difficulty": "easy",
+    "landlordPermission": "ask",
+    "reversible": "fully",
+    "impact": "medium",
+    "impactNote": "EPA puts a WaterSense labelled showerhead at 2,700 gallons and more than 330 kWh saved a year for an average family",
+    "appliesToHeat": [
+      "any"
+    ],
+    "appliesToPayer": "tenant",
+    "phase": "move-in",
+    "materials": [
+      "WaterSense labelled showerhead",
+      "plumber's thread tape"
+    ],
+    "safety": null,
+    "sources": [
+      "S33",
+      "S23"
+    ],
+    "lastReviewed": "2026-08-24"
+  },
+  {
     "type": "explainer",
     "slug": "move-out-restore",
     "title": "Put it back at move-out",

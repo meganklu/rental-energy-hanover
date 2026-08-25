@@ -2750,6 +2750,144 @@ body:has(.motion-loop) .motion-fab__pause {
   font-weight: 600;
 }
 
+/* ---------- Door hero, added 2026-08-24 ----------
+   `/improvements` opened on a centred page title on a white band, which said nothing the nav had
+   not already said. It opens on a front door now, with the page title on the door, and the door
+   swings on its hinge as the reader scrolls until the Renter basics band behind it is what they are
+   looking at. The metaphor is the site's own: the home page is a doll house you look into, and this
+   is the door you go in through.
+
+   Scroll-progress driven, not timed, the same mechanism as the hero shoes (DESIGN.md §3.1). Scroll
+   position *is* the animation's progress, so it reverses when the reader scrolls back and stops
+   when they stop. Nothing moves on its own, so unlike the site's loops it needs no Pause button.
+
+   The opening behind the door is filled with --color-surface-brand, the same green as the Renter
+   basics band below, so the light coming through the doorway is the colour of the thing being
+   revealed rather than an arbitrary panel. */
+.door-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  padding-block: var(--space-8) var(--space-7);
+}
+
+/* The scene carries the perspective, so the door swings in depth rather than squashing flat. The
+   value is deliberately shallow for the door's size: a longer focal length would read as a flat
+   panel rotating, which is what a door does not look like. */
+.door-hero__scene {
+  position: relative;
+  width: min(21rem, 66vw);
+  aspect-ratio: 5 / 9;
+  perspective: 1100px;
+  perspective-origin: 60% 50%;
+}
+
+/* The doorway itself: the frame the door sits in, and the light behind it. */
+.door-hero__opening {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-brand);
+  border: 6px solid var(--color-surface-dark);
+  overflow: hidden;
+}
+
+/* A wedge of light falling out of the doorway, brightest at the hinge side. Decorative depth
+   only. */
+.door-hero__light {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 60%);
+}
+
+.door-hero__door {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  /* The title sits in the door's upper half, the way lettering on a real door does, which keeps it
+     clear of the knob at the middle right. Centring it put the two on the same line. */
+  padding: 20% var(--space-5) var(--space-5);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-dark);
+  /* The recessed panel a front door has, drawn rather than added as an element. One, low, so it
+     sits under the lettering rather than competing with it. */
+  background-image: linear-gradient(var(--color-split-owner), var(--color-split-owner));
+  background-repeat: no-repeat;
+  background-position: 50% 84%;
+  background-size: 62% 26%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  box-shadow: var(--shadow-raised);
+}
+
+.door-hero__title {
+  margin: 0;
+  text-align: center;
+  color: var(--color-text-on-dark);
+  /* Capped so "Improvements" stays on one line inside the door at every width. Past this it
+     overflows the panel and the white letters vanish against the white band behind. */
+  font-size: clamp(1.375rem, 0.95rem + 1.9vw, 2rem);
+  line-height: 1.15;
+}
+
+.door-hero__knob {
+  position: absolute;
+  right: var(--space-4);
+  top: 52%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-brand);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.25);
+  transform: translateY(-50%);
+}
+
+.door-hero__hint {
+  /* The swinging door reaches past the bottom of its own scene box, so the hint sits clear of it
+     rather than being crossed as the door opens. */
+  margin-top: var(--space-6);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+/* Gated the three ways the site's other scroll motion is (DESIGN.md §7): @supports, because
+   scroll-driven animation is an enhancement; prefers-reduced-motion and the reduce-motion switch;
+   and a min-width, since a door swinging in a 360px column is a door filling the screen. Under any
+   of those the door stays shut and square on, with the title flat and fully legible, which is the
+   state that has to be readable anyway. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    body:not(:has(.reduce-motion-input:checked)) .door-hero__door {
+      animation-name: door-open;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 62vh;
+    }
+  }
+}
+
+/* Stops at 72deg rather than swinging flat to 90: past about 75 the door is edge-on, the title is
+   a line, and the reader loses the thing they were reading. The shadow lifts as it opens, because
+   a door standing open across a doorway casts across the opening rather than onto it. */
+@keyframes door-open {
+  from {
+    transform: rotateY(0deg);
+    box-shadow: var(--shadow-raised);
+  }
+  to {
+    transform: rotateY(-72deg);
+    box-shadow: 12px 0 28px rgba(20, 32, 26, 0.35);
+  }
+}
+
 /* ---------- Split incentive, added 2026-08-24 ----------
    The About page opens on the problem the whole site exists because of: in a rental the person
    who would pay for an efficiency improvement is not the person who would save from it. The
