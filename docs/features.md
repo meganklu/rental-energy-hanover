@@ -76,6 +76,13 @@ Priority: **Must** / **Should** / **Could** / **Won't (v1)**
   The five checklist item states the original spec called for came down to two, done and not done,
   because the other three were describing the item rather than the reader's progress and the
   improvement page already carries those. See [DESIGN.md](../DESIGN.md) §3.8.
+
+  Revised 2026-08-25, the same day: one press in the library toolbar adds every improvement
+  currently showing, which is the personalized set once F2's four questions are answered. That is
+  the closest this feature gets to the original spec's generated list, and it keeps the reader as
+  the one who decides, since they press it. The doll house info bar gained the same add control, so
+  every place the site states an improvement's cost, time and impact now also offers the action on
+  it.
 - **F7 and F8** are blocked by sourcing rather than by effort.
   [content-strategy.md](content-strategy.md) §4 bars unsourced numbers, and the Liberty Utilities
   residential rate is not yet in [sources.md](sources.md). A cost-per-hour figure with no citation
@@ -380,9 +387,9 @@ feature and a defect. Check them honestly.
   criterion 3.3.7 as well as good manners.
 - **Progress.** F5 counts spots viewed in the doll house, in `sessionStorage`. It is encouragement
   and it never gates content. There is no progress tracking anywhere else in v1.
-- **Print, export, share.** A filtered URL is shareable, which is the only export path in v1. Print
-  and copy-as-text arrive with F6 in v2. Every page has a sane print stylesheet regardless, because
-  a student may print an improvement page.
+- **Print, export, share.** A filtered URL is shareable. Print, download and share-by-link arrived
+  with F6 on 2026-08-25. Every page has a sane print stylesheet regardless, because a student may
+  print an improvement page.
 - **Entry points.** A student can land mid-feature from an external link: a room fragment, a
   filtered library URL, or an improvement page. Every one of those renders completely on its own,
   with the header chip showing whether a situation is set.

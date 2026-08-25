@@ -309,42 +309,6 @@ About page:
 
 Change other parts/sections/cards of the website to use the interactive features that have already been created, such as the story bars on the article pages and the carousel for the renter basics. Avoid long stretches of text/paragraphs that are the same style and overwhelming. Add animations and interactivity where it would enhance the website goals of creating a visually interesting and useful way to learn about these improvements.
 
-### 2026-08-24 Fixing Interactivity
-
-Home page:
-- Make the shoes look more like they are walking forward in steps rather than sliding for the animation. This means resizing them appropriately for each step
-- What is some improvement that can be added as a spot in the bathroom? Are there any improvements in the sources/information documents that has not been added that could be relevant here?
-- The width of the help pop-up for instructions about how to use the house still does not look as expected. It should be wider
-
-Improvements page:
-- The opening animation for the hero section of the improvements page should be a front door of a house opening. Improvements is on the door. As the user scrolls, the door opens and reveals the "Renter basics" section
-
-About page:
-- The moving split halves effect is not working. When hovering over one side, that color should expand
-- Change the colors to match the style theme of this website
-
-Change other parts/sections/cards of the website to use the interactive features that have already been created, such as the story bars on the article pages and the carousel for the renter basics. Avoid long stretches of text/paragraphs that are the same style and overwhelming. Add animations and interactivity where it would enhance the website goals of creating a visually interesting and useful way to learn about these improvements.
-
-### 2026-08-25 Interactivity and Animations
-
-Article pages:
-- The story bars should have more animation. When scrolling, they should briefly stick to the top of the screen and stack on top of each other until the screen is full. After, the user can scroll past and get to the contents below.
-- Why does "Hang thermal curtains" have $$$ and $25 to $75 when "Use a space heater..." has the same price range but $$? 
-
-Improvements page:
-- The screen should be held at the door until it is fully opened to the renters basics section. The opening goes with the scrolling.  Once it is fully opened, the light green will expand gradually out to fill the screen to show the rest of the section as it is now
-- Make the "Improvements" heading look like it is signage/decoration on the door
-- Please match the design of this door with the windows, rectangle details, and trim: https://www.wayfair.com/home-improvement/pdp/mmi-door-quarter-fan-lite-4-panel-clear-glass-fiberglass-painted-prehung-entry-door-vron3362.html?piid=45369195%2C45369196%2C45369203. Also match the colors for the most part, but use a green that is part of the style guide
-
-Home page:
-- The same kind of hold on the hero section should happen on the home page so that the animation of the shoes can be seen while scrolling. Because the screen is stuck here while scrolling, the full animation can be viewed and the shoes can be shown walking forward (to the top of the door mat) rather than to the right side
-
-Renter basics articles:
-- Make these articles follow the layout of the improvement articles. There should be breadcrumb links to show how to get there and the same format.
-- When clicking back on the breadcrumb link, it should bring you back to the appropriate section on the improvements page. For example, it should go back to the renters basic section for a renter basics article and the card list for the improvement articles
-
-About page:
-- Make the sliding between colors smoother like it is on the heat pumps website
 
 ### 2026-08-25 Interactivity and Animations
 
@@ -390,30 +354,7 @@ For all of the animations being added, figure out how reduced motion still works
 
 Let's add a feature where a user can add an improvement to their to do list. This will be like a shopping cart/purchasing an item. They can then click on their to do list to get a full compiled/custom version of what they need to purchase, ask their landlord about, and complete. This is a list that they would be able to print, export, or share (e.g., to their roommates). Please follow typical user interface and user experience interaction principles for purchasing to make this feature easy to use.
 
-### 2026-08-25 Revisions and To Do List Feature
-
-Home page:
-- Still start with the shoes at the bottom right corner of the mat before they start walking forward for the animation
-
-Story bars:
-- Have the story bars initially separated out so that they have to come together and stack
-- Make the animation of the text on the story bar while scrolling more noticable
-- Story bar sections should take up the height of the screen
-
-Improvements page:
-- The article "Before you sign" should be formatted like the other renter basics articles
-- Make the window light blue and the door handle brown
-- Add a more decorative trim around the outside of the door
-- Incorpearte the carousel used for the renters basics articles elsewhere (e.g., section where there are multiple cards that you could scroll through)
-
-Glossary:
-- For terms defined in the glossary, have an underline and hover effect to show the definiton (plus a way to go and learn more/see the rest of the glossary entry) like the help question mark hovers for the "Set your situation" window
-
-For all of the animations being added, figure out how reduced motion still works. For example, don't pin to a certain part of the screen during a scroll when an animation tied to the scroll is turned off.
-
-Let's add a feature where a user can add an improvement to their to do list. This will be like a shopping cart/purchasing an item. They can then click on their to do list to get a full compiled/custom version of what they need to purchase, ask their landlord about, and complete. This is a list that they would be able to print, export, or share (e.g., to their roommates). Please follow typical user interface and user experience interaction principles for purchasing to make this feature easy to use.
-
-### 2026-08-25
+### 2026-08-25 Edits and Potential Doll House Design Change
 
 Home page:
 - I meant bottom left for the start area of the shoes
@@ -437,3 +378,10 @@ Programs page:
 - Add a way to sort through/filter these programs
 
 I think it could be cool to have the items in the house layed out like an actual doll house with furniture/features that a user could tap on. They could be guided to the item by color or arrows. This would make the clicking to expand certain rooms more relevant. I'm not sure how this would look or if it would be usable and helpful. Please try out a version of this in a new branch after completing the other edits I've described. 
+
+## Claude Design
+
+I started to use Claude Design to visually edit the website. This is the initial prompt I gave with the code base attatched:
+
+> I am currently refining the design elements of this website. Please show me the site so I can make comments on specific elements.
+

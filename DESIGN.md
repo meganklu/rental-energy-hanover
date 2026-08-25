@@ -419,6 +419,12 @@ The pair does cross the wordmark on the way up. That is unavoidable at this mat'
 any vertical path crosses the lettering, and it is the right trade: the walk is the thing the reader
 is being held to watch.
 
+**And it starts in the bottom left corner, 2026-08-25.** The pair rested at the bottom right, which
+is the corner the mat's fine print already occupies: `*Rental home` is anchored to the bottom right
+of the border, and a pair of shoes resting under it left both harder to read. The start moves to the
+opposite corner. The walk is unchanged, since it goes straight up the mat whichever corner it leaves
+from.
+
 ### 3.2 The doll house
 
 The centerpiece. Everything else on the site can be reached from it.
@@ -736,6 +742,16 @@ tooltip element, not a bare `title` attribute, so it can be styled and is reacha
 (the term itself is focusable); screen readers get the definition through the tooltip's own text
 in the accessibility tree, not through hover alone.
 
+**The gap between the term and the panel is bridged, fixed 2026-08-25.** Once the panel started
+carrying a "Read the full entry" link, the link was almost impossible to reach: the panel sits eight
+pixels above the term, and a pointer crossing those eight pixels is over neither the term nor the
+panel, so the panel closed under the reader on the way to it. An invisible bridge now spans exactly
+that gap, on the panel and flipped for the terms that open downward, so the pointer stays inside the
+term's own subtree for the whole trip. The link is also a full 44px target rather than one line of
+text, which is what makes it a control rather than a decoration. This is the standard fix for a gap
+between a trigger and its popup, and the standard reason it is needed: `:hover` follows the pointer,
+and a pointer in a margin is nowhere.
+
 **What it opens.** The same four-question form as `/start`, in a `<dialog>`. There is exactly one
 copy of this form's markup, on the `/start` page; the dialog is populated from it rather than
 duplicating the fieldsets into every page's shell. Submitting the dialog's form saves the answers
@@ -873,6 +889,23 @@ and full contrast, which is the honest fallback: a dimmed card with nothing able
 be worse than no effect at all. The controls also stop following their own `href` and scroll the
 track directly, so pressing Next moves the row without moving the document or leaving a fragment in
 the address bar. The `href` stays on the element as the no-JS path.
+
+**The casing overhangs the box it is drawn in, fixed 2026-08-25.** The brickmould is drawn outside
+the door's own layout box, six percent of the scene's height past the top and the bottom of it, plus
+a pediment above that. The stage is a flex column and its gap measures to the layout box rather than
+to the painted one, so the casing's foot landed on top of "Keep scrolling to open the door" and,
+being an opaque white board, covered it. The stage now holds the door's width as a custom property
+and the hint reserves the overhang the casing needs, which keeps the gap between the trim and the
+label the gap it says it is. The general rule: an element drawn outside its own box has to have that
+overhang reserved by whatever sits next to it, because layout will not do it.
+
+**Every card in the library is the same height, 2026-08-25.** The grid rows sized to their own
+tallest card, so a row holding one three-line summary was taller than the row under it and the add
+button sat at a different height on every card. The grid's rows are equal now (`grid-auto-rows:
+1fr`), and the add button is pushed to the bottom of its card with an auto top margin, so the
+control is in the same place on every card and the eye can run down the column and press without
+re-finding it. The badges and facts stay directly under the summary, which leaves the whitespace
+between the facts and the button rather than between the title and the facts.
 
 **The carousel is reused on `/programs`, 2026-08-25.** Seven program entries were seven tall cards
 to scroll past. The peek treatment suits a long entry better than a short one: you read the one in
@@ -1110,6 +1143,78 @@ Saving merges rather than overwrites.
 **Copy falls back twice.** Clipboard access can be refused and is absent over plain HTTP, so it
 tries the share sheet next and a prompt after that, rather than leaving a button that looks like it
 worked.
+
+**Add all the ones that apply, added 2026-08-25.** A reader who has already answered the four
+situation questions has told the site which improvements are theirs, and then had to press eleven
+buttons to act on it. One control in the library toolbar adds everything currently showing. It
+counts what is showing rather than what exists, so with a situation set it adds the personalized set
+and with none set it adds all of them, and its label says which of those it is about to do. It is a
+one-way control: there is no "remove all" next to it, because undoing eleven adds is what Clear the
+list is for and two destructive controls on one toolbar is one too many. Once everything showing is
+on the list it states that and stops being pressable, rather than sitting there looking like it
+would do something.
+
+**The empty state is a real empty state, revised 2026-08-25.** It was a bare paragraph, and
+`base.css` caps every paragraph at the reading measure, so it rendered as a grey box against the
+left edge of a 1140px page under a centred title. Centred now, and built like the thing it is: the
+list icon at size, one sentence, and a button into `/improvements`. An empty state that names the
+next action is worth more than one that only reports the emptiness.
+
+**The doll house adds to the list too, added 2026-08-25.** The info bar under the house is the card
+version of an improvement page, carrying the same badges and the same cost, time and impact facts,
+and it was the one place those facts appeared without the control that acts on them. It has the add
+button now, next to Learn more. Improvements only: an explainer is not something you can put on a
+shopping list, and `/checklist` carries markup for the eleven improvements and nothing else.
+
+Because the info bar is rebuilt on every open, the add control's click handling is delegated from
+the document and its state is re-read on `todochange` rather than bound to the buttons present at
+load. The alternative was for the doll house to reimplement the label, icon and `aria-pressed`
+handling itself, which is how two controls that are supposed to be one control drift apart.
+
+**The add control never sits inside a callout, fixed 2026-08-25.** On `/improvements/door-sweeps-and-weatherstripping`
+the actions paragraph had been left inside the permission callout's own element, so the button
+rendered inside the tinted "ask your landlord first" panel and read as part of the warning rather
+than as the page's primary action. It is the only page with a permission callout in its intro, and
+so the only page where the mistake was possible; the other ten put the actions paragraph directly
+after the fact row and are unchanged.
+
+### 3.9 The programs page, revised 2026-08-25
+
+`/programs` is the page a renter arrives at holding a question their landlord asked, or holding a
+bill they cannot pay. Seven programs, and only three of them are things a renter can start on their
+own. Three changes make that page usable at the size it has grown to.
+
+**The carousel runs the full width of the window.** It was inside the 1140px page shell, which put a
+46rem slide in a 71rem box and left the peek gutters doing very little. A program entry is the
+longest card on the site, so the width is worth having: the band it sits in is full-bleed, the
+gutters are wide enough for the neighbours to actually peek, and the heading and the filter row
+above it stay inside the reading column, which is the same "background spans the window, text stays
+put" arrangement the Renter basics band uses.
+
+**A program card opens rather than unrolls.** The Window Inserts entry is two paragraphs and six
+definition pairs, which is taller than a laptop screen on its own, and a carousel taller than the
+window is a carousel whose controls you cannot see while you read it. Each card now shows its
+badges, its heading and its first paragraph, and everything after that sits behind a "Show more"
+disclosure on the card. `<details>` rather than a scripted panel, per the site's own rule, so it
+works with no JavaScript and a browser find-in-page can still open it. The card is capped in height
+as well, with its own scrollbar past that cap, so a reader who opens every disclosure on the tallest
+card still cannot push the carousel past the bottom of the window.
+
+**Filtering asks the two questions a renter actually has.** Who has to sign, and what does it help
+with. The first is the site's existing permission spine, worded for a program rather than for an
+improvement: nothing, your landlord approves it, your landlord applies. The second sorts by what the
+money or the loan is for: weatherizing the building, paying the bill, borrowing equipment, choosing
+your electricity supply. Two `<select>`s in a plain form, no Apply button, and a live count next to
+them.
+
+Same rule as the library (§3.4) and the doll house (§3.2): the page carries every program as markup
+and the script hides what does not match. With JavaScript off the form is inert and all seven
+programs are there, which is the state the page shipped in. The carousel had to learn about hidden
+slides for this — its count, its Previous and Next targets and its centred-slide tracking all read
+the showing slides now rather than a list captured at load.
+
+"Programs that are not for you" stays outside the carousel and outside the filter. It is one entry,
+it exists to be ruled out, and a filter that can hide it defeats the point of writing it down.
 
 ## 4. Visual system
 
@@ -1389,12 +1494,15 @@ to be better than.
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
 | Photograph | A credited photo, `4:3` in a page, `3:1` as a full-width band (§3.6) | inline, intro, band |
 | Story stack | A run of adjacent story bars that pins and stacks as the reader scrolls | default only |
-| Add to list | The cart control on an improvement page and on a library card (§3.8) | article, card |
+| Add to list | The cart control on an improvement page, on a library card, and in the doll house info bar (§3.8). Click handling is delegated, so a copy built after page load behaves like the ones in the markup | article, card, info bar, on the list, added, removed |
+| Add all showing (added 2026-08-25) | One press puts every improvement currently showing in the library on the list (§3.8) | default, hover, focus-visible, everything already added (states so and stops being pressable) |
+| Empty state (revised 2026-08-25) | What `/checklist` and the library show when there is nothing to show. Centred, with an icon, one sentence and the next action | list empty, no improvement matches the situation |
 | List row | One item on `/checklist`, with its own checkbox | buy, ask, do |
 | Info panel | A photo and a short block of text side by side inside a tinted band | default, reverse |
 | Source and last-reviewed block | "How we know this". Links plus an ISO date | open by default on detail pages, collapsed to a count on cards |
-| Glossary term | Inline definition on first use. Hover over the underlined term to view the definition. | closed, open, focus-visible |
-| Program card | An NHSaves or assistance program | NH, out-of-state (explicitly labeled), eligibility unknown |
+| Glossary term | Inline definition on first use. Hover over or focus the underlined term to view the definition, which carries a link to the full entry. The gap between term and panel is bridged so the pointer can reach that link | closed, open, focus-visible, opening upward, opening downward (`--below`), anchored right (`--end`) |
+| Program card | An NHSaves or assistance program | NH, out-of-state (explicitly labeled), eligibility unknown, collapsed and expanded (the "Show more" disclosure, added 2026-08-25), filtered out |
+| Program filter (added 2026-08-25) | Two selects over `/programs`: who has to sign, and what it helps with (§3.9) | default, focus-visible, no match, no JavaScript (inert, every program shows) |
 | Button | Primary, secondary, text | default, hover, focus-visible, active, disabled, loading |
 | Skip link | First focusable element on every page | hidden, focused |
 
