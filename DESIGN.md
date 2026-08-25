@@ -432,44 +432,64 @@ The centerpiece. Everything else on the site can be reached from it.
 **Furnished rooms, an experiment on `feature/dollhouse-furniture`, 2026-08-25.** The rooms held a
 row of chips, which meant the house was a house in name and a list of buttons in fact, and it meant
 opening a room bought you nothing except bigger buttons. This branch draws each room as a cutaway
-seen from the front — a wall, a floor, and things standing on and against them — and puts each spot
-where its object actually is. The radiator under the window, the outlet near the floor, the bill on
-the fridge, the joists over the basement.
+seen from the front — a wall, a floor, a baseboard where they meet, and furniture standing on it —
+and puts each spot where its object actually is. The radiator at the baseboard, the space heater out
+on the floor, the bill on the fridge, the joists over the basement.
 
-**Two kinds of object, told apart by shape.** A prop is scenery: a bed, a sofa, a tub, a run of
-stairs. Flat fill, no border, no label, `aria-hidden`, not focusable. A spot is the same `.hotspot`
-link it always was, with a border, an icon and its name. Only spots carry a name, and only spots
-carry a frame, so "which of these can I press" is answered twice over without either answer being a
-colour. Where a spot names something big enough to draw — the door, the window, the fridge — the
-prop is drawn behind it and the spot sits on it, which is what makes the spot read as a label on an
-object rather than a button floating on a wall.
+**The furniture is drawn, not blocked out.** The first pass built props from CSS boxes with rounded
+corners, and a bed came out as a crate with a smaller crate on it. Sixteen furniture symbols now
+live in `assets/icons/sprite.svg` alongside the icons, drawn in the same pen: a bed, a sofa, a tub,
+a sink, a toilet, a fridge, a counter, a table, stairs, joists, a lamp, a plant, a shelf, a washer,
+a rug and a doorway. Each in a viewBox of its own real proportion rather than a 24 square, because
+forcing a sofa into a square is what makes a drawing read as an icon of a sofa rather than as a
+sofa. They render with `vector-effect: non-scaling-stroke`, since at furniture size a scaled
+2-unit stroke comes out as a marker line.
 
-**Placement is `--x`/`--y` in the markup**, as a percentage of the room. Inline, because it is
-per-object placement rather than a style, the same reason a chart's data does not live in a
-stylesheet. That also keeps the whole experiment in two files: the placement in `index.html` and one
-marked block in `components.css` that reverts by deletion.
+**Two kinds of object, told apart three ways.** A prop is scenery: no name, no interactive state, no
+place in the accessibility tree, drawn in a muted grey-green. A spot is the same `.hotspot` link it
+always was, drawn in the accent green, carrying an icon and its name, and lifting under the pointer.
+Only spots carry a name, which is the signal that does not depend on colour and the reason this is
+not a colour-alone design. The button frame came off: a bordered pill standing on a wall is exactly
+what the experiment is trying to stop looking like.
+
+**Things stand on the floor.** Props and floor-level spots are placed by their feet (`--b`, measured
+up from the bottom of the room) rather than by their middle, because where a bed's feet land is what
+has to be right and where its centre lands is whatever its own proportions make it. At
+`--room-floor` a piece is against the back wall; lower brings it forward, which is the only depth
+cue a flat elevation gets. Wall-mounted spots — a thermostat, a light fixture, a shower head — keep
+`--y` and hang.
+
+**A striped wallpaper and ruled floorboards were both tried and both reverted the same day.** At the
+size a room actually renders they read as a barcode and a picket fence, and they competed with the
+furniture, which is the thing the reader is meant to be looking at. Three flat bands is what
+survived. Same lesson as the hero mat's coir texture in §3.1: check a decorative texture at the size
+it renders, not the size it is drawn at.
 
 **Guidance needed no JavaScript.** `dollhouse.js` already flags the next unvisited spot with "Start
 here" or "Next"; the branch only restyles that flag into a tag above the object with an arrowhead
 pointing down at it, and `:has()` puts a halo on whichever spot is carrying it. Three signals for
-one thing: the words, the pointer's shape, the colour. The tag nods once every five seconds so the
-eye finds it among seventeen objects, gated off under reduced motion, where the words and the arrow
-still do the whole job.
+one thing: the words, the pointer's shape, the halo. The tag nods once every five seconds so the eye
+finds it among seventeen objects, gated off under reduced motion, where the words and the arrow
+still do the whole job. The width gate on that animation is load-bearing rather than tidiness: the
+keyframes set `translateX(-50%)` on every frame, a running animation beats a declared `transform`,
+and below the gate the flag would sit pulled half its own width over the name it belongs to.
 
-**What it costs, and this is the finding.** A spot's label is sized in text and text does not shrink
+**What it costs, and this is the finding.** A spot's name is sized in text and text does not shrink
 with the room; the placement is a percentage and does. Below about 1000px the two stop agreeing:
-labels collide with each other and run off the wall. Measured across 640 to 1440, not guessed. So
-the furnished scene is a wide-screen treatment, and everything narrower drops back to the chip rows
-it replaced, which were designed for that width and lose nothing — the same links, the same names,
-the same guide flag, in a row instead of on a wall. Below 600px the drawing is hidden entirely and
-the plain "Everything in this house" list takes over, unchanged.
+names collide with each other and run off the wall. Measured across 640 to 1440, not guessed, and
+re-measured after every placement change. So the furnished scene is a wide-screen treatment, and
+everything narrower drops back to the chip rows it replaced, which were designed for that width and
+lose nothing — the same links, the same names, the same guide flag, in a row instead of on a wall.
+Below 600px the drawing is hidden entirely and the plain "Everything in this house" list takes over,
+unchanged.
 
 **Is it worth it.** The strongest argument for it is the enlarged room, which is where the request
 started. Opening a room used to give you the same chips at a larger size. It now gives you a room
-you can read: the window with its curtain beside it, the sofa under them, the outlet by the floor.
-The strongest argument against it is that it is a second layout to maintain for one breakpoint band
-and one page, and that seventeen hand-placed coordinates have to be re-checked whenever a spot's
-name changes length. Not merged. See `docs/ai-use.md` for the request this answers.
+you can read: the sofa under the window, the rug on the floor, the outlet by the baseboard. The
+strongest argument against it is that it is a second layout to maintain for one breakpoint band on
+one page, and that seventeen hand-placed coordinates have to be re-checked whenever a spot's name
+changes length — three collisions appeared from a single repositioning pass and only a measurement
+caught them. Not merged. See `docs/ai-use.md` for the request this answers.
 
 **How to play is a callout, not a paragraph, added 2026-08-19.** "Click a room to open it. Click
 each highlighted spot to see what you can do about it." moved off the page by default and into a
@@ -1505,7 +1525,7 @@ to be better than.
 | Room box | One room in the house, and the enlarged view of it | small (in the house), enlarged (`:target`), focused, empty (no hotspots apply to this student) |
 | Next spot control | Carries the guided order from one info bar to the next | default, focus-visible, last spot, removed once all spots are seen (revised 2026-08-19, was a relabeled state) |
 | Back to the house | Returns from an enlarged room to the full view | default, focus-visible |
-| Room prop (experiment, 2026-08-25) | Scenery inside a furnished room: bed, sofa, tub, counter, stairs, joists. No label, no border, `aria-hidden`, never focusable — the absence of all three is what says it is not the thing to press | single state |
+| Room prop (experiment, 2026-08-25) | Scenery inside a furnished room. Sixteen furniture symbols in the sprite, each in a viewBox of its own proportion, drawn with a non-scaling stroke. No name, no interactive state, `aria-hidden`, never focusable — the absence of all three is what says it is not the thing to press | standing on the floor (`--b`), hung on the wall (`--y`), hidden below 1000px |
 | Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker), hidden (does not apply to the student's situation — reversed 2026-08-20, was dimmed with a text reason, see §3.2), 44px hit area |
 | Info bar | Opens under the drawing with the short answer | closed, opening, open, empty, error, no JavaScript (becomes a link) |
 | Flip card | Flashcards for myths and definitions | front, back, focus-visible, reduced motion. Spec in §5.1 |

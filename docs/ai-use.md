@@ -379,6 +379,10 @@ Programs page:
 
 I think it could be cool to have the items in the house layed out like an actual doll house with furniture/features that a user could tap on. They could be guided to the item by color or arrows. This would make the clicking to expand certain rooms more relevant. I'm not sure how this would look or if it would be usable and helpful. Please try out a version of this in a new branch after completing the other edits I've described. 
 
+### 2026-08-25 Doll House
+
+Use color for the doll house. Take inspiration from a Calico Critters toy house for the interior furniture. Make the entry/porch the height of the first floor only like it was before. Make the drawings more realistic and easy to understand what they are. Also, position them in a logical way that matches typical house layouts.
+
 ## Claude Design
 
 I started to use Claude Design to visually edit the website. This is the initial prompt I gave with the code base attatched:

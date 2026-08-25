@@ -285,4 +285,124 @@
     <polyline points="15.5 6.5 21 12 15.5 17.5"/>
   </symbol>
 
+
+  <!-- ================= Furniture, added 2026-08-25 for the furnished doll house (DESIGN.md 3.2)
+       Scenery only: none of these is ever pressed and none carries an accessible name. Drawn in the
+       same pen as the icons above, but each in a viewBox of its own real proportion rather than a
+       24 square, because a sofa is not square and forcing it into a square box is what makes a
+       drawing read as an icon of a sofa rather than as a sofa. Rendered with a non-scaling stroke
+       (components.css), since at furniture size a scaled 2-unit stroke comes out as a fat marker
+       line. =================================================================================== -->
+
+  <symbol id="prop-bed" viewBox="0 0 48 26">
+    <path d="M2 22 L2 9 Q2 6 5 6 L43 6 Q46 6 46 9 L46 22"/>
+    <path d="M2 14 L46 14"/>
+    <rect x="5" y="8.5" width="12" height="4.5" rx="1.5"/>
+    <path d="M4 22 L4 25 M44 22 L44 25"/>
+  </symbol>
+
+  <symbol id="prop-sofa" viewBox="0 0 48 28">
+    <path d="M6 20 L6 8 Q6 5 9 5 L39 5 Q42 5 42 8 L42 20"/>
+    <rect x="2" y="11" width="6" height="11" rx="2"/>
+    <rect x="40" y="11" width="6" height="11" rx="2"/>
+    <path d="M8 22 L40 22"/>
+    <path d="M24 11 L24 20"/>
+    <path d="M7 22 L7 26 M41 22 L41 26"/>
+  </symbol>
+
+  <symbol id="prop-tub" viewBox="0 0 40 24">
+    <path d="M3 6 L3 16 Q3 21 8 21 L32 21 Q37 21 37 16 L37 6"/>
+    <path d="M1 6 L39 6"/>
+    <path d="M8 21 L7 24 M32 21 L33 24"/>
+    <path d="M34 6 L34 2 L29 2"/>
+  </symbol>
+
+  <symbol id="prop-sink" viewBox="0 0 22 24">
+    <path d="M2 9 L20 9 L17 15 L5 15 Z"/>
+    <path d="M9 15 L9 22 L13 22 L13 15"/>
+    <path d="M11 9 L11 4 L15 4"/>
+  </symbol>
+
+  <symbol id="prop-toilet" viewBox="0 0 18 26">
+    <rect x="3" y="2" width="12" height="8" rx="1"/>
+    <path d="M3 12 L15 12 Q15 20 9 20 Q3 20 3 12 Z"/>
+    <path d="M9 20 L9 24 M5 24 L13 24"/>
+  </symbol>
+
+  <symbol id="prop-fridge" viewBox="0 0 22 44">
+    <rect x="2" y="2" width="18" height="40" rx="2"/>
+    <path d="M2 15 L20 15"/>
+    <path d="M16 7 L16 12 M16 19 L16 26"/>
+  </symbol>
+
+  <symbol id="prop-counter" viewBox="0 0 48 24">
+    <path d="M1 6 L47 6"/>
+    <path d="M3 6 L3 22 L45 22 L45 6"/>
+    <path d="M24 6 L24 22"/>
+    <circle cx="12" cy="12" r="2.5"/>
+    <circle cx="12" cy="18" r="1.5"/>
+    <path d="M33 11 L39 11 M33 16 L39 16"/>
+  </symbol>
+
+  <symbol id="prop-table" viewBox="0 0 36 22">
+    <path d="M4 8 L32 8"/>
+    <path d="M8 8 L8 19 M28 8 L28 19"/>
+    <path d="M2 19 L2 12 M34 19 L34 12"/>
+    <path d="M2 12 L5 12 M31 12 L34 12"/>
+  </symbol>
+
+  <symbol id="prop-stairs" viewBox="0 0 24 34">
+    <path d="M2 32 L2 25 L8 25 L8 18 L14 18 L14 11 L20 11 L20 4 L23 4"/>
+    <path d="M2 32 L22 32"/>
+  </symbol>
+
+  <!-- Very wide on purpose: this runs the width of the basement, and the height follows the
+       viewBox, so a squarer box would draw a beam the depth of a wall. -->
+  <symbol id="prop-joists" viewBox="0 0 240 14">
+    <path d="M0 11 L240 11"/>
+    <path d="M10 11 L10 2 M40 11 L40 2 M70 11 L70 2 M100 11 L100 2 M130 11 L130 2 M160 11 L160 2 M190 11 L190 2 M220 11 L220 2"/>
+  </symbol>
+
+  <symbol id="prop-lamp" viewBox="0 0 18 36">
+    <path d="M4 10 L6 3 L12 3 L14 10 Z"/>
+    <path d="M9 10 L9 31"/>
+    <path d="M4 33 L14 33"/>
+    <path d="M9 31 Q9 33 6 33 M9 31 Q9 33 12 33"/>
+  </symbol>
+
+  <symbol id="prop-plant" viewBox="0 0 18 26">
+    <path d="M5 16 L13 16 L12 24 L6 24 Z"/>
+    <path d="M9 16 L9 7"/>
+    <path d="M9 11 Q3 10 3 4 Q9 4 9 11"/>
+    <path d="M9 9 Q15 8 15 3 Q9 3 9 9"/>
+  </symbol>
+
+  <symbol id="prop-shelf" viewBox="0 0 28 22">
+    <path d="M2 2 L2 20 M26 2 L26 20"/>
+    <path d="M2 11 L26 11 M2 20 L26 20"/>
+    <path d="M6 4 L6 11 M9 4 L9 11 M12 5 L12 11"/>
+    <path d="M18 14 L18 20 M21 14 L21 20"/>
+  </symbol>
+
+  <symbol id="prop-washer" viewBox="0 0 24 26">
+    <rect x="2" y="2" width="20" height="22" rx="2"/>
+    <circle cx="12" cy="15" r="5.5"/>
+    <path d="M5 7 L11 7"/>
+    <circle cx="18" cy="7" r="1"/>
+  </symbol>
+
+  <!-- Flat on purpose. A rug seen from the front is a band on the floor, and at anything squarer
+       than this the rounded rectangle reads as a bolster lying in the middle of the room. -->
+  <symbol id="prop-rug" viewBox="0 0 120 9">
+    <rect x="2" y="2" width="116" height="5" rx="2"/>
+    <path d="M14 2 L14 7 M106 2 L106 7"/>
+  </symbol>
+
+  <symbol id="prop-doorway" viewBox="0 0 26 48">
+    <rect x="2" y="2" width="22" height="44" rx="1"/>
+    <rect x="5" y="6" width="16" height="16" rx="1"/>
+    <rect x="5" y="27" width="16" height="15" rx="1"/>
+    <circle cx="20.5" cy="25" r="1.2"/>
+  </symbol>
+
 </svg>
