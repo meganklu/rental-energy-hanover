@@ -431,65 +431,70 @@ The centerpiece. Everything else on the site can be reached from it.
 
 **Furnished rooms, an experiment on `feature/dollhouse-furniture`, 2026-08-25.** The rooms held a
 row of chips, which meant the house was a house in name and a list of buttons in fact, and it meant
-opening a room bought you nothing except bigger buttons. This branch draws each room as a cutaway
-seen from the front — a wall, a floor, a baseboard where they meet, and furniture standing on it —
-and puts each spot where its object actually is. The radiator at the baseboard, the space heater out
-on the floor, the bill on the fridge, the joists over the basement.
+opening a room bought you nothing except bigger buttons. This branch draws each room as a toy house
+room seen with the front wall off, and the furniture is what you press.
 
-**The furniture is drawn, not blocked out.** The first pass built props from CSS boxes with rounded
-corners, and a bed came out as a crate with a smaller crate on it. Sixteen furniture symbols now
-live in `assets/icons/sprite.svg` alongside the icons, drawn in the same pen: a bed, a sofa, a tub,
-a sink, a toilet, a fridge, a counter, a table, stairs, joists, a lamp, a plant, a shelf, a washer,
-a rug and a doorway. Each in a viewBox of its own real proportion rather than a 24 square, because
-forcing a sofa into a square is what makes a drawing read as an icon of a sofa rather than as a
-sofa. They render with `vector-effect: non-scaling-stroke`, since at furniture size a scaled
-2-unit stroke comes out as a marker line.
+**The look comes from the reference, not from the site's palette.** Cream walls under a faint print,
+warm mid-brown floors, a heavier beam under each room where one story sits on the next, arched
+windows in white frames, and light natural wood furniture carrying soft fabric pastels. Two passes
+got here. The first drew scenery out of rounded CSS boxes, and a bed came out as a crate with a
+smaller crate on it. The second drew it in the icon set's flat green line pen, which read as a
+wireframe of a doll house. Thirty-nine furniture symbols now live in `assets/icons/sprite.svg`, each
+in a viewBox of its own real proportion, because forcing a sofa into a 24 square is what makes a
+drawing read as an icon of a sofa rather than as a sofa. The color lives in the furniture rather
+than in the walls: a room that is pink from wall to wall leaves nothing for a pink chair to be. The
+roof stays the site's green, since the brief scopes the toy reference to the interior.
 
 **Two kinds of object, told apart three ways.** A prop is scenery: no name, no interactive state, no
-place in the accessibility tree, drawn in a muted grey-green. A spot is the same `.hotspot` link it
-always was, drawn in the accent green, carrying an icon and its name, and lifting under the pointer.
-Only spots carry a name, which is the signal that does not depend on colour and the reason this is
-not a colour-alone design. The button frame came off: a bordered pill standing on a wall is exactly
-what the experiment is trying to stop looking like.
+place in the accessibility tree. An object is the same `.hotspot` link it always was, drawn in full
+color, carrying its name under it, and lifting off the wall under the pointer. Only objects carry a
+name, and that is the signal that does not depend on color. The button frame came off: a bordered
+pill standing on a wall is exactly what this is trying to stop looking like.
 
-**Things stand on the floor.** Props and floor-level spots are placed by their feet (`--b`, measured
-up from the bottom of the room) rather than by their middle, because where a bed's feet land is what
-has to be right and where its centre lands is whatever its own proportions make it. At
-`--room-floor` a piece is against the back wall; lower brings it forward, which is the only depth
-cue a flat elevation gets. Wall-mounted spots — a thermostat, a light fixture, a shower head — keep
-`--y` and hang.
+**Everything is placed against the floor line.** `--x` across the room, `--w` wide, and then either
+`--b` up from the floor to a piece's feet or `--y` down from the ceiling to its top edge. Placing by
+edges rather than by centers is not a detail: the first pass centered on both axes, and a ceiling
+light placed near the top of the wall hung off the top of the room by half its own height. A piece
+standing on the floor takes its name above it, since there is no wall under a bed to put a name on.
 
-**A striped wallpaper and ruled floorboards were both tried and both reverted the same day.** At the
-size a room actually renders they read as a barcode and a picket fence, and they competed with the
-furniture, which is the thing the reader is meant to be looking at. Three flat bands is what
-survived. Same lesson as the hero mat's coir texture in §3.1: check a decorative texture at the size
-it renders, not the size it is drawn at.
+**The bug that made the whole thing look broken.** An outer `<svg>` with no `viewBox` has no
+intrinsic aspect ratio, so `height: auto` fell back to CSS's default 150px and every drawing sat
+letterboxed inside a box far bigger than itself. Furniture floated above the floor, names sat ninety
+pixels from the things they named, and the collision measurements were all measuring the wrong
+boxes. Each referencing element carries its symbol's own viewBox now. The lesson is narrow and
+worth keeping: a `<use>` of a symbol inherits the symbol's aspect ratio for painting but not for
+layout.
 
-**Guidance needed no JavaScript.** `dollhouse.js` already flags the next unvisited spot with "Start
-here" or "Next"; the branch only restyles that flag into a tag above the object with an arrowhead
-pointing down at it, and `:has()` puts a halo on whichever spot is carrying it. Three signals for
-one thing: the words, the pointer's shape, the halo. The tag nods once every five seconds so the eye
-finds it among seventeen objects, gated off under reduced motion, where the words and the arrow
-still do the whole job. The width gate on that animation is load-bearing rather than tidiness: the
-keyframes set `translateX(-50%)` on every frame, a running animation beats a declared `transform`,
-and below the gate the flag would sit pulled half its own width over the name it belongs to.
+**Objects are spread evenly across the rooms, 2026-08-25.** Seventeen objects over six rooms sat at
+3/3/1/4/3/3, with the bathroom holding one thing and the living room four. Two moves fix it, both to
+somewhere the object plausibly is in a real rental: the radiator or baseboard goes to the bathroom,
+and the curtains go to the bedroom. That gives 3/3/2/3/3/3, and the bathroom keeps the two since it
+is the smallest room drawn. The guided order is untouched, because it was never grouped by room.
 
-**What it costs, and this is the finding.** A spot's name is sized in text and text does not shrink
-with the room; the placement is a percentage and does. Below about 1000px the two stop agreeing:
-names collide with each other and run off the wall. Measured across 640 to 1440, not guessed, and
-re-measured after every placement change. So the furnished scene is a wide-screen treatment, and
-everything narrower drops back to the chip rows it replaced, which were designed for that width and
-lose nothing — the same links, the same names, the same guide flag, in a row instead of on a wall.
-Below 600px the drawing is hidden entirely and the plain "Everything in this house" list takes over,
-unchanged.
+**Guidance needed no JavaScript.** `dollhouse.js` already flags the next unvisited object with "Start
+here" or "Next"; the branch only restyles that flag into a tag above the piece with an arrowhead
+pointing down at it, and `:has()` puts a glow on whichever piece is carrying it. Three signals for
+one thing: the words, the pointer's shape, the glow. The tag nods once every five seconds so the eye
+finds it among seventeen pieces of furniture, gated off under reduced motion. The width gate on that
+animation is load-bearing rather than tidiness: the keyframes set `translateX(-50%)` on every frame,
+a running animation beats a declared `transform`, and below the gate the flag would sit pulled half
+its own width over the name it belongs to.
+
+**What it costs, and this is the finding.** A piece's name is sized in text and text does not shrink
+with the room; the placement is a percentage and does. Below about 1150px the two stop agreeing:
+names collide with each other and run off the wall. Measured across 640 to 1600, and re-measured
+after every placement change, which is the only reason it is a number rather than a guess. So the
+furnished scene is a wide-screen treatment, and everything narrower drops back to the chip rows it
+replaced, which were designed for that width and lose nothing — the same links, the same names, the
+same guide flag, in a row instead of on a wall. Below 600px the drawing is hidden entirely and the
+plain "Everything in this house" list takes over, unchanged.
 
 **Is it worth it.** The strongest argument for it is the enlarged room, which is where the request
 started. Opening a room used to give you the same chips at a larger size. It now gives you a room
-you can read: the sofa under the window, the rug on the floor, the outlet by the baseboard. The
-strongest argument against it is that it is a second layout to maintain for one breakpoint band on
-one page, and that seventeen hand-placed coordinates have to be re-checked whenever a spot's name
-changes length — three collisions appeared from a single repositioning pass and only a measurement
-caught them. Not merged. See `docs/ai-use.md` for the request this answers.
+you can read. The strongest argument against it is that it is a second layout to maintain for one
+breakpoint band on one page, and that seventeen hand-placed coordinates have to be re-checked
+whenever a name changes length or a piece moves rooms. Not merged. See `docs/ai-use.md` for the
+requests this answers.
 
 **How to play is a callout, not a paragraph, added 2026-08-19.** "Click a room to open it. Click
 each highlighted spot to see what you can do about it." moved off the page by default and into a
@@ -655,7 +660,7 @@ house reads as one consistent structure rather than a patchwork of surfaces.
 
 **Explainer hotspots carry a "Renter basics" badge** (added 2026-08-19) in place of a permission
 badge, since find-your-drafts and read-your-bill are not upgrades and have no
-`landlordPermission` to state. Same pill shape as the permission badges, but a neutral grey
+`landlordPermission` to state. Same pill shape as the permission badges, but a neutral gray
 (`--color-surface` on `--color-border-strong`) rather than any of success/warning/info, since
 those three already mean the three permission states and reusing one would misread as a claim
 about permission.
@@ -671,7 +676,7 @@ ordinary links. That list is the screen reader path, the no-JavaScript path, and
 below the drawing at every width, which put a twelve-item link list directly under a section whose
 whole point is that you explore it by clicking the drawing. It is now the site's standard
 disclosure bar (§5) — the same closed-by-default `<details>` the improvement pages use for depth —
-labelled "Everything in this house" and closed on load. `<details>` is what makes this safe to do:
+labeled "Everything in this house" and closed on load. `<details>` is what makes this safe to do:
 the summary is a real, keyboard-operable control that is always in the tab order and always
 announced, so the list stays *reachable* at every width even while it is not *shown*, which is what
 the no-JavaScript and zoom paths above actually need. It is still never `display: none`, and it is
@@ -934,19 +939,19 @@ clipped by the scroll container it sits in.
 **Focused on one card, rebuilt 2026-08-24.** The peek variant showed all three slides at roughly
 equal weight, which meant Previous and Next moved a track that already showed everything and so
 appeared to do nothing. A slide is now 58% of the track and the track carries a matching gutter each
-side, which puts the current card in the middle at full size with roughly a third of each neighbour
+side, which puts the current card in the middle at full size with roughly a third of each neighbor
 showing either side of it. Neighbours drop to `scale(0.9)` and 72% opacity; the current card takes
 the accent border and the raised shadow.
 
 Two things about how that is built are worth keeping. **The slide width is a length, not a
 percentage.** Percentage `flex-basis` resolves against the flex container's content box, percentage
-`padding-inline` shrinks that same content box, and asking for "a slide centred in the leftover
+`padding-inline` shrinks that same content box, and asking for "a slide centered in the leftover
 space" with both at once has no solution short of 50% padding and a zero-width content box. The
-first attempt did exactly that and the focused card sat left of centre. A length breaks the loop and
+first attempt did exactly that and the focused card sat left of center. A length breaks the loop and
 the gutter is then simply half the leftover.
 
 **The scale-down only applies under `.is-enhanced`**, a class `assets/js/carousel.js` adds once it
-can actually track which slide is centred. With the script absent every slide renders at full size
+can actually track which slide is centered. With the script absent every slide renders at full size
 and full contrast, which is the honest fallback: a dimmed card with nothing able to un-dim it would
 be worse than no effect at all. The controls also stop following their own `href` and scroll the
 track directly, so pressing Next moves the row without moving the document or leaving a fragment in
@@ -1016,21 +1021,21 @@ loaded. This is the kind of thing that only shows up in a screenshot.
 arched glass in the top quarter with grilles radiating from the sill, two panels above the lock rail
 and two below, the door's own stiles left as a margin, and a brickmould casing around the frame. The
 greens are this site's and the white trim and grilles are the reference's. The glass is filled with
-the same green as the doorway behind it, so the colour the door opens onto is already showing
+the same green as the doorway behind it, so the color the door opens onto is already showing
 through the window before anything moves.
 
 **The title is signage.** A plate screwed across the lock rail, with a raised edge and a fixing at
 each end, rather than lettering floating on the door face. It is still the page's `h1` and still the
 first heading a screen reader reaches; only its presentation is a plaque.
 
-**The page opens on a door, added 2026-08-24.** `/improvements` opened on a centred page title on a
+**The page opens on a door, added 2026-08-24.** `/improvements` opened on a centered page title on a
 white band, which said nothing the nav had not already said one line above it. It opens on a front
 door now, with the title on the door, and the door swings on its hinge as the reader scrolls until
 the Renter basics band behind it is what they are looking at. The metaphor is the site's own: the
 home page is a doll house you look into, and this is the door you go in through.
 
 The doorway behind the door is filled with `--color-surface-brand`, the same green as the Renter
-basics band below it, so the light coming through the opening is the colour of the thing being
+basics band below it, so the light coming through the opening is the color of the thing being
 revealed rather than an arbitrary panel. Scroll-progress driven rather than timed, the same
 mechanism as the hero shoes (§3.1): scroll position is the animation's progress, so it reverses
 when the reader scrolls back, stops when they stop, and needs no Pause button because nothing moves
@@ -1042,7 +1047,7 @@ floor, since a door swinging in a phone-width column is a door filling the scree
 those it stays shut and square on, with the title flat and fully legible, which is the state that
 has to work anyway. The swing stops at 72 degrees rather than going flat to 90: past about 75 the
 door is edge-on, the title is a line, and the reader loses what they were reading. The title sits in
-the door's upper half rather than centred, which is where lettering on a real door goes and which
+the door's upper half rather than centered, which is where lettering on a real door goes and which
 keeps it clear of the knob at the middle right.
 
 ### 3.5 The heating systems explainer, added 2026-08-21
@@ -1117,7 +1122,7 @@ structural one and prose was the wrong shape for it: in a rental the person who 
 efficiency improvement is not the person who would save from it, so the improvement often does not
 happen. Two parties, two ledgers, one building.
 
-**The treatment.** One colour field runs behind everything from the page title down to a converging
+**The treatment.** One color field runs behind everything from the page title down to a converging
 arrow: the tenant's side in the site's own dark green, the owner's in a deep slate that is
 deliberately not another green, because two sides of one lease have to read as two places. Hovering
 or focusing either side widens that side's share of the whole field rather than just its own panel,
@@ -1128,29 +1133,29 @@ the same team's heat pump site (S25), rebuilt in this site's tokens.
 emphasis and nothing else, so a reader who never hovers and never focuses misses nothing. That is
 what lets the whole thing be CSS: `:has()` on the container moves the field, matching how the
 reduce-motion switch and the carousel already work, with no script involved. Below 860px the panels
-stack and each takes its own colour, since a vertical split would otherwise run down the middle of
+stack and each takes its own color, since a vertical split would otherwise run down the middle of
 each stacked panel.
 
 **One variable drives both halves, fixed 2026-08-24.** The first build set the two background halves
 to 58% and 50% and let flex resolve it. Flex items shrink to fit by default, so a pair whose bases
 sum to 108% both shrink, and the seam moved about 3.7% instead of 8%: small enough that the effect
 read as broken rather than as subtle. The panels moved separately again, on their own `flex-grow`,
-so the colour boundary and the text boundary travelled different distances. Both now read
+so the color boundary and the text boundary travelled different distances. Both now read
 `--split-pos` off the container, at 50% at rest and 62% or 38% on hover, so the seam and the text
 are the same line and move as one.
 
-**The colour, decided the same day.** The owner's side opened as a deep slate blue on the reasoning
+**The color, decided the same day.** The owner's side opened as a deep slate blue on the reasoning
 that two sides of one lease should read as two distinct places. It read as a different website. The
 constraint that decides this is that the page title, the lede, the float card and the three approach
-cards all cross the seam, and one element cannot take two text colours depending on which half it
+cards all cross the seam, and one element cannot take two text colors depending on which half it
 sits over. Both halves therefore have to carry white text, which rules out pairing the dark green
 with the light `--color-surface-brand`. It is the site's dark green against its mid green, 2.3:1
 between the fields, which is enough to separate two large adjacent areas without either of them
 leaving the palette.
 
 **The opening block is laid across the seam on purpose.** Title on the tenant's side, the sentence
-that names the problem on the owner's. Centring it instead put the smaller type across the join,
-where one text colour has to work on two fields at once and the eyebrow stopped being readable on
+that names the problem on the owner's. Centering it instead put the smaller type across the join,
+where one text color has to work on two fields at once and the eyebrow stopped being readable on
 one of them.
 
 **"How AI was used" lives on this page**, added 2026-08-24. It names the model, says what it wrote,
@@ -1217,8 +1222,8 @@ on the list it states that and stops being pressable, rather than sitting there 
 would do something.
 
 **The empty state is a real empty state, revised 2026-08-25.** It was a bare paragraph, and
-`base.css` caps every paragraph at the reading measure, so it rendered as a grey box against the
-left edge of a 1140px page under a centred title. Centred now, and built like the thing it is: the
+`base.css` caps every paragraph at the reading measure, so it rendered as a gray box against the
+left edge of a 1140px page under a centered title. Centered now, and built like the thing it is: the
 list icon at size, one sentence, and a button into `/improvements`. An empty state that names the
 next action is worth more than one that only reports the emptiness.
 
@@ -1249,7 +1254,7 @@ own. Three changes make that page usable at the size it has grown to.
 **The carousel runs the full width of the window.** It was inside the 1140px page shell, which put a
 46rem slide in a 71rem box and left the peek gutters doing very little. A program entry is the
 longest card on the site, so the width is worth having: the band it sits in is full-bleed, the
-gutters are wide enough for the neighbours to actually peek, and the heading and the filter row
+gutters are wide enough for the neighbors to actually peek, and the heading and the filter row
 above it stay inside the reading column, which is the same "background spans the window, text stays
 put" arrangement the Renter basics band uses.
 
@@ -1272,7 +1277,7 @@ them.
 Same rule as the library (§3.4) and the doll house (§3.2): the page carries every program as markup
 and the script hides what does not match. With JavaScript off the form is inert and all seven
 programs are there, which is the state the page shipped in. The carousel had to learn about hidden
-slides for this — its count, its Previous and Next targets and its centred-slide tracking all read
+slides for this — its count, its Previous and Next targets and its centered-slide tracking all read
 the showing slides now rather than a list captured at load.
 
 "Programs that are not for you" stays outside the carousel and outside the filter. It is one entry,

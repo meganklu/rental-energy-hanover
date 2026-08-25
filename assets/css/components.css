@@ -2608,15 +2608,16 @@ body:has(.motion-loop) .motion-fab__pause {
   display: inline-flex;
 }
 
-/* ---------- Furnished rooms, added 2026-08-25 (DESIGN.md §3.2) ----------
+/* ---------- Furnished rooms, added 2026-08-25, redrawn the same day (DESIGN.md §3.2) ----------
    An experiment: the room boxes hold drawn furniture rather than a row of chips, and the furniture
    is what you press. Everything in this block is additive and sits after the rules it overrides, so
    the whole feature reverts by deleting from here down to the info bar.
 
-   Each room is a cutaway seen from the front. Papered wall, boarded floor, a baseboard where they
-   meet, all painted on the scene rather than built out of elements, so a room costs no extra
-   markup. Objects are placed by `--x`/`--y` from the markup; that is the only thing the markup
-   adds. */
+   Each room is a toy house room seen with the front wall off: papered wall, wood floor, a skirting
+   where they meet, and furniture standing on it. The room surfaces are painted on the scene rather
+   than built out of elements, so a room costs no extra markup. Everything in a room is placed by
+   `--x` across, `--w` wide, and either `--b` up from the floor or `--y` down from the ceiling. That
+   is the only thing the markup adds. */
 .room {
   display: flex;
   flex-direction: column;
@@ -2628,172 +2629,209 @@ body:has(.motion-loop) .motion-fab__pause {
   flex: 1 1 auto;
   min-height: 250px;
   border-radius: 2px;
-  /* Where the back wall meets the floor. Named because furniture is placed against it: a piece
-     standing at the baseboard has its feet here, and a piece nearer the viewer has them lower,
-     which is the only depth cue a flat elevation gets. */
-  --room-floor: 24%;
-  /* Three flat bands and nothing else. A striped wallpaper and ruled floorboards were both tried
-     and both reverted the same day: at the size a room actually renders they read as a barcode and
-     a picket fence, and they competed with the furniture, which is the thing the reader is meant to
-     be looking at. Same lesson as the hero mat's coir texture in §3.1. */
+  /* Where the back wall meets the floor. Named because everything is placed against it: a piece at
+     this height stands against the wall and a lower one stands forward of it, which is the only
+     depth cue a flat elevation gets. */
+  --room-floor: 15%;
+  /* Cream wall, warm wood floor, and a skirting board where they meet. The wall carries a very
+     faint print, which is what the reference houses have and what stops a large flat cream field
+     reading as unpainted card. A vertical stripe was tried first and read as a barcode at the size
+     a room actually renders; a sparse dot at low contrast survives the same test, which is the
+     lesson §3.1 records about the hero mat's coir texture. */
   background:
-    linear-gradient(var(--color-room-floor), var(--color-room-floor)) bottom / 100% var(--room-floor) no-repeat,
-    linear-gradient(var(--color-room-line), var(--color-room-line)) bottom var(--room-floor) left / 100% 2px no-repeat,
-    var(--color-room-wall);
+    radial-gradient(var(--toy-wall-print) 1px, transparent 1.2px) 0 0 / 16px 16px,
+    var(--toy-wall);
   overflow: hidden;
 }
 
-/* Scenery. Drawn in the muted line colour with no label and no place in the accessibility tree:
-   the absence of all three is what says it is not the thing to press. `--w` is a share of the
-   room's width and the height follows the symbol's own viewBox, so a sofa stays sofa-shaped
-   whatever the room does. */
+/* The wall print belongs on the wall, so the floor gets a plain band painted over it. Cheaper than
+   masking the gradient and it also gives the floor its own soft top edge. */
+.room-scene::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--room-floor);
+  background: var(--toy-floor);
+  border-top: 3px solid var(--toy-floor-dark);
+}
+
+/* A basement has a concrete floor and one wide room across the bottom of the house, so its floor
+   reads as a field rather than as a strip at the share the rooms upstairs use. */
+.room--basement .room-scene {
+  --room-floor: 12%;
+}
+
+.room--basement .room-scene::before {
+  background: var(--toy-slate-soft);
+  border-top-color: var(--toy-slate);
+}
+
+/* The house is built like the reference: each room is a box with a heavy wood beam under it, the
+   way one story sits on the next in a real doll house. The beam is the room's own bottom border,
+   so it costs no markup and it lands exactly where the floor does. */
+.room {
+  border-color: var(--toy-beam);
+  border-width: 2px 2px 7px;
+  border-radius: 3px;
+  background: var(--toy-cream);
+}
+
+/* Scenery. Sized as a share of the room and standing on its feet, because where a bed's feet land
+   is what has to be right and where its middle lands is whatever its own proportions make it.
+   Height follows the symbol's viewBox. No name, no interactive state, out of the accessibility
+   tree: the absence of all three is what says this is not the thing to press. */
 .room-prop {
   position: absolute;
   left: var(--x);
-  top: var(--y);
+  bottom: var(--b);
   width: var(--w);
   height: auto;
-  transform: translate(-50%, -50%);
-  color: var(--color-room-line);
+  transform: translateX(-50%);
   fill: none;
-  stroke: currentColor;
-  /* Constant in device pixels. At furniture size a scaled 2-unit stroke comes out as a marker
-     line, which is the difference between a drawing of a sofa and a cartoon of one. */
-  stroke-width: 1.5;
+  /* Constant in device pixels. At furniture size a stroke that scales with the drawing comes out as
+     a marker line, which is the difference between a drawing of a sofa and a cartoon of one. */
+  stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
 
-/* Anything that stands on the floor is placed by its feet rather than by its middle, because where
-   a bed's feet land is the thing that has to be right and where its centre lands is whatever its
-   own proportions make it. `--b` is how far up from the bottom of the room the feet sit: at
-   `--room-floor` the piece is against the back wall, and lower than that brings it forward. */
-.room-prop--stands {
-  top: auto;
-  bottom: var(--b);
-  transform: translateX(-50%);
-}
-
-/* The pressable objects. Still the same `.hotspot` link with the same icon and the same visible
-   name; what changes is that it stands where its object stands, drawn rather than boxed. The
-   button frame comes off, because a bordered pill on a wall is the thing this experiment is trying
-   to stop looking like. What replaces it as the affordance: the object is drawn in the accent
-   green where the scenery is drawn in a muted grey-green, it is the only kind of object in a room
-   that carries a name at all, and it lifts under the pointer. Colour is the weakest of those three
-   and the only one a reader can miss, which is what keeps this out of colour-alone territory. */
+/* The pressable objects. Still the same `.hotspot` link with the same accessible name; what changes
+   is that it is the object rather than a button naming the object. The button frame comes off,
+   because a bordered pill standing on a wall is exactly what this is trying to stop looking like.
+   What carries the affordance instead: the piece is drawn in full color where the scenery is drawn
+   in the same colors but never named, it is the only thing in a room with a label under it, and it
+   lifts off the wall under the pointer. The label is the signal that does not depend on color. */
 .room-scene .hotspot {
   position: absolute;
+  display: block;
   left: var(--x);
   top: var(--y);
-  transform: translate(-50%, -50%);
-  flex-direction: column;
-  gap: 1px;
-  width: max-content;
-  /* Wide enough for a two-word name on one line, narrow enough that two objects side by side in
-     one room do not run into each other. Longer names wrap. */
-  max-width: min(38%, 8rem);
+  width: var(--w);
+  /* The site's 44px floor still applies. An object drawn smaller than that keeps its drawing and
+     gains padding around it rather than being scaled up out of proportion with the room. */
   min-width: var(--target-min);
-  padding: var(--space-1);
+  min-height: var(--target-min);
+  /* Centered across the room but not down it: `--y` is how far below the ceiling the piece hangs,
+     measured to its top edge, and `--b` is how far above the floor it stands, measured to its feet.
+     Centering on the vertical too was the first pass and it meant a ceiling light placed near the
+     top of the wall hung off the top of the room by half its own height. */
+  transform: translateX(-50%);
+  padding: 0;
   border: 0;
-  border-radius: var(--radius-sm);
+  border-radius: 6px;
   background: none;
-  text-align: center;
-  line-height: 1.15;
-  color: var(--color-accent);
   z-index: 1;
 }
 
-/* An object that stands on the floor is placed by its feet, same as the scenery: a radiator sits
-   at the baseboard and a space heater sits out on the floor, and neither of those is a statement
-   about where its middle is. */
+/* An object that stands on the floor is placed by its feet, same as the scenery. A radiator sits at
+   the skirting and a space heater sits out on the floor, and neither of those is a statement about
+   where its middle is. */
 .room-scene .hotspot--stands {
   top: auto;
   bottom: var(--b);
-  transform: translateX(-50%);
 }
 
 .room-scene .hotspot .icon {
-  width: 2.1em;
-  height: 2.1em;
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
-/* The name sits on a plate of its own, because the floor it crosses is a different tone from the
-   wall and a caption that changes contrast halfway along is a caption nobody trusts. */
+/* The name sits under the piece on a plate of its own, out of the link's own box so a long name
+   does not stretch the drawing. It is still inside the link in the markup, so it is still part of
+   the accessible name and still reads in order. The plate is there because a caption that crosses
+   from the papered wall onto the wood floor changes contrast halfway along. */
 .room-scene .hotspot .hotspot__label {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  /* Narrow on purpose. A name is the widest thing an object has, and two objects a room apart can
+     still collide through their names alone. Wrapping to two short lines costs a line of height and
+     buys back most of the room's width. */
+  max-width: 5rem;
   padding: 1px var(--space-1);
   border-radius: 3px;
   background: var(--color-room-plate);
   color: var(--color-text);
   font-size: 0.75rem;
   font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
 }
 
-/* Hover and keyboard focus both lift the object off the wall and put a soft plate behind it, which
-   is the site's own tactile-hover response (§5.1) applied to a drawing rather than a button. */
+/* A piece standing on the floor takes its name above it instead of below. Below would put the name
+   under the floor: the whole point of standing a bed on the floor line is that there is nothing
+   under it, and a name is about thirty pixels tall. Wall-hung pieces keep the name underneath,
+   where there is wall to put it on. */
+.room-scene .hotspot--stands .hotspot__label {
+  top: auto;
+  bottom: calc(100% + 2px);
+}
+
+/* Hover and keyboard focus lift the piece off the wall, which is the site's own tactile-hover
+   response (§5.1) applied to a drawing rather than to a button. A drop shadow rather than a box
+   shadow, because the thing being lifted is an outline and not a rectangle. */
 .room-scene .hotspot:hover,
 .room-scene .hotspot:focus-visible {
-  background: var(--color-room-plate);
-  box-shadow: var(--shadow-raised);
   z-index: 3;
+  filter: drop-shadow(0 3px 4px rgba(20, 32, 26, 0.3));
 }
 
 @media (prefers-reduced-motion: no-preference) {
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot {
     transition: transform var(--motion-base) var(--motion-ease),
-      box-shadow var(--motion-base) var(--motion-ease);
+      filter var(--motion-base) var(--motion-ease);
   }
 
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:hover,
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:focus-visible {
-    transform: translate(-50%, -50%) scale(1.06);
-  }
-
-  /* The lift has to be written twice because it carries the centring with it, and a
-     floor-standing object is only centred on one axis. */
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--stands:hover,
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--stands:focus-visible {
-    transform: translateX(-50%) scale(1.06);
+    transform: translateX(-50%) scale(1.08);
   }
 }
 
-/* Selected: this object's info bar is the one open. The base rule's ring is drawn for a bordered
-   pill and reads as a box around a drawing here, so it becomes a plate instead. */
+/* Selected: this piece's info bar is the one open. */
 .room-scene .hotspot--selected {
   box-shadow: none;
-  background: var(--color-room-plate);
   outline: 2px solid var(--color-accent);
-  outline-offset: 1px;
+  outline-offset: 3px;
 }
 
-/* Seen already: the object fades back into the scenery rather than out of the room. What is left
-   standing in accent green is what has not been opened yet. `--visited` also puts "Viewed" into
-   the accessible name (dollhouse.js), so this is the second signal rather than the only one. */
+/* Seen already: the piece fades back rather than out. What is left in full color is what has not
+   been opened yet. `--visited` also puts "Viewed" into the accessible name (dollhouse.js), so this
+   is the second signal rather than the only one. */
 .room-scene .hotspot--visited {
-  opacity: 1;
-  color: var(--color-room-line);
+  opacity: 0.45;
 }
 
 .room-scene .hotspot--visited .hotspot__label {
-  color: var(--color-text-muted);
   font-weight: 400;
 }
 
-/* The guide, and why it is three signals. `:has()` keys off the flag dollhouse.js already places
-   on whichever object is next, so the pointer needs no new JavaScript at all. The tag's own words
-   ("Start here", "Next") are the first signal, the arrowhead aimed down at the object is the
-   second, and the halo is the third. Only the halo is a colour. */
+/* The guide, and why it is three signals. `:has()` keys off the flag dollhouse.js already places on
+   whichever piece is next, so the pointer needs no new JavaScript at all. The tag's own words
+   ("Start here", "Next") are the first signal, the arrowhead aimed down at the piece is the second,
+   and the glow is the third. Only the glow is a color. */
 .room-scene .hotspot:has(.hotspot__badge-flag) {
-  background: var(--color-room-plate);
-  box-shadow: 0 0 0 4px var(--color-guide-halo);
   z-index: 2;
+  box-shadow: 0 0 0 5px var(--color-guide-halo);
+  background: var(--color-room-plate);
 }
 
-/* The flag becomes a tag above the object rather than a badge inside its name, so it does not push
+/* The flag becomes a tag above the piece rather than a badge inside its name, so it does not push
    the name onto a second line and so it reads as a pointer aimed at something. */
 .room-scene .hotspot__badge-flag {
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 9px);
   left: 50%;
   transform: translateX(-50%);
   margin: 0;
@@ -2811,15 +2849,15 @@ body:has(.motion-loop) .motion-fab__pause {
   border-bottom: 0;
 }
 
-/* The pointer nods, so the eye finds it among seventeen objects. Gated the way the site's other
-   loops are (§7): off under prefers-reduced-motion and off under the reduce-motion switch. It
-   carries nothing the tag's own words do not, so losing it costs nothing.
+/* The pointer nods, so the eye finds it among seventeen pieces of furniture. Gated the way the
+   site's other loops are (§7): off under prefers-reduced-motion and off under the reduce-motion
+   switch. It carries nothing the tag's own words do not, so losing it costs nothing.
 
    The width gate is here rather than in the fallback below, and it has to be: the keyframes set
    `translateX(-50%)` on every frame, a running animation beats a declared `transform`, and this
    selector outspecifies anything the fallback could reasonably write. Below the gate the flag is an
    inline badge with nothing to point at, so the animation should not exist there at all. */
-@media (prefers-reduced-motion: no-preference) and (min-width: 1000px) {
+@media (prefers-reduced-motion: no-preference) and (min-width: 1150px) {
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot__badge-flag {
     animation: guide-nod var(--motion-loop) var(--motion-ease-smooth) infinite;
   }
@@ -2828,12 +2866,6 @@ body:has(.motion-loop) .motion-fab__pause {
 @keyframes guide-nod {
   0%, 12%, 100% { transform: translateX(-50%) translateY(0); }
   6% { transform: translateX(-50%) translateY(-4px); }
-}
-
-/* The basement is one wide room across the bottom of the house, so its floor reads as a field
-   rather than as a strip at the share the upstairs rooms use. */
-.room--basement .room-scene {
-  --room-floor: 16%;
 }
 
 /* A room with nothing in it still has to look like a room, so the message goes on the wall rather
@@ -2865,42 +2897,36 @@ body:has(.motion-loop) .motion-fab__pause {
   text-decoration: underline;
 }
 
-/* Rooms need height for furniture to stand in, which the chip layout never did. The porch column
-   widens with them and runs the full height of the house, which is what an entry actually is. The
-   roof caps all three columns rather than two, since with the porch under it the house is one box. */
+/* Rooms need height for furniture to stand in, which the chip layout never did, and the entry needs
+   width for a door and a console table. The house keeps the shape it has always had otherwise: the
+   entry is one story on the ground floor, not a two-story hall. */
 .dollhouse {
-  grid-template-columns: minmax(160px, 0.8fr) 1fr 1fr;
-  grid-template-areas:
-    "roof     roof     roof"
-    "porch    bedroom  bathroom"
-    "porch    living   kitchen"
-    "basement basement basement";
+  /* The entry is wider than the chip layout gave it because three named objects need the room. It
+     is still one story on the ground floor, which is the shape the house has always had. */
+  grid-template-columns: minmax(150px, 0.85fr) 1fr 1fr;
 }
 
-/* Enlarged, the scene is the point rather than a thumbnail of one, so it gets real height and
-   everything in it gets drawn at a size worth looking at. */
+/* Enlarged, the scene is the point rather than a thumbnail of one, so it gets real height and the
+   names get their normal size back. Everything in it is sized as a share of the room, so the
+   furniture grows with it on its own. */
 .dollhouse:has(.room:target) .room:target .room-scene {
-  min-height: min(60vh, 460px);
+  min-height: min(62vh, 480px);
 }
 
-.dollhouse:has(.room:target) .room:target .room-scene .hotspot .icon {
-  width: 2.8em;
-  height: 2.8em;
-}
-
-.dollhouse:has(.room:target) .room:target .room-scene .hotspot .hotspot__label {
+.dollhouse:has(.room:target) .room:target .room-scene .hotspot__label {
   font-size: var(--text-small);
+  max-width: 12rem;
 }
 
-/* The floor this layout needs, and the honest limit of the whole idea. An object's name is sized in
+/* The floor this layout needs, and the honest limit of the whole idea. A piece's name is sized in
    text and text does not shrink with the room; the placement is a percentage and does. Below about
-   1000px the two stop agreeing and names start colliding and running off the wall — measured, not
-   guessed, across 640 to 1440. So the furnished scene is a wide-screen treatment and everything
+   1150px the two stop agreeing and names start colliding and running off the wall — measured, not
+   guessed, across 640 to 1440, and re-measured after every placement change. So the furnished scene is a wide-screen treatment and everything
    narrower falls back to the chip rows this replaced, which were designed for exactly that width.
    Nothing is lost by dropping into it: the same links, the same names, the same guide flag, in a
    row instead of on a wall. Below 600px the drawing is hidden altogether and the plain "Everything
    in this house" list takes over, which is a rule this block does not touch. */
-@media (max-width: 999px) {
+@media (max-width: 1149px) {
   .room-scene {
     display: flex;
     flex-wrap: wrap;
@@ -2922,31 +2948,44 @@ body:has(.motion-loop) .motion-fab__pause {
   .room-scene .hotspot,
   .room-scene .hotspot--stands {
     position: static;
-    transform: none;
+    display: inline-flex;
     flex-direction: row;
-    max-width: none;
+    align-items: center;
+    gap: var(--space-1);
+    width: auto;
+    transform: none;
     padding: var(--space-2);
     border: 2px solid var(--color-accent);
+    border-radius: var(--radius-sm);
     background: var(--color-bg);
+    color: var(--color-accent);
   }
 
   .room-scene .hotspot:hover,
   .room-scene .hotspot:focus-visible {
+    filter: none;
     background: var(--color-surface);
-    box-shadow: none;
   }
 
   .room-scene .hotspot--visited {
     opacity: 0.6;
-    color: var(--color-accent);
   }
 
+  /* Back to the flat line icons for the chip row: a colored drawing at 20px is a smudge, and the
+     chip's own frame is doing the work the drawing does upstairs. */
   .room-scene .hotspot .icon {
     width: 1.3em;
     height: 1.3em;
+    stroke: currentColor;
+    stroke-width: 2;
+    vector-effect: none;
   }
 
   .room-scene .hotspot .hotspot__label {
+    position: static;
+    transform: none;
+    width: auto;
+    max-width: none;
     padding: 0;
     background: none;
     color: inherit;
@@ -2963,16 +3002,8 @@ body:has(.motion-loop) .motion-fab__pause {
     display: none;
   }
 
-  /* The house goes back to the shape the chip layout was drawn for: the narrow porch on the middle
-     floor only. The two-row entry above is a furnished-scene idea — with chips in it the porch is
-     three buttons and a screen of empty room. */
   .dollhouse {
     grid-template-columns: minmax(70px, 0.55fr) 1fr 1fr;
-    grid-template-areas:
-      ".      roof     roof"
-      ".      bedroom  bathroom"
-      "porch  living   kitchen"
-      "basement basement basement";
   }
 }
 
