@@ -421,3 +421,16 @@ Home page:
 Improvements page:
 - The new door trim is blocking the label about scrolling to open the door
 - Make all of the improvement article cards a consistent size/height with the add to list button at the same position for each card (bottom)
+
+List feature:
+- Make a button to add all recommendations (given the user's specific situation) to the list 
+- Reformat the box that shows up when the list is empty. It is awkwardly on the left side currently
+- The article "Seal your door with a sweep" has the "Add to my list" button within the permission callout. Fix this and check if this error has occured anywhere else too
+
+Glossary:
+- When hovering over a glossary term, it is difficult to click the link to see the full entry without making the glossary callout disappear
+
+Programs page:
+- Have the carousel take up the width of the page
+- Reformat the cards so that the carousel does not go beyond the height of the page. This might mean adding a "Show more" button
+- Add a way to sort through/filter these programs
