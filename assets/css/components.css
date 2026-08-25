@@ -829,6 +829,20 @@
   pointer-events: auto;
 }
 
+/* The bridge, added 2026-08-25. The panel sits `--space-2` clear of the term, and a pointer part
+   way across that gap is over neither, so the panel closed under anyone moving toward the link
+   inside it. This is an invisible strip filling exactly that gap, which keeps the pointer inside
+   `.term`'s own subtree for the whole trip. It only takes pointer events while the panel is open,
+   because the panel itself only does. */
+.term__tooltip::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: var(--space-2);
+}
+
 /* For a term sitting close to the right margin, so the panel runs back to the left instead. */
 .term--end .term__tooltip {
   left: auto;
@@ -844,15 +858,30 @@
   margin-top: var(--space-2);
 }
 
+/* The gap is above the panel for these, so the bridge goes there too. */
+.term--below .term__tooltip::before {
+  top: auto;
+  bottom: 100%;
+}
+
+/* A full 44px target rather than one line of text (DESIGN.md §6). The negative inline margin keeps
+   the padded box flush with the panel's own text edge, so the link still lines up under the
+   definition it belongs to. */
 .term__more {
-  display: block;
-  margin-top: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  margin: var(--space-1) calc(var(--space-2) * -1) calc(var(--space-2) * -1);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
   color: var(--color-brand);
   font-weight: 600;
 }
 
 .term__more:hover,
 .term__more:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
   color: var(--color-text-on-dark);
 }
 
@@ -864,6 +893,20 @@
   padding: 0;
   list-style: none;
   margin: 0;
+}
+
+/* `grid-auto-rows: 1fr`, added 2026-08-25, is what makes every card the same height rather than
+   only the cards sharing a row. Without it each row sizes to its own tallest card, so the add
+   button sat at a different height in every row and a reader running down the grid had to find it
+   again on each one.
+
+   Only where the grid actually has more than one column. In a single-column layout there is
+   nothing to line the cards up against, and holding all eleven at the tallest one's height would
+   add a screen of empty space to the page for no gain. */
+@media (min-width: 600px) {
+  .card-grid {
+    grid-auto-rows: 1fr;
+  }
 }
 
 .card {
@@ -1026,6 +1069,122 @@
   margin: 0;
 }
 
+/* ---------- Programs page, revised 2026-08-25 (DESIGN.md §3.9) ---------- */
+/* The filter row. Same `.sort-control` label shape the library toolbar uses, so the two pages ask
+   their questions in the same voice. Centred under the centred heading, with the count on its own
+   line once the row wraps. */
+/* Mobile-first: the label sits above its select and the select fills the column, because at 360px
+   "What it helps with" beside a select wraps to four words on four lines. Above 620px there is room
+   for the label and the select on one line, and the row centres under the centred heading. */
+.program-filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-block: var(--space-5);
+}
+
+.program-filter .sort-control {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.program-filter select {
+  width: 100%;
+}
+
+.program-filter .results-count {
+  margin: 0;
+}
+
+@media (min-width: 620px) {
+  .program-filter {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .program-filter .sort-control {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .program-filter select {
+    width: auto;
+  }
+
+  /* Its own line under the two questions, so the count is never squeezed between them. */
+  .program-filter .results-count {
+    flex-basis: 100%;
+    text-align: center;
+  }
+}
+
+/* Everything past the first paragraph of a program entry. The Window Inserts card is two
+   paragraphs and six definition pairs, taller than a laptop screen on its own, and a carousel
+   taller than the window is one whose controls you cannot see while you read it. `<details>` rather
+   than a scripted panel, per AGENTS.md, so it opens with no JavaScript and find-in-page still
+   reaches what is inside it. */
+/* Not the boxed `.disclosure` treatment the site uses for a section-sized panel. This one is a
+   control inside a card that already has a frame, so it reads as a link with a chevron rather than
+   as a second bordered box drawn across the card. `overflow: visible` puts back what `.disclosure`
+   hides, so the focus ring is not clipped. */
+.program__more {
+  margin-block: var(--space-3);
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.program__more > summary {
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  padding: 0;
+  font-size: var(--text-small);
+  color: var(--color-accent);
+}
+
+.program__more > summary:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+.program__more > .disclosure__body {
+  padding: 0;
+}
+
+/* Two labels, one shown at a time, rather than one label that still reads "Show more" while the
+   card is open. In the markup rather than in CSS `content`, because it is prose. */
+.program__more:not([open]) .program__more-open,
+.program__more[open] .program__more-shut {
+  display: none;
+}
+
+/* The cap that keeps the carousel inside the window however many disclosures are open. A slide
+   past this scrolls itself. `flex-start` on the track goes with it: without it the flex row
+   stretches every slide to the tallest one, so opening one card would grow all seven. */
+.program-carousel .carousel__track {
+  align-items: flex-start;
+}
+
+.program-carousel .carousel__slide {
+  max-height: min(32rem, 62vh);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* The controls sit back inside the reading width even though the track spans the window, so
+   Previous and Next stay where the reader's eye already is rather than at the window's edges. */
+.program-carousel .carousel__controls {
+  margin-top: var(--space-4);
+}
+
 /* ---------- Filter / situation form ---------- */
 /* Revised 2026-08-24: three explicit columns rather than auto-fit, with the one long question
    (nine lifecycle phases) spanning the full row and laying its own options out in columns
@@ -1121,6 +1280,23 @@
   margin-block: var(--space-4);
 }
 
+/* Added 2026-08-25 with "Add all showing". The two controls stay together on the right and wrap as
+   a pair, rather than the count and the sort splitting to opposite ends with a button adrift
+   between them. */
+.library-toolbar__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Once everything showing is on the list the button states that and stops acting. Dimmed rather
+   than removed, and still focusable, for the reason `.carousel__nav[aria-disabled]` is. */
+.todo-add-all[aria-disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 .sort-control {
   display: flex;
   align-items: center;
@@ -1145,11 +1321,35 @@
   color: var(--color-text-muted);
 }
 
+/* Centred, revised 2026-08-25. It was a bare `<p>`, and base.css caps every paragraph at the
+   reading measure, so the box stopped 40rem in and sat against the left edge of a 1140px page
+   under a centred title. The margin is what fixes that; the rest is the box earning its place —
+   an icon, one sentence, and the next action, rather than a report that there is nothing here. */
 .empty-state {
-  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-6);
   text-align: center;
   background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+}
+
+/* The paragraph inside carries base.css's own measure cap, which is narrower than this box and
+   would push its text off-centre inside a centred box. */
+.empty-state > p {
+  max-width: none;
+  margin: 0;
+}
+
+.empty-state__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--color-accent);
 }
 
 /* A way back to the doll house, added 2026-08-20, on every page one of its hotspots links to
@@ -1321,11 +1521,15 @@
 }
 
 /* A card's title link stretches an invisible overlay across the whole card (§3.4), which would
-   otherwise swallow this button along with everything else on it. */
+   otherwise swallow this button along with everything else on it.
+
+   `margin-top: auto`, added 2026-08-25: the card is a flex column of a fixed height (see
+   `.card-grid`), so an auto top margin puts this at the bottom of every card whatever the summary
+   above it runs to. `align-self` keeps it the width of its own label rather than the card's. */
 .todo-add--card {
   position: relative;
   z-index: 1;
-  margin-top: var(--space-4);
+  margin-top: auto;
   align-self: flex-start;
 }
 
@@ -1899,10 +2103,11 @@ body:has(.motion-loop) .motion-fab__pause {
    is informational. */
 .hero__shoes {
   position: absolute;
-  /* Bottom-right corner of the mat, where a pair actually gets kicked off, and where they sat
-     before the walk turned upward. They walk up from there. */
-  right: 10%;
-  bottom: 3%;
+  /* Bottom-left corner of the mat, where a pair actually gets kicked off. It was the bottom right
+     until 2026-08-25, which is the corner the `*Rental home` note already sits in (§3.1) — the pair
+     rested under the fine print and left both harder to read. They walk up from here. */
+  left: 0%;
+  bottom: -5%;
   /* A row, revised 2026-08-25. The shoe points up now (see the markup), and from above a pair
      facing away from you sits side by side across the screen rather than one in front of the
      other. `width` measures the pair's width, and each shoe takes half of it. */
@@ -1910,7 +2115,7 @@ body:has(.motion-loop) .motion-fab__pause {
   flex-direction: row;
   align-items: flex-end;
   gap: 3%;
-  width: 20%;
+  width: 26%;
   transform-origin: bottom center;
   pointer-events: none;
   --shoe-shadow-down: drop-shadow(0 1px 1px rgba(20, 32, 26, 0.55));
@@ -2195,7 +2400,7 @@ body:has(.motion-loop) .motion-fab__pause {
      window, and it is measured against .section-heading-row rather than the button, per the note
      above. Padding is a callout's rather than a tooltip's, since at this width it reads as a
      panel. */
-  max-width: min(48rem, 100%);
+  max-width: min(48rem, 300%);
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
@@ -2748,9 +2953,10 @@ body:has(.motion-loop) .motion-fab__pause {
 
 /* A wider slide, added 2026-08-25 for the programs list. A program entry is a heading, two
    paragraphs and a definition list, and at the Renter basics width that is a very tall, very narrow
-   column. The peek behaviour is unchanged; only the slide's width moves. */
+   column. The peek behaviour is unchanged; only the slide's width moves. Widened again the same day
+   when the track came out of the 1140px page shell and started spanning the window (§3.9). */
 .carousel--peek.carousel--wide {
-  --peek-slide: min(46rem, 80vw);
+  --peek-slide: min(52rem, 74vw);
 }
 
 /* A slide that is already a card keeps its own frame rather than gaining a second one. */
@@ -3167,6 +3373,9 @@ body:has(.motion-loop) .motion-fab__pause {
 }
 
 .door-scene__stage {
+  /* One width for the door and for the flood behind it, so the two cannot drift apart, and so the
+     hint below can work out how far the casing overhangs the door's own box. */
+  --door-width: min(21rem, 60vh);
   min-height: 34rem;
   padding-block: var(--space-7);
   display: flex;
@@ -3179,7 +3388,7 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .door-hero__scene {
   position: relative;
-  width: min(21rem, 60vh);
+  width: var(--door-width);
   aspect-ratio: 5 / 9;
   perspective: 1100px;
   perspective-origin: 62% 50%;
@@ -3342,11 +3551,16 @@ body:has(.motion-loop) .motion-fab__pause {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
 }
 
+/* The casing is painted outside the door's layout box (`.door-hero__frame`, `inset: -6% -7%`) and
+   the stage's flex gap measures to that box, so the trim's foot landed on this label and, being an
+   opaque board, covered it. This reserves the overhang: 6% of the scene's height, and the scene is
+   9/5 as tall as it is wide, so 0.108 of the door's width. Derived from the drawing rather than
+   picked off the spacing scale, because it has to track whatever the door's width resolves to. */
 .door-hero__hint {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  margin: 0;
+  margin: calc(var(--door-width, 0px) * 0.108) 0 0;
   font-size: var(--text-small);
   color: var(--color-text-muted);
 }
@@ -3360,7 +3574,7 @@ body:has(.motion-loop) .motion-fab__pause {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(21rem, 60vh);
+  width: var(--door-width);
   aspect-ratio: 5 / 9;
   background: var(--color-surface-brand);
   transform: translate(-50%, -50%) scale(0);
