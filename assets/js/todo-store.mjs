@@ -75,9 +75,15 @@ export function toQuery(list) {
 }
 
 // Merge rather than replace. A link opened by someone who already has a list of their own should
-// add to it, not silently throw it away.
+// add to it, not silently throw it away. Also what "Add all showing" in the library runs on
+// (assets/js/library.js): adding eleven improvements one at a time would write eleven times and
+// fire eleven `todochange` events for one press.
 export function merge(list) {
   const existing = read();
   const known = new Set(existing.map((entry) => entry.slug));
   write([...existing, ...list.filter((entry) => !known.has(entry.slug))]);
+}
+
+export function addAll(slugs) {
+  merge(slugs.map((slug) => ({ slug, done: false })));
 }
