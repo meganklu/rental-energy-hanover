@@ -426,6 +426,7 @@ List feature:
 - Make a button to add all recommendations (given the user's specific situation) to the list 
 - Reformat the box that shows up when the list is empty. It is awkwardly on the left side currently
 - The article "Seal your door with a sweep" has the "Add to my list" button within the permission callout. Fix this and check if this error has occured anywhere else too
+- Include a button to add to the list from the doll house section (in the small preview/card version of the improvement page)
 
 Glossary:
 - When hovering over a glossary term, it is difficult to click the link to see the full entry without making the glossary callout disappear
@@ -434,3 +435,5 @@ Programs page:
 - Have the carousel take up the width of the page
 - Reformat the cards so that the carousel does not go beyond the height of the page. This might mean adding a "Show more" button
 - Add a way to sort through/filter these programs
+
+I think it could be cool to have the items in the house layed out like an actual doll house with furniture/features that a user could tap on. They could be guided to the item by color or arrows. This would make the clicking to expand certain rooms more relevant. I'm not sure how this would look or if it would be usable and helpful. Please try out a version of this in a new branch after completing the other edits I've described. 
