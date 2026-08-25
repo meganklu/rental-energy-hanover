@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="../assets/css/print.css" media="print">
 <!-- /shell:head-links -->
 
-<title>Before you sign — Energy for Student Renters</title>
+<title>What to check before you sign — Energy for Student Renters</title>
 <meta name="description" content="What to look at during a ten-minute apartment viewing, and the questions about heat and utilities to ask before you sign a Hanover lease.">
 </head>
 <body>
@@ -39,6 +39,11 @@
         <li><a href="../about/">About</a></li>
       </ul>
     </nav>
+    <a class="nav-todo" href="../checklist/">
+      <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-list"/></svg>
+      <span class="nav-todo__label">My list</span>
+      <span class="nav-todo__count" data-todo-count aria-hidden="true" hidden>0</span>
+    </a>
   </div>
 </header>
 <!-- /shell:header -->
@@ -46,28 +51,51 @@
 <main id="main">
 
   <section class="section page-shell">
-    <div class="page-head">
-      <h1>Before you sign</h1>
-      <p class="lede">
-        A viewing lasts about ten minutes and usually happens in warm weather. Here is what to
-        look at, and the two questions that decide what winter will cost you.
-      </p>
+    <nav aria-label="Breadcrumb" class="text-small"><a href="../improvements/">Improvements</a> / <a href="../improvements/#renter-basics">Renter basics</a> / What to check before you sign</nav>
+    <a class="btn btn--secondary house-return-link" href="../index.html#house">
+      <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-house"/></svg>
+      Back to the house
+    </a>
+
+    <article class="improvement">
+      <div class="improvement-intro">
+        <div class="improvement-intro__text">
+          <h1>What to check before you sign</h1>
+          <p class="card__summary">A viewing lasts about ten minutes and usually happens in warm weather. Here is what to look at, and the two questions that decide what winter will cost you.</p>
+          <div class="badge-row">
+            <span class="badge badge--basics">Renter basics</span>
+          </div>
+        </div>
+
+        <figure class="improvement-intro__media">
+          <img class="photo" src="../assets/img/photos/keys-stairs.webp"
+               alt="A hand holding a set of keys at the foot of a staircase."
+               width="1000" height="750" loading="lazy" decoding="async">
+          <figcaption class="photo-credit">Photo by <a href="https://unsplash.com/photos/V7Q94jc04wQ">Jakub Żerdzicki</a> on Unsplash</figcaption>
+        </figure>
+      </div>
+
+    <div class="story-stack">
+      <div class="story-bar full-bleed">
+        <div class="story-bar__inner">
+          <h2 class="story-bar__heading">Ask these two things first</h2>
+          <div class="story-bar__body">
+            <p>
+              Everything else on this page is worth less than the answers to these. Ask them before the
+              viewing if you can, because they decide whether the apartment is affordable rather than
+              whether it is nice.
+            </p>
+            <p>
+              A landlord who does not know, or will not say, has told you something too. Get the answer
+              in writing either way, because "heat included" in conversation and "heat included" in a
+              lease are different things.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="content-column">
-      <figure class="prose-figure">
-        <img class="photo" src="../assets/img/photos/keys-stairs.webp"
-             alt="A hand holding a set of keys at the foot of a staircase."
-             width="1000" height="750" loading="lazy" decoding="async">
-        <figcaption class="photo-credit">Photo by <a href="https://unsplash.com/photos/V7Q94jc04wQ">Jakub Żerdzicki</a> on Unsplash</figcaption>
-      </figure>
-
-      <h2>Ask these two things first</h2>
-      <p>
-        Everything else on this page is worth less than the answers to these. Ask them before the
-        viewing if you can, because they decide whether the apartment is affordable rather than
-        whether it is nice.
-      </p>
+      <div class="improvement-body">
       <ol>
         <li>
           <strong>What heats it, and who pays for that?</strong> Fuel oil, propane, natural gas,
@@ -82,12 +110,6 @@
           the months that hurt.
         </li>
       </ol>
-      <p>
-        A landlord who does not know, or will not say, has told you something too. Get the answer
-        in writing either way, because "heat included" in conversation and "heat included" in a
-        lease are different things.
-      </p>
-
       <h2>Take this to the viewing</h2>
       <p>
         Ten minutes, and most of this is looking rather than asking. A cold apartment in August
@@ -171,7 +193,7 @@
         make everything else on this site apply to your actual apartment.
       </p>
 
-      <div class="sources-block">
+      <div class="sources-block improvement-body">
         <h2>Sources</h2>
         <ul>
           <li><a href="https://www.ncei.noaa.gov/data/normals-monthly/1991-2020/access/USW00094765.csv">U.S. Climate Normals 1991-2020, monthly, Lebanon Municipal Airport</a>, NOAA NCEI, for the heating season months</li>
@@ -180,8 +202,9 @@
           <li><a href="https://realestate.dartmouth.edu/rental-property/upper-valley-rentals">Upper Valley Rentals List</a>, Dartmouth Real Estate Office</li>
         </ul>
         <p class="last-reviewed">Last reviewed 2026-08-21.</p>
+        </div>
       </div>
-    </div>
+    </article>
   </section>
 
 </main>
@@ -250,6 +273,7 @@
 <script type="module" src="../assets/js/house-return.js"></script>
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
+<script type="module" src="../assets/js/todo.js"></script>
 <!-- /shell:footer -->
 </body>
 </html>

@@ -545,6 +545,82 @@
   margin-inline: calc(50% - 50vw);
 }
 
+/* ---------- Story stack, added 2026-08-25 ----------
+   A run of adjacent story bars pins to the top of the window one after another and builds a stack,
+   then the whole stack scrolls away together. The wrapper is what makes it work: `position: sticky`
+   is bounded by the element's containing block, so without `.story-stack` the first bar would pin
+   at the top of the window and stay there for the rest of the article, sitting over the steps the
+   reader had moved on to.
+
+   Every child of the stack is a story bar, which is why `nth-of-type` can index them here and could
+   not have out in the article, where the bars are siblings of the body columns and every one of
+   them is a `div`. Four offsets is the depth any page on this site actually reaches.
+
+   `padding-bottom` is the dwell: the last bar in a stack has nothing below it inside the stack, so
+   without it the stack's bottom edge arrives the moment the bar does and it releases without ever
+   holding. The padding gives the finished stack a stretch of scrolling to be looked at before it
+   leaves.
+
+   Gated on width, on height, and on both reduced-motion controls. Pinned full-width bands on a
+   short window are bands covering the thing the reader is trying to read, and a reader who has
+   asked for less movement has asked for exactly this. Outside the gate the bars are ordinary
+   stacked bands with their own margins, which is what they were before. */
+.story-stack > .story-bar + .story-bar {
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 900px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  body:not(:has(.reduce-motion-input:checked)) .story-stack {
+    --stack-step: 4.5rem;
+    padding-bottom: 25vh;
+  }
+
+  /* A screen each. The bar is the section while it is on screen, so its content centres in the
+     window rather than sitting wherever the flow left it. */
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar {
+    position: sticky;
+    top: var(--stack-top, 0px);
+    margin-block: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar > .story-bar__inner {
+    width: 100%;
+  }
+
+  /* The gap the bars start apart by. Sticky closes it as the reader scrolls, which is the coming
+     together: without it the second bar is already touching the first and arrives on the stack with
+     nothing having visibly happened. */
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar + .story-bar {
+    margin-top: 25vh;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(2) {
+    --stack-top: var(--stack-step);
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(3) {
+    --stack-top: calc(var(--stack-step) * 2);
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(4) {
+    --stack-top: calc(var(--stack-step) * 3);
+  }
+
+  /* A stack of one has nothing to stack against, so it neither pins nor reserves the dwell. It
+     still takes the screen, because that is the section treatment rather than the stacking. */
+  body:not(:has(.reduce-motion-input:checked)) .story-stack:not(:has(.story-bar + .story-bar)) {
+    padding-bottom: 0;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack:not(:has(.story-bar + .story-bar)) > .story-bar {
+    position: static;
+    margin-block: var(--space-8);
+  }
+}
+
 .story-bar {
   margin-block: var(--space-8);
   background: var(--color-surface);
@@ -628,15 +704,19 @@
     body:not(:has(.reduce-motion-input:checked)) .story-bar__body {
       animation: story-bar-in linear both;
       animation-timeline: view();
-      animation-range: entry 0% cover 35%;
+      /* Longer than the old `cover 35%`, so the move plays out over enough scroll to be watched
+         rather than being finished before the bar is properly on screen. */
+      animation-range: entry 0% cover 55%;
     }
 
     body:not(:has(.reduce-motion-input:checked)) .story-bar__heading {
-      animation-name: story-bar-in-from-left;
+      animation-name: story-bar-heading-in-from-left;
+      transform-origin: left center;
     }
 
     body:not(:has(.reduce-motion-input:checked)) .story-bar--reverse .story-bar__heading {
-      animation-name: story-bar-in-from-right;
+      animation-name: story-bar-heading-in-from-right;
+      transform-origin: right center;
     }
 
     body:not(:has(.reduce-motion-input:checked)) .story-bar__body {
@@ -649,14 +729,29 @@
   }
 }
 
+/* Revised 2026-08-25: 14px was a nudge nobody saw. The offset is 3.5rem now and the heading takes a
+   scale as well, which at display size is the half of it that actually reads. Still transform-only,
+   for the reason in the note above: a `view()` timeline that never advances leaves the element stuck
+   wherever the range started, and a transform stuck anywhere still leaves fully legible,
+   full-contrast text. Opacity would not. */
 @keyframes story-bar-in-from-left {
-  from { transform: translateX(-14px); }
+  from { transform: translateX(-3.5rem); }
   to { transform: translateX(0); }
 }
 
 @keyframes story-bar-in-from-right {
-  from { transform: translateX(14px); }
+  from { transform: translateX(3.5rem); }
   to { transform: translateX(0); }
+}
+
+@keyframes story-bar-heading-in-from-left {
+  from { transform: translateX(-3.5rem) scale(0.9); }
+  to { transform: translateX(0) scale(1); }
+}
+
+@keyframes story-bar-heading-in-from-right {
+  from { transform: translateX(3.5rem) scale(0.9); }
+  to { transform: translateX(0) scale(1); }
 }
 
 /* ---------- Glossary term ---------- */
@@ -697,12 +792,17 @@
 .term__tooltip {
   position: absolute;
   bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  /* Anchored to the term's left edge rather than centred on it. Centring meant half the panel hung
+     to the left of the word, which runs off the screen for any term near the start of a line, and
+     CSS has no way to clamp an absolutely positioned box against the viewport. Extending rightward
+     is safe everywhere except a term hard against the right margin, which `.term--end` handles. */
+  left: 0;
   margin-bottom: var(--space-2);
   width: max-content;
-  max-width: 16rem;
-  padding: var(--space-2) var(--space-3);
+  max-width: min(22rem, 72vw);
+  padding: var(--space-3) var(--space-4);
+  line-height: 1.5;
+  text-align: left;
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
   color: var(--color-text-on-dark);
@@ -715,9 +815,45 @@
   z-index: 30;
 }
 
+/* `:focus-within` rather than `:focus-visible`, and pointer events back on, both added 2026-08-25
+   so the popup can hold a link to the full glossary entry. Without them the popup closed the moment
+   the reader moved toward the link, and a keyboard user tabbing from the term into the link lost it
+   entirely. The term itself keeps `tabindex="0"` and `aria-describedby`, so the definition is
+   announced whether or not anyone reaches the link.
+
+   A popup carrying a link is not a tooltip in the ARIA sense, so the ones that do are plain spans
+   rather than `role="tooltip"`. The four in the situation form carry no link and keep the role. */
 .term:hover .term__tooltip,
-.term:focus-visible .term__tooltip {
+.term:focus-within .term__tooltip {
   opacity: 1;
+  pointer-events: auto;
+}
+
+/* For a term sitting close to the right margin, so the panel runs back to the left instead. */
+.term--end .term__tooltip {
+  left: auto;
+  right: 0;
+}
+
+/* The popup opens above the term, which puts it out of reach if the term is on the first line of a
+   page. Terms near the top get the modifier and open downward instead. */
+.term--below .term__tooltip {
+  bottom: auto;
+  top: 100%;
+  margin-bottom: 0;
+  margin-top: var(--space-2);
+}
+
+.term__more {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--color-brand);
+  font-weight: 600;
+}
+
+.term__more:hover,
+.term__more:focus-visible {
+  color: var(--color-text-on-dark);
 }
 
 /* ---------- Cards (the improvements library only) ---------- */
@@ -1030,6 +1166,16 @@
   background: var(--color-bg);
 }
 
+/* Added 2026-08-25 with the cart: the nav takes the space it needs and the cart keeps its own,
+   rather than the two competing and the cart wrapping under the brand. */
+.site-header__inner > .primary-nav {
+  margin-inline-start: auto;
+}
+
+.site-header__inner > .nav-todo {
+  flex-shrink: 0;
+}
+
 .site-header__inner {
   display: flex;
   flex-wrap: wrap;
@@ -1108,6 +1254,204 @@
 .primary-nav a:hover,
 .primary-nav a[aria-current="page"] {
   color: var(--color-accent);
+}
+
+/* ---------- My list, added 2026-08-25 ----------
+   F6 in features.md. The interaction is a shopping cart's, because that is the one every student
+   already knows: a control on the item that flips the moment it is pressed, a count in the header
+   that never moves, and one link from that count to the whole list. DESIGN.md §3.8. */
+
+/* The header's cart. Deliberately not a sixth nav item: it is a control rather than a section, so
+   it sits outside the nav list and is shaped like a button. */
+.nav-todo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  padding-inline: var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--text-small);
+  white-space: nowrap;
+  transition: border-color var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease),
+    transform var(--motion-base) var(--motion-ease);
+}
+
+.nav-todo:hover,
+.nav-todo:focus-visible {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.nav-todo[aria-current="page"] {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.nav-todo__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding-inline: 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+  font-size: 0.8125rem;
+  line-height: 1;
+}
+
+/* The add control, on an article and on a card. `aria-pressed` carries the state rather than a
+   swapped class, so the button is one toggle rather than two buttons pretending to be one, and the
+   label changes with it because a pressed state nobody can see is not a state. */
+.improvement-actions {
+  margin-top: var(--space-5);
+}
+
+.todo-add[aria-pressed="true"] {
+  background: var(--color-success-bg);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* A card's title link stretches an invisible overlay across the whole card (§3.4), which would
+   otherwise swallow this button along with everything else on it. */
+.todo-add--card {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--space-4);
+  align-self: flex-start;
+}
+
+/* ---------- The list page ---------- */
+.todo-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-block: var(--space-6);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* The one destructive control here, pushed away from the three that are not. */
+.todo-toolbar__clear {
+  margin-inline-start: auto;
+  color: var(--color-danger-text);
+  border-color: var(--color-danger-text);
+}
+
+.todo-section + .todo-section {
+  margin-top: var(--space-8);
+}
+
+.todo-section > h2 {
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--color-surface-brand);
+}
+
+.todo-buy,
+.todo-ask,
+.todo-do {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-4);
+}
+
+.todo-buy__item,
+.todo-ask__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.todo-buy__what {
+  font-weight: 600;
+}
+
+.todo-buy__why {
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+}
+
+.todo-item {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* A real checkbox at a real size. This is the only place on the site a reader ticks something off,
+   and a 20px box is the difference between a list you use and a list you look at. */
+.todo-item__check {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-top: var(--space-1);
+  accent-color: var(--color-accent);
+}
+
+.todo-item__body > * + * {
+  margin-top: var(--space-2);
+}
+
+.todo-item__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-h4);
+}
+
+.todo-item__title label {
+  cursor: pointer;
+}
+
+/* Ticked items stay in place and stay legible. Striking them out and dropping them to 40% would
+   make the finished half of the list the hard half to read, which is backwards. */
+.todo-item.is-done .todo-item__title {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.todo-item__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: var(--text-small);
+}
+
+.todo-item__remove {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.todo-item__remove:hover,
+.todo-item__remove:focus-visible {
+  color: var(--color-danger-text);
+}
+
+.todo-shared {
+  margin-block: var(--space-5);
+}
+
+@media (max-width: 720px) {
+  .todo-toolbar__clear {
+    margin-inline-start: 0;
+  }
 }
 
 /* ---------- Personalize FAB and dialog ---------- */
@@ -1488,6 +1832,32 @@ body:has(.motion-loop) .motion-fab__pause {
    subtle (16% opacity). Scaled up 2026-08-21: a 480px tile rather than 320px, so the stones read
    as proportionate to the mat sitting on them. Same dissection, same seed, and the joint stroke
    stays 2px rather than scaling with the tile. */
+/* ---------- Hero scene, added 2026-08-25 ----------
+   The hero holds while the reader scrolls through it, so the shoes get a whole walk rather than a
+   glimpse of one. The scene is taller than the window and the hero inside it is sticky, which turns
+   the scroll from a way past the hero into the thing that drives it. Same shape as the door scene
+   on /improvements (§3.4), and gated the same way: without scroll-timeline support, under reduced
+   motion, or on a narrow screen the scene collapses to one screen and the hero does not stick,
+   because there is nothing to scrub through. */
+.hero-scene {
+  position: relative;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    body:not(:has(.reduce-motion-input:checked)) .hero-scene {
+      height: 220vh;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .hero-scene > .hero {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      min-height: 34rem;
+    }
+  }
+}
+
 .hero {
   min-height: 85svh;
   display: flex;
@@ -1529,25 +1899,48 @@ body:has(.motion-loop) .motion-fab__pause {
    is informational. */
 .hero__shoes {
   position: absolute;
-  left: -4%;
-  bottom: -4%;
+  /* Bottom-right corner of the mat, where a pair actually gets kicked off, and where they sat
+     before the walk turned upward. They walk up from there. */
+  right: 10%;
+  bottom: 3%;
+  /* A row, revised 2026-08-25. The shoe points up now (see the markup), and from above a pair
+     facing away from you sits side by side across the screen rather than one in front of the
+     other. `width` measures the pair's width, and each shoe takes half of it. */
   display: flex;
-  /* A column, revised 2026-08-21. The shoe is turned to point right (see the markup), and from
-     above, a pair facing right sits one shoe in front of the other on the screen's vertical axis.
-     `width` now measures the shoe's length rather than its width, so it grew from 24% to 27% to
-     land the pair at the same rendered size it had before the turn. */
-  flex-direction: column;
-  gap: var(--space-2);
-  width: 27%;
-  transform: rotate(-8deg);
-  transform-origin: bottom left;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 3%;
+  width: 20%;
+  transform-origin: bottom center;
   pointer-events: none;
+  --shoe-shadow-down: drop-shadow(0 1px 1px rgba(20, 32, 26, 0.55));
+  --shoe-shadow-mid: drop-shadow(0 5px 5px rgba(20, 32, 26, 0.4));
+  --shoe-shadow-up: drop-shadow(0 10px 9px rgba(20, 32, 26, 0.26));
 }
 
 .hero__shoes svg {
-  width: 100%;
+  flex: 1 1 0;
+  width: auto;
   height: auto;
-  flex-shrink: 0;
+  filter: var(--shoe-shadow-down);
+}
+
+/* The leading foot starts half a stride ahead, the way a pair mid-walk sits. Without it a pair
+   drawn side by side and level reads as standing still no matter what the stride does. Forward is
+   up here, so the margin lifts rather than drops it. */
+.hero__shoes svg:first-child {
+  margin-bottom: 9%;
+}
+
+/* Three stages of one shadow, added 2026-08-24 for the walk below. Seen from directly overhead, a
+   foot that has left the ground reads almost entirely through its shadow: planted, the shadow is
+   tight, close and dark; lifted, it is offset, spread and faint. Scale alone was carrying the whole
+   lift before this and 6% of it was not enough to read as a step. These are `filter` values rather
+   than `box-shadow` because the shape being lifted is an SVG outline, not a box. */
+.hero__shoes {
+  --shoe-shadow-down: drop-shadow(0 1px 1px rgba(20, 32, 26, 0.55));
+  --shoe-shadow-mid: drop-shadow(0 5px 5px rgba(20, 32, 26, 0.4));
+  --shoe-shadow-up: drop-shadow(0 10px 9px rgba(20, 32, 26, 0.26));
 }
 
 /* The walk, added 2026-08-21, rebuilt the same day (DESIGN.md §3.1). Scroll-progress driven, not
@@ -1568,7 +1961,8 @@ body:has(.motion-loop) .motion-fab__pause {
       animation-timing-function: linear;
       animation-fill-mode: both;
       animation-timeline: scroll(root block);
-      animation-range: 0 70vh;
+      /* The pinned stretch of `.hero-scene`, so the walk finishes exactly as the hero lets go. */
+      animation-range: 0 118vh;
     }
 
     body:not(:has(.reduce-motion-input:checked)) .hero__shoes {
@@ -1585,56 +1979,72 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* The pair keeps its resting -8deg through the whole walk, so it stays tilted the way a kicked-off
-   pair landed. The translate is written *before* the rotate, which applies it in the mat's own
-   coordinates rather than along the tilted axis: written the other way round the pair climbs as it
-   crosses, and around the middle of the scroll range it is walking through the middle of the
-   `<h1>`. Along the bottom of the mat there is nothing to walk over. 270% of the pair's own length
-   lands them at the far border. Change this and the stride amplitude below has to change with
-   it. */
+/* The pair walks up the mat toward the door it is lying in front of, revised 2026-08-25 from the
+   left-to-right crossing it used to do. Straight up the screen with no tilt: from directly overhead
+   a pair walking away from you has no reason to lean. 290% of the pair's own height carries them
+   from the bottom edge clear off the top of the mat. Change this and the stride amplitude below has
+   to change with it. */
 @keyframes shoes-walk {
-  from { transform: translateX(0) rotate(-8deg); }
-  to { transform: translateX(270%) rotate(-8deg); }
+  from { transform: translateY(0); }
+  to { transform: translateY(-290%); }
 }
 
 /* The stride, and why these numbers are not taste. The two keyframe sets below are the same walk
    half a cycle apart, three cycles across the scroll range. One cycle is 33.333% of the range and
-   the pair advances 90% of a shoe's length in it, so half a cycle advances 45%. A planted foot has
-   to stay still against the ground while that happens, which means drifting exactly -45% relative
-   to the pair: hence ±22.5% around the mean through stance, and hence the other foot covering 90%
-   against the ground in its half, at twice the pair's speed. Get this wrong and the planted foot
-   skids, which is what the first pass looked like.
+   the pair advances 96.7% of a shoe's length in it, so half a cycle advances 48.3%. A planted foot
+   has to stay still against the ground while that happens, which means drifting exactly -48.3%
+   relative to the pair: hence ±24% around the mean through stance, and hence the other foot
+   covering 96.7% against the ground in its half, at twice the pair's speed. Get this wrong and the
+   planted foot skids, which is what the first pass looked like. Negative Y is forward now, so the
+   signs are the mirror of the left-to-right version.
 
-   Both start the range at 0 so the pair rests level, side by side, the way a pair left at a door
-   sits — one of them mid-stance and the other mid-swing, which is the only phase where that is
-   true of both at once. `scale` stands in for the lift at the middle of each swing: from directly
-   overhead a raised foot reads as a nearer one, and there is no other axis to show it on. It is
-   also why the near shoe is the fractionally larger of the two at rest. */
+   Both start the range at translateY(0) with the planted shadow, so the pair rests as it is drawn:
+   side by side with the trailing foot half a stride back (see the margin above). The cycle picks up
+   from there, which costs the follow shoe a quarter-cycle of catching up in the first few percent of
+   scroll and is not visible at that speed.
+
+   The lift is what makes this read as walking rather than sliding. `scale` runs 0.94 planted to 1.16
+   at the top of the swing, with a keyframe either side of the peak so the foot rises and falls
+   instead of popping, and the drop shadow spreads and fades across the same three stages. From
+   directly overhead those two are the only axes there are: a raised foot is a nearer one, and its
+   shadow has further to fall. */
 @keyframes shoe-step-lead {
-  0% { transform: translateX(0) scale(1); }
-  8.333% { transform: translateX(-22.5%) scale(1); }
-  16.667% { transform: translateX(0) scale(1.06); }
-  25% { transform: translateX(22.5%) scale(1); }
-  41.667% { transform: translateX(-22.5%) scale(1); }
-  50% { transform: translateX(0) scale(1.06); }
-  58.333% { transform: translateX(22.5%) scale(1); }
-  75% { transform: translateX(-22.5%) scale(1); }
-  83.333% { transform: translateX(0) scale(1.06); }
-  91.667% { transform: translateX(22.5%) scale(1); }
-  100% { transform: translateX(0) scale(1); }
+  0% { transform: translateY(0) scale(1); filter: var(--shoe-shadow-down); }
+  8.333% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  12.5% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  16.667% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  20.833% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  25% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  41.667% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  45.833% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  50% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  54.167% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  58.333% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  75% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  79.167% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  83.333% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  87.5% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  91.667% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  100% { transform: translateY(0) scale(0.94); filter: var(--shoe-shadow-down); }
 }
 
 @keyframes shoe-step-follow {
-  0% { transform: translateX(0) scale(1.06); }
-  8.333% { transform: translateX(22.5%) scale(1); }
-  25% { transform: translateX(-22.5%) scale(1); }
-  33.333% { transform: translateX(0) scale(1.06); }
-  41.667% { transform: translateX(22.5%) scale(1); }
-  58.333% { transform: translateX(-22.5%) scale(1); }
-  66.667% { transform: translateX(0) scale(1.06); }
-  75% { transform: translateX(22.5%) scale(1); }
-  91.667% { transform: translateX(-22.5%) scale(1); }
-  100% { transform: translateX(0) scale(1.06); }
+  0% { transform: translateY(0) scale(1); filter: var(--shoe-shadow-down); }
+  4.167% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  8.333% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  25% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  29.167% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  33.333% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  37.5% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  41.667% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  58.333% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  62.5% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  66.667% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  70.833% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  75% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  91.667% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  95.833% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  100% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
 }
 
 /* Only this border and what's inside it is "the mat" proper. Inset by a fixed margin (not
@@ -1778,12 +2188,15 @@ body:has(.motion-loop) .motion-fab__pause {
   left: 0;
   margin-top: var(--space-2);
   width: max-content;
-  /* Widened 2026-08-21: the 20rem cap broke a two-sentence instruction into four short lines and
-     made a callout read as a column of text. The `100%` half is what keeps it inside a narrow
+  /* Widened 2026-08-21 from a 20rem cap that broke a two-sentence instruction into four short
+     lines, and again 2026-08-24: 34rem still wrapped it to three. The instruction is about 82
+     characters, which wants roughly 40rem at this type size, so the cap is 48rem and the callout
+     sits on one line at any normal window width. The `100%` half is what keeps it inside a narrow
      window, and it is measured against .section-heading-row rather than the button, per the note
-     above. */
-  max-width: min(34rem, 100%);
-  padding: var(--space-2) var(--space-3);
+     above. Padding is a callout's rather than a tooltip's, since at this width it reads as a
+     panel. */
+  max-width: min(48rem, 100%);
+  padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
   color: var(--color-text-on-dark);
@@ -2297,7 +2710,7 @@ body:has(.motion-loop) .motion-fab__pause {
    slide does not occupy — which is what `scroll-snap-align: center` needs in order to center the
    slides at either end as well as the ones in the middle. */
 .carousel--peek .carousel__track {
-  gap: var(--space-3);
+  gap: var(--space-4);
   padding-inline: calc(50% - var(--peek-slide) / 2);
   /* The neighbours scale up to 1 as they become current, and a scroll container clips at its
      padding box, so the block padding has to leave room for the taller state. */
@@ -2331,6 +2744,19 @@ body:has(.motion-loop) .motion-fab__pause {
 .carousel--peek.is-enhanced .carousel__slide:focus-within {
   transform: scale(1);
   opacity: 1;
+}
+
+/* A wider slide, added 2026-08-25 for the programs list. A program entry is a heading, two
+   paragraphs and a definition list, and at the Renter basics width that is a very tall, very narrow
+   column. The peek behaviour is unchanged; only the slide's width moves. */
+.carousel--peek.carousel--wide {
+  --peek-slide: min(46rem, 80vw);
+}
+
+/* A slide that is already a card keeps its own frame rather than gaining a second one. */
+.carousel__slide.program {
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-accent);
 }
 
 .carousel__controls {
@@ -2716,6 +3142,295 @@ body:has(.motion-loop) .motion-fab__pause {
   font-weight: 600;
 }
 
+/* ---------- Door scene, added 2026-08-24, rebuilt 2026-08-25 ----------
+   `/improvements` opens on a front door with the page title on it. The reader is held at the door
+   while they scroll: the scene is three viewports tall and the stage inside it is sticky, so the
+   view stays put while the scroll position drives the door open. Once it is open the green behind
+   floods out from the doorway to fill the screen, and the reader arrives in the Renter basics band
+   that green belongs to. DESIGN.md §3.4.
+
+   Scroll-progress driven rather than timed, the same mechanism as the hero shoes (§3.1). Scroll
+   position is the animation's progress, so it reverses on the way back up and stops when the reader
+   stops. Nothing moves on its own, so unlike the site's loops it needs no Pause button.
+
+   The door is drawn against the MMI Door quarter-fan-lite four-panel reference: arched glass in the
+   top quarter with grilles radiating from the sill, two panels above the lock rail and two below,
+   and a brickmould casing around the frame. The greens are the site's; the white trim and grilles
+   are the reference's. */
+/* The scene is an ordinary one-screen section by default, and only becomes three viewports of
+   scroll with a pinned stage inside the same gate the animation itself sits behind (below). Pinning
+   the view is only worth anything if something is happening while it is pinned: with the animation
+   off, a reader who has asked for less movement, or a browser without scroll timelines, would
+   otherwise get three screens of scrolling past a door that never moves. */
+.door-scene {
+  position: relative;
+}
+
+.door-scene__stage {
+  min-height: 34rem;
+  padding-block: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5);
+  overflow: hidden;
+}
+
+.door-hero__scene {
+  position: relative;
+  width: min(21rem, 60vh);
+  aspect-ratio: 5 / 9;
+  perspective: 1100px;
+  perspective-origin: 62% 50%;
+}
+
+/* The casing, sitting outside the opening on all four sides. Part of the frame rather than the
+   door, so it stays put while the door swings. Three layers stand in for a moulded architrave: the
+   flat casing board itself, a bead line inset from its edge, and a pediment capping the head. All
+   decorative, all on the frame, none of it on the leaf that moves. */
+.door-hero__frame {
+  position: absolute;
+  inset: -6% -7%;
+  border-radius: 2px;
+  background: var(--color-bg);
+  box-shadow: 0 0 0 2px var(--color-border-strong), var(--shadow-raised);
+}
+
+/* The bead: a second line inside the casing, which is what separates a moulding from a border. */
+.door-hero__frame::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 1px;
+}
+
+/* The pediment over the head of the frame: a wider cap with its own shadow line under it. */
+.door-hero__frame::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  bottom: calc(100% - 2px);
+  height: 5%;
+  min-height: 12px;
+  border-radius: 2px 2px 0 0;
+  background: var(--color-bg);
+  box-shadow: 0 0 0 2px var(--color-border-strong), 0 4px 6px rgba(20, 32, 26, 0.18);
+}
+
+.door-hero__opening {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-brand);
+  overflow: hidden;
+}
+
+/* A wedge of light falling out of the doorway, brightest at the hinge side. Decorative depth. */
+.door-hero__light {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 60%);
+}
+
+.door-hero__door {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-dark);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  box-shadow: var(--shadow-raised);
+}
+
+.door-hero__face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.door-face__glass path {
+  fill: var(--color-door-glass);
+}
+
+.door-face__grille path,
+.door-face__grille line {
+  fill: none;
+  stroke: var(--color-bg);
+  stroke-width: 2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The panels read as recessed through a single lighter fill and a hairline edge, which is as much
+   as a flat drawing at this size can carry without looking like drop shadows. */
+.door-face__panel rect {
+  fill: var(--color-accent);
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The title as signage screwed to the door: a plate across the lock rail, with a raised edge and a
+   fixing at each end. It is still the page's h1, and it is still the first heading a screen reader
+   reaches. */
+.door-hero__title {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  /* The rail between the glass and the upper panels, which is where a door plate goes and, more to
+     the point, is not where the handle is. Sharing the lock rail with it put the two on top of each
+     other. */
+  top: 33%;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  text-align: center;
+  font-size: clamp(0.95rem, 0.55rem + 1.5vw, 1.4rem);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--color-surface-dark);
+  background: linear-gradient(var(--color-bg), var(--color-surface));
+  border: 1px solid var(--color-border-strong);
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* The two screws holding the plate on. */
+.door-hero__title::before,
+.door-hero__title::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 50%;
+  background: var(--color-border-strong);
+}
+
+.door-hero__title::before { left: 6px; }
+.door-hero__title::after { right: 6px; }
+
+/* A brass lever on a backplate, rather than the round knob it started as. The plate is what makes
+   it read as hardware at this size instead of as a dot. */
+.door-hero__knob {
+  position: absolute;
+  right: 5%;
+  top: 65%;
+  width: 9px;
+  height: 26px;
+  border-radius: 2px;
+  background: var(--color-door-handle);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+  transform: translateY(-50%);
+}
+
+.door-hero__knob::after {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 16px;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 3px 0 0 3px;
+  background: var(--color-door-handle);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+.door-hero__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+/* The colour coming through the doorway, once the door is out of the way. A plain rectangle the
+   size of the opening, scaled up from the doorway's own centre until it covers the stage, so the
+   green arrives from where the light was rather than fading in over everything at once. Above the
+   door in paint order on purpose: the reader is walking through, and what is behind them stops
+   being the subject. */
+.door-scene__flood {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(21rem, 60vh);
+  aspect-ratio: 5 / 9;
+  background: var(--color-surface-brand);
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+/* Gated the three ways the site's other scroll motion is (DESIGN.md §7): @supports, because
+   scroll-driven animation is an enhancement; prefers-reduced-motion and the reduce-motion switch;
+   and a 600px floor, since a door swinging in a phone-width column is a door filling the screen.
+   Outside the gate the scene is one screen tall and does not stick, the door stays shut and square
+   on with the title flat and legible, and the flood never appears. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    body:not(:has(.reduce-motion-input:checked)) .door-scene {
+      height: 300vh;
+    }
+
+    /* Three viewports of scroll for one viewport of view: the first two thirds swing the door, the
+       last third floods the colour out. */
+    body:not(:has(.reduce-motion-input:checked)) .door-scene__stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding-block: 0;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .door-hero__door,
+    body:not(:has(.reduce-motion-input:checked)) .door-scene__flood {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .door-hero__door {
+      animation-name: door-open;
+      animation-range: 10vh 150vh;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .door-scene__flood {
+      animation-name: door-flood;
+      animation-range: 150vh 215vh;
+    }
+  }
+}
+
+/* Stops at 74 degrees rather than swinging flat to 90: past about 75 the door is edge-on, the sign
+   is a line, and the reader loses the thing they were reading. The shadow lifts as it opens,
+   because a door standing open across a doorway casts across the opening rather than onto it. */
+@keyframes door-open {
+  from {
+    transform: rotateY(0deg);
+    box-shadow: var(--shadow-raised);
+  }
+  to {
+    transform: rotateY(-74deg);
+    box-shadow: 14px 0 30px rgba(20, 32, 26, 0.35);
+  }
+}
+
+/* Starts at nothing rather than at the doorway's own size. `animation-fill-mode: both` back-fills
+   the `from` keyframe for the whole scroll before the range opens, so a `from` of `scale(1)` left a
+   full-size green rectangle sitting over the shut door from the moment the page loaded. 9 is enough
+   for the doorway rectangle to cover a 100vh stage from its own centre at every viewport this runs
+   at. */
+@keyframes door-flood {
+  from { transform: translate(-50%, -50%) scale(0); }
+  to { transform: translate(-50%, -50%) scale(9); }
+}
+
 /* ---------- Split incentive, added 2026-08-24 ----------
    The About page opens on the problem the whole site exists because of: in a rental the person
    who would pay for an efficiency improvement is not the person who would save from it. The
@@ -2727,13 +3442,34 @@ body:has(.motion-loop) .motion-fab__pause {
    resizing. That shift is done with `:has()` rather than script, matching how the reduce-motion
    switch and the carousel already work in this file.
 
+   **One variable drives everything**, rebuilt 2026-08-24. The first pass set the two background
+   halves to 58% and 50% and let flex sort it out. Flex items shrink to fit by default, so a pair
+   with bases summing to 108% both shrank and the seam moved about 3.7% instead of 8% — a shift too
+   small to notice, which is why the effect read as broken. Worse, the panels themselves moved on a
+   separate `flex-grow` rule, so the colour and the text it sat behind travelled different
+   distances. Both now read `--split-pos` off the container, so the seam and the text move together
+   and by the same amount, and the shift is large enough to see.
+
    Nothing is hidden in the narrow state. Both panels carry all of their text at 50/50, and the
-   widening is emphasis alone — which is what makes it safe for it to be a hover effect at all,
+   widening is emphasis alone, which is what makes it safe for it to be a hover effect at all,
    since a reader who never hovers and never focuses misses nothing. */
 .split-continuum {
+  --split-pos: 50%;
   position: relative;
   isolation: isolate;
   color: var(--color-text-on-dark);
+}
+
+@media (min-width: 860px) {
+  .split-continuum:has(.split-side--tenant:hover),
+  .split-continuum:has(.split-side--tenant:focus-within) {
+    --split-pos: 62%;
+  }
+
+  .split-continuum:has(.split-side--owner:hover),
+  .split-continuum:has(.split-side--owner:focus-within) {
+    --split-pos: 38%;
+  }
 }
 
 .split-continuum__bg {
@@ -2744,28 +3480,19 @@ body:has(.motion-loop) .motion-fab__pause {
   overflow: hidden;
 }
 
-.split-continuum__bg span {
-  display: block;
-  width: 50%;
-  transition: width var(--motion-base) var(--motion-ease);
-}
-
+/* `flex: none` on the first half and `flex: 1` on the second: the width below is a hard size, and
+   the other half simply takes what is left. Left to the default `flex-shrink: 1` the two would
+   negotiate, which is the bug this replaced. */
 .split-continuum__bg span:first-child {
+  flex: none;
+  width: var(--split-pos);
   background: var(--color-split-tenant);
+  transition: width var(--motion-slow) var(--motion-ease-smooth);
 }
 
 .split-continuum__bg span:last-child {
+  flex: 1;
   background: var(--color-split-owner);
-}
-
-.split-continuum:has(.split-side--tenant:hover) .split-continuum__bg span:first-child,
-.split-continuum:has(.split-side--tenant:focus-within) .split-continuum__bg span:first-child {
-  width: 58%;
-}
-
-.split-continuum:has(.split-side--owner:hover) .split-continuum__bg span:first-child,
-.split-continuum:has(.split-side--owner:focus-within) .split-continuum__bg span:first-child {
-  width: 42%;
 }
 
 .split-continuum h1,
@@ -2836,13 +3563,23 @@ body:has(.motion-loop) .motion-fab__pause {
 .split-side {
   flex: 1 1 20rem;
   display: flex;
-  transition: flex-grow var(--motion-base) var(--motion-ease);
 }
 
+/* Above the stacking breakpoint the panels track the same `--split-pos` the colour field does, so
+   the text boundary and the colour boundary are the same line and move as one. */
 @media (min-width: 860px) {
-  .split-side:hover,
-  .split-side:focus-within {
-    flex-grow: 1.25;
+  .split-side {
+    flex-wrap: nowrap;
+    transition: width var(--motion-slow) var(--motion-ease-smooth);
+  }
+
+  .split-side--tenant {
+    flex: none;
+    width: var(--split-pos);
+  }
+
+  .split-side--owner {
+    flex: 1;
   }
 }
 
@@ -2884,7 +3621,7 @@ body:has(.motion-loop) .motion-fab__pause {
 .split-side__inner ul {
   margin: 0 0 var(--space-6);
   padding-left: var(--space-5);
-  color: rgba(255, 255, 255, 0.94);
+  color: var(--color-text-on-dark);
 }
 
 .split-side__inner ul:last-child {

@@ -39,21 +39,66 @@
         <li><a href="../about/">About</a></li>
       </ul>
     </nav>
+    <a class="nav-todo" href="../checklist/">
+      <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-list"/></svg>
+      <span class="nav-todo__label">My list</span>
+      <span class="nav-todo__count" data-todo-count aria-hidden="true" hidden>0</span>
+    </a>
   </div>
 </header>
 <!-- /shell:header -->
 
 <main id="main">
 
-  <section class="section page-shell">
-    <div class="page-head">
-      <h1>Improvements</h1>
+  <section class="door-scene" aria-labelledby="improvements-h">
+    <div class="door-scene__stage">
+      <div class="door-hero__scene">
+        <div class="door-hero__frame" aria-hidden="true"></div>
+        <div class="door-hero__opening" aria-hidden="true"><span class="door-hero__light"></span></div>
+
+        <div class="door-hero__door">
+          <!-- A quarter fan lite over four panels, drawn against the MMI Door reference in
+               DESIGN.md 3.4: arched glass in the top quarter with radiating grilles, two panels
+               above the lock rail and two below, and the door's own stiles left as a margin. The
+               glass is filled with the same green as the doorway behind it, so the colour the door
+               opens onto is already showing through the window before it moves. -->
+          <svg class="door-hero__face" viewBox="0 0 100 180" preserveAspectRatio="none" aria-hidden="true">
+            <g class="door-face__glass">
+              <path d="M14 46 L14 25 Q50 4 86 25 L86 46 Z"/>
+            </g>
+            <g class="door-face__grille">
+              <path d="M14 46 L14 25 Q50 4 86 25 L86 46 Z"/>
+              <line x1="50" y1="46" x2="50" y2="8"/>
+              <line x1="50" y1="46" x2="26" y2="13"/>
+              <line x1="50" y1="46" x2="74" y2="13"/>
+              <line x1="50" y1="46" x2="15" y2="26"/>
+              <line x1="50" y1="46" x2="85" y2="26"/>
+            </g>
+            <g class="door-face__panel">
+              <rect x="14" y="78" width="33" height="32" rx="1"/>
+              <rect x="53" y="78" width="33" height="32" rx="1"/>
+              <rect x="14" y="126" width="33" height="44" rx="1"/>
+              <rect x="53" y="126" width="33" height="44" rx="1"/>
+            </g>
+          </svg>
+
+          <h1 class="door-hero__title" id="improvements-h">Improvements</h1>
+          <span class="door-hero__knob" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <p class="door-hero__hint">
+        <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
+        Keep scrolling to open the door
+      </p>
+
+      <div class="door-scene__flood" aria-hidden="true"></div>
     </div>
   </section>
 
-  <section class="theme-brand full-bleed renter-basics">
+  <section class="theme-brand full-bleed renter-basics" id="renter-basics" aria-labelledby="renter-basics-h">
     <div class="section page-shell">
-      <h2>Renter basics</h2>
+      <h2 id="renter-basics-h">Renter basics</h2>
       <div class="carousel carousel--peek">
         <ul class="carousel__track" tabindex="0" aria-label="Renter basics articles">
           <li class="carousel__slide" id="rb-before-you-sign">
@@ -121,7 +166,7 @@
     </div>
   </section>
 
-  <section class="section page-shell">
+  <section class="section page-shell" id="improvements-list">
     <div class="library-toolbar">
       <p class="results-count" id="results-count" aria-live="polite"></p>
       <label class="sort-control">
@@ -152,6 +197,10 @@
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>1 to 2 hours</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="seal-your-windows-with-film" data-todo-title="Seal your windows with film" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
       <li class="card" data-slug="door-sweeps-and-weatherstripping">
@@ -169,6 +218,10 @@
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>1 to 2 hours</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="door-sweeps-and-weatherstripping" data-todo-title="Seal your door with a sweep" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
       <li class="card" data-slug="thermostat-setback">
@@ -186,6 +239,10 @@
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-high"/></svg>High impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="thermostat-setback" data-todo-title="Set your thermostat back" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
       <li class="card" data-slug="dont-block-your-radiator-or-baseboard">
@@ -203,6 +260,10 @@
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="dont-block-your-radiator-or-baseboard" data-todo-title="Keep your radiator or baseboard clear" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
       <li class="card" data-slug="space-heaters-real-cost-and-safety">
@@ -220,6 +281,10 @@
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="space-heaters-real-cost-and-safety" data-todo-title="Use a space heater safely" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
       <li class="card" data-slug="hot-water-showers-and-laundry">
@@ -237,6 +302,10 @@
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="hot-water-showers-and-laundry" data-todo-title="Cut your hot water use" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
       <li class="card" data-slug="phantom-load-and-plug-loads">
@@ -254,6 +323,10 @@
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-low"/></svg>Low impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="phantom-load-and-plug-loads" data-todo-title="Cut phantom load" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
       <li class="card" data-slug="led-lighting-swaps">
@@ -271,6 +344,10 @@
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-low"/></svg>Low impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="led-lighting-swaps" data-todo-title="Swap in LED bulbs" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
       <li class="card" data-slug="thermal-curtains">
@@ -284,10 +361,14 @@
           <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Mostly comes off at move-out</span>
         </div>
         <div class="fact-row">
-          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>$25 to $75</span>
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>$25 to $75</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>1 to 2 hours</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="thermal-curtains" data-todo-title="Hang thermal curtains" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
       <li class="card" data-slug="winter-break-shutdown">
@@ -305,6 +386,31 @@
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
           <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
         </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="winter-break-shutdown" data-todo-title="Shut down before a break" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
+      </li>
+
+      <li class="card" data-slug="low-flow-showerhead">
+        <h2 class="card__title">
+          <svg class="icon card__title-icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-shower"/></svg>
+          <a href="low-flow-showerhead/">Swap in a low-flow showerhead</a>
+        </h2>
+        <p class="card__summary">A showerhead unscrews by hand. Less hot water through it is less oil or electricity burned heating it.</p>
+        <div class="badge-row">
+          <span class="badge badge--permission-ask"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-ask"/></svg>Ask your landlord first</span>
+          <span class="badge badge--reversible"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-reversible"/></svg>Comes off at move-out</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact"><span class="price-dollars" aria-hidden="true"><svg class="icon"><use href="../assets/icons/sprite.svg#icon-cost"/></svg></span>Under $25</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
+          <span class="fact"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
+        </div>
+        <button type="button" class="btn btn--secondary todo-add todo-add--card" data-todo-slug="low-flow-showerhead" data-todo-title="Swap in a low-flow showerhead" aria-pressed="false">
+          <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
+          <span data-todo-label>Add to my list</span>
+        </button>
       </li>
 
     </ul>
@@ -402,6 +508,7 @@
 <script type="module" src="../assets/js/house-return.js"></script>
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
+<script type="module" src="../assets/js/todo.js"></script>
 <!-- /shell:footer -->
 
 <script type="module" src="../assets/js/carousel.js"></script>

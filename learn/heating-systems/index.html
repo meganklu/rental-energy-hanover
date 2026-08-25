@@ -39,6 +39,11 @@
         <li><a href="../../about/">About</a></li>
       </ul>
     </nav>
+    <a class="nav-todo" href="../../checklist/">
+      <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-list"/></svg>
+      <span class="nav-todo__label">My list</span>
+      <span class="nav-todo__count" data-todo-count aria-hidden="true" hidden>0</span>
+    </a>
   </div>
 </header>
 <!-- /shell:header -->
@@ -46,7 +51,7 @@
 <main id="main">
 
   <section class="section page-shell">
-    <nav aria-label="Breadcrumb" class="text-small"><a href="../../improvements/">Improvements</a> / Understanding your heating system</nav>
+    <nav aria-label="Breadcrumb" class="text-small"><a href="../../improvements/">Improvements</a> / <a href="../../improvements/#renter-basics">Renter basics</a> / Understanding your heating system</nav>
     <a class="btn btn--secondary house-return-link" href="../../index.html#house">
       <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-house"/></svg>
       Back to the house
@@ -107,7 +112,7 @@
         <li class="id-card">
           <h3 class="id-card__head">
             <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-vent"/></svg>
-            Forced air
+            <span class="term" tabindex="0" aria-describedby="term-forced-air">Forced air<span class="term__tooltip" id="term-forced-air">Three ways heat gets delivered to a room, besides baseboard.<a class="term__more" href="../../glossary/#forced-air">Read the full entry</a></span></span>
           </h3>
           <p>Rectangular grilles in the floor, low on a wall, or in the ceiling. You hear a fan start and feel air blowing.</p>
           <p class="id-card__tell">A furnace heats air and a fan pushes it through ducts. Somewhere there is a larger grille that pulls air back to the furnace. This is the only kind where duct leaks matter, and they can be a large share of what you pay for.</p>
@@ -372,35 +377,37 @@
         </p>
       </div>
 
-      <div class="story-bar full-bleed">
-        <div class="story-bar__inner">
-          <h2 class="story-bar__heading">Why it matters</h2>
-          <div class="story-bar__body">
-            <p>
-              Your heat type decides which half of this site is about you. It sets whether the bill
-              arrives in your name, whether you can reach a thermostat, and whether the fuel price
-              you should be watching is oil or electricity.
-            </p>
-            <p>
-              Tell the site which one you have, and it stops showing you the advice that cannot
-              apply.
-            </p>
+      <div class="story-stack">
+        <div class="story-bar full-bleed">
+          <div class="story-bar__inner">
+            <h2 class="story-bar__heading">Why it matters</h2>
+            <div class="story-bar__body">
+              <p>
+                Your heat type decides which half of this site is about you. It sets whether the bill
+                arrives in your name, whether you can reach a thermostat, and whether the fuel price
+                you should be watching is oil or electricity.
+              </p>
+              <p>
+                Tell the site which one you have, and it stops showing you the advice that cannot
+                apply.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="story-bar full-bleed story-bar--reverse">
-        <div class="story-bar__inner">
-          <h2 class="story-bar__heading">Who pays</h2>
-          <div class="story-bar__body">
-            <p>
-              Knowing what the system is only gets you halfway. The other half is whose name the
-              bill is in, and that is in your lease rather than on the wall.
-            </p>
-            <p>
-              If heat is included in your rent, sealing a draft mostly saves your landlord money.
-              It is still worth asking for, and it will not lower what you pay.
-            </p>
+        <div class="story-bar full-bleed story-bar--reverse">
+          <div class="story-bar__inner">
+            <h2 class="story-bar__heading">Who pays</h2>
+            <div class="story-bar__body">
+              <p>
+                Knowing what the system is only gets you halfway. The other half is whose name the
+                bill is in, and that is in your lease rather than on the wall.
+              </p>
+              <p>
+                If heat is included in your rent, sealing a draft mostly saves your landlord money.
+                It is still worth asking for, and it will not lower what you pay.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -485,6 +492,7 @@
 <script type="module" src="../../assets/js/house-return.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
+<script type="module" src="../../assets/js/todo.js"></script>
 <!-- /shell:footer -->
 
 <script type="application/json" class="content-meta">

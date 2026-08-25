@@ -39,13 +39,18 @@
         <li><a href="../../about/">About</a></li>
       </ul>
     </nav>
+    <a class="nav-todo" href="../../checklist/">
+      <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-list"/></svg>
+      <span class="nav-todo__label">My list</span>
+      <span class="nav-todo__count" data-todo-count aria-hidden="true" hidden>0</span>
+    </a>
   </div>
 </header>
 <!-- /shell:header -->
 
 <main id="main">
   <section class="section page-shell">
-    <nav aria-label="Breadcrumb" class="text-small"><a href="../../improvements/">Improvements</a> / Who pays for what</nav>
+    <nav aria-label="Breadcrumb" class="text-small"><a href="../../improvements/">Improvements</a> / <a href="../../improvements/#renter-basics">Renter basics</a> / Who pays for what</nav>
     <a class="btn btn--secondary house-return-link" href="../../index.html#house">
       <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-house"/></svg>
       Back to the house
@@ -80,25 +85,36 @@
       </div>
 
       <div class="improvement-body">
-        <h2>Why this is the first question</h2>
-        <p>
-          Almost everything on this site changes depending on the answer. If you pay for heat, a
-          setback saves you money. If heat is included in the rent, the same setback saves your
-          landlord money and changes nothing on your bill. Advice that does not know which one you
-          are is advice you cannot act on.
-        </p>
-        <p>
-          It is also the number most likely to surprise a first-time renter. Rent is one figure you
-          agreed to. Heat in a cold winter is a second figure nobody quoted you.
-        </p>
+      </div>
 
+      <div class="story-stack">
+        <div class="story-bar full-bleed">
+          <div class="story-bar__inner">
+            <h2 class="story-bar__heading">Why this is the first question</h2>
+            <div class="story-bar__body">
+              <p>
+                Almost everything on this site changes depending on the answer. If you pay for heat, a setback
+                saves you money. If heat is included in the rent, the same setback saves your landlord money and
+                changes nothing on your bill. Advice that does not know which one you are is advice you cannot
+                act on.
+              </p>
+              <p>
+                It is also the number most likely to surprise a first-time renter. Rent is one figure you agreed
+                to. Heat in a cold winter is a second figure nobody quoted you.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="improvement-body">
         <h2>What to look for</h2>
         <p>
           Leases use different words for the same thing. Read the whole document, then search it
           for these:
         </p>
         <ul>
-          <li><strong>Utilities.</strong> Usually the section heading. Look for a list of which
+          <li><strong><span class="term" tabindex="0" aria-describedby="term-utilities-included">Utilities<span class="term__tooltip" id="term-utilities-included">Heat, electricity, or both are already covered by your monthly rent, with no separate bill in your name for that utility.<a class="term__more" href="../../glossary/#utilities-included">Read the full entry</a></span></span>.</strong> Usually the section heading. Look for a list of which
             ones are the tenant's and which are the landlord's.</li>
           <li><strong>Heat, heating, fuel, oil, propane, gas.</strong> Fuel oil and propane are
             delivered and billed differently from electricity, so they are often named separately.</li>
@@ -125,18 +141,29 @@
           in writing.
         </p>
 
-        <h2>If the lease does not say</h2>
-        <p>
-          A lease that is silent on a bill is a question, not an answer. Ask before you sign, and
-          ask for the answer to be added to the document rather than agreed verbally. Once you have
-          signed, the leverage is gone.
-        </p>
-        <p>
-          Whatever the lease says about bills, New Hampshire sets a minimum standard for heat that a
-          lease cannot sign away. <a href="../../your-rights/">Your rights</a> has that, and has the
-          organizations to call.
-        </p>
+      </div>
 
+      <div class="story-stack">
+        <div class="story-bar full-bleed story-bar--reverse">
+          <div class="story-bar__inner">
+            <h2 class="story-bar__heading">If the lease does not say</h2>
+            <div class="story-bar__body">
+              <p>
+                A lease that is silent on a bill is a question rather than an answer. Ask before you sign, and ask
+                for the answer to be added to the document rather than agreed verbally. Once you have signed, the
+                leverage is gone.
+              </p>
+              <p>
+                Whatever the lease says about bills, New Hampshire sets a minimum standard for heat that a lease
+                cannot sign away. <a href="../../your-rights/">Your rights</a> has that, and has the organizations
+                to call.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="improvement-body">
         <h2>What to do next</h2>
         <ul>
           <li>Going to a viewing? <a href="../../before-you-sign/">What to check before you sign</a> is the walkthrough version.</li>
@@ -222,6 +249,7 @@
 <script type="module" src="../../assets/js/house-return.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
+<script type="module" src="../../assets/js/todo.js"></script>
 <!-- /shell:footer -->
 
 <script type="application/json" class="content-meta">

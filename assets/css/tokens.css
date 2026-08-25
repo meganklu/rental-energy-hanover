@@ -36,12 +36,27 @@
   --color-border: #C9D4C6;
   --color-border-strong: #6F8272;
 
-  /* The About page's split-incentive panels only. Added 2026-08-24, see DESIGN.md §3.6. Two sides
-     of one lease have to read as two distinct places and every green on this site is one family,
-     so the owner's side borrows a deep slate instead. Both carry --color-text-on-dark: 14.5:1 on
-     the tenant side, 9.3:1 on the owner side. */
-  --color-split-tenant: #06301F;
-  --color-split-owner: #1B4B6B;
+  /* The About page's split-incentive panels only. Added 2026-08-24, revised the same day, see
+     DESIGN.md §3.7. The owner's side was a deep slate blue on the reasoning that two sides of one
+     lease should read as two distinct places. It read as a different website. Both sides are the
+     site's own greens now, one very dark and one mid, which is far enough apart to separate two
+     large adjacent fields and still plainly the same palette.
+
+     Both sides have to carry white text, which is what rules out pairing the dark green with the
+     light --color-surface-brand: the page title, the lede, the float card and the three approach
+     cards all cross the seam, and one element cannot take two text colours depending on which half
+     it happens to sit over. So both halves are dark, and the owner's is the lighter of the two.
+     --color-accent was the first try and separated the fields by only 1.8:1, which read as a
+     rendering artifact rather than a boundary; this is 2.3:1 between the halves. Contrast with
+     white: 14.5:1 on the tenant side, 6.3:1 on the owner side. */
+  --color-split-tenant: var(--color-surface-dark);
+  --color-split-owner: #0A6E4B;
+
+  /* The /improvements door only. Added 2026-08-25, see DESIGN.md §3.4. The slab and its panels are
+     the site's greens; these two are the parts of a real front door that are not painted with it.
+     Neither ever carries text. */
+  --color-door-glass: #CBE2EF;
+  --color-door-handle: #7A5230;
 
   /* Hero welcome mat only. Added 2026-08-19, see DESIGN.md §4. */
   --color-mat: #D9BE8A;
@@ -98,6 +113,11 @@
   --motion-flip: 260ms;
   --motion-room: 240ms;
   --motion-loop: 5s;
+  /* A longer, gentler move for something large and continuous, added 2026-08-25. The About page's
+     colour field is most of the screen, and --motion-base's 200ms with a sharp-out curve made a
+     half-page of colour snap rather than slide. */
+  --motion-slow: 450ms;
+  --motion-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);
 
   /* Focus ring: one token, everywhere. Never removed, including on mouse click. */

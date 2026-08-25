@@ -61,7 +61,16 @@ Effort: `Low` (under 1 hr) · `Med` (an afternoon) · `High` (multi-day or needs
 | 19 | Where to get this stuff — fare-free bus to West Lebanon, or order online | Pre-winter | Free | Low | n/a | n/a | Enabler | Must |
 | 20 | What kind of heat do I have — radiator, baseboard, forced air, heat pump | Move-in | Free | Low | n/a | n/a | Enabler | Must |
 
-**Status, 2026-08-24: all twenty are built.** Ten are improvements under `/improvements`, six are
+**Topic 21, added 2026-08-24: swap in a low-flow showerhead.** The first topic added beyond the
+original inventory, and it came from a gap in the doll house rather than from the list: the bathroom
+was the one room with nothing in it. It earns its place on the same test as everything else here. It
+is reversible, since the head unscrews by hand and the original goes back in a bag; it is cheap; and
+the saving is a heating saving rather than a water one, because every gallon that does not pass
+through the head is a gallon nobody had to heat. Sourced to S33 (EPA WaterSense). The savings figures
+on that page are for an average family, and the page says so rather than implying a student household
+would see them.
+
+**Status, 2026-08-24: all twenty are built.** Eleven are improvements under `/improvements` counting topic 21 above, six are
 explainers under `/learn`, and four are standalone pages (`/programs`, `/your-rights`,
 `/before-you-sign`, `/where-to-get-it`). Topics 6, 9 and 16 became explainers rather than
 improvements: all three carry "n/a" for permission or reversibility in the table above, and the
@@ -185,6 +194,13 @@ loses credibility on first contact.
 | Type | Purpose | Distinguishing fields |
 |---|---|---|
 | `Explainer` | Concept pages — how a bill works, what setback is | `question` (the plain-language question it answers), `misconception` (optional) |
+
+**Explainers use the improvement page's layout, settled 2026-08-25.** Same breadcrumb, same intro
+(title, one-sentence summary, photograph or diagram beside it), same body columns, same story bars,
+same sources block. What they do not carry is the fact row, because cost, time and impact are the
+improvement model's fields and an explainer has no honest value for any of them. Inventing a reading
+time to fill the row would have been a number with no source, which is the one thing this project
+does not do. The "Renter basics" badge is what marks the difference instead.
 | `Program` | NHSaves, income-eligible weatherization, assistance | `eligibility`, `whoRuns`, `state`, `renterEligible`, `landlordApprovalNeeded`, `applyUrl`, `lastReviewed` |
 | `ChecklistItem` | Steps in a generated checklist | `phase`, `improvementRef`, `roommateVisible` |
 | `GlossaryTerm` | See [glossary.md](glossary.md) | `term`, `definition`, `whyYouCare` |

@@ -39,6 +39,11 @@
         <li><a href="../about/">About</a></li>
       </ul>
     </nav>
+    <a class="nav-todo" href="../checklist/">
+      <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-list"/></svg>
+      <span class="nav-todo__label">My list</span>
+      <span class="nav-todo__count" data-todo-count aria-hidden="true" hidden>0</span>
+    </a>
   </div>
 </header>
 <!-- /shell:header -->
@@ -64,14 +69,14 @@
       <div class="info-panel__text">
         <h2>Why so many of these need your landlord</h2>
         <p>
-          Weatherizing an apartment means changing the building, and the building is not yours.
+          <span class="term" tabindex="0" aria-describedby="term-weatherization">Weatherizing<span class="term__tooltip" id="term-weatherization">Keeping indoor air from escaping and outdoor air from getting in, which is how you cut what heating costs.<a class="term__more" href="../glossary/#weatherization">Read the full entry</a></span></span> an apartment means changing the building, and the building is not yours.
           That is the whole reason a program asks for an owner's signature: it is a permanent
           improvement to someone else's property.
         </p>
         <p>
           It is also why the improvement often does not happen. The landlord pays for insulation
           and you get the lower heating bill, so neither of you has a reason to move first. That
-          gap has a name, the split incentive, and <a href="../about/">About</a> lays it out. The
+          gap has a name, the <span class="term" tabindex="0" aria-describedby="term-split-incentive">split incentive<span class="term__tooltip" id="term-split-incentive">What happens when the person who would pay for an upgrade, your landlord, is not the person who benefits from the lower bill it produces, you.<a class="term__more" href="../glossary/#split-incentive">Read the full entry</a></span></span>, and <a href="../about/">About</a> lays it out. The
           practical answer is usually to bring your landlord a
           program that pays for the work rather than a request that they pay for it.
         </p>
@@ -80,8 +85,11 @@
 
     <div class="content-column">
       <h2>Programs to look at</h2>
-      <ul class="program-list">
-        <li class="program">
+    </div>
+
+    <div class="carousel carousel--peek carousel--wide">
+        <ul class="program-list carousel__track" tabindex="0" aria-label="Programs to look at">
+        <li class="program carousel__slide" id="prog-income-eligible-energy-assistance-pr">
           <div class="badge-row">
             <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>Renters can use this</span>
             <span class="badge badge--permission-required"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-key"/></svg>Your landlord has to approve it</span>
@@ -103,7 +111,7 @@
           <p><a href="https://nhsaves.com/residential/income-eligible-energy-assistance-program/">Income-Eligible Energy Assistance Program</a></p>
         </li>
 
-        <li class="program">
+        <li class="program carousel__slide" id="prog-fuel-and-electric-assistance-through">
           <div class="badge-row">
             <span class="badge badge--permission-ask"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-ask"/></svg>Check the current income limits</span>
           </div>
@@ -124,7 +132,7 @@
           <p><a href="https://www.energy.nh.gov/consumers/help-energy-and-utility-bills/assistance-programs-eligibility">Assistance program eligibility</a></p>
         </li>
 
-        <li class="program">
+        <li class="program carousel__slide" id="prog-home-energy-performance-through-nhsa">
           <div class="badge-row">
             <span class="badge badge--permission-required"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-key"/></svg>Your landlord applies, not you</span>
           </div>
@@ -144,7 +152,7 @@
           <p><a href="https://nhsaves.com/residential/weatherization/">Energy audits and weatherization</a></p>
         </li>
 
-        <li class="program">
+        <li class="program carousel__slide" id="prog-window-inserts-through-sustainable-h">
           <div class="badge-row">
             <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>Renters can use this</span>
           </div>
@@ -179,7 +187,7 @@
           <p><a href="https://sustainablehanovernh.org/windows">Window Inserts</a></p>
         </li>
 
-        <li class="program">
+        <li class="program carousel__slide" id="prog-the-library-of-things-at-howe-librar">
           <div class="badge-row">
             <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>Renters can use this</span>
           </div>
@@ -208,7 +216,7 @@
           <p><a href="https://www.thehowe.org/library-of-things">Library of Things</a></p>
         </li>
 
-        <li class="program">
+        <li class="program carousel__slide" id="prog-hanover-community-power">
           <div class="badge-row">
             <span class="badge badge--permission-none"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-check"/></svg>Renters can use this</span>
             <span class="badge badge--permission-ask"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-ask"/></svg>Only if the electric bill is in your name</span>
@@ -235,7 +243,7 @@
           <p><a href="https://sustainablehanovernh.org/communitypower">Hanover Community Power</a></p>
         </li>
 
-        <li class="program">
+        <li class="program carousel__slide" id="prog-weatherize-through-sustainable-hanov">
           <div class="badge-row">
             <span class="badge badge--permission-required"><svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-key"/></svg>Your landlord applies, not you</span>
           </div>
@@ -256,8 +264,21 @@
           <p><a href="https://sustainablehanovernh.org/weatherize">Weatherize</a></p>
         </li>
 
-      </ul>
+        </ul>
+        <div class="carousel__controls">
+          <a class="carousel__nav" href="#prog-income-eligible-energy-assistance-pr" data-carousel-prev>
+            <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-previous"/></svg>
+            Previous
+          </a>
+          <p class="carousel__count" data-carousel-count aria-live="polite">7 programs</p>
+          <a class="carousel__nav" href="#prog-weatherize-through-sustainable-hanov" data-carousel-next>
+            Next
+            <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-next"/></svg>
+          </a>
+      </div>
+    </div>
 
+    <div class="content-column">
       <h2>Programs that are not for you</h2>
       <p>
         These come up in a search and cost an afternoon to rule out. Ruling them out here is
@@ -389,6 +410,9 @@
 <script type="module" src="../assets/js/house-return.js"></script>
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
+<script type="module" src="../assets/js/todo.js"></script>
 <!-- /shell:footer -->
+
+<script type="module" src="../assets/js/carousel.js"></script>
 </body>
 </html>

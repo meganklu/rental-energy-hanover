@@ -39,13 +39,18 @@
         <li><a href="../../about/">About</a></li>
       </ul>
     </nav>
+    <a class="nav-todo" href="../../checklist/">
+      <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-list"/></svg>
+      <span class="nav-todo__label">My list</span>
+      <span class="nav-todo__count" data-todo-count aria-hidden="true" hidden>0</span>
+    </a>
   </div>
 </header>
 <!-- /shell:header -->
 
 <main id="main">
   <section class="section page-shell">
-    <nav aria-label="Breadcrumb" class="text-small"><a href="../../improvements/">Improvements</a> / Find your drafts</nav>
+    <nav aria-label="Breadcrumb" class="text-small"><a href="../../improvements/">Improvements</a> / <a href="../../improvements/#renter-basics">Renter basics</a> / Find your drafts</nav>
     <a class="btn btn--secondary house-return-link" href="../../index.html#house">
       <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-house"/></svg>
       Back to the house
@@ -139,6 +144,30 @@
           <figcaption class="photo-credit">Photo by <a href="https://unsplash.com/photos/6hmjdWkylj8">Clay LeConey</a> on Unsplash</figcaption>
         </figure>
 
+      </div>
+
+      <div class="story-stack">
+        <div class="story-bar full-bleed">
+          <div class="story-bar__inner">
+            <h2 class="story-bar__heading">Borrow a thermal camera</h2>
+            <div class="story-bar__body">
+              <p>
+                Everything above finds a draft you can feel. A thermal camera finds the ones you cannot, because
+                it photographs surface temperature rather than air movement: a cold stripe along a wall, a dark
+                square where the attic hatch is, the outline of a stud bay with nothing in it.
+              </p>
+              <p>
+                Howe Library lends one, free, through its Library of Things, along with an electricity usage
+                monitor. Loan periods for those items are not listed on their page, so ask at the desk. It turns
+                this page from a walkthrough into a measurement, and a photograph is a far better thing to attach
+                to <a href="../ask-your-landlord/">an email to your landlord</a> than a description of a draught.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="improvement-body">
         <h2>What to do next</h2>
         <p>
           Windows and the exterior door are the two most common places students find a draft in a
@@ -155,8 +184,9 @@
         <ul>
           <li><a href="https://www.energystar.gov/saveathome?s=mega">ENERGY STAR — Save at Home</a></li>
           <li><a href="https://www.energy.gov/sites/prod/files/2014/01/f6/homeHeating.pdf">U.S. Department of Energy — Energy Saver 101: Home Heating</a></li>
+          <li><a href="https://www.thehowe.org/library-of-things">Howe Library — Library of Things</a></li>
         </ul>
-        <p class="last-reviewed">Last reviewed 2026-08-19.</p>
+        <p class="last-reviewed">Last reviewed 2026-08-25.</p>
       </div>
     </article>
   </section>
@@ -226,6 +256,7 @@
 <script type="module" src="../../assets/js/house-return.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
+<script type="module" src="../../assets/js/todo.js"></script>
 <!-- /shell:footer -->
 
 <script type="module" src="../../assets/js/diagram.js"></script>
@@ -242,8 +273,8 @@
   "appliesToHeat": ["any"],
   "appliesToPayer": "tenant",
   "phase": "pre-winter",
-  "sources": ["S10", "S22"],
-  "lastReviewed": "2026-08-19"
+  "sources": ["S10", "S22", "S29"],
+  "lastReviewed": "2026-08-25"
 }
 </script>
 </body>

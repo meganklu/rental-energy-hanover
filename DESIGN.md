@@ -78,7 +78,7 @@ Sustainable Hanover page cannot do.
 
 ```
 /                                Hero, then the doll house
-│   /#house                      The doll house. Front-open view, six rooms, sixteen hotspots.
+│   /#house                      The doll house. Front-open view, six rooms, seventeen hotspots.
 │                                The scroll arrow's target
 │   /#kitchen /#basement …       A room, enlarged. Real fragments, so a room is linkable and
 │                                works with JavaScript off
@@ -99,7 +99,8 @@ Sustainable Hanover page cannot do.
 │   │                             Added 2026-08-24. Topic #9
 │   └── /learn/move-out-restore  Enabler. What to take down and photograph. Added 2026-08-24.
 │                                 Topic #16
-├── /checklist                   v2. Generated checklist for the student's phase and situation
+├── /checklist                   "Your list". F6, shipped 2026-08-25 (§3.8). What the student
+│                                 added, sorted into buy / ask / do. Prints, downloads, shares
 ├── /before-you-sign             Hunting and signing. Viewing checklist, what to ask. Reached
 │                                 from Renter basics, decided 2026-08-24 — it had no inbound
 │                                 link at all until then
@@ -124,6 +125,13 @@ West Lebanon), rather than a separate trailing paragraph lower on the page — s
 belongs with the materials list a student is already reading, not after the steps. This is a short
 inline pointer, not a duplicate of the shared page: `/where-to-get-it` remains the fuller reference
 once it is built, per §8 of content-strategy.md.
+
+**Breadcrumbs name the section, added 2026-08-25.** An article's breadcrumb used to read
+"Improvements / Set your thermostat back" and link back to the top of `/improvements`, which is now
+a shut door two screens above where the reader left. Each breadcrumb links to the part of the page
+the reader actually came from: an improvement returns to `#improvements-list`, and an explainer
+reads "Improvements / Renter basics / …" and returns to `#renter-basics`. Both anchors sit below the
+pinned door scene, so the jump lands past it rather than in the middle of it.
 
 **How those three pages are reached, decided 2026-08-24.** An audit of inbound links found
 `/before-you-sign` and `/glossary` with no inbound link from anywhere on the site, and
@@ -380,6 +388,36 @@ jumps instantly when motion is reduced. An arrow with no label is not a control 
 
 **What it must not do.** It must not become the reason a student never finds the house. The 85svh
 cap, the arrow, and the peeking top edge of the next section are all there for that.
+
+**The stride, revised 2026-08-24.** The shoes read as sliding rather than stepping. The cause was
+that the lift was carried entirely by `scale`, running 1 to 1.06, and 6% is not a step. Seen from
+directly overhead there are only two axes available to say a foot has left the ground: it is nearer,
+so it is larger, and its shadow has further to fall, so the shadow spreads and fades. Both now run
+across three stages, 0.94 planted to 1.16 at the top of the swing, with a keyframe either side of
+the peak so the foot rises and falls instead of popping between states. The resting frame is held at
+`scale(1)` with the planted shadow for both shoes, so the pair still sits level and side by side
+before any scroll happens; the follow shoe catches up a quarter cycle in the first few percent of
+scroll, which is not visible at that speed.
+
+**The hero is held while the walk plays, added 2026-08-25.** The walk ran over the first 70vh of
+scroll, which is the distance a reader covers getting past the hero, so almost nobody saw more than
+a step of it. The hero now sits inside a scene 220vh tall and sticks to the top of it, which turns
+the scroll from a way past the hero into the thing that drives it: the view holds, the shoes cross
+the mat, and the hero lets go at the end. Gated the same three ways as everything else here, and
+outside the gate the scene is one screen tall and nothing sticks, because there is nothing to scrub
+through.
+
+**And the walk turned upward.** It crossed the mat left to right, which is the one direction nobody
+walks over a doormat. It goes up the mat now, toward the door the mat is lying in front of. The shoe
+was already drawn toe-up and turned a quarter clockwise to point right, so the turn simply came off;
+the pair changed from a column to a row, because from directly overhead a pair walking away from you
+sits side by side rather than one behind the other; and the tilt went, because a pair walking
+straight away has no reason to lean. The stride keyframes are the same walk with the signs mirrored,
+since forward is now negative Y.
+
+The pair does cross the wordmark on the way up. That is unavoidable at this mat's proportions, where
+any vertical path crosses the lettering, and it is the right trade: the walk is the thing the reader
+is being held to watch.
 
 ### 3.2 The doll house
 
@@ -836,6 +874,13 @@ be worse than no effect at all. The controls also stop following their own `href
 track directly, so pressing Next moves the row without moving the document or leaving a fragment in
 the address bar. The `href` stays on the element as the no-JS path.
 
+**The carousel is reused on `/programs`, 2026-08-25.** Seven program entries were seven tall cards
+to scroll past. The peek treatment suits a long entry better than a short one: you read the one in
+front of you and the next is visibly waiting. It takes a wider slide than the Renter basics row,
+since a program entry is a heading, two paragraphs and a definition list, and it sits outside the
+reading column rather than inside it. At 40rem the column was narrower than the slide, which sent
+the track's gutter calculation negative and clipped the cards.
+
 **Seven cards, 2026-08-24.** Three new explainers (§3.6's topic list) plus `/before-you-sign`, which
 had no inbound link anywhere on the site until it joined this row. Ordered along the renter's own
 timeline: before you sign, who pays for what, what heat you have, reading the bill, finding drafts,
@@ -860,6 +905,50 @@ none !important; }` reset, and the one-off `.info-bar` rule is removed as redund
 `!important` is deliberate here — it enforces what the `hidden` attribute already promises
 semantically, for every element on the site, rather than patching each component rule that sets
 `display` one at a time as each one happens to get caught by it.
+
+**The reader is held at the door, added 2026-08-25.** The door swung as the reader scrolled past it,
+which meant it was half-open by the time it left the screen. The scene is 300vh now with the stage
+sticky inside it, so the view holds while the scroll drives the door: the first two thirds swing it
+open, and the last third floods the green out from the doorway until it fills the screen and the
+reader arrives in the Renter basics band that green belongs to.
+
+**The flood's first keyframe is `scale(0)`, not `scale(1)`.** `animation-fill-mode: both` back-fills
+the `from` keyframe for the entire scroll before the range opens, so a flood sized to the doorway at
+`from` rendered as a full-size green rectangle sitting over the shut door from the moment the page
+loaded. This is the kind of thing that only shows up in a screenshot.
+
+**The door is drawn against a real one, 2026-08-25.** An MMI Door quarter fan lite four panel:
+arched glass in the top quarter with grilles radiating from the sill, two panels above the lock rail
+and two below, the door's own stiles left as a margin, and a brickmould casing around the frame. The
+greens are this site's and the white trim and grilles are the reference's. The glass is filled with
+the same green as the doorway behind it, so the colour the door opens onto is already showing
+through the window before anything moves.
+
+**The title is signage.** A plate screwed across the lock rail, with a raised edge and a fixing at
+each end, rather than lettering floating on the door face. It is still the page's `h1` and still the
+first heading a screen reader reaches; only its presentation is a plaque.
+
+**The page opens on a door, added 2026-08-24.** `/improvements` opened on a centred page title on a
+white band, which said nothing the nav had not already said one line above it. It opens on a front
+door now, with the title on the door, and the door swings on its hinge as the reader scrolls until
+the Renter basics band behind it is what they are looking at. The metaphor is the site's own: the
+home page is a doll house you look into, and this is the door you go in through.
+
+The doorway behind the door is filled with `--color-surface-brand`, the same green as the Renter
+basics band below it, so the light coming through the opening is the colour of the thing being
+revealed rather than an arbitrary panel. Scroll-progress driven rather than timed, the same
+mechanism as the hero shoes (§3.1): scroll position is the animation's progress, so it reverses
+when the reader scrolls back, stops when they stop, and needs no Pause button because nothing moves
+on its own.
+
+Gated the three ways the site's other scroll motion is (§7): `@supports`, because scroll-driven
+animation is an enhancement; `prefers-reduced-motion` and the reduce-motion switch; and a 600px
+floor, since a door swinging in a phone-width column is a door filling the screen. Under any of
+those it stays shut and square on, with the title flat and fully legible, which is the state that
+has to work anyway. The swing stops at 72 degrees rather than going flat to 90: past about 75 the
+door is edge-on, the title is a line, and the reader loses what they were reading. The title sits in
+the door's upper half rather than centred, which is where lettering on a real door goes and which
+keeps it clear of the knob at the middle right.
 
 ### 3.5 The heating systems explainer, added 2026-08-21
 
@@ -947,6 +1036,23 @@ reduce-motion switch and the carousel already work, with no script involved. Bel
 stack and each takes its own colour, since a vertical split would otherwise run down the middle of
 each stacked panel.
 
+**One variable drives both halves, fixed 2026-08-24.** The first build set the two background halves
+to 58% and 50% and let flex resolve it. Flex items shrink to fit by default, so a pair whose bases
+sum to 108% both shrink, and the seam moved about 3.7% instead of 8%: small enough that the effect
+read as broken rather than as subtle. The panels moved separately again, on their own `flex-grow`,
+so the colour boundary and the text boundary travelled different distances. Both now read
+`--split-pos` off the container, at 50% at rest and 62% or 38% on hover, so the seam and the text
+are the same line and move as one.
+
+**The colour, decided the same day.** The owner's side opened as a deep slate blue on the reasoning
+that two sides of one lease should read as two distinct places. It read as a different website. The
+constraint that decides this is that the page title, the lede, the float card and the three approach
+cards all cross the seam, and one element cannot take two text colours depending on which half it
+sits over. Both halves therefore have to carry white text, which rules out pairing the dark green
+with the light `--color-surface-brand`. It is the site's dark green against its mid green, 2.3:1
+between the fields, which is enough to separate two large adjacent areas without either of them
+leaving the palette.
+
 **The opening block is laid across the seam on purpose.** Title on the tenant's side, the sentence
 that names the problem on the owner's. Centring it instead put the smaller type across the join,
 where one text colour has to work on two fields at once and the eyebrow stopped being readable on
@@ -959,6 +1065,51 @@ which are existing work by named photographers rather than generated images. It 
 prompt record in [docs/ai-use.md](docs/ai-use.md) and the standing rules in
 [AGENTS.md](AGENTS.md). Disclosure belongs where a reader deciding whether to trust the page will
 look, which is the page that already says who made it and how it is sourced.
+
+### 3.8 My list, added 2026-08-25
+
+F6 in [docs/features.md](docs/features.md), cut from v1 as "the largest cut and the first thing back
+in v2".
+
+**It is a shopping cart, on purpose.** Not because the site sells anything, but because that is the
+one multi-step selection interaction every student already knows without being taught. The pattern
+brings its own rules and they are the reason it works:
+
+- **The control lives on the item**, not in a separate mode. An add button sits under the facts on
+  each improvement page and on each library card.
+- **Pressing it does not navigate away.** Adding a second improvement should cost one click from
+  where you already are. A cart that jumps you to the checkout after every item is the thing
+  everyone complains about.
+- **The count is in the header and never moves.** It is a control rather than a section, so it sits
+  outside the nav list and is shaped like a button.
+- **The state is on the button.** `aria-pressed` plus a label that changes, because a pressed state
+  nobody can see is not a state. One page-level live region announces the change, since a card
+  button pressed with a mouse otherwise gives nothing back and "did that work" is the question a
+  cart has to answer instantly.
+- **Only one control is destructive**, and it is the only one that asks before acting.
+
+**The list sorts by what the reader has to do**, not by what they picked. Buy this, ask your
+landlord, do this. The buy list is the materials off every chosen improvement, each saying which one
+it is for, so a trip to West Lebanon is one list rather than a page of prose. The ask list is only
+the improvements needing permission, pointing at the email guide. The do list is a real checkbox
+each, at 24px, because this is the one place on the site a reader ticks something off.
+
+**Every improvement is in the page as markup**, and the script hides what is not on the list. Same
+rule as the library (§3.4): the page carries its content and the script filters. With the script off
+`/checklist` is the complete list of everything the site covers, which is still a usable thing to
+print and take to the shop.
+
+**Sharing is slugs in a query string.** No done flags, because what a roommate needs is which
+improvements and not how far along you are, and the shorter the link the better it survives being
+pasted into a message. Nothing personal is in it because there is nothing personal to put in it.
+
+**A shared list is shown but not saved.** Opening a roommate's link is not a request to have your
+own list replaced, so the page renders theirs, says so, and offers a Save button as the consent.
+Saving merges rather than overwrites.
+
+**Copy falls back twice.** Clipboard access can be refused and is absent over plain HTTP, so it
+tries the share sheet next and a prompt after that, rather than leaving a button that looks like it
+worked.
 
 ## 4. Visual system
 
@@ -999,8 +1150,9 @@ interactive work.
 | `--color-mat` | `#D9BE8A` | Added 2026-08-19. The hero's welcome-mat background. Used nowhere else | ☑ 9.3:1 with `--color-text` |
 | `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
 | `--color-hero-ground` | `#94A0A7` | Added 2026-08-19. The hero section's own background, behind the mat. A bluestone grey, used nowhere else | ☑ 6.3:1 with `--color-text`, 7.9:1 with `--color-mat-border` |
+| `--motion-slow` / `--motion-ease-smooth` | `450ms` / `cubic-bezier(0.4, 0, 0.2, 1)` | Added 2026-08-25. For something large and continuous, where `--motion-base`'s 200ms and sharp-out curve make a half-page of colour snap rather than slide. The About page's split field is the only user | n/a |
 | `--color-split-tenant` | `#06301F` | Added 2026-08-24. The tenant's half of the About page's split field (§3.7). The same value as `--color-surface-dark`, named separately because it is one of a pair | ☑ 14.5:1 with white |
-| `--color-split-owner` | `#1B4B6B` | Added 2026-08-24. The owner's half of the same field. Deliberately not another green: two sides of one lease have to read as two places, and every other colour here is one family | ☑ 9.3:1 with white |
+| `--color-split-owner` | `#0A6E4B` | Added 2026-08-24 as a deep slate blue, changed the same day. Both halves have to carry white text, since the title, the lede, the float card and the approach cards all cross the seam and one element cannot take two text colours, so pairing the dark green with the light `--color-surface-brand` was out. This is the site's mid green instead, 2.3:1 against the tenant's half | ☑ 6.3:1 with white |
 
 - **Dark mode:** ☐ Supported ☑ Not in v1. The token structure supports adding one later
   without touching component code.
@@ -1236,12 +1388,32 @@ to be better than.
 | Callout, safety | Renders `safety` above steps, never below, never collapsed | single variant, `--color-danger` |
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
 | Photograph | A credited photo, `4:3` in a page, `3:1` as a full-width band (§3.6) | inline, intro, band |
+| Story stack | A run of adjacent story bars that pins and stacks as the reader scrolls | default only |
+| Add to list | The cart control on an improvement page and on a library card (§3.8) | article, card |
+| List row | One item on `/checklist`, with its own checkbox | buy, ask, do |
 | Info panel | A photo and a short block of text side by side inside a tinted band | default, reverse |
 | Source and last-reviewed block | "How we know this". Links plus an ISO date | open by default on detail pages, collapsed to a count on cards |
 | Glossary term | Inline definition on first use. Hover over the underlined term to view the definition. | closed, open, focus-visible |
 | Program card | An NHSaves or assistance program | NH, out-of-state (explicitly labeled), eligibility unknown |
 | Button | Primary, secondary, text | default, hover, focus-visible, active, disabled, loading |
 | Skip link | First focusable element on every page | hidden, focused |
+
+**Story bars stack, added 2026-08-25.** A run of adjacent story bars pins to the top of the window
+one after another and builds a stack, then the whole stack scrolls away together. The wrapper is the
+load-bearing part: `position: sticky` is bounded by the element's containing block, so without a
+`.story-stack` around them the first bar would pin at the top of the window and stay there for the
+rest of the article, sitting over the steps the reader had moved on to.
+
+Every child of a stack is a story bar, which is why `nth-of-type` can index them there and could not
+have out in the article, where the bars are siblings of the body columns and every one of those is a
+`div` too. The stack carries a `padding-bottom` because the last bar has nothing below it inside the
+stack: without it the stack's bottom edge arrives at the same moment the bar does and it releases
+without ever holding.
+
+Gated on width, on height, and on both reduced-motion controls. A pinned full-width band on a short
+window is a band covering the thing the reader is trying to read, and a reader who has asked for
+less movement has asked for exactly this. Outside the gate they are ordinary stacked bands with
+their own margins, which is what they were before.
 
 **One card for every disclaimer, unified 2026-08-24.** The callout variants had drifted apart in a
 way that only shows up when you look at them all at once. A permission note on one improvement page

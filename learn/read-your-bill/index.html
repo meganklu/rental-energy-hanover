@@ -39,13 +39,18 @@
         <li><a href="../../about/">About</a></li>
       </ul>
     </nav>
+    <a class="nav-todo" href="../../checklist/">
+      <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-list"/></svg>
+      <span class="nav-todo__label">My list</span>
+      <span class="nav-todo__count" data-todo-count aria-hidden="true" hidden>0</span>
+    </a>
   </div>
 </header>
 <!-- /shell:header -->
 
 <main id="main">
   <section class="section page-shell">
-    <nav aria-label="Breadcrumb" class="text-small"><a href="../../improvements/">Improvements</a> / Read your bill</nav>
+    <nav aria-label="Breadcrumb" class="text-small"><a href="../../improvements/">Improvements</a> / <a href="../../improvements/#renter-basics">Renter basics</a> / Read your bill</nav>
     <a class="btn btn--secondary house-return-link" href="../../index.html#house">
       <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-house"/></svg>
       Back to the house
@@ -135,6 +140,32 @@
           <figcaption class="photo-credit">Photo by <a href="https://unsplash.com/photos/xVptEZzgVfo">Thomas Kelley</a> on Unsplash</figcaption>
         </figure>
 
+      </div>
+
+      <div class="story-stack">
+        <div class="story-bar full-bleed">
+          <div class="story-bar__inner">
+            <h2 class="story-bar__heading">What a kilowatt hour actually is</h2>
+            <div class="story-bar__body">
+              <p>
+                A <span class="term" tabindex="0" aria-describedby="term-kwh">kilowatt hour<span class="term__tooltip" id="term-kwh">The unit your electric bill is priced in.<a class="term__more" href="../../glossary/#kwh">Read the full entry</a></span></span> is one unit of energy: a thousand watts drawn for one hour. A 100-watt
+                device left on for ten hours uses one. Anything that makes heat is in a different class
+                entirely, and its nameplate will tell you so, which is the whole reason
+                <a href="../../improvements/space-heaters-real-cost-and-safety/">a space heater costs
+                what it does</a> to run.
+              </p>
+              <p>
+                Your bill is that number multiplied by a rate, plus fixed charges that do not move whatever you
+                do. Which is why the useful question is never "why is the bill high" but "which line moved, and
+                what did I plug in". Howe Library lends an electricity usage monitor if you want to measure a
+                particular device rather than guess at it.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="improvement-body">
         <h2>Who serves Hanover</h2>
         <p>
           Liberty Utilities (Granite State Electric) is the electric utility serving Hanover.
@@ -146,8 +177,9 @@
         <h2>Sources</h2>
         <ul>
           <li><a href="https://www.energy.nh.gov/utilities-providers/regulated-utility-services/electric">NH Department of Energy — Regulated Utility Services: Electric</a></li>
+          <li><a href="https://www.thehowe.org/library-of-things">Howe Library — Library of Things</a></li>
         </ul>
-        <p class="last-reviewed">Last reviewed 2026-08-18.</p>
+        <p class="last-reviewed">Last reviewed 2026-08-25.</p>
       </div>
     </article>
   </section>
@@ -217,6 +249,7 @@
 <script type="module" src="../../assets/js/house-return.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
+<script type="module" src="../../assets/js/todo.js"></script>
 <!-- /shell:footer -->
 
 <script type="module" src="../../assets/js/diagram.js"></script>
@@ -233,8 +266,8 @@
   "appliesToHeat": ["any"],
   "appliesToPayer": "tenant",
   "phase": "move-in",
-  "sources": ["S3"],
-  "lastReviewed": "2026-08-18"
+  "sources": ["S3", "S29"],
+  "lastReviewed": "2026-08-25"
 }
 </script>
 </body>

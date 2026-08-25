@@ -39,13 +39,18 @@
         <li><a href="../../about/">About</a></li>
       </ul>
     </nav>
+    <a class="nav-todo" href="../../checklist/">
+      <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-list"/></svg>
+      <span class="nav-todo__label">My list</span>
+      <span class="nav-todo__count" data-todo-count aria-hidden="true" hidden>0</span>
+    </a>
   </div>
 </header>
 <!-- /shell:header -->
 
 <main id="main">
   <section class="section page-shell">
-    <nav aria-label="Breadcrumb" class="text-small"><a href="../">Improvements</a> / Keep your radiator or baseboard clear</nav>
+    <nav aria-label="Breadcrumb" class="text-small"><a href="../#improvements-list">Improvements</a> / Keep your radiator or baseboard clear</nav>
     <a class="btn btn--secondary house-return-link" href="../../index.html#house">
       <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-house"/></svg>
       Back to the house
@@ -66,6 +71,12 @@
             <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-time"/></svg>Under 30 minutes</span>
             <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
           </div>
+        <p class="improvement-actions">
+          <button type="button" class="btn btn--primary todo-add" data-todo-slug="dont-block-your-radiator-or-baseboard" data-todo-title="Keep your radiator or baseboard clear" aria-pressed="false">
+            <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-plus"/></svg>
+            <span data-todo-label>Add to my list</span>
+          </button>
+        </p>
         </div>
 
         <figure class="improvement-intro__media">
@@ -92,25 +103,27 @@
         </ol>
       </div>
 
-      <div class="story-bar full-bleed">
-        <div class="story-bar__inner">
-          <h2 class="story-bar__heading">Why this works</h2>
-          <div class="story-bar__body">
-            <p>
-              A radiator or baseboard heater warms a room by letting heat rise and circulate off its
-              surface. Furniture or curtains against it trap that heat right where it is made, so the
-              heater works harder while the rest of the room stays cold, and the thermostat keeps
-              calling for more heat than the room actually needs.
-            </p>
+      <div class="story-stack">
+        <div class="story-bar full-bleed">
+          <div class="story-bar__inner">
+            <h2 class="story-bar__heading">Why this works</h2>
+            <div class="story-bar__body">
+              <p>
+                A radiator or baseboard heater warms a room by letting heat rise and circulate off its
+                surface. Furniture or curtains against it trap that heat right where it is made, so the
+                heater works harder while the rest of the room stays cold, and the thermostat keeps
+                calling for more heat than the room actually needs.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="story-bar full-bleed story-bar--reverse">
-        <div class="story-bar__inner">
-          <h2 class="story-bar__heading">Savings</h2>
-          <div class="story-bar__body">
-            <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
+        <div class="story-bar full-bleed story-bar--reverse">
+          <div class="story-bar__inner">
+            <h2 class="story-bar__heading">Savings</h2>
+            <div class="story-bar__body">
+              <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -190,6 +203,7 @@
 <script type="module" src="../../assets/js/house-return.js"></script>
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
+<script type="module" src="../../assets/js/todo.js"></script>
 <!-- /shell:footer -->
 
 <script type="application/json" class="content-meta">

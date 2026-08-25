@@ -6,7 +6,7 @@ efficiency of their rentals. In partnership with Sustainable Hanover.
 > **Status: build, all twenty topics written.** As of 2026-08-24 every topic in the inventory
 > ([docs/content-strategy.md](docs/content-strategy.md) §3) has a page. Ten improvements, six
 > explainers, and the standalone pages for programs, rights, pre-lease and materials. The doll
-> house tour is sixteen spots, ordered as a sequence rather than a list: understand the bill and
+> house tour is seventeen spots, ordered as a sequence rather than a list: understand the bill and
 > the lease, find where the heat goes, seal it, control it, then ask, then leave.
 >
 > The 2026-08-24 pass replaced the drawn illustration on every improvement page with a credited
@@ -17,6 +17,28 @@ efficiency of their rentals. In partnership with Sustainable Hanover.
 > because of, and states how AI was used to build the site. Three pages that had no inbound link
 > anywhere — the glossary, the pre-lease checklist and the materials page — now have routes to
 > them.
+>
+> The 2026-08-25 pass fixed the split-halves effect, which had been moving about 3.7% instead of 8%
+> and so read as broken, and rethemed it onto the site's own greens. `/improvements` now opens on a
+> front door that swings as you scroll to reveal the Renter basics band behind it. The empty
+> bathroom in the doll house got the topic that belongs there, a low-flow showerhead, which is the
+> first topic added beyond the original inventory. Story bars, previously only on article pages,
+> now break up the longest stretches of prose on Your rights, Before you sign, Where to get it and
+> the three newest explainers.
+>
+> The 2026-08-25 pass turned both openings into scenes the reader is held in while they scroll.
+> The home hero pins while the shoes walk up the mat toward the door it lies in front of, and
+> `/improvements` pins at a front door drawn against a real one, which swings open and then floods
+> its green out to fill the screen. Story bars pin and stack. Explainers took the improvement page
+> layout, and every breadcrumb now returns to the section it came from rather than to the top of
+> the page.
+>
+> The 2026-08-25 revision pass brought back F6, cut from v1 as "the largest cut and the first thing
+> back". `/checklist` is a shopping cart for improvements: add from an article or a card, watch the
+> count in the header, then open the list to find what you picked sorted into what to buy, what to
+> ask your landlord, and what to do. It prints, downloads as text, and shares to a roommate as a
+> link. The same pass gave glossary terms a hover definition with a route into the full entry, put
+> the programs list in a carousel, and gave every story bar a screen of its own.
 >
 > What is still open: flip-card myth busters (F3) are built as a component but still need their
 > myth-and-correction pairs through content review. `/learn/whats-in-your-lease` and

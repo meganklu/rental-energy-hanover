@@ -39,13 +39,19 @@
         <li><a href="about/">About</a></li>
       </ul>
     </nav>
+    <a class="nav-todo" href="checklist/">
+      <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-list"/></svg>
+      <span class="nav-todo__label">My list</span>
+      <span class="nav-todo__count" data-todo-count aria-hidden="true" hidden>0</span>
+    </a>
   </div>
 </header>
 <!-- /shell:header -->
 
 <main id="main">
 
-  <section class="hero">
+  <div class="hero-scene">
+    <section class="hero">
     <div class="hero__mat">
       <div class="hero__mat-border">
         <h1 class="hero__tagline">
@@ -62,13 +68,14 @@
              this actually renders at. Decorative throughout: the container carries aria-hidden,
              so nothing here needs a title.
 
-             The shoe is drawn toe-up in a 60x140 box and turned a quarter clockwise to point
-             right, which is the direction it walks (§3.1). The turn sits on the group rather than
-             on each <use>, so there is one place to change it, and the outer viewBox is the
-             swapped 140x60 the turned drawing actually occupies. -->
-        <svg viewBox="0 0 140 60">
+             The shoe is drawn toe-up in a 60x140 box and stays that way. It was turned a quarter
+             clockwise until 2026-08-25, when the walk changed from crossing the mat left to right
+             to going up it, toward the door the mat is lying in front of (§3.1). Toe-up is the
+             direction it now walks, so the turn came off and the viewBox is the box it is drawn
+             in. -->
+        <svg viewBox="0 0 60 140">
           <defs>
-            <g id="hero-shoe" transform="translate(140 0) rotate(90)">
+            <g id="hero-shoe">
               <path d="M30 7 C44 7 55 17 56.5 33 C57.5 48 57 64 55.5 82 C54 100 52 112 48.5 122 C46 131 38.5 135 30 135 C21.5 135 14 131 11.5 122 C8 112 6 100 4.5 82 C3 64 2.5 48 3.5 33 C5 17 16 7 30 7 Z"
                     fill="var(--color-accent)" stroke="#000" stroke-width="3" stroke-linejoin="round"/>
               <path d="M30 19 C41.5 19 49 28 49 41 L49 54 Q30 58 11 54 L11 41 C11 28 18.5 19 30 19 Z"
@@ -92,17 +99,18 @@
           </defs>
           <use href="#hero-shoe"/>
         </svg>
-        <svg viewBox="0 0 140 60"><use href="#hero-shoe"/></svg>
+        <svg viewBox="0 0 60 140"><use href="#hero-shoe"/></svg>
       </div>
     </div>
     <p class="hero__description">
       Learn how to improve energy efficiency in your rental to save money and the environment.
     </p>
-    <a class="scroll-cue" href="#house">
-      <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-next" transform="rotate(90 12 12)"/></svg>
-      Take a look inside
-    </a>
-  </section>
+      <a class="scroll-cue" href="#house">
+        <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-next" transform="rotate(90 12 12)"/></svg>
+        Take a look inside
+      </a>
+    </section>
+  </div>
 
   <section class="dollhouse-section page-shell theme-white" id="house" aria-labelledby="house-heading">
     <div class="progress-row" id="progress-row">
@@ -147,7 +155,7 @@
               </a>
               <a href="improvements/winter-break-shutdown/" class="hotspot"
                  data-hotspot-id="bedroom-break" data-slug="winter-break-shutdown"
-                 data-room="Bedroom" data-label="Packed for a break" data-order="15"
+                 data-room="Bedroom" data-label="Packed for a break" data-order="16"
                  aria-label="Bedroom: what to set and what to unplug before you leave for a break.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-suitcase"/></svg>
                 <span class="hotspot__label">Packed for a break</span>
@@ -157,9 +165,17 @@
         </li>
 
         <li>
-          <section id="bathroom" class="room room--bathroom room--empty" aria-labelledby="bathroom-h">
+          <section id="bathroom" class="room room--bathroom" aria-labelledby="bathroom-h">
             <h3 id="bathroom-h"><a class="room-open" href="#bathroom">Bathroom</a></h3>
-            <div class="room-hotspots"></div>
+            <div class="room-hotspots">
+              <a href="improvements/low-flow-showerhead/" class="hotspot"
+                 data-hotspot-id="bathroom-showerhead" data-slug="low-flow-showerhead"
+                 data-room="Bathroom" data-label="Shower head" data-order="12"
+                 aria-label="Bathroom shower head: it unscrews by hand, and less hot water through it is less fuel burned heating it.">
+                <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-shower"/></svg>
+                <span class="hotspot__label">Shower head</span>
+              </a>
+            </div>
           </section>
         </li>
 
@@ -176,14 +192,14 @@
               </a>
               <a href="learn/ask-your-landlord/" class="hotspot"
                  data-hotspot-id="entry-ask" data-slug="ask-your-landlord"
-                 data-room="Entry" data-label="Asking your landlord" data-order="14"
+                 data-room="Entry" data-label="Asking your landlord" data-order="15"
                  aria-label="Entry: how to ask your landlord for an improvement so the request goes somewhere.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-ask"/></svg>
                 <span class="hotspot__label">Asking your landlord</span>
               </a>
               <a href="learn/move-out-restore/" class="hotspot"
                  data-hotspot-id="entry-keys" data-slug="move-out-restore"
-                 data-room="Entry" data-label="Keys on the way out" data-order="16"
+                 data-room="Entry" data-label="Keys on the way out" data-order="17"
                  aria-label="Entry: what to take down and photograph before you hand the keys back.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-key"/></svg>
                 <span class="hotspot__label">Keys on the way out</span>
@@ -219,7 +235,7 @@
               </a>
               <a href="improvements/phantom-load-and-plug-loads/" class="hotspot"
                  data-hotspot-id="living-room-outlets" data-slug="phantom-load-and-plug-loads"
-                 data-room="Living room" data-label="Outlets and plugs" data-order="13"
+                 data-room="Living room" data-label="Outlets and plugs" data-order="14"
                  aria-label="Living room outlets: Devices plugged in but off still draw a small amount of power around the clock.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-plug"/></svg>
                 <span class="hotspot__label">Outlets and plugs</span>
@@ -248,7 +264,7 @@
               </a>
               <a href="improvements/led-lighting-swaps/" class="hotspot"
                  data-hotspot-id="kitchen-light" data-slug="led-lighting-swaps"
-                 data-room="Kitchen" data-label="Light fixture" data-order="12"
+                 data-room="Kitchen" data-label="Light fixture" data-order="13"
                  aria-label="Kitchen light fixture: Swapping to LED bulbs cuts the electricity a light uses.">
                 <svg class="icon" aria-hidden="true"><use href="assets/icons/sprite.svg#icon-light-bulb"/></svg>
                 <span class="hotspot__label">Light fixture</span>
@@ -321,7 +337,7 @@
         <div class="room-index__room">
           <h4>Bathroom</h4>
           <ul>
-            <li>Nothing here yet.</li>
+            <li><a href="improvements/low-flow-showerhead/">Shower head: swap in a low-flow one</a></li>
           </ul>
         </div>
         <div class="room-index__room">
@@ -419,6 +435,7 @@
 <script type="module" src="assets/js/house-return.js"></script>
 <script type="module" src="assets/js/situation.js"></script>
 <script type="module" src="assets/js/situation-modal.js"></script>
+<script type="module" src="assets/js/todo.js"></script>
 <!-- /shell:footer -->
 
 <script type="module" src="assets/js/dollhouse.js"></script>
