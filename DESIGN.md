@@ -125,6 +125,13 @@ belongs with the materials list a student is already reading, not after the step
 inline pointer, not a duplicate of the shared page: `/where-to-get-it` remains the fuller reference
 once it is built, per §8 of content-strategy.md.
 
+**Breadcrumbs name the section, added 2026-08-25.** An article's breadcrumb used to read
+"Improvements / Set your thermostat back" and link back to the top of `/improvements`, which is now
+a shut door two screens above where the reader left. Each breadcrumb links to the part of the page
+the reader actually came from: an improvement returns to `#improvements-list`, and an explainer
+reads "Improvements / Renter basics / …" and returns to `#renter-basics`. Both anchors sit below the
+pinned door scene, so the jump lands past it rather than in the middle of it.
+
 **How those three pages are reached, decided 2026-08-24.** An audit of inbound links found
 `/before-you-sign` and `/glossary` with no inbound link from anywhere on the site, and
 `/where-to-get-it` reachable only from body text inside five improvement pages. All three are real
@@ -390,6 +397,26 @@ the peak so the foot rises and falls instead of popping between states. The rest
 `scale(1)` with the planted shadow for both shoes, so the pair still sits level and side by side
 before any scroll happens; the follow shoe catches up a quarter cycle in the first few percent of
 scroll, which is not visible at that speed.
+
+**The hero is held while the walk plays, added 2026-08-25.** The walk ran over the first 70vh of
+scroll, which is the distance a reader covers getting past the hero, so almost nobody saw more than
+a step of it. The hero now sits inside a scene 220vh tall and sticks to the top of it, which turns
+the scroll from a way past the hero into the thing that drives it: the view holds, the shoes cross
+the mat, and the hero lets go at the end. Gated the same three ways as everything else here, and
+outside the gate the scene is one screen tall and nothing sticks, because there is nothing to scrub
+through.
+
+**And the walk turned upward.** It crossed the mat left to right, which is the one direction nobody
+walks over a doormat. It goes up the mat now, toward the door the mat is lying in front of. The shoe
+was already drawn toe-up and turned a quarter clockwise to point right, so the turn simply came off;
+the pair changed from a column to a row, because from directly overhead a pair walking away from you
+sits side by side rather than one behind the other; and the tilt went, because a pair walking
+straight away has no reason to lean. The stride keyframes are the same walk with the signs mirrored,
+since forward is now negative Y.
+
+The pair does cross the wordmark on the way up. That is unavoidable at this mat's proportions, where
+any vertical path crosses the lettering, and it is the right trade: the walk is the thing the reader
+is being held to watch.
 
 ### 3.2 The doll house
 
@@ -871,6 +898,28 @@ none !important; }` reset, and the one-off `.info-bar` rule is removed as redund
 semantically, for every element on the site, rather than patching each component rule that sets
 `display` one at a time as each one happens to get caught by it.
 
+**The reader is held at the door, added 2026-08-25.** The door swung as the reader scrolled past it,
+which meant it was half-open by the time it left the screen. The scene is 300vh now with the stage
+sticky inside it, so the view holds while the scroll drives the door: the first two thirds swing it
+open, and the last third floods the green out from the doorway until it fills the screen and the
+reader arrives in the Renter basics band that green belongs to.
+
+**The flood's first keyframe is `scale(0)`, not `scale(1)`.** `animation-fill-mode: both` back-fills
+the `from` keyframe for the entire scroll before the range opens, so a flood sized to the doorway at
+`from` rendered as a full-size green rectangle sitting over the shut door from the moment the page
+loaded. This is the kind of thing that only shows up in a screenshot.
+
+**The door is drawn against a real one, 2026-08-25.** An MMI Door quarter fan lite four panel:
+arched glass in the top quarter with grilles radiating from the sill, two panels above the lock rail
+and two below, the door's own stiles left as a margin, and a brickmould casing around the frame. The
+greens are this site's and the white trim and grilles are the reference's. The glass is filled with
+the same green as the doorway behind it, so the colour the door opens onto is already showing
+through the window before anything moves.
+
+**The title is signage.** A plate screwed across the lock rail, with a raised edge and a fixing at
+each end, rather than lettering floating on the door face. It is still the page's `h1` and still the
+first heading a screen reader reaches; only its presentation is a plaque.
+
 **The page opens on a door, added 2026-08-24.** `/improvements` opened on a centred page title on a
 white band, which said nothing the nav had not already said one line above it. It opens on a front
 door now, with the title on the door, and the door swings on its hinge as the reader scrolls until
@@ -1048,6 +1097,7 @@ interactive work.
 | `--color-mat` | `#D9BE8A` | Added 2026-08-19. The hero's welcome-mat background. Used nowhere else | ☑ 9.3:1 with `--color-text` |
 | `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
 | `--color-hero-ground` | `#94A0A7` | Added 2026-08-19. The hero section's own background, behind the mat. A bluestone grey, used nowhere else | ☑ 6.3:1 with `--color-text`, 7.9:1 with `--color-mat-border` |
+| `--motion-slow` / `--motion-ease-smooth` | `450ms` / `cubic-bezier(0.4, 0, 0.2, 1)` | Added 2026-08-25. For something large and continuous, where `--motion-base`'s 200ms and sharp-out curve make a half-page of colour snap rather than slide. The About page's split field is the only user | n/a |
 | `--color-split-tenant` | `#06301F` | Added 2026-08-24. The tenant's half of the About page's split field (§3.7). The same value as `--color-surface-dark`, named separately because it is one of a pair | ☑ 14.5:1 with white |
 | `--color-split-owner` | `#0A6E4B` | Added 2026-08-24 as a deep slate blue, changed the same day. Both halves have to carry white text, since the title, the lede, the float card and the approach cards all cross the seam and one element cannot take two text colours, so pairing the dark green with the light `--color-surface-brand` was out. This is the site's mid green instead, 2.3:1 against the tenant's half | ☑ 6.3:1 with white |
 
@@ -1285,12 +1335,30 @@ to be better than.
 | Callout, safety | Renders `safety` above steps, never below, never collapsed | single variant, `--color-danger` |
 | Callout, disclaimer | The three standing disclaimers, worded exactly as in content-strategy §5 | legal, savings, permission |
 | Photograph | A credited photo, `4:3` in a page, `3:1` as a full-width band (§3.6) | inline, intro, band |
+| Story stack | A run of adjacent story bars that pins and stacks as the reader scrolls | default only |
 | Info panel | A photo and a short block of text side by side inside a tinted band | default, reverse |
 | Source and last-reviewed block | "How we know this". Links plus an ISO date | open by default on detail pages, collapsed to a count on cards |
 | Glossary term | Inline definition on first use. Hover over the underlined term to view the definition. | closed, open, focus-visible |
 | Program card | An NHSaves or assistance program | NH, out-of-state (explicitly labeled), eligibility unknown |
 | Button | Primary, secondary, text | default, hover, focus-visible, active, disabled, loading |
 | Skip link | First focusable element on every page | hidden, focused |
+
+**Story bars stack, added 2026-08-25.** A run of adjacent story bars pins to the top of the window
+one after another and builds a stack, then the whole stack scrolls away together. The wrapper is the
+load-bearing part: `position: sticky` is bounded by the element's containing block, so without a
+`.story-stack` around them the first bar would pin at the top of the window and stay there for the
+rest of the article, sitting over the steps the reader had moved on to.
+
+Every child of a stack is a story bar, which is why `nth-of-type` can index them there and could not
+have out in the article, where the bars are siblings of the body columns and every one of those is a
+`div` too. The stack carries a `padding-bottom` because the last bar has nothing below it inside the
+stack: without it the stack's bottom edge arrives at the same moment the bar does and it releases
+without ever holding.
+
+Gated on width, on height, and on both reduced-motion controls. A pinned full-width band on a short
+window is a band covering the thing the reader is trying to read, and a reader who has asked for
+less movement has asked for exactly this. Outside the gate they are ordinary stacked bands with
+their own margins, which is what they were before.
 
 **One card for every disclaimer, unified 2026-08-24.** The callout variants had drifted apart in a
 way that only shows up when you look at them all at once. A permission note on one improvement page

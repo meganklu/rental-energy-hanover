@@ -26,6 +26,13 @@ efficiency of their rentals. In partnership with Sustainable Hanover.
 > now break up the longest stretches of prose on Your rights, Before you sign, Where to get it and
 > the three newest explainers.
 >
+> The 2026-08-25 pass turned both openings into scenes the reader is held in while they scroll.
+> The home hero pins while the shoes walk up the mat toward the door it lies in front of, and
+> `/improvements` pins at a front door drawn against a real one, which swings open and then floods
+> its green out to fill the screen. Story bars pin and stack. Explainers took the improvement page
+> layout, and every breadcrumb now returns to the section it came from rather than to the top of
+> the page.
+>
 > What is still open: flip-card myth busters (F3) are built as a component but still need their
 > myth-and-correction pairs through content review. `/learn/whats-in-your-lease` and
 > `/learn/move-out-restore` touch leases and deposits and need human review before publishing, per

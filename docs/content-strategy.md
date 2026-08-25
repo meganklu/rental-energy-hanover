@@ -194,6 +194,13 @@ loses credibility on first contact.
 | Type | Purpose | Distinguishing fields |
 |---|---|---|
 | `Explainer` | Concept pages — how a bill works, what setback is | `question` (the plain-language question it answers), `misconception` (optional) |
+
+**Explainers use the improvement page's layout, settled 2026-08-25.** Same breadcrumb, same intro
+(title, one-sentence summary, photograph or diagram beside it), same body columns, same story bars,
+same sources block. What they do not carry is the fact row, because cost, time and impact are the
+improvement model's fields and an explainer has no honest value for any of them. Inventing a reading
+time to fill the row would have been a number with no source, which is the one thing this project
+does not do. The "Renter basics" badge is what marks the difference instead.
 | `Program` | NHSaves, income-eligible weatherization, assistance | `eligibility`, `whoRuns`, `state`, `renterEligible`, `landlordApprovalNeeded`, `applyUrl`, `lastReviewed` |
 | `ChecklistItem` | Steps in a generated checklist | `phase`, `improvementRef`, `roommateVisible` |
 | `GlossaryTerm` | See [glossary.md](glossary.md) | `term`, `definition`, `whyYouCare` |
