@@ -412,3 +412,8 @@ Glossary:
 For all of the animations being added, figure out how reduced motion still works. For example, don't pin to a certain part of the screen during a scroll when an animation tied to the scroll is turned off.
 
 Let's add a feature where a user can add an improvement to their to do list. This will be like a shopping cart/purchasing an item. They can then click on their to do list to get a full compiled/custom version of what they need to purchase, ask their landlord about, and complete. This is a list that they would be able to print, export, or share (e.g., to their roommates). Please follow typical user interface and user experience interaction principles for purchasing to make this feature easy to use.
+
+### 2026-08-25
+
+Home page:
+- I meant bottom left for the start area of the shoes

@@ -792,12 +792,17 @@
 .term__tooltip {
   position: absolute;
   bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+  /* Anchored to the term's left edge rather than centred on it. Centring meant half the panel hung
+     to the left of the word, which runs off the screen for any term near the start of a line, and
+     CSS has no way to clamp an absolutely positioned box against the viewport. Extending rightward
+     is safe everywhere except a term hard against the right margin, which `.term--end` handles. */
+  left: 0;
   margin-bottom: var(--space-2);
   width: max-content;
-  max-width: 16rem;
-  padding: var(--space-2) var(--space-3);
+  max-width: min(22rem, 72vw);
+  padding: var(--space-3) var(--space-4);
+  line-height: 1.5;
+  text-align: left;
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
   color: var(--color-text-on-dark);
@@ -810,9 +815,45 @@
   z-index: 30;
 }
 
+/* `:focus-within` rather than `:focus-visible`, and pointer events back on, both added 2026-08-25
+   so the popup can hold a link to the full glossary entry. Without them the popup closed the moment
+   the reader moved toward the link, and a keyboard user tabbing from the term into the link lost it
+   entirely. The term itself keeps `tabindex="0"` and `aria-describedby`, so the definition is
+   announced whether or not anyone reaches the link.
+
+   A popup carrying a link is not a tooltip in the ARIA sense, so the ones that do are plain spans
+   rather than `role="tooltip"`. The four in the situation form carry no link and keep the role. */
 .term:hover .term__tooltip,
-.term:focus-visible .term__tooltip {
+.term:focus-within .term__tooltip {
   opacity: 1;
+  pointer-events: auto;
+}
+
+/* For a term sitting close to the right margin, so the panel runs back to the left instead. */
+.term--end .term__tooltip {
+  left: auto;
+  right: 0;
+}
+
+/* The popup opens above the term, which puts it out of reach if the term is on the first line of a
+   page. Terms near the top get the modifier and open downward instead. */
+.term--below .term__tooltip {
+  bottom: auto;
+  top: 100%;
+  margin-bottom: 0;
+  margin-top: var(--space-2);
+}
+
+.term__more {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--color-brand);
+  font-weight: 600;
+}
+
+.term__more:hover,
+.term__more:focus-visible {
+  color: var(--color-text-on-dark);
 }
 
 /* ---------- Cards (the improvements library only) ---------- */
