@@ -45,20 +45,50 @@
 
 <main id="main">
 
-  <section class="door-hero" aria-labelledby="improvements-h">
-    <div class="door-hero__scene">
-      <div class="door-hero__opening" aria-hidden="true">
-        <span class="door-hero__light"></span>
+  <section class="door-scene" aria-labelledby="improvements-h">
+    <div class="door-scene__stage">
+      <div class="door-hero__scene">
+        <div class="door-hero__frame" aria-hidden="true"></div>
+        <div class="door-hero__opening" aria-hidden="true"><span class="door-hero__light"></span></div>
+
+        <div class="door-hero__door">
+          <!-- A quarter fan lite over four panels, drawn against the MMI Door reference in
+               DESIGN.md 3.4: arched glass in the top quarter with radiating grilles, two panels
+               above the lock rail and two below, and the door's own stiles left as a margin. The
+               glass is filled with the same green as the doorway behind it, so the colour the door
+               opens onto is already showing through the window before it moves. -->
+          <svg class="door-hero__face" viewBox="0 0 100 180" preserveAspectRatio="none" aria-hidden="true">
+            <g class="door-face__glass">
+              <path d="M14 48 L14 26 Q50 5 86 26 L86 48 Z"/>
+            </g>
+            <g class="door-face__grille">
+              <path d="M14 48 L14 26 Q50 5 86 26 L86 48 Z"/>
+              <line x1="50" y1="48" x2="50" y2="9"/>
+              <line x1="50" y1="48" x2="26" y2="14"/>
+              <line x1="50" y1="48" x2="74" y2="14"/>
+              <line x1="50" y1="48" x2="15" y2="27"/>
+              <line x1="50" y1="48" x2="85" y2="27"/>
+            </g>
+            <g class="door-face__panel">
+              <rect x="14" y="62" width="33" height="32" rx="1"/>
+              <rect x="53" y="62" width="33" height="32" rx="1"/>
+              <rect x="14" y="122" width="33" height="48" rx="1"/>
+              <rect x="53" y="122" width="33" height="48" rx="1"/>
+            </g>
+          </svg>
+
+          <h1 class="door-hero__title" id="improvements-h">Improvements</h1>
+          <span class="door-hero__knob" aria-hidden="true"></span>
+        </div>
       </div>
-      <div class="door-hero__door">
-        <h1 class="door-hero__title" id="improvements-h">Improvements</h1>
-        <span class="door-hero__knob" aria-hidden="true"></span>
-      </div>
+
+      <p class="door-hero__hint">
+        <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
+        Keep scrolling to open the door
+      </p>
+
+      <div class="door-scene__flood" aria-hidden="true"></div>
     </div>
-    <p class="door-hero__hint">
-      <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-disclosure"/></svg>
-      Scroll to open the door
-    </p>
   </section>
 
   <section class="theme-brand full-bleed renter-basics" id="renter-basics" aria-labelledby="renter-basics-h">

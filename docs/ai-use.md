@@ -367,6 +367,21 @@ Renter basics articles:
 About page:
 - Make the sliding between colors smoother like it is on the heat pumps website
 
-### 2026-08-25 To Do List Feature
+### 2026-08-25 Revisions and To Do List Feature
+
+Home page:
+- Still start with the shoes at the bottom right corner of the mat before they start walking forward for the animation
+
+Story bars:
+- Have the story bars initially separated out so that they have to come together and stack
+- Make the animation of the text on the story bar while scrolling more noticable
+- Story bar sections should take up the height of the screen
+
+Improvements page:
+- Make the window light blue and the door handle brown
+- Add a more decorative trim around the outside of the door
+- Incorpearte the carousel used for the renters basics articles elsewhere (e.g., section where there are multiple cards that you could scroll through)
+
+For all of the animations being added, figure out how reduced motion still works. For example, don't pin to a certain part of the screen during a scroll when an animation tied to the scroll is turned off.
 
 Let's add a feature where a user can add an improvement to their to do list. This will be like a shopping cart/purchasing an item. They can then click on their to do list to get a full compiled/custom version of what they need to purchase, ask their landlord about, and complete. Please follow typical user interface interaction principles for purchasing to make this feature easy to use.

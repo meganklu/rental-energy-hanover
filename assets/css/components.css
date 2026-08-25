@@ -1547,6 +1547,32 @@ body:has(.motion-loop) .motion-fab__pause {
    subtle (16% opacity). Scaled up 2026-08-21: a 480px tile rather than 320px, so the stones read
    as proportionate to the mat sitting on them. Same dissection, same seed, and the joint stroke
    stays 2px rather than scaling with the tile. */
+/* ---------- Hero scene, added 2026-08-25 ----------
+   The hero holds while the reader scrolls through it, so the shoes get a whole walk rather than a
+   glimpse of one. The scene is taller than the window and the hero inside it is sticky, which turns
+   the scroll from a way past the hero into the thing that drives it. Same shape as the door scene
+   on /improvements (§3.4), and gated the same way: without scroll-timeline support, under reduced
+   motion, or on a narrow screen the scene collapses to one screen and the hero does not stick,
+   because there is nothing to scrub through. */
+.hero-scene {
+  position: relative;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    body:not(:has(.reduce-motion-input:checked)) .hero-scene {
+      height: 220vh;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .hero-scene > .hero {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      min-height: 34rem;
+    }
+  }
+}
+
 .hero {
   min-height: 85svh;
   display: flex;
@@ -1588,26 +1614,38 @@ body:has(.motion-loop) .motion-fab__pause {
    is informational. */
 .hero__shoes {
   position: absolute;
-  left: -4%;
-  bottom: -4%;
+  /* Left of the wordmark's centre so the pair walks up beside "Welcome" rather than straight
+     through the middle of it. Revised 2026-08-25 from the bottom-left corner it started in when
+     the walk went across the mat. */
+  left: 16%;
+  bottom: 3%;
+  /* A row, revised 2026-08-25. The shoe points up now (see the markup), and from above a pair
+     facing away from you sits side by side across the screen rather than one in front of the
+     other. `width` measures the pair's width, and each shoe takes half of it. */
   display: flex;
-  /* A column, revised 2026-08-21. The shoe is turned to point right (see the markup), and from
-     above, a pair facing right sits one shoe in front of the other on the screen's vertical axis.
-     `width` now measures the shoe's length rather than its width, so it grew from 24% to 27% to
-     land the pair at the same rendered size it had before the turn. */
-  flex-direction: column;
-  gap: var(--space-2);
-  width: 27%;
-  transform: rotate(-8deg);
-  transform-origin: bottom left;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 3%;
+  width: 20%;
+  transform-origin: bottom center;
   pointer-events: none;
+  --shoe-shadow-down: drop-shadow(0 1px 1px rgba(20, 32, 26, 0.55));
+  --shoe-shadow-mid: drop-shadow(0 5px 5px rgba(20, 32, 26, 0.4));
+  --shoe-shadow-up: drop-shadow(0 10px 9px rgba(20, 32, 26, 0.26));
 }
 
 .hero__shoes svg {
-  width: 100%;
+  flex: 1 1 0;
+  width: auto;
   height: auto;
-  flex-shrink: 0;
   filter: var(--shoe-shadow-down);
+}
+
+/* The leading foot starts half a stride ahead, the way a pair mid-walk sits. Without it a pair
+   drawn side by side and level reads as standing still no matter what the stride does. Forward is
+   up here, so the margin lifts rather than drops it. */
+.hero__shoes svg:first-child {
+  margin-bottom: 9%;
 }
 
 /* Three stages of one shadow, added 2026-08-24 for the walk below. Seen from directly overhead, a
@@ -1639,7 +1677,8 @@ body:has(.motion-loop) .motion-fab__pause {
       animation-timing-function: linear;
       animation-fill-mode: both;
       animation-timeline: scroll(root block);
-      animation-range: 0 70vh;
+      /* The pinned stretch of `.hero-scene`, so the walk finishes exactly as the hero lets go. */
+      animation-range: 0 118vh;
     }
 
     body:not(:has(.reduce-motion-input:checked)) .hero__shoes {
@@ -1656,75 +1695,72 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* The pair keeps its resting -8deg through the whole walk, so it stays tilted the way a kicked-off
-   pair landed. The translate is written *before* the rotate, which applies it in the mat's own
-   coordinates rather than along the tilted axis: written the other way round the pair climbs as it
-   crosses, and around the middle of the scroll range it is walking through the middle of the
-   `<h1>`. Along the bottom of the mat there is nothing to walk over. 270% of the pair's own length
-   lands them at the far border. Change this and the stride amplitude below has to change with
-   it. */
+/* The pair walks up the mat toward the door it is lying in front of, revised 2026-08-25 from the
+   left-to-right crossing it used to do. Straight up the screen with no tilt: from directly overhead
+   a pair walking away from you has no reason to lean. 290% of the pair's own height carries them
+   from the bottom edge clear off the top of the mat. Change this and the stride amplitude below has
+   to change with it. */
 @keyframes shoes-walk {
-  from { transform: translateX(0) rotate(-8deg); }
-  to { transform: translateX(270%) rotate(-8deg); }
+  from { transform: translateY(0); }
+  to { transform: translateY(-290%); }
 }
 
 /* The stride, and why these numbers are not taste. The two keyframe sets below are the same walk
    half a cycle apart, three cycles across the scroll range. One cycle is 33.333% of the range and
-   the pair advances 90% of a shoe's length in it, so half a cycle advances 45%. A planted foot has
-   to stay still against the ground while that happens, which means drifting exactly -45% relative
-   to the pair: hence ±22.5% around the mean through stance, and hence the other foot covering 90%
-   against the ground in its half, at twice the pair's speed. Get this wrong and the planted foot
-   skids, which is what the first pass looked like.
+   the pair advances 96.7% of a shoe's length in it, so half a cycle advances 48.3%. A planted foot
+   has to stay still against the ground while that happens, which means drifting exactly -48.3%
+   relative to the pair: hence ±24% around the mean through stance, and hence the other foot
+   covering 96.7% against the ground in its half, at twice the pair's speed. Get this wrong and the
+   planted foot skids, which is what the first pass looked like. Negative Y is forward now, so the
+   signs are the mirror of the left-to-right version.
 
-   Both start the range at translateX(0) scale(1) with the planted shadow, so the pair rests level
-   and side by side, the way a pair left at a door sits. The cycle picks up from there, which costs
-   the follow shoe a quarter-cycle of catching up in the first few percent of scroll and is not
-   visible at that speed. The alternative was letting the resting frame show one shoe mid-swing,
-   which at the lift size below would have read as a mistake rather than as a stride.
+   Both start the range at translateY(0) with the planted shadow, so the pair rests as it is drawn:
+   side by side with the trailing foot half a stride back (see the margin above). The cycle picks up
+   from there, which costs the follow shoe a quarter-cycle of catching up in the first few percent of
+   scroll and is not visible at that speed.
 
-   Revised 2026-08-24: the lift is what makes this read as walking rather than sliding, and it was
-   far too small. `scale` ran 1 to 1.06 and nothing else moved. It now runs 0.94 planted to 1.16 at
-   the top of the swing, with a keyframe either side of the peak so the foot rises and falls instead
-   of popping, and the drop shadow above spreads and fades across the same three stages. From
+   The lift is what makes this read as walking rather than sliding. `scale` runs 0.94 planted to 1.16
+   at the top of the swing, with a keyframe either side of the peak so the foot rises and falls
+   instead of popping, and the drop shadow spreads and fades across the same three stages. From
    directly overhead those two are the only axes there are: a raised foot is a nearer one, and its
    shadow has further to fall. */
 @keyframes shoe-step-lead {
-  0% { transform: translateX(0) scale(1); filter: var(--shoe-shadow-down); }
-  8.333% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  12.5% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  16.667% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
-  20.833% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  25% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  41.667% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  45.833% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  50% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
-  54.167% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  58.333% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  75% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  79.167% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  83.333% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
-  87.5% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  91.667% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  100% { transform: translateX(0) scale(0.94); filter: var(--shoe-shadow-down); }
+  0% { transform: translateY(0) scale(1); filter: var(--shoe-shadow-down); }
+  8.333% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  12.5% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  16.667% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  20.833% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  25% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  41.667% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  45.833% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  50% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  54.167% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  58.333% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  75% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  79.167% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  83.333% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  87.5% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  91.667% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  100% { transform: translateY(0) scale(0.94); filter: var(--shoe-shadow-down); }
 }
 
 @keyframes shoe-step-follow {
-  0% { transform: translateX(0) scale(1); filter: var(--shoe-shadow-down); }
-  4.167% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  8.333% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  25% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  29.167% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  33.333% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
-  37.5% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  41.667% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  58.333% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  62.5% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  66.667% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
-  70.833% { transform: translateX(11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  75% { transform: translateX(22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  91.667% { transform: translateX(-22.5%) scale(0.94); filter: var(--shoe-shadow-down); }
-  95.833% { transform: translateX(-11.25%) scale(1.04); filter: var(--shoe-shadow-mid); }
-  100% { transform: translateX(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  0% { transform: translateY(0) scale(1); filter: var(--shoe-shadow-down); }
+  4.167% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  8.333% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  25% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  29.167% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  33.333% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  37.5% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  41.667% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  58.333% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  62.5% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  66.667% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
+  70.833% { transform: translateY(-12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  75% { transform: translateY(-24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  91.667% { transform: translateY(24%) scale(0.94); filter: var(--shoe-shadow-down); }
+  95.833% { transform: translateY(12%) scale(1.04); filter: var(--shoe-shadow-mid); }
+  100% { transform: translateY(0) scale(1.16); filter: var(--shoe-shadow-up); }
 }
 
 /* Only this border and what's inside it is "the mat" proper. Inset by a fixed margin (not
@@ -2809,51 +2845,69 @@ body:has(.motion-loop) .motion-fab__pause {
   font-weight: 600;
 }
 
-/* ---------- Door hero, added 2026-08-24 ----------
-   `/improvements` opened on a centred page title on a white band, which said nothing the nav had
-   not already said. It opens on a front door now, with the page title on the door, and the door
-   swings on its hinge as the reader scrolls until the Renter basics band behind it is what they are
-   looking at. The metaphor is the site's own: the home page is a doll house you look into, and this
-   is the door you go in through.
+/* ---------- Door scene, added 2026-08-24, rebuilt 2026-08-25 ----------
+   `/improvements` opens on a front door with the page title on it. The reader is held at the door
+   while they scroll: the scene is three viewports tall and the stage inside it is sticky, so the
+   view stays put while the scroll position drives the door open. Once it is open the green behind
+   floods out from the doorway to fill the screen, and the reader arrives in the Renter basics band
+   that green belongs to. DESIGN.md §3.4.
 
-   Scroll-progress driven, not timed, the same mechanism as the hero shoes (DESIGN.md §3.1). Scroll
-   position *is* the animation's progress, so it reverses when the reader scrolls back and stops
-   when they stop. Nothing moves on its own, so unlike the site's loops it needs no Pause button.
+   Scroll-progress driven rather than timed, the same mechanism as the hero shoes (§3.1). Scroll
+   position is the animation's progress, so it reverses on the way back up and stops when the reader
+   stops. Nothing moves on its own, so unlike the site's loops it needs no Pause button.
 
-   The opening behind the door is filled with --color-surface-brand, the same green as the Renter
-   basics band below, so the light coming through the doorway is the colour of the thing being
-   revealed rather than an arbitrary panel. */
-.door-hero {
+   The door is drawn against the MMI Door quarter-fan-lite four-panel reference: arched glass in the
+   top quarter with grilles radiating from the sill, two panels above the lock rail and two below,
+   and a brickmould casing around the frame. The greens are the site's; the white trim and grilles
+   are the reference's. */
+.door-scene {
+  position: relative;
+  /* Three viewports of scroll for one viewport of view. The first two thirds swing the door, the
+     last third floods the colour out. Collapses to a single screen without scroll-timeline support
+     or under reduced motion (below), where there is nothing to scrub through. */
+  height: 300vh;
+}
+
+.door-scene__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 34rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: var(--space-5);
-  padding-block: var(--space-8) var(--space-7);
+  overflow: hidden;
 }
 
-/* The scene carries the perspective, so the door swings in depth rather than squashing flat. The
-   value is deliberately shallow for the door's size: a longer focal length would read as a flat
-   panel rotating, which is what a door does not look like. */
 .door-hero__scene {
   position: relative;
-  width: min(21rem, 66vw);
+  width: min(21rem, 60vh);
   aspect-ratio: 5 / 9;
   perspective: 1100px;
-  perspective-origin: 60% 50%;
+  perspective-origin: 62% 50%;
 }
 
-/* The doorway itself: the frame the door sits in, and the light behind it. */
+/* The brickmould casing, sitting outside the opening on all four sides. Part of the frame rather
+   than the door, so it stays put while the door swings. */
+.door-hero__frame {
+  position: absolute;
+  inset: -3.5%;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  box-shadow: 0 0 0 3px var(--color-border-strong), var(--shadow-raised);
+}
+
 .door-hero__opening {
   position: absolute;
   inset: 0;
   border-radius: var(--radius-sm);
   background: var(--color-surface-brand);
-  border: 6px solid var(--color-surface-dark);
   overflow: hidden;
 }
 
-/* A wedge of light falling out of the doorway, brightest at the hinge side. Decorative depth
-   only. */
+/* A wedge of light falling out of the doorway, brightest at the hinge side. Decorative depth. */
 .door-hero__light {
   position: absolute;
   inset: 0;
@@ -2863,51 +2917,93 @@ body:has(.motion-loop) .motion-fab__pause {
 .door-hero__door {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  /* The title sits in the door's upper half, the way lettering on a real door does, which keeps it
-     clear of the knob at the middle right. Centring it put the two on the same line. */
-  padding: 20% var(--space-5) var(--space-5);
   border-radius: var(--radius-sm);
   background: var(--color-surface-dark);
-  /* The recessed panel a front door has, drawn rather than added as an element. One, low, so it
-     sits under the lettering rather than competing with it. */
-  background-image: linear-gradient(var(--color-accent), var(--color-accent));
-  background-repeat: no-repeat;
-  background-position: 50% 84%;
-  background-size: 62% 26%;
   transform-origin: left center;
   transform-style: preserve-3d;
   box-shadow: var(--shadow-raised);
 }
 
-.door-hero__title {
-  margin: 0;
-  text-align: center;
-  color: var(--color-text-on-dark);
-  /* Capped so "Improvements" stays on one line inside the door at every width. Past this it
-     overflows the panel and the white letters vanish against the white band behind. */
-  font-size: clamp(1.375rem, 0.95rem + 1.9vw, 2rem);
-  line-height: 1.15;
+.door-hero__face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
+
+.door-face__glass path {
+  fill: var(--color-surface-brand);
+}
+
+.door-face__grille path,
+.door-face__grille line {
+  fill: none;
+  stroke: var(--color-bg);
+  stroke-width: 2;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The panels read as recessed through a single lighter fill and a hairline edge, which is as much
+   as a flat drawing at this size can carry without looking like drop shadows. */
+.door-face__panel rect {
+  fill: var(--color-accent);
+  stroke: rgba(255, 255, 255, 0.28);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The title as signage screwed to the door: a plate across the lock rail, with a raised edge and a
+   fixing at each end. It is still the page's h1, and it is still the first heading a screen reader
+   reaches. */
+.door-hero__title {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 55%;
+  transform: translateY(-50%);
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  text-align: center;
+  font-size: clamp(0.95rem, 0.55rem + 1.5vw, 1.4rem);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--color-surface-dark);
+  background: linear-gradient(var(--color-bg), var(--color-surface));
+  border: 1px solid var(--color-border-strong);
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* The two screws holding the plate on. */
+.door-hero__title::before,
+.door-hero__title::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  margin-top: -2px;
+  border-radius: 50%;
+  background: var(--color-border-strong);
+}
+
+.door-hero__title::before { left: 6px; }
+.door-hero__title::after { right: 6px; }
 
 .door-hero__knob {
   position: absolute;
-  right: var(--space-4);
-  top: 52%;
-  width: 14px;
-  height: 14px;
+  right: 6%;
+  top: 55%;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   background: var(--color-brand);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.3);
   transform: translateY(-50%);
 }
 
 .door-hero__hint {
-  /* The swinging door reaches past the bottom of its own scene box, so the hint sits clear of it
-     rather than being crossed as the door opens. */
-  margin-top: var(--space-6);
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -2916,35 +3012,81 @@ body:has(.motion-loop) .motion-fab__pause {
   color: var(--color-text-muted);
 }
 
+/* The colour coming through the doorway, once the door is out of the way. A plain rectangle the
+   size of the opening, scaled up from the doorway's own centre until it covers the stage, so the
+   green arrives from where the light was rather than fading in over everything at once. Above the
+   door in paint order on purpose: the reader is walking through, and what is behind them stops
+   being the subject. */
+.door-scene__flood {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(21rem, 60vh);
+  aspect-ratio: 5 / 9;
+  background: var(--color-surface-brand);
+  transform: translate(-50%, -50%) scale(0);
+  transform-origin: center;
+  pointer-events: none;
+}
+
 /* Gated the three ways the site's other scroll motion is (DESIGN.md §7): @supports, because
    scroll-driven animation is an enhancement; prefers-reduced-motion and the reduce-motion switch;
-   and a min-width, since a door swinging in a 360px column is a door filling the screen. Under any
-   of those the door stays shut and square on, with the title flat and fully legible, which is the
-   state that has to be readable anyway. */
+   and a 600px floor, since a door swinging in a phone-width column is a door filling the screen.
+   Outside the gate the scene is one screen tall and does not stick, the door stays shut and square
+   on with the title flat and legible, and the flood never appears. */
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
-    body:not(:has(.reduce-motion-input:checked)) .door-hero__door {
-      animation-name: door-open;
+    body:not(:has(.reduce-motion-input:checked)) .door-hero__door,
+    body:not(:has(.reduce-motion-input:checked)) .door-scene__flood {
       animation-timing-function: linear;
       animation-fill-mode: both;
       animation-timeline: scroll(root block);
-      animation-range: 0 62vh;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .door-hero__door {
+      animation-name: door-open;
+      animation-range: 10vh 150vh;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .door-scene__flood {
+      animation-name: door-flood;
+      animation-range: 150vh 215vh;
     }
   }
 }
 
-/* Stops at 72deg rather than swinging flat to 90: past about 75 the door is edge-on, the title is
-   a line, and the reader loses the thing they were reading. The shadow lifts as it opens, because
-   a door standing open across a doorway casts across the opening rather than onto it. */
+@media not all and (min-width: 600px) {
+  .door-scene { height: auto; }
+  .door-scene__stage { position: static; height: auto; padding-block: var(--space-7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .door-scene { height: auto; }
+  .door-scene__stage { position: static; height: auto; padding-block: var(--space-7); }
+}
+
+/* Stops at 74 degrees rather than swinging flat to 90: past about 75 the door is edge-on, the sign
+   is a line, and the reader loses the thing they were reading. The shadow lifts as it opens,
+   because a door standing open across a doorway casts across the opening rather than onto it. */
 @keyframes door-open {
   from {
     transform: rotateY(0deg);
     box-shadow: var(--shadow-raised);
   }
   to {
-    transform: rotateY(-72deg);
-    box-shadow: 12px 0 28px rgba(20, 32, 26, 0.35);
+    transform: rotateY(-74deg);
+    box-shadow: 14px 0 30px rgba(20, 32, 26, 0.35);
   }
+}
+
+/* Starts at nothing rather than at the doorway's own size. `animation-fill-mode: both` back-fills
+   the `from` keyframe for the whole scroll before the range opens, so a `from` of `scale(1)` left a
+   full-size green rectangle sitting over the shut door from the moment the page loaded. 9 is enough
+   for the doorway rectangle to cover a 100vh stage from its own centre at every viewport this runs
+   at. */
+@keyframes door-flood {
+  from { transform: translate(-50%, -50%) scale(0); }
+  to { transform: translate(-50%, -50%) scale(9); }
 }
 
 /* ---------- Split incentive, added 2026-08-24 ----------
