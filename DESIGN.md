@@ -1072,10 +1072,23 @@ loaded. This is the kind of thing that only shows up in a screenshot.
 
 **The door is drawn against a real one, 2026-08-25.** An MMI Door quarter fan lite four panel:
 arched glass in the top quarter with grilles radiating from the sill, two panels above the lock rail
-and two below, the door's own stiles left as a margin, and a brickmould casing around the frame. The
-greens are this site's and the white trim and grilles are the reference's. The glass is filled with
-the same green as the doorway behind it, so the color the door opens onto is already showing
-through the window before anything moves.
+and two below, the door's own stiles left as a margin, and a brickmould casing around the frame.
+
+**Redrawn in the doll house's pen, 2026-08-26.** The shape stayed and the palette changed. This door
+and the exterior door in the doll house's entry room are the same object at two sizes, and they were
+drawn by two different hands: the toy is flat shapes in one warm brown outline (§3.2), the hero was a
+dark green slab with a gray architrave and no outline anywhere on it. The hero takes the toy's
+palette now, matched piece for piece against `#obj-door` in the sprite — white casing, `--toy-wood`
+slab, `--toy-sky-soft` arched glass, `--toy-wood-light` panels, a `--toy-butter` handle, and
+`--toy-outline` around every one of them. The plate keeps the cream and brown of the name plates
+under the doll house furniture.
+
+That retired `--color-door-glass` and `--color-door-handle`, which existed only for this drawing.
+Two tokens for one element were always the sign that the element was outside the system; the fix was
+to bring the element in rather than to keep the tokens.
+
+The doorway behind the door stays `--color-surface-brand`: the green the door opens onto is the
+site's own, and it is the payoff the whole scene is built for.
 
 **The title is signage.** A plate screwed across the lock rail, with a raised edge and a fixing at
 each end, rather than lettering floating on the door face. It is still the page's `h1` and still the
@@ -1350,6 +1363,81 @@ the showing slides now rather than a list captured at load.
 
 "Programs that are not for you" stays outside the carousel and outside the filter. It is one entry,
 it exists to be ruled out, and a filter that can hide it defeats the point of writing it down.
+
+### 3.10 Page heroes, added 2026-08-26
+
+The home page opens on a doormat and `/improvements` opens on a door. Everything else reachable from
+the nav opened on a centered title over white, which made those pages read as the reference material
+behind the two that had been designed. Three of them have a drawn scene now, in the doll house's pen
+(§3.2): flat shapes, one outline weight, the toy palette for anything that is a physical object and
+the site's greens for anything that is a mark on it.
+
+| Page | The scene | What it does on scroll |
+|---|---|---|
+| `/your-rights` | A wall thermometer with the state minimum marked on it | The column rises to the 65°F line and stops there |
+| `/programs` | Three application forms, one per permission state, in that state's badge color | They fan apart, and a tick lands on the one a renter can sign |
+| `/checklist` | A clipboard with four lines | Three ticks draw themselves in, one after another |
+
+**Every scene is `aria-hidden`, and nothing in one is the only place its content appears.** The
+65°F is written out in the first key point on that page, the three permission states are on every
+program in the list, and the checkboxes on the clipboard are a drawing of the real ones below it.
+That is what makes it safe for the scenes to be the part of the page that moves.
+
+**Every scene's resting state is its finished state.** Motion is scroll-driven and gated the site's
+three ways (§7), and a timeline that never advances leaves a thermometer reading 65, three fanned
+forms and three drawn ticks. A drawing that needs the animation to have run in order to make sense
+is a drawing that fails on a browser without scroll timelines, which is the same rule the story bars
+and the door already follow.
+
+**The layout is one grid**, words beside scene, stacked below 800px with the scene first so a phone
+still opens on the drawing. The two halves drift at different rates as the hero leaves, which is the
+multi-level parallax the rest of the site's scroll motion uses.
+
+`/about` is the fourth nav page and keeps its own opening, the split color field of §3.7. It was
+already the most distinctive page on the site and adding a scene to it would have been a second
+subject competing with the one it is about.
+
+**Every list ticks off, revised 2026-08-26.** The do list had the only checkboxes on the site, which
+left the two lists a reader actually walks around holding — the shop list and the list of things to
+raise with the landlord — as the two they could not cross anything off. Both have them now, at the
+same 24px, with the material's own name as the label so the target is the word and not just the box.
+
+A slug alone could not carry them. One improvement puts three materials in the buy list and one row
+in the ask list, and those are four separate things to tick at four different moments, so the stored
+entry grew a `ticks` array beside its `done` flag. A tick id only has to be unique within its own
+improvement, so the markup writes short ones, and removing the improvement takes its ticks with it
+rather than leaving them orphaned in storage.
+
+**The email writes itself, added 2026-08-26.** The ask section said "send one email covering all of
+these" and then offered no way to send one. It now ends in a draft built from whichever ask rows are
+showing: one numbered paragraph each, saying what the work is, what the materials cost and whether it
+comes off at move-out, wrapped in the six things `/learn/ask-your-landlord` says a good ask has in
+it — one specific thing per paragraph, what it costs, who pays, what is in it for them, and a date
+to answer by.
+
+Three decisions hold it together:
+
+- **None of the prose is in the script.** Every fixed sentence is in the page's markup, in a hidden
+  template block with braced slots, and every per-improvement sentence is in that improvement's own
+  ask row. `assets/js/ask-email.mjs` decides which sentences apply and in what order, which is the
+  part worth unit-testing, and it is tested. The content conventions say prose belongs in the
+  markup; a generated email is not an exception to that.
+- **Nothing typed into it is stored.** The landlord's name, the apartment and the date are the three
+  things only the reader knows, and they are exactly what
+  [docs/project-brief.md](docs/project-brief.md)'s non-goals rule out keeping. They are read on
+  every keystroke and written down nowhere, and the `mailto:` link carries no address, because who
+  the reader's landlord is is not something this site knows or wants to.
+- **An edited draft is theirs.** From the first keystroke in the textarea the generator stops
+  rewriting it. Regenerating over the top of somebody's edit is the one thing this must not do.
+
+With the script off, the textarea already holds a complete, sendable example covering the general
+case, which is the same rule the rest of the page follows: the markup is the content and the script
+narrows it.
+
+**One sentence is conditional.** "I would buy the materials and do the work myself" is about buying
+and fitting, and one of the four ask rows is telling a landlord you will be away over the break,
+which is neither. The row carries a `data-ask-diy` marker and the sentence only goes in when
+something on the list is actually work the reader would do.
 
 ## 4. Visual system
 
@@ -2040,6 +2128,38 @@ sliding, info bars appear without animating, scroll-expanding bands render finis
 stops condensing, and carousel and anchor scrolling become instant (`scroll-behavior: auto`). Every
 response transition resolves to 1ms. No component loses a state, a control, or a piece of content.
 
+**Microinteractions, added 2026-08-26.** Three, all response rather than ambient, all behind
+`prefers-reduced-motion` and the switch, and all losing nothing that carries meaning when they are
+off.
+
+- **Magnetic hover** on primary buttons and the Personalize FAB. The control leans a few pixels
+  toward the pointer while the pointer is over it and lets go when it leaves. Four gates before it
+  does anything: a fine pointer (a magnet has nothing to follow on a touch screen, where the first
+  the element hears about the pointer is the tap that already landed), the media query, the switch,
+  and a `--magnet-range` that only exists inside the gate — so `assets/js/magnetic.js` reads zero
+  and does nothing rather than the CSS having to undo it. The offset is written to a custom property
+  and applied with `translate` rather than `transform`, so a button that already lifts on hover
+  keeps doing that and leans as well.
+- **The list count pings** when something is added to it. The oldest cart problem there is: the
+  button is under the reader's finger and the number that changed is in the far corner of the
+  screen. A ring expands out of the control once and the count bumps. Adding only — a removal is
+  already confirmed by the button under the pointer changing back, and a badge that flashes on the
+  way down reads like something went wrong. The page-level live region has already said it out loud
+  either way.
+- **The add button's plus turns into a tick.** `assets/js/todo.js` swaps which sprite symbol the
+  `<use>` points at, which is instant and correct and reads as the icon having been replaced rather
+  than as the thing the reader just did. Rotating and squeezing through the swap gives the change a
+  direction. The animation fires on its own, because the selector only starts matching when
+  `aria-pressed` flips.
+
+**Scroll reveals, added 2026-08-26.** Section headings wipe in from behind their own baseline as
+they reach the viewport, `clip-path` rather than `overflow: hidden` so a descender and a focus ring
+are not clipped with them. Step numbers scale up as their step arrives and step bodies slide in from
+the side. All of it is `animation-timeline: view()` behind `@supports`, the media query, the switch
+and a 600px floor, and all of it is transform-only or clip-only for the reason the story bars are: a
+timeline that never advances leaves the element wherever the range started, and that has to be fully
+legible, full-contrast text.
+
 ## 8. Content presentation patterns
 
 ### Keeping pages short
@@ -2113,6 +2233,67 @@ length is a tier to delete.
 - **Enablers.** The four enabler topics are labeled "Start here" rather than given an impact
   rating, in the library and on their hotspots, so a student is never told that reading their bill
   saves nothing.
+
+### Section furniture, revised 2026-08-26
+
+Five things a page can be made of, beyond a paragraph. The rules above say to reach for a paragraph
+last; these are what to reach for first.
+
+**The story stack.** Two full-bleed dark bands that pin one after the other and, once both are
+locked, fill the screen together. Reserved for the pair of connective explanations on an improvement
+page, "Why this works" and "Savings", where one alternates its heading to the other side so the two
+read as a matched pair.
+
+Rebuilt 2026-08-26. Each bar used to be `min-height: 100vh` and pin 4.5rem below the one before it,
+which had two consequences: a two-sentence "Savings" panel was given a whole viewport to sit in the
+middle of, and what a reader watched happen was one panel sliding over another. The pair splits the
+screen now, first bar in the top half and second in the bottom, so the stack is one full-height
+section assembled out of two pieces rather than two full-height sections in a row. The share is set
+off the count with `:has()`, so a stack of three would take thirds.
+
+The band went from `--color-surface` to the site's two darks at the same time. A bar carrying the
+one idea a page turns on had been sitting on the same near-white green as the cards and the
+callouts, which made it read as more page rather than as a break in it. Two darks rather than one,
+for the reason the About page's two halves are two darks (§3.7): a seam between two fields of the
+same color is not a seam.
+
+**The key point.** What a story bar becomes when it is alone. Nine pages carried a single bar inside
+a stack, which meant a full-bleed band, a display-size heading and a screen of height for two
+sentences, with nothing to stack against and so none of the arrival the treatment exists for. A band
+that big earns its size by being one of a pair.
+
+A key point is no band, no break in the page's background, and no full screen. The heading sits in a
+column beside the body and stays there while the body scrolls past it, which keeps the "holds still
+for a moment" quality at a fraction of the cost, and a heavy brand rule down the left marks it as
+the page's turning point. It takes exactly the height of its own content.
+
+**The step list.** A numbered sequence where each step is a heading and a paragraph, with the
+numeral in a filled square beside it. Adapted from the "Ways to close the gap" list on the same
+team's heat pump site (S25). It replaces a run of `<li>` items that each opened with a bold phrase:
+the phrases were already headings, and formatting them as headings is what makes the sequence
+scannable without reading the sentences around it.
+
+The numeral is not `aria-hidden`. `list-style: none` is enough for some engines to drop list
+semantics, which takes the ordinal with it, so the number stays in the accessible name where it
+cannot be lost.
+
+**The steps track.** The step list turned on its side. Below 900px, and in print, it is the step list
+again; above it the same list becomes a row of cards running off the right edge of the window, so a
+sequence reads as continuing rather than as a grid that happens to have seven cells.
+
+It is a real scroll container with `tabindex="0"`, not a track driven by page scroll. That is a
+decision about keyboard access rather than about taste: a scroll-hijacked row moves content out of
+view without moving focus, so a keyboard reader can land on a link nobody can see. Here arrow keys
+move the row, focus inside a card scrolls that card into view by itself, and `scroll-snap` stops
+between cards rather than mid-sentence. `scroll-padding-inline-start` has to match the row's start
+inset exactly, or the first card snaps flush to the window edge and the row starts a page gutter to
+the left of its own heading.
+
+**The band.** A full-bleed tinted stretch that is a section of the page rather than a decoration
+inside one. `/programs` was one white column from the title to the sources, so the carousel — the
+part a reader came for — began with nothing marking it as a different kind of thing from the two
+paragraphs above it. The tint is what a band is for; the extra vertical room is what makes the tint
+read as a section break instead of a highlighted paragraph.
 
 ## 9. Voice in the interface
 
