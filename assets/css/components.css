@@ -1318,10 +1318,56 @@
   margin: 0;
 }
 
+/* Two columns above 900px, added 2026-08-26: the term on the left and everything said about it on
+   the right. The page was a 40rem reading column of alternating headings and paragraphs, which is
+   the shape of an article and the wrong shape for a reference — a reader here is looking one thing
+   up, not reading from the top, and a term set as a heading in the flow of prose is a term that has
+   to be found by reading past the ones before it. Set as a column of its own it can be scanned.
+
+   This is also the one page whose content wants the width the left-aligned reading column leaves
+   empty (§6), which is what makes it a layout rather than a stretched column.
+
+   The term sticks while its definition scrolls past, on the same mechanic and for the same reason
+   as the key point's heading (§8): `align-self: start`, because a stretched grid cell is exactly as
+   tall as its row and has no room inside it to stick. */
+.glossary-page {
+  max-width: 1140px;
+}
+
 .glossary > div {
   padding-block: var(--space-5);
   border-top: 1px solid var(--color-border);
   scroll-margin-top: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .glossary > div {
+    display: grid;
+    grid-template-columns: 17rem 1fr;
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+  }
+
+  /* Spanning every row is what gives the sticky term something to stick inside. Left in row 1 it
+     would sit in a cell exactly one line tall, and an element cannot stick within its own height. */
+  .glossary dt {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    position: sticky;
+    top: var(--space-6);
+    align-self: start;
+  }
+
+  /* Every `dd` into the second column, under whichever one came before it. `dt` takes the first
+     column and the rest stack in the second, which is what an explicit line rather than
+     auto-placement buys here. */
+  .glossary dd {
+    grid-column: 2;
+  }
+
+  .glossary dd:first-of-type {
+    margin-top: 0;
+  }
 }
 
 .glossary dt {
@@ -1329,6 +1375,7 @@
   font-size: var(--text-h3);
   font-weight: 600;
   line-height: var(--leading-display);
+  text-wrap: balance;
 }
 
 .glossary dd {
@@ -1338,6 +1385,15 @@
 
 .glossary dd + dd {
   margin-top: var(--space-2);
+}
+
+/* The entry the reader arrived at from a term tooltip elsewhere on the site. A page of definitions
+   that all look alike is a page where a fragment link lands you somewhere and says nothing about
+   which one it meant. */
+.glossary > div:target {
+  border-left: 4px solid var(--color-surface-brand);
+  padding-left: var(--space-5);
+  margin-left: calc(var(--space-5) * -1);
 }
 
 .glossary .also-called {

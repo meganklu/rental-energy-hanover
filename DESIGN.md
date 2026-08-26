@@ -1436,6 +1436,25 @@ the showing slides now rather than a list captured at load.
 "Programs that are not for you" stays outside the carousel and outside the filter. It is one entry,
 it exists to be ruled out, and a filter that can hide it defeats the point of writing it down.
 
+### 3.10a The glossary as a reference page, added 2026-08-26
+
+`/glossary` was fourteen terms set as headings in a 40rem reading column with their definitions
+under them, which is the shape of an article. A reader is here to look one thing up, and a term set
+in the flow of prose has to be found by reading past the ones before it.
+
+It is two columns above 900px: the term in a column of its own on the left, everything said about it
+on the right. That makes the list scannable down one edge, and it is the one page on the site whose
+content actually wants the width the left-aligned reading column leaves empty (§6), which is what
+makes this a layout rather than a stretched column.
+
+The term sticks while its definition scrolls past, on the same mechanic and for the same reason as a
+key point's heading: the `dt` spans every row of its own entry, because an element cannot stick
+inside a cell exactly its own height.
+
+An entry arrived at by fragment — every glossary link in a term tooltip elsewhere on the site is one
+— takes a brand rule down its left while it is `:target`. A page of definitions that all look alike
+is a page where a fragment link lands you somewhere and then says nothing about which one it meant.
+
 ### 3.10 Page heroes, added 2026-08-26
 
 The home page opens on a doormat and `/improvements` opens on a door. Everything else reachable from

@@ -1,6 +1,6 @@
 # Image credits
 
-> **Status:** ● Complete · **Last updated:** 2026-08-26 · **Owner:** Megan
+> **Status:** ● Complete · **Last updated:** 2026-08-26 · **Owner:** Megan (created by Claude)
 
 Every photograph on the site, who took it, and where it came from. See
 [content-strategy.md](content-strategy.md) §7 for the policy this implements and

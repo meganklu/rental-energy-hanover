@@ -1,7 +1,7 @@
 # Research Plan
 
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-07 · **Owner:** Ryan and Katharine
+> **Status:** ◐ Draft · **Last updated:** 2026-08-07 · **Owner:** Ryan
 
 
 <!-- GUIDANCE: You have an unusual advantage on this project — your users are your peers and
