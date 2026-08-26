@@ -241,7 +241,6 @@
 .callout p,
 .callout ul {
   margin: 0;
-  max-width: none;
 }
 
 .callout ul {
@@ -283,10 +282,6 @@
 .callout--safety-full > div {
   flex: 1 1 auto;
   min-width: 0;
-}
-
-.callout--safety-full p {
-  max-width: none;
 }
 
 @media (min-width: 900px) {
@@ -396,7 +391,6 @@
 
 .improvement-intro__text {
   grid-area: text;
-  max-width: var(--measure);
 }
 
 /* A column, not a row: the figure holds an image and its credit line, and `display: flex` with the
@@ -454,11 +448,19 @@
   color: inherit;
 }
 
-/* A photograph set into a reading column to break up a long stretch of prose. Keeps the column's
-   measure rather than bleeding wide, so the eye returns to the same left edge afterwards. */
+/* A photograph set into a section to break up a long stretch of prose, with nothing beside it.
+   Centered since 2026-08-26: it used to keep the reading column's 40rem measure and sit against the
+   left edge, on the reasoning that the eye should come back to the same edge afterwards. With the
+   section running the shell's full width that left a photograph in the left third of the page with
+   nothing in the other two, which reads as a photograph that failed to line up rather than as one
+   set into a column.
+
+   Capped under the files' own 1000px width rather than filled to the shell, because a 1000px
+   photograph stretched to 1140 is a blurred photograph. */
 .prose-figure {
-  margin: var(--space-7) 0;
-  max-width: var(--measure);
+  margin-block: var(--space-7);
+  margin-inline: auto;
+  max-width: min(100%, 52rem);
 }
 
 /* A photograph that runs the full window width as a band between two sections. The image is
@@ -529,8 +531,12 @@
   animation-timing-function: var(--motion-ease);
 }
 
+/* Full width, revised 2026-08-26. It was capped at the 40rem reading measure while the story bars,
+   the key points and the safety card on the same page all ran the page shell, so an article was a
+   narrow column of prose interrupted by full-width sections and then back again. It is the shell's
+   width now, like everything else on the page. */
 .improvement-body {
-  max-width: var(--measure);
+  max-width: none;
 }
 
 /* Base.css resets every heading and paragraph to zero margin, so vertical rhythm inside an
@@ -760,10 +766,6 @@
   font-size: var(--text-h4);
 }
 
-.story-bar__body p {
-  max-width: none;
-}
-
 .story-bar__body p + p {
   margin-top: var(--space-3);
 }
@@ -886,7 +888,6 @@
 
 .step-list__body p {
   margin: 0;
-  max-width: none;
 }
 
 /* The square fills as the step arrives, so working down the list has something happening in it.
@@ -978,7 +979,6 @@
 .steps-track__step p {
   grid-area: body;
   margin: 0;
-  max-width: none;
 }
 
 @media (min-width: 900px) {
@@ -1088,10 +1088,6 @@
 
 .keypoint__body {
   font-size: var(--text-h4);
-}
-
-.keypoint__body p {
-  max-width: none;
 }
 
 .keypoint__body p + p {
@@ -1380,7 +1376,6 @@
 
 .glossary dd {
   margin: var(--space-2) 0 0;
-  max-width: var(--measure);
 }
 
 .glossary dd + dd {
@@ -1737,7 +1732,6 @@
 /* The paragraph inside carries base.css's own measure cap, which is narrower than this box and
    would push its text off-center inside a centered box. */
 .empty-state > p {
-  max-width: none;
   margin: 0;
 }
 
@@ -2711,8 +2705,9 @@ body:has(.motion-loop) .motion-fab__pause {
    it; the arriving face takes no delay, and its own backface hides it until it is past square. */
 .flip-card {
   /* Centered, and wider than the 24rem it used to cap at. A card is an object on the page rather
-     than a paragraph of it, so it sits in the middle of the column with air either side. */
-  max-width: 34rem;
+     than a paragraph of it, so it sits in the middle of its section with air either side. Widened
+     again 2026-08-26 with the section it sits in. */
+  max-width: 46rem;
   margin-inline: auto;
   perspective: 1200px;
 }
@@ -2820,10 +2815,6 @@ body:has(.motion-loop) .motion-fab__pause {
   font-size: var(--text-h2);
   line-height: 1;
   color: var(--color-brand);
-}
-
-.flip-card__back p {
-  max-width: none;
 }
 
 .flip-card__back a {
@@ -3188,7 +3179,6 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
   font-size: var(--text-small);
   color: var(--color-text-muted);
   margin-top: var(--space-3);
-  max-width: var(--measure);
 }
 
 /* A real fieldset of radios rather than buttons: one choice out of two, which is what radios are,
@@ -3378,7 +3368,6 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 .id-card p {
   margin: 0;
   font-size: var(--text-small);
-  max-width: none;
 }
 
 .id-card__tell {
@@ -3991,7 +3980,6 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 
 .split-approach p {
   color: rgba(255, 255, 255, 0.9);
-  max-width: none;
 }
 
 /* The two sides meeting. Ends the coloured stretch and hands the page back to the ordinary white
@@ -4121,7 +4109,6 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 }
 
 .page-hero .lede {
-  max-width: var(--measure);
   margin: var(--space-4) 0 0;
   font-size: var(--text-h4);
   color: var(--color-text-muted);

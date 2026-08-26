@@ -200,7 +200,7 @@ student can send a filtered list to a roommate. Rooms serialize as fragments (`/
 | Room, enlarged `/#room` | Show the three or four things worth knowing about in this room | Tap a hotspot | The room box grows out of the doll house. The same hotspots also render as a plain linked list under the drawing, which is the keyboard, screen reader and no-JavaScript path |
 | Situation selector `/start` | Collect the four inputs that change what we recommend | Answer, then "Show what I can do" | Every question has "I am not sure", which widens results rather than blocking. All four questions on one screen in v1. One question per screen arrives with the mobile layouts in the next version. A plain form, so it submits without JavaScript. Revised 2026-08-19: this is now also the one and only situation form on the site — the improvements library filters against the same four answers rather than keeping a second, separate filter form. Reached directly at `/start`, or as a dialog opened by the "Personalize your recommendations" button (§3.3) from any page, with the same markup either way |
 | Improvements library `/improvements` | Let a student scan everything and narrow it to their situation | Open an improvement | The one screen in the site that is a card grid, because it is the complete index and the direct route for a student who already knows what they want. Default sort: enablers first, then impact, then lowest cost. Empty state never dead-ends |
-| Improvement detail `/improvements/:slug` | Get this done today | Follow the steps | Revised 2026-08-20: the page runs the full page-shell width rather than being capped at the 40rem content measure top to bottom. Title, summary, badges and facts sit in two columns above 900px, a custom SVG illustration of the improvement beside them (below 900px the illustration drops below the heading block and above "What you need"). A safety note, where the item has one, is pulled out of that two-column block into its own full-width band directly beneath it — safety does not share space with the illustration, revised again 2026-08-20 after the first pass put it in the text column. What you need, steps, where to get it (folded into "what you need" rather than a trailing paragraph), why this works and savings (now full-width story bars, §5.1), sources. Visible prose under 200 words still applies to the steps and what-you-need column, which keeps the 40rem measure |
+| Improvement detail `/improvements/:slug` | Get this done today | Follow the steps | Revised 2026-08-20: the page runs the full page-shell width rather than being capped at the 40rem content measure top to bottom. Title, summary, badges and facts sit in two columns above 900px, a custom SVG illustration of the improvement beside them (below 900px the illustration drops below the heading block and above "What you need"). A safety note, where the item has one, is pulled out of that two-column block into its own full-width band directly beneath it — safety does not share space with the illustration, revised again 2026-08-20 after the first pass put it in the text column. What you need, steps, where to get it (folded into "what you need" rather than a trailing paragraph), why this works and savings (now full-width story bars, §5.1), sources. Visible prose under 200 words still applies. The 40rem measure it kept until 2026-08-26 is gone; the body runs the page shell like everything else on the page (§6) |
 | Explainer `/learn/:slug` | Correct one wrong idea, fast | Flip the cards, then go do the improvement | Built as flip cards (rebuilt 2026-08-26, §5.1) and an animated diagram rather than paragraphs. Every explainer carries one diagram that shows the mechanism, for example where heat leaves a room. See §5.1 |
 | Checklist `/checklist` | Take a list away and act on it over a week | Print, or copy as text to send to roommates | **v2**, cut from v1 per [docs/features.md](docs/features.md) §3. State is local to the browser. Nothing is submitted anywhere |
 | Rights `/your-rights` | Find out whether 58°F is legal and who to call | Reach a real help resource | Legal disclaimer at the top, never collapsed. No advice on a specific dispute |
@@ -1020,7 +1020,7 @@ its hotspot read as the same thing encountered by two different routes, per §2'
 same content items" rule.
 
 **The page title, revised 2026-08-21.** "Improvements" sits at display size (`--text-display`, §4)
-rather than at normal h1 size inside the 40rem content column. The page has no lede sentence under
+rather than at normal h1 size inside the content column. The page has no lede sentence under
 it (see "What the page opens with" above), so a normal-size h1 read as a label someone forgot to
 finish rather than as the start of a page. It was centered from 2026-08-21 until 2026-08-26, when
 every page title on the site went back to the left edge for the reason in §6; the size was never the
@@ -1113,7 +1113,7 @@ between the facts and the button rather than between the title and the facts.
 to scroll past. The peek treatment suits a long entry better than a short one: you read the one in
 front of you and the next is visibly waiting. It takes a wider slide than the Renter basics row,
 since a program entry is a heading, two paragraphs and a definition list, and it sits outside the
-reading column rather than inside it. At 40rem the column was narrower than the slide, which sent
+reading column rather than inside it. At the 40rem measure the column was narrower than the slide, which sent
 the track's gutter calculation negative and clipped the cards.
 
 **Seven cards, 2026-08-24.** Three new explainers (§3.6's topic list) plus `/before-you-sign`, which
@@ -1471,7 +1471,7 @@ it exists to be ruled out, and a filter that can hide it defeats the point of wr
 
 ### 3.10a The glossary as a reference page, added 2026-08-26
 
-`/glossary` was fourteen terms set as headings in a 40rem reading column with their definitions
+`/glossary` was fourteen terms set as headings in a narrow reading column with their definitions
 under them, which is the shape of an article. A reader is here to look one thing up, and a term set
 in the flow of prose has to be found by reading past the ones before it.
 
@@ -1712,7 +1712,10 @@ h1 and below.
   counter, so figures line up in the cost meter and the count does not jitter as it changes.
 - **Text inside SVG** uses `--font-body` at 16px minimum and is real `<text>`, never outlined
   paths, so it scales, reflows at 200% zoom, and is read by a screen reader.
-- **Max line length:** 65 characters, and the content column caps at 40rem. Poppins sets wider
+- **Max line length:** the 40rem content column was removed 2026-08-26 (§6), so a line of body copy
+  now runs to about 110 characters at the shell's full width. That is a deliberate trade and the
+  reasoning is recorded there. Where a block is genuinely a long stretch of prose, the answer is two
+  columns inside the full width rather than a narrow block inside it. Poppins sets wider
   than a UI face at the same size, so the measure is tighter than the 70 characters a system stack
   would take.
 
@@ -2166,32 +2169,54 @@ result is a phone design.
 
 | Width | v1 status | Layout |
 |---|---|---|
-| 900px and up | **Designed.** This is the target | House and info bar side by side, so opening a hotspot does not push the drawing. An enlarged room keeps the rest of the house visible beside it. Library gets a persistent left filter rail. Parallax layers run. The hero holds 85svh. Detail pages keep the 40rem measure. Page shell caps at 1140px |
-| 600 to 900px | **Works.** Falls out of the same CSS | Single column. The whole house stays visible, with the info bar below it. Content column caps at 40rem against the left edge. Library cards go to two columns. Filters become a horizontal chip row |
+| 900px and up | **Designed.** This is the target | House and info bar side by side, so opening a hotspot does not push the drawing. An enlarged room keeps the rest of the house visible beside it. Library gets a persistent left filter rail. The hero holds 85svh. Page shell caps at 1140px and every section fills it |
+| 600 to 900px | **Works.** Falls out of the same CSS | Single column. The whole house stays visible, with the info bar below it. Sections fill the shell, which at this width is the window less its gutters. Library cards go to two columns. Filters become a horizontal chip row |
 | Below 600px | **Reflow floor, not a designed experience** | One column, no horizontal scrolling down to 320px. Parallax holds still. The hero shrinks to its content. The doll house gives way to "Everything in this house", the room-by-room link list, which carries every hotspot as an ordinary link. Filters become a plain stacked form. Everything is reachable and readable. Nothing is tuned |
 
-**Three widths and one left edge, settled 2026-08-26.** Every page had been assembling its own
-layout out of whatever it needed, and a reader moving between them met a title that was sometimes
-centered and sometimes not, over prose that was sometimes centered and sometimes not, and the two
-did not always agree on the same page. There are three widths on this site and one axis:
+**Two widths and one left edge, settled 2026-08-26.** Every page had been assembling its own layout
+out of whatever it needed, and a reader moving between them met a title that was sometimes centered
+and sometimes not, over prose that was sometimes centered and sometimes not, and the two did not
+always agree on the same page. There are two widths on this site and one axis:
 
 | Width | What takes it |
 |---|---|
 | The window | Anything whose background is the point: the page hero band, story bars and the stack, the Renter basics band, a `.band`, a photo band, the split color field |
-| 1140px, the page shell | The frame everything else sits in, and directly: the doll house, the library's card grid, a key point, a steps track, an improvement page's two-column intro |
-| 40rem, the measure | Every reading column, whatever page it is on. `.content-column` and `.improvement-body` are the same width, and since 2026-08-26 the same position |
+| 1140px, the page shell | Everything else, including the prose. The doll house, the library's card grid, a key point, a steps track, an improvement page's two-column intro, and every reading column |
 
 And the axis is the left edge of the page shell. The wordmark in the header starts there, so the
 page title starts there, so the lede under it starts there, so the prose under that starts there.
-Nothing is centered any more except things that are objects rather than text: a flip card in the
-middle of a column, the float card on `/about`, an empty state.
 
-`.content-column` was centered from 2026-08-21 and the reasoning was sound about the symptom — a
-left column under a centered page title reads as a column that failed to line up. It was aimed at
-the wrong half. The page titles were what was centered, and every article on the site was already
-left-aligning prose at the identical width, so the site ended up with one measure on two axes and
-which one a reader got depended on whether the page happened to be an article. Moving the titles
-left costs one rule and settles it for both.
+**There was a third width and it is gone, 2026-08-26.** The 40rem reading measure, `--measure`, used
+to cap `.content-column`, `.improvement-body`, `.improvement-intro__text`, a standalone photograph,
+a glossary definition and — through a rule in `base.css` — every `<p>` on the site wherever it sat.
+Two passes moved that column around, first centering it and then left-aligning it, and both left the
+same thing on the screen: a narrow strip of text with two thirds of a page empty beside it, in among
+bands, key points and card grids that all ran the full shell. It read as a column that had failed to
+fill its page rather than as a measure, and it was the single most-reported inconsistency across two
+rounds of feedback.
+
+So a section is as wide as the shell and everything in a section is as wide as the section. The
+global `<p>` cap is gone with it, along with the dozen `max-width: none` declarations that existed
+around the site to undo it locally.
+
+**What this costs, stated plainly.** At the shell's full width a line of body copy runs to roughly
+110 characters, which is past the 45-to-75 a typographer would ask for. That is a real cost and it
+was the reason the measure existed. The judgement made here is that it is the smaller of the two
+costs: an inconsistent page is noticed by every reader on every page, and a long line is noticed
+while reading a long stretch of prose, of which this site has deliberately little (§8 caps body copy
+at 60 consecutive words). Where a block genuinely is a long stretch — the safety card's list — the
+answer is two columns inside the full width rather than a narrow block inside it, which is a pattern
+this file already had.
+
+If the long lines turn out to be the worse trade, the way back is one number: reinstate a cap on
+`.content-column` and `.improvement-body`, at something like 54rem rather than the 40 it was.
+
+**A figure with nothing beside it centers.** A photograph set into a section on its own used to keep
+the reading measure and sit against the left edge. Against a full-width section that put a
+photograph in the left third of the page with nothing in the other two. It centers now, capped under
+the image files' own 1000px width, because a 1000px photograph stretched to 1140 is a blurred
+photograph. A figure that is one half of a two-column block — an improvement page's intro, an info
+panel — is not this case and has not changed.
 
 **Pointer targets:** 44×44px minimum stays in v1, on hotspots, carousel controls, disclosure bars
 and filter chips, with 8px between adjacent targets. Dense hit areas on a drawing are hard to hit
