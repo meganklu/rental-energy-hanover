@@ -860,6 +860,27 @@
   box-shadow: 0 0 0 1px var(--color-accent);
 }
 
+/* And the piece itself rises two pixels. Small on purpose, and on the drawing rather than on the
+   link, which is the rule the last three passes arrived at: the link is the hover target, and a
+   hover target that moves can carry itself out from under the pointer and hand the hover back. The
+   drawing inside it can move as much as it likes without that being possible.
+
+   Two pixels rather than the 1.05 scale this used to inherit from the shared tactile-hover block
+   (components.css). That scale was replacing the piece's own `translateX(-50%)` and throwing it half
+   its own width sideways; it is a `scale` property now and composes, and the doll house takes this
+   instead, because scaling a drawing that carries `vector-effect: non-scaling-stroke` rebuilds its
+   stroke geometry every frame. */
+@media (prefers-reduced-motion: no-preference) {
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot .icon {
+    transition: translate var(--motion-base) var(--motion-ease);
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:hover .icon,
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:focus-visible .icon {
+    translate: 0 -2px;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot .hotspot__label {
     transition: background-color var(--motion-fast) var(--motion-ease-smooth),
@@ -1164,6 +1185,18 @@
   .room-scene .hotspot:hover,
   .room-scene .hotspot:focus-visible {
     background: var(--color-surface);
+  }
+
+  /* Down here a hotspot is a bordered pill, so it takes the site's ordinary button response rather
+     than the drawing's two-pixel rise. Safe to scale: the chip is `position: static` with no
+     transform to lose, and its icon drops `non-scaling-stroke` (below). */
+  .room-scene .hotspot .icon {
+    translate: none;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:hover,
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:focus-visible {
+    scale: 1.05;
   }
 
   .room-scene .hotspot .icon,

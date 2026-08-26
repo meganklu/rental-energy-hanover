@@ -551,71 +551,63 @@ wall and the brown outlines there is enough separation for the lit edge to be ob
 the second signal and the info bar naming the piece is still the third, so nothing here rests on a
 color.
 
-**Hover, in three passes, and what it took to stop it stuttering (2026-08-26).** Worth writing out,
-because the first two passes each fixed something real and neither fixed the symptom.
+**Hover, in four passes, and the one line that was causing it (2026-08-26).** Worth writing out in
+full, because the first three passes each fixed something real and none of them fixed the symptom,
+and the reason they did not is the useful part.
 
-*Pass one* found four causes and fixed four causes. The `filter` transition on the hotspot ran
-against the selected piece's own infinite `filter` keyframes, and a running animation beats a
-transition, so hovering an open piece snapped. The scale had no `transform-origin` except when
-selected, so a piece standing on the floor grew from its middle and sank through the floorboards,
-then jumped origin when pressed. The filter sat on the link, so the glow spread around the name
-plate and the guide tag. And the scale sat on the link too, so twelve-pixel text was re-rasterized
-at a new size on every frame.
+The cause was in `components.css`, in the shared tactile-hover block, which has read
+`transform: scale(1.05)` since 2026-08-19 and lists `.hotspot:hover` among its targets.
+**`transform` is one property: setting it on hover does not add a scale to what an element already
+had, it replaces the whole thing.** Every piece in a furnished room is placed with
+`left: var(--x); transform: translateX(-50%)` — centred on its own coordinate — so hovering one
+dropped the centring and threw the drawing right by half its own width, then threw it back when the
+pointer left. If the jump carried the drawing out from under the pointer, that ended the hover,
+which put it back, which started the hover again.
 
-*Pass two* found the cost. **A scale and `vector-effect: non-scaling-stroke` cannot both be cheap.**
-That vector-effect is what keeps a furniture outline a constant weight in device pixels whatever
-size the room renders at, and it is load-bearing: without it a stroke at furniture size comes out as
-a marker line. But a stroke that must stay the same width on screen while its shape changes size has
-its outline geometry rebuilt from the path every frame. It cannot be handed to the compositor as a
-picture and scaled, and being handed to the compositor as a picture is the entire reason a transform
-is cheap. So the scale became a four-pixel lift.
+Every symptom reported over three rounds is that one line: the shaking, the moving in and out
+several times, worse at the edge of a piece, worse the faster the pointer moved, and different
+depending on which direction it came from.
 
-*Pass three* found that the lift was the problem too, for a different reason. Moving an outline drawn
-in a 1.6px non-scaling stroke through sub-pixel positions is exactly the regime where the stroke
-snaps between pixel rows frame to frame. The piece reads as vibrating rather than rising, which is
-what "it shakes" described. And four pixels is small enough that the entire travel happens inside
-that regime: there is no part of the move that is unambiguously a move.
+**Why three passes missed it.** All three searched `home.css`, which is where the doll house lives
+and where every hover rule for it had been written. The rule doing the damage was in the shared
+stylesheet, matched the bare `.hotspot` class rather than `.room-scene .hotspot`, and beat the
+placement rule on specificity. A grep scoped to the component's own file cannot find a rule that
+reaches into it from outside; the check that found it in the end asked a different question — which
+elements in the tactile list carry a base transform that `scale()` would replace — and that question
+answers itself in one pass over every stylesheet.
 
-**So the response is paint, and there are two rules now.** Nothing that is part of the hover target
-moves, and nothing on the drawing changes geometry. The name plate lights up, dark accent with white
-text. A plate is a box: its background and its text color animate smoothly at any size with no
-geometry anywhere in it.
+The block reads `scale: 1.05` now. `scale` is a separate property from `transform` and composes with
+it, so the centring survives. That fixed a second member of the same list at the same time: a peek
+carousel slide sits at `scale(0.9)` until it is the current one, and hovering a background slide had
+been popping it straight past the current slide to 1.05.
 
-*Pass four* took the last thing off the drawing. The lift was replaced by an untransitioned
-`drop-shadow` on the SVG, and it was still enough. The report that settled it was precise: hovering
-the name plate is smooth and hovering the object is not. Both put the link in exactly the same
-state, so the difference could not be in the styling — it had to be in what the pointer was over.
-Applying a filter to an SVG makes the browser render it through a separate buffer, and a
-`non-scaling-stroke` resolves against that buffer's coordinate system rather than the screen's, so
-the outline's weight can visibly snap when the filter turns on and again when it turns off. Over the
-plate the pointer is nowhere near the drawing and there is nothing to see; over the object it is the
-thing being looked at.
+**What the three passes did fix**, all of it still true and all of it still wanted:
 
-**The drawing does not respond to the pointer at all now.** The plate is the whole response, and it
-sits directly under (or over) the thing being pointed at. That is the fourth version of this effect,
-and the rule it leaves behind is the general one: in this pen, a drawing is a picture, and pictures
-do not react. Their labels do.
+- The `filter` transition on the hotspot ran against the selected piece's own infinite `filter`
+  keyframes, and a running animation beats a transition, so hovering an open piece snapped.
+- The scale had no `transform-origin` except when selected, so a piece standing on the floor grew
+  from its middle and sank through the floorboards, then jumped origin when pressed.
+- The filter and the scale sat on the link, so the glow spread around the name plate and the guide
+  tag, and twelve-pixel text was re-rasterized at a new size on every frame.
+- The name plate sat four pixels clear of the link's box, so crossing from the object to its name
+  passed through a strip belonging to neither and dropped the hover.
+- The press target was exactly the drawing's size on anything over 44px, so the edge of the target
+  was the edge of the picture and a pointer resting on the outline of a lamp sat on the boundary.
 
-The second rule is also what rules out the other half of the report, "it moves in and out multiple
-times". That is hover oscillation, and it has exactly one mechanism: the thing being hovered travels
-out from under the pointer, the hover ends, it comes back, and the cycle repeats. Nothing moves, so
-nothing can.
+**Where it landed.** The piece rises two pixels, and the rise is on the drawing rather than on the
+link. That is the rule these passes arrived at and it is worth keeping whatever else changes: **the
+link is the hover target, and a hover target that moves can carry itself out from under the pointer.
+The drawing inside it can move freely, because it cannot.** The name plate fills with the accent
+green and its text turns white, which is the part the eye actually follows. The drawing takes no
+filter on hover — scaling or filtering something drawn with `vector-effect: non-scaling-stroke`
+rebuilds its stroke geometry every frame — and the invisible press target stands eight pixels clear
+of the drawing on every side, so the boundary is out in the wallpaper where nobody aims.
 
-Two things were checked before rewriting rather than after, since neither is visible by eye. The
-hover targets do not overlap each other — every hotspot is a link box the size of its drawing, plus
-an invisible box at `max(100%, 44px)` centred on it, plus a name plate hanging outside the box, and
-all three take the hover; every pair of those across all six rooms was measured for intersection and
-none intersect. And the link box itself never moved in any of the three passes, only the drawing
-inside it did.
-
-**The selected glow stopped breathing at the same time**, for the same kind of reason. It was an
-infinite `filter` animation, so one drawing repainted forever while a reader hovered every other
+**The selected glow does not breathe**, for a related reason: an infinite `filter` animation repaints
+one drawing for as long as it is on screen, including while the reader is hovering every other
 drawing on the page. Selected carries the white glow, its name set heavier than every other name on
-the wall, and the info bar under the house naming the piece. The plate was filled in the light brand
-green for a few hours on 2026-08-26 and that came straight back out: a filled plate on the wall
-reads as a second thing competing with the glow it is meant to support, and it made "open" and
-"under the pointer" look like two versions of one state. Weight is the signal that is not a color,
-and the info bar is the one that is not visual at all.
+the wall, and the info bar under the house naming it. Weight is the signal that is not a color, and
+the info bar is the one that is not visual at all.
 
 **An object that does not apply is scenery, revised 2026-08-26.** Personalization used to set
 `hidden` on every hotspot the reader's heat type or who-pays answer ruled out, which took the object
@@ -2975,6 +2967,11 @@ gzip charges very little for prose that repeats itself as much as English does.
 - **Nothing loops that does not have to.** An infinite `filter` animation on one element repaints
   that element for as long as it is on screen, including while the reader is doing something else
   entirely.
+- **Never set `transform` on a state that an element already uses `transform` to position.** It is
+  one property and the state wins outright, so the element loses its placement for as long as the
+  state lasts. Use the individual `scale`, `translate` and `rotate` properties for a response, which
+  compose with `transform` instead of replacing it. This is what was throwing the doll house pieces
+  half their own width sideways on hover for a week — see §3.2.
 - **Never measure layout in a pointer handler.** `getBoundingClientRect` forces the browser to
   resolve layout before it can answer. `assets/js/magnetic.js` called it on every `pointermove`,
   which is sixty forced layouts a second for a rectangle that cannot change while the pointer is

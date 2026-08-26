@@ -74,11 +74,29 @@
    Added 2026-08-19, DESIGN.md §5. Every button-like control grows slightly on hover, additive to
    whatever color/border change it already has. A response transition, so it is held still (not
    merely slowed) under the same reduced-motion gating as everything else — the OS setting, or
-   the reduce-motion switch. Each target already declares `transition: transform ...` on its own base
-   rule; this block only supplies the actual scale, so it stays in one place. */
+   the reduce-motion switch. Each target already declares its own transition on its base rule; this
+   block only supplies the growth, so it stays in one place.
+
+   **`scale`, not `transform: scale()`, fixed 2026-08-26, and this was a real bug rather than a
+   tidy-up.** `transform` is one property: setting it on hover does not add a scale to what an
+   element already had, it replaces the whole thing. Two members of this list position themselves
+   with a transform of their own, and both were losing it for as long as the pointer was on them.
+
+   The doll house pieces were the bad one. Every piece in a furnished room is placed with
+   `left: var(--x); transform: translateX(-50%)` — centred on its own coordinate — so hovering one
+   dropped the centring and the drawing jumped right by half its own width, then jumped back when
+   the pointer left. If the jump carried it out from under the pointer, that ended the hover, which
+   put it back, which started the hover: the piece flickering in and out. Every symptom reported
+   over three rounds — shaking, jumping in and out, worse at the edge of a piece, worse the faster
+   the pointer moved, worse from some directions than others — is that one line.
+
+   The other was the peek carousel, where a slide sits at `scale(0.9)` until it is the current one;
+   hovering a background slide popped it straight past the current slide to 1.05.
+
+   `scale` is a separate property from `transform` and composes with it, so the centring survives and
+   a peek slide grows relative to its own resting size instead of ignoring it. */
 @media (prefers-reduced-motion: no-preference) {
   body:not(:has(.reduce-motion-input:checked)) .btn:hover,
-  body:not(:has(.reduce-motion-input:checked)) .hotspot:hover,
   body:not(:has(.reduce-motion-input:checked)) .fab:hover,
   body:not(:has(.reduce-motion-input:checked)) .scroll-cue:hover,
   body:not(:has(.reduce-motion-input:checked)) .card:hover,
@@ -88,7 +106,7 @@
   body:not(:has(.reduce-motion-input:checked)) .help-icon:hover,
   body:not(:has(.reduce-motion-input:checked)) .progress-reset:hover,
   body:not(:has(.reduce-motion-input:checked)) .motion-fab__pause:hover {
-    transform: scale(1.05);
+    scale: 1.05;
   }
 }
 

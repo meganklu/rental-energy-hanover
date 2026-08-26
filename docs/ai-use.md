@@ -542,3 +542,7 @@ Doll house section:
 - Glitching hover effect seems to also be happening when hoving at the edge of the object. Is there a way to get around this. For example, would making the area that you can hover over and still have the effect larger help?
 
 Fix the site-review date. It should be 2026-08-26.
+
+### 2026-08-26 Hover Effect
+
+For the doll house section object hover effect, make the translation/amount that the object moves smaller
