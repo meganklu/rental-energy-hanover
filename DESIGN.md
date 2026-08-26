@@ -1428,11 +1428,11 @@ behind the two that had been designed. Three of them have a drawn scene now, in 
 (§3.2): flat shapes, one outline weight, the toy palette for anything that is a physical object and
 the site's greens for anything that is a mark on it.
 
-| Page | The scene | What it does on scroll |
+| Page | The scene | What it does through the hold |
 |---|---|---|
-| `/your-rights` | A wall thermometer with the state minimum marked on it | The column rises to the 65°F line and stops there |
-| `/programs` | Three application forms, one per permission state, in that state's badge color | They fan apart, and a tick lands on the one a renter can sign |
-| `/checklist` | A clipboard with four lines | Three ticks draw themselves in, one after another |
+| `/your-rights` | A wall thermometer with the state minimum marked on it | The column starts as a bead in the neck and rises, and the 65°F line slides in to meet it |
+| `/programs` | Three application forms, one per permission state, in that state's badge color | They are turned one at a time, front sheet first, each lifting off the stack into its place in the fan; a tick lands last on the one a renter can sign |
+| `/checklist` | A clipboard with four lines | The four lines cross themselves off one after another |
 
 **Every scene is `aria-hidden`, and nothing in one is the only place its content appears.** The
 65°F is written out in the first key point on that page, the three permission states are on every
@@ -1446,12 +1446,34 @@ is a drawing that fails on a browser without scroll timelines, which is the same
 and the door already follow.
 
 **The layout is one grid**, words beside scene, stacked below 800px with the scene first so a phone
-still opens on the drawing. The two halves drift at different rates as the hero leaves, which is the
-multi-level parallax the rest of the site's scroll motion uses.
+still opens on the drawing.
 
-`/about` is the fourth nav page and keeps its own opening, the split color field of §3.7. It was
-already the most distinctive page on the site and adding a scene to it would have been a second
-subject competing with the one it is about.
+**The reader is held at the hero, added 2026-08-26.** The three scenes drifted past on a two-level
+parallax, which is something a reader sees on the way somewhere else. Each of these drawings says
+something, and a drawing that says something wants long enough to say it. Every hero sits in a track
+two viewports tall with a one-viewport stage stuck to the top of it, and each scene's animation
+reads `scroll(root block)` over the pinned stretch — the same shape as the doormat on the home page
+(§3.1) and the door on `/improvements` (§3.4), which is now the site's one way of doing this rather
+than its third.
+
+`--hold` is the length of the pinned stretch, declared once on the track and read by every scene, so
+the four scenes' timings are stated as fractions of one number instead of four sets of viewport
+percentages that have to be kept in step by hand. The track is 210vh rather than 200 because the
+site header sits above it, so the pin starts a header's height into the scroll; the extra tenth is
+what the scenes spend finishing before the hero lets go.
+
+The words drift a little across the hold so the pinned screen is not completely still while the
+drawing beside it works. Transform-only, for the reason every other scroll-driven move here is.
+
+Pinning is only worth anything if something happens while it is pinned, so the track and the
+animations sit behind exactly the same gate: scroll-timeline support, both reduced-motion controls,
+a 800px floor and a 640px height floor. Fail any of them and the track collapses to the hero's own
+height, nothing sticks, and the resting drawing is the finished one.
+
+**The real checkboxes on `/checklist` are not animated, and that is deliberate.** The clipboard in
+its hero crosses off four lines as the reader scrolls, and the list below it does not. A drawing of
+a list ticking itself off is a drawing. A control that ticks itself off is a claim about what is on
+somebody's list, and that claim would be wrong.
 
 **Every list ticks off, revised 2026-08-26.** The do list had the only checkboxes on the site, which
 left the two lists a reader actually walks around holding — the shop list and the list of things to

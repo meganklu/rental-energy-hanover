@@ -5398,32 +5398,66 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* The title arrives from the side and the scene from the other, at different rates, which is the
-   two-level parallax the rest of the site's scroll motion uses (§7). */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) and (min-width: 800px) {
-    body:not(:has(.reduce-motion-input:checked)) .page-hero__text {
-      animation: page-hero-text linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 60%;
+/* ---------- Page hero: the hold, added 2026-08-26 ----------
+   The reader is held at the hero while they scroll, and the scroll position is what drives the
+   drawing. Same shape as the doormat on the home page (§3.1) and the door on /improvements (§3.4):
+   a track two viewports tall with a one-viewport stage stuck to the top of it, and every scene
+   animation reading `scroll(root block)` over the pinned stretch rather than a `view()` timeline of
+   its own. `--hold` is the range every scene writes its own timings against, so the length of the
+   hold is one number here rather than four numbers spread down the file.
+
+   The hero used to drift past on a two-level parallax instead. A parallax is something a reader
+   sees on the way past; these drawings each say something, and a drawing that says something wants
+   long enough to say it.
+
+   Gated four ways, and pinning is only worth anything if something happens while it is pinned:
+   without scroll-timeline support, under either reduced-motion control, on a narrow window, or on a
+   short one, the track collapses to the hero's own height and nothing sticks. Every scene's resting
+   state is its finished state, so all four of those leave a complete drawing. */
+.page-hero-hold {
+  position: relative;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 800px) and (min-height: 640px) {
+    body:not(:has(.reduce-motion-input:checked)) .page-hero-hold {
+      /* 210 rather than 200: the site header sits above the track, so the pin starts a header's
+         height into the scroll. The extra ten viewport-percent is what the scenes' own ranges,
+         which all end at `--hold`, spend finishing before the hero lets go. */
+      height: 210vh;
     }
 
-    body:not(:has(.reduce-motion-input:checked)) .page-hero__scene {
-      animation: page-hero-scene linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 70%;
+    body:not(:has(.reduce-motion-input:checked)) .page-hero-hold > .page-hero {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .page-hero-hold > .page-hero > .page-hero__inner {
+      width: 100%;
+    }
+
+    /* The words drift up a little across the hold, so the pinned screen is not completely still
+       while the drawing beside it works. Transform-only, for the reason every other scroll-driven
+       move on this site is: a timeline stuck anywhere still leaves legible, full-contrast text. */
+    body:not(:has(.reduce-motion-input:checked)) .page-hero-hold .page-hero__text {
+      animation: page-hero-text linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 var(--hold);
     }
   }
 }
 
-@keyframes page-hero-text {
-  from { transform: translateY(0); }
-  to { transform: translateY(-2rem); }
+/* The length of the pinned stretch, in the one place the scenes below all read it from. */
+.page-hero-hold {
+  --hold: 100vh;
 }
 
-@keyframes page-hero-scene {
-  from { transform: translateY(2.5rem); }
-  to { transform: translateY(-2.5rem); }
+@keyframes page-hero-text {
+  from { transform: translateY(1.25rem); }
+  to { transform: translateY(-1.25rem); }
 }
 
 /* ---------- Hero scene: the thermometer, /your-rights ---------- */
@@ -5482,21 +5516,50 @@ body:has(.motion-loop) .motion-fab__pause {
   stroke: none;
 }
 
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
+/* The 65 line and its number arrive with the column rather than being printed on the glass from the
+   start, so what the reader watches is a thermometer reaching a mark. `transform-box: fill-box` is
+   what makes the slide measure against the group's own bounds. */
+.thermo__mark {
+  transform-box: fill-box;
+  transform-origin: right center;
+}
+
+/* The column starts just clear of the bulb and rises through the hold, revised 2026-08-26. It used
+   to run on a `view()` timeline from 0.18, which is a third of the way up the glass before the
+   reader has done anything, and it finished while the hero was still arriving. It starts at 0.05
+   now, which is a bead of mercury sitting in the neck, and the whole rise happens inside the pin.
+
+   Ends at full height, which is the column standing at the 65°F line — so the drawing frozen at any
+   point is a thermometer reading something, and frozen at the end it is the page's own number. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 800px) and (min-height: 640px) {
+    body:not(:has(.reduce-motion-input:checked)) .thermo__mercury,
+    body:not(:has(.reduce-motion-input:checked)) .thermo__mark {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+    }
+
     body:not(:has(.reduce-motion-input:checked)) .thermo__mercury {
-      animation: thermo-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 20% cover 55%;
+      animation-name: thermo-rise;
+      animation-range: 0 calc(var(--hold) * 0.82);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .thermo__mark {
+      animation-name: thermo-mark-in;
+      animation-range: calc(var(--hold) * 0.58) var(--hold);
     }
   }
 }
 
-/* Ends at full height, which is the column standing at the 65°F line — so the drawing frozen at any
-   point is a thermometer reading something, and frozen at the end it is the page's own number. */
 @keyframes thermo-rise {
-  from { transform: scaleY(0.18); }
+  from { transform: scaleY(0.05); }
   to { transform: scaleY(1); }
+}
+
+@keyframes thermo-mark-in {
+  from { transform: translateX(-2.5rem); }
+  to { transform: translateX(0); }
 }
 
 /* ---------- Hero scene: the applications, /programs ---------- */
@@ -5547,41 +5610,77 @@ body:has(.motion-loop) .motion-fab__pause {
 .forms__sheet--mid { transform: rotate(-3deg) translateX(-4px); }
 .forms__sheet--front { transform: rotate(5deg) translateX(10px); }
 
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    body:not(:has(.reduce-motion-input:checked)) .forms__sheet {
-      animation: forms-fan linear both;
-      animation-timeline: view();
-      animation-range: entry 15% cover 50%;
-    }
+/* The tick lands last, drawn in one stroke. One dash length longer than the path, so the offset can
+   be written once, the same way the clipboard's ticks are drawn. */
+.forms__tick {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
 
-    body:not(:has(.reduce-motion-input:checked)) .forms__sheet--back {
-      animation-name: forms-fan-back;
-    }
+/* Leafed through rather than fanned open, revised 2026-08-26. The three sheets used to spread apart
+   together over a `view()` range, which is one move the reader half-sees on the way past. They now
+   turn one at a time across the pinned hold, front sheet first, each lifting off the stack and
+   settling into its place in the fan before the next one starts — which is what going through a
+   pile of forms looks like, and which is the question this page answers. The tick lands on the
+   front sheet at the end, on the one a renter can sign.
 
-    body:not(:has(.reduce-motion-input:checked)) .forms__sheet--mid {
-      animation-name: forms-fan-mid;
+   The three ranges overlap by a fifth, so the next sheet starts moving as the one before it settles
+   rather than after it has stopped. Consecutive moves with a gap between them read as three
+   separate animations; overlapped, they read as one hand working down a pile. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 800px) and (min-height: 640px) {
+    body:not(:has(.reduce-motion-input:checked)) .forms__sheet,
+    body:not(:has(.reduce-motion-input:checked)) .forms__tick {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
     }
 
     body:not(:has(.reduce-motion-input:checked)) .forms__sheet--front {
-      animation-name: forms-fan-front;
+      animation-name: forms-turn-front;
+      animation-range: 0 calc(var(--hold) * 0.4);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .forms__sheet--mid {
+      animation-name: forms-turn-mid;
+      animation-range: calc(var(--hold) * 0.32) calc(var(--hold) * 0.68);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .forms__sheet--back {
+      animation-name: forms-turn-back;
+      animation-range: calc(var(--hold) * 0.6) calc(var(--hold) * 0.9);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .forms__tick {
+      animation-name: forms-tick-draw;
+      animation-range: calc(var(--hold) * 0.86) var(--hold);
     }
   }
 }
 
-@keyframes forms-fan-back {
-  from { transform: rotate(0deg) translateX(0); }
-  to { transform: rotate(-9deg) translateX(-14px); }
+/* Each sheet lifts clear of the stack at the halfway point and comes back down into its own place
+   in the fan. Without the lift the move is a slide, and a slid sheet is a sheet nobody turned. */
+@keyframes forms-turn-front {
+  from { transform: rotate(0deg) translate(0, 0); }
+  50% { transform: rotate(11deg) translate(30px, -26px); }
+  to { transform: rotate(5deg) translateX(10px); }
 }
 
-@keyframes forms-fan-mid {
-  from { transform: rotate(0deg) translateX(0); }
+@keyframes forms-turn-mid {
+  from { transform: rotate(0deg) translate(0, 0); }
+  50% { transform: rotate(-9deg) translate(-26px, -22px); }
   to { transform: rotate(-3deg) translateX(-4px); }
 }
 
-@keyframes forms-fan-front {
-  from { transform: rotate(0deg) translateX(0); }
-  to { transform: rotate(5deg) translateX(10px); }
+@keyframes forms-turn-back {
+  from { transform: rotate(0deg) translate(0, 0); }
+  50% { transform: rotate(-17deg) translate(-34px, -18px); }
+  to { transform: rotate(-9deg) translateX(-14px); }
+}
+
+@keyframes forms-tick-draw {
+  from { stroke-dashoffset: 60; }
+  to { stroke-dashoffset: 0; }
 }
 
 /* ---------- Hero scene: the clipboard, /checklist ---------- */
@@ -5611,23 +5710,57 @@ body:has(.motion-loop) .motion-fab__pause {
   stroke-dashoffset: 0;
 }
 
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
+/* The box takes the tick's color as the tick lands, which is what a checkbox does when it is
+   checked. Kept off the tick's own timeline so it can lag it by a fraction and read as a
+   consequence of the tick rather than as part of the same stroke. */
+.clipboard__box {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Four lines crossed off one after another across the hold, revised 2026-08-26. Three of them used
+   to draw on a `view()` timeline, which finished about the time the hero finished arriving, and the
+   fourth stayed blank. The list is what this page is, so working down it is what the drawing should
+   spend the hold doing, and it ends with every line crossed off.
+
+   The real checkboxes below are deliberately not animated. They carry a reader's own state, and a
+   drawing of a list ticking itself off is a drawing; a control that ticks itself off is a lie about
+   what is on the list. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 800px) and (min-height: 640px) {
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__tick,
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__box {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+    }
+
     body:not(:has(.reduce-motion-input:checked)) .clipboard__tick {
-      animation: tick-draw linear both;
-      animation-timeline: view();
+      animation-name: tick-draw;
     }
 
-    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(2) .clipboard__tick {
-      animation-range: entry 20% cover 42%;
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__box {
+      animation-name: tick-box;
     }
 
-    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(3) .clipboard__tick {
-      animation-range: entry 30% cover 52%;
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(1) .clipboard__tick,
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(1) .clipboard__box {
+      animation-range: calc(var(--hold) * 0.06) calc(var(--hold) * 0.26);
     }
 
-    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(4) .clipboard__tick {
-      animation-range: entry 40% cover 62%;
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(2) .clipboard__tick,
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(2) .clipboard__box {
+      animation-range: calc(var(--hold) * 0.28) calc(var(--hold) * 0.48);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(3) .clipboard__tick,
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(3) .clipboard__box {
+      animation-range: calc(var(--hold) * 0.5) calc(var(--hold) * 0.7);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(4) .clipboard__tick,
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(4) .clipboard__box {
+      animation-range: calc(var(--hold) * 0.72) calc(var(--hold) * 0.92);
     }
   }
 }
@@ -5637,6 +5770,14 @@ body:has(.motion-loop) .motion-fab__pause {
 @keyframes tick-draw {
   from { stroke-dashoffset: 40; }
   to { stroke-dashoffset: 0; }
+}
+
+/* The box presses in as its line is crossed off. Transform-only, so a frozen timeline leaves a box
+   the right size with the right tick in it. */
+@keyframes tick-box {
+  from { transform: scale(1); }
+  40% { transform: scale(0.88); }
+  to { transform: scale(1); }
 }
 
 .page-head {

@@ -52,48 +52,51 @@
 
   <!-- The 65°F thermometer, added 2026-08-26. Every page reachable from the nav now opens on
        something drawn rather than on a centered title, and the thing worth drawing here is the one
-       number the page turns on: the column rises to the state minimum as the reader scrolls and
-       stops there. Decorative, so the scene is aria-hidden; the figure itself is in the first key
-       point below, in words. -->
-  <section class="page-hero page-hero--rights full-bleed" aria-labelledby="rights-h">
-    <div class="page-hero__inner page-shell">
-      <div class="page-hero__text">
-        <h1 id="rights-h">Your rights</h1>
-        <p class="lede">
-          What New Hampshire requires of a landlord, what to do when an apartment is genuinely too
-          cold, and who to call.
-        </p>
-      </div>
+       number the page turns on. The hero holds while the reader scrolls: the column starts as a
+       bead in the neck of the glass, rises through the hold, and the 65 line slides in to meet it.
+       Decorative, so the scene is aria-hidden; the figure itself is in the first key point below,
+       in words. -->
+  <div class="page-hero-hold">
+    <section class="page-hero page-hero--rights full-bleed" aria-labelledby="rights-h">
+      <div class="page-hero__inner page-shell">
+        <div class="page-hero__text">
+          <h1 id="rights-h">Your rights</h1>
+          <p class="lede">
+            What New Hampshire requires of a landlord, what to do when an apartment is genuinely too
+            cold, and who to call.
+          </p>
+        </div>
 
-      <div class="page-hero__scene" aria-hidden="true">
-        <svg class="thermo" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
-          <!-- The wall behind it, drifting at half the rate of the instrument in front. -->
-          <g class="thermo__wall">
-            <rect x="18" y="14" width="164" height="312" rx="10"/>
-            <path d="M18 96 H182 M18 178 H182 M18 260 H182"/>
-          </g>
+        <div class="page-hero__scene" aria-hidden="true">
+          <svg class="thermo" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
+            <!-- The wall behind it, drifting at half the rate of the instrument in front. -->
+            <g class="thermo__wall">
+              <rect x="18" y="14" width="164" height="312" rx="10"/>
+              <path d="M18 96 H182 M18 178 H182 M18 260 H182"/>
+            </g>
 
-          <g class="thermo__body">
-            <!-- Bulb first, tube over it: the tube's own white fill hides the top of the bulb's
-                 outline, so the two read as one piece of glass rather than a circle with a stick on
-                 it. The tube is an open path for the same reason — a closed one would draw a line
-                 across where they meet. -->
-            <circle class="thermo__bulb" cx="100" cy="272" r="34"/>
-            <path class="thermo__tube" d="M132 260 V56 a16 16 0 0 0 -16 -16 h-32 a16 16 0 0 0 -16 16 v204"/>
-            <circle class="thermo__mercury-bulb" cx="100" cy="272" r="24"/>
-            <rect class="thermo__mercury" x="90" y="130" width="20" height="146" rx="10"/>
-            <g class="thermo__ticks">
-              <path d="M136 96 h22 M136 130 h14 M136 164 h22 M136 198 h14 M136 232 h22"/>
+            <g class="thermo__body">
+              <!-- Bulb first, tube over it: the tube's own white fill hides the top of the bulb's
+                   outline, so the two read as one piece of glass rather than a circle with a stick on
+                   it. The tube is an open path for the same reason — a closed one would draw a line
+                   across where they meet. -->
+              <circle class="thermo__bulb" cx="100" cy="272" r="34"/>
+              <path class="thermo__tube" d="M132 260 V56 a16 16 0 0 0 -16 -16 h-32 a16 16 0 0 0 -16 16 v204"/>
+              <circle class="thermo__mercury-bulb" cx="100" cy="272" r="24"/>
+              <rect class="thermo__mercury" x="90" y="130" width="20" height="146" rx="10"/>
+              <g class="thermo__ticks">
+                <path d="M136 96 h22 M136 130 h14 M136 164 h22 M136 198 h14 M136 232 h22"/>
+              </g>
+              <g class="thermo__mark">
+                <path d="M46 130 H150"/>
+                <text x="40" y="136" text-anchor="end">65&#176;F</text>
+              </g>
             </g>
-            <g class="thermo__mark">
-              <path d="M46 130 H150"/>
-              <text x="40" y="136" text-anchor="end">65&#176;F</text>
-            </g>
-          </g>
-        </svg>
+          </svg>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section class="section page-shell">
 

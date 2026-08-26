@@ -50,48 +50,52 @@
 
 <main id="main">
 
-  <!-- The clipboard, added 2026-08-26. Three ticks draw themselves in as the reader scrolls, which
-       is the page in one picture: a list you take somewhere and cross things off. Decorative and
-       aria-hidden; the real checkboxes are below. -->
-  <section class="page-hero page-hero--list full-bleed" aria-labelledby="list-h">
-    <div class="page-hero__inner page-shell">
-      <div class="page-hero__text">
-        <h1 id="list-h">Your list</h1>
-        <p class="lede">
-          Everything you have added, sorted into what to buy, what to ask your landlord, and what to
-          do. Print it, save it, or send it to your roommates.
-        </p>
-      </div>
+  <!-- The clipboard, added 2026-08-26. The hero holds while the reader scrolls and the four lines
+       cross themselves off one after another, which is the page in one picture: a list you take
+       somewhere and work down. Decorative and aria-hidden; the real checkboxes below are the ones
+       that carry state, and they are deliberately left for the reader to tick. -->
+  <div class="page-hero-hold">
+    <section class="page-hero page-hero--list full-bleed" aria-labelledby="list-h">
+      <div class="page-hero__inner page-shell">
+        <div class="page-hero__text">
+          <h1 id="list-h">Your list</h1>
+          <p class="lede">
+            Everything you have added, sorted into what to buy, what to ask your landlord, and what to
+            do. Print it, save it, or send it to your roommates.
+          </p>
+        </div>
 
-      <div class="page-hero__scene" aria-hidden="true">
-        <svg class="clipboard" viewBox="0 0 240 300" xmlns="http://www.w3.org/2000/svg">
-          <rect class="clipboard__board" x="24" y="26" width="192" height="252" rx="12"/>
-          <rect class="clipboard__paper" x="42" y="52" width="156" height="208" rx="6"/>
-          <rect class="clipboard__clip" x="94" y="12" width="52" height="30" rx="8"/>
+        <div class="page-hero__scene" aria-hidden="true">
+          <svg class="clipboard" viewBox="0 0 240 300" xmlns="http://www.w3.org/2000/svg">
+            <rect class="clipboard__board" x="24" y="26" width="192" height="252" rx="12"/>
+            <rect class="clipboard__paper" x="42" y="52" width="156" height="208" rx="6"/>
+            <rect class="clipboard__clip" x="94" y="12" width="52" height="30" rx="8"/>
 
-          <g class="clipboard__row">
-            <rect class="clipboard__box" x="62" y="84" width="22" height="22" rx="5"/>
-            <path class="clipboard__rule" d="M96 95 h84"/>
-            <path class="clipboard__tick" d="M66 95 l5 6 l12 -14"/>
-          </g>
-          <g class="clipboard__row">
-            <rect class="clipboard__box" x="62" y="128" width="22" height="22" rx="5"/>
-            <path class="clipboard__rule" d="M96 139 h68"/>
-            <path class="clipboard__tick" d="M66 139 l5 6 l12 -14"/>
-          </g>
-          <g class="clipboard__row">
-            <rect class="clipboard__box" x="62" y="172" width="22" height="22" rx="5"/>
-            <path class="clipboard__rule" d="M96 183 h90"/>
-            <path class="clipboard__tick" d="M66 183 l5 6 l12 -14"/>
-          </g>
-          <g class="clipboard__row">
-            <rect class="clipboard__box" x="62" y="216" width="22" height="22" rx="5"/>
-            <path class="clipboard__rule" d="M96 227 h58"/>
-          </g>
-        </svg>
+            <g class="clipboard__row">
+              <rect class="clipboard__box" x="62" y="84" width="22" height="22" rx="5"/>
+              <path class="clipboard__rule" d="M96 95 h84"/>
+              <path class="clipboard__tick" d="M66 95 l5 6 l12 -14"/>
+            </g>
+            <g class="clipboard__row">
+              <rect class="clipboard__box" x="62" y="128" width="22" height="22" rx="5"/>
+              <path class="clipboard__rule" d="M96 139 h68"/>
+              <path class="clipboard__tick" d="M66 139 l5 6 l12 -14"/>
+            </g>
+            <g class="clipboard__row">
+              <rect class="clipboard__box" x="62" y="172" width="22" height="22" rx="5"/>
+              <path class="clipboard__rule" d="M96 183 h90"/>
+              <path class="clipboard__tick" d="M66 183 l5 6 l12 -14"/>
+            </g>
+            <g class="clipboard__row">
+              <rect class="clipboard__box" x="62" y="216" width="22" height="22" rx="5"/>
+              <path class="clipboard__rule" d="M96 227 h58"/>
+              <path class="clipboard__tick" d="M66 227 l5 6 l12 -14"/>
+            </g>
+          </svg>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <section class="section page-shell">
 
