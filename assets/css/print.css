@@ -107,3 +107,17 @@ details {
 .site-footer a {
   color: #000;
 }
+
+/* The horizontal steps track is a column again on paper: a row that scrolls sideways prints as one
+   card and six missing ones. Added 2026-08-26. */
+.steps-track {
+  display: block !important;
+  overflow: visible !important;
+  padding-inline: 0 !important;
+}
+
+.steps-track__step {
+  flex: none !important;
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}

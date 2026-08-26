@@ -913,6 +913,130 @@
   to { transform: translateX(0); }
 }
 
+/* ---------- Steps track, added 2026-08-26 ----------
+   The horizontal layout switch. Below 900px it is an ordinary numbered list in a column, which is
+   what it has to be on a phone and what it stays as in print. At 900px and up the same list turns
+   on its side: one card per step, in order, running off the right edge of the window so the row
+   reads as a sequence that continues rather than as a grid that happens to have seven cells.
+
+   It is a real scroll container, not a pinned track driven by page scroll. That matters for more
+   than taste: a scroll-hijacked row moves content out of view without moving focus, so a keyboard
+   reader can land on a link nobody can see. Here the track takes `tabindex="0"` and arrow keys move
+   it, focus inside a card scrolls that card into view by itself, and scroll-snap stops it between
+   cards rather than mid-sentence. No JavaScript is involved in any of that.
+
+   The peek at the right edge is the affordance: the last visible card is cut, so the row visibly
+   has more in it. `scroll-padding-inline-start` keeps a snapped card clear of the page gutter. */
+.steps-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-5);
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.steps-track__step {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  grid-template-areas: "number title" ". body";
+  gap: var(--space-2) var(--space-4);
+  align-items: start;
+}
+
+.steps-track__number {
+  grid-area: number;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.steps-track__title {
+  grid-area: title;
+  margin: 0;
+  align-self: center;
+  font-size: var(--text-h4);
+}
+
+.steps-track__step p {
+  grid-area: body;
+  margin: 0;
+  max-width: none;
+}
+
+@media (min-width: 900px) {
+  .steps-track {
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    /* `proximity` rather than `mandatory`: mandatory takes the scroll away from the reader between
+       cards, and on a row this long that is seven forced stops on the way to the end. */
+    scroll-snap-type: x proximity;
+    padding-block: var(--space-2) var(--space-5);
+    /* The row starts at the reading column's left edge and runs to the window's right edge, so the
+       sequence reads as leaving the page rather than as ending inside a box. The scroll padding has
+       to match the start inset exactly, or the first card snaps flush to the window edge on load and
+       the row starts a page gutter to the left of its own heading. */
+    --track-inset: max(var(--space-5), calc(50vw - 570px + var(--space-5)));
+    max-width: none;
+    margin-inline: 0;
+    padding-inline: var(--track-inset);
+    scroll-padding-inline-start: var(--track-inset);
+  }
+
+  .steps-track__step {
+    flex: 0 0 clamp(16rem, 22vw, 20rem);
+    scroll-snap-align: start;
+    display: block;
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+  }
+
+  .steps-track__number {
+    margin-bottom: var(--space-3);
+  }
+
+  .steps-track__title {
+    margin-bottom: var(--space-2);
+  }
+
+  /* The track is focusable, so it needs the site's own ring rather than the browser's. */
+  .steps-track:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: calc(var(--focus-ring-offset) * -1);
+  }
+}
+
+/* Each card lifts as it crosses into the row, which is the horizontal equivalent of the scroll
+   reveal the headings take. Behind the same three gates, and the resting state is the finished one. */
+@supports (animation-timeline: view(inline)) {
+  @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+    body:not(:has(.reduce-motion-input:checked)) .steps-track__step {
+      animation: steps-arrive linear both;
+      animation-timeline: view(inline);
+      animation-range: entry 0% entry 90%;
+    }
+  }
+}
+
+@keyframes steps-arrive {
+  from { transform: translateY(1.25rem); }
+  to { transform: translateY(0); }
+}
+
 /* ---------- Key point, added 2026-08-26 ----------
    What a story bar becomes when it is on its own. Nine pages carried a single bar inside a
    `.story-stack`, which meant a full-bleed band, a display-size heading and a screen of height for
