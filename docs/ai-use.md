@@ -445,8 +445,3 @@ General design choices:
 - All of the pages accessible from the nav bar should have a more interesting and interactive hero section, like the home page hero section and improvements page hero section
 
 Put major design changes in a new branch
-
-### 2026-08-26 Doll House Selected State
-
-Addition to the doll house section edits:
-- For the selected element, add a glowing effect instead of the green border

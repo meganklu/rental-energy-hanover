@@ -1298,6 +1298,21 @@ than as the page's primary action. It is the only page with a permission callout
 so the only page where the mistake was possible; the other ten put the actions paragraph directly
 after the fact row and are unchanged.
 
+**The three approach cards got a ground of their own, revised 2026-08-26.** They were a translucent
+white border and nothing else, sitting straight on the color field. The field is two greens with a
+seam down the middle of the page, and the middle card sat on top of that seam, so one paragraph's
+background changed color halfway along the line. They carry their own dark ground now, one shade
+below both halves, blurred where `backdrop-filter` exists so the field still shows through them and
+opaque where it does not. White measures 9.2:1 over the blurred version and 11.6:1 over the
+fallback, both against the lighter half.
+
+**Hanover is a photograph of Hanover now, revised 2026-08-26.** "Hanover in particular" was
+illustrated with a stock brick apartment block that could have been any town in the country, under a
+heading whose entire job is to say this one. It is a view of the town from the ridge above it
+instead. That photograph is the site's one non-Unsplash image and its one share-alike obligation;
+[docs/image-credits.md](docs/image-credits.md) records why, and why the Town of Hanover's own aerial
+photograph is not the file committed here.
+
 ### 3.9 The programs page, revised 2026-08-25
 
 `/programs` is the page a renter arrives at holding a question their landlord asked, or holding a

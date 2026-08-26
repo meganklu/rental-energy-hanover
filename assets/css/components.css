@@ -4544,8 +4544,17 @@ body:has(.motion-loop) .motion-fab__pause {
   margin-inline: auto;
 }
 
-/* The three approaches, sitting directly on the color field rather than in cards, so the field
-   stays continuous behind them. Bordered in translucent white to keep them separable. */
+/* The three approaches. Revised 2026-08-26: they used to be a translucent white border and nothing
+   else, so the color field ran straight through them — and the field is two greens with a seam down
+   the middle of the page, which the middle card sat directly on top of. Reading a paragraph whose
+   background changes halfway along the line is the problem the doll house's name plates solve, in a
+   different place on the same site.
+
+   The cards carry their own dark ground now, one shade below both halves of the field, so the seam
+   passes behind them rather than through them. Where `backdrop-filter` is available they take a
+   blur and less opacity, which keeps the field visible through them: the point of the section is
+   still that these three sit inside the colored stretch rather than after it. White text measures
+   9.2:1 over the blurred version and 11.6:1 over the opaque fallback, both over the lighter half. */
 .split-approach {
   display: grid;
   gap: var(--space-4);
@@ -4556,9 +4565,17 @@ body:has(.motion-loop) .motion-fab__pause {
 }
 
 .split-approach li {
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--radius-md);
   padding: var(--space-5);
+  background: rgba(6, 48, 31, 0.72);
+}
+
+@supports (backdrop-filter: blur(10px)) {
+  .split-approach li {
+    background: rgba(6, 48, 31, 0.45);
+    backdrop-filter: blur(10px);
+  }
 }
 
 .split-approach h3 {
