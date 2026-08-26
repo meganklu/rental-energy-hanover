@@ -22,7 +22,9 @@
 .program-filter,
 .program__more > summary,
 .todo-item__links,
-.todo-shared {
+.todo-shared,
+.ask-email__fields,
+.ask-email__actions {
   display: none !important;
 }
 
@@ -108,6 +110,48 @@ details {
   color: #000;
 }
 
+/* The page heroes' scenes are decoration and print as a quarter-page of nothing useful. Added
+   2026-08-26 with the heroes. The title and the lede above them stay. */
+.page-hero__scene {
+  display: none !important;
+}
+
+/* The story bars are dark full-bleed bands on screen, which on paper is two-thirds of a sheet of
+   green ink around white text that most printers will render as gray on gray. Added 2026-08-26 with
+   the rebuild: black on white, no breakout, no pinning, and the pair prints as two ordinary
+   sections. `.keypoint` needs only its rule turning down, since it never had a band. */
+.story-stack,
+.story-bar,
+.band {
+  background: #fff !important;
+  color: #000 !important;
+  width: auto !important;
+  margin-inline: 0 !important;
+  padding-bottom: 0 !important;
+  position: static !important;
+  min-height: 0 !important;
+  border: 0 !important;
+}
+
+.story-bar__heading,
+.story-bar strong,
+.story-bar a {
+  color: #000 !important;
+}
+
+.story-bar__inner {
+  padding-inline: 0 !important;
+  transform: none !important;
+}
+
+.keypoint {
+  break-inside: avoid;
+}
+
+.keypoint__heading {
+  position: static !important;
+}
+
 /* The horizontal steps track is a column again on paper: a row that scrolls sideways prints as one
    card and six missing ones. Added 2026-08-26. */
 .steps-track {
@@ -120,4 +164,29 @@ details {
   flex: none !important;
   break-inside: avoid;
   margin-bottom: 1rem;
+}
+
+/* The draft prints as the text it holds rather than as a form control: a textarea on paper clips at
+   its own height and shows a scrollbar. Added 2026-08-26. */
+.ask-email {
+  border: 1px solid #999 !important;
+  background: #fff !important;
+  break-inside: avoid;
+}
+
+.field > input,
+.field > textarea {
+  border: 1px solid #999 !important;
+  background: #fff !important;
+  color: #000 !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.field > textarea {
+  /* Tall enough for the longest draft the four ask rows can produce. There is no way to size a
+     textarea to its content in CSS, and a clipped email is worse than a page with room to spare. */
+  height: 48em !important;
+  overflow: visible !important;
+  resize: none !important;
 }
