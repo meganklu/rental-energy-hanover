@@ -541,14 +541,25 @@ wall and the brown outlines there is enough separation for the lit edge to be ob
 the second signal and the info bar naming the piece is still the third, so nothing here rests on a
 color.
 
-**Hover was fighting itself, fixed 2026-08-26.** Three separate causes, all of them visible as a
-stutter. The `filter` transition on the hotspot ran against the selected piece's own infinite
-`filter` keyframes, and a running animation beats a transition, so hovering an open piece snapped
-rather than grew. The scale had no `transform-origin` except when selected, so a piece standing on
-the floor grew from its middle and sank through the floorboards on the way up. And the filter sat on
-the link, which meant the glow spread around the name plate and the guide tag as well as the
-drawing. The glow and the scale are on the drawing now, the origin is declared for both kinds of
-piece in every state, and the hotspot itself transitions nothing.
+**Hover was fighting itself, fixed 2026-08-26.** Four separate causes, all of them visible as a
+stutter:
+
+- The `filter` transition on the hotspot ran against the selected piece's own infinite `filter`
+  keyframes, and a running animation beats a transition, so hovering an open piece snapped rather
+  than grew.
+- The scale had no `transform-origin` except when selected, so a piece standing on the floor grew
+  from its middle and sank through the floorboards on the way up — and then jumped origin the moment
+  it was pressed.
+- The filter sat on the link, so the glow spread around the name plate and the guide tag as well as
+  the drawing.
+- The scale sat on the link too, so twelve-pixel text was re-rasterized at a new size on every frame
+  of a 200ms hover.
+
+The glow and the scale are on the drawing now and the link transitions nothing. There is one origin,
+the bottom edge, in every state: a piece standing on the floor has to grow from its feet, and a
+wall-hung piece carries its name underneath, so growing upward takes the drawing away from its own
+name rather than into it. The name plate gained two pixels of clearance, which is what it needed
+once it stopped growing along with the drawing.
 
 **An object that does not apply is scenery, revised 2026-08-26.** Personalization used to set
 `hidden` on every hotspot the reader's heat type or who-pays answer ruled out, which took the object

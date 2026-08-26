@@ -753,9 +753,12 @@
    does not stretch the drawing. It is still inside the link in the markup, so it is still part of
    the accessible name and still reads in order. The plate is there because a caption that crosses
    from the papered wall onto the wood floor changes contrast halfway along. */
+/* The gap is 4px rather than 2px since 2026-08-26, because the drawing above it grows on hover and
+   the name does not. Scaling the link scaled the name with it, which never collided and which also
+   re-rasterized twelve-pixel text sixty times a second on the way. */
 .room-scene .hotspot .hotspot__label {
   position: absolute;
-  top: calc(100% + 2px);
+  top: calc(100% + 4px);
   left: 50%;
   transform: translateX(-50%);
   width: max-content;
@@ -779,7 +782,7 @@
    where there is wall to put it on. */
 .room-scene .hotspot--stands .hotspot__label {
   top: auto;
-  bottom: calc(100% + 2px);
+  bottom: calc(100% + 4px);
 }
 
 /* Hover and keyboard focus lift the piece off the wall, which is the site's own tactile-hover
@@ -791,19 +794,17 @@
    business glowing, and they scaled the name up along with the piece. The link now carries only its
    position; everything that responds to a pointer happens inside `.hotspot .icon`.
 
-   `transform-origin` is declared for both kinds of piece in every state for the same reason. It
-   used to appear once, on a selected standing piece, so hovering a bed grew it from its middle and
-   sank it through the floorboards on the way up. A piece standing on the floor grows from its feet
-   and a wall-hung one from its middle, whether it is hovered, focused, selected or all three. */
+   One `transform-origin`, on the bottom edge, in every state. It used to appear once — on a
+   selected standing piece — so hovering a bed grew it from its middle and sank it through the
+   floorboards on the way up, and then jumped origin the moment it was selected. Growing from the
+   bottom edge is what a piece standing on the floor has to do, and it is also what a wall-hung one
+   wants: a wall-hung piece carries its name underneath, so growing upward takes the drawing away
+   from its own name rather than into it. */
 .room-scene .hotspot .icon {
-  transform-origin: center;
+  transform-origin: bottom center;
   /* Declared rather than left at `none`, so the hover transition has a filter to interpolate from
      and starts at the shadow's own zero rather than at whatever the engine substitutes. */
   filter: drop-shadow(0 0 0 rgba(20, 32, 26, 0));
-}
-
-.room-scene .hotspot--stands .icon {
-  transform-origin: bottom center;
 }
 
 .room-scene .hotspot:hover,
