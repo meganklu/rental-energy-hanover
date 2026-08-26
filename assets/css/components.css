@@ -545,43 +545,58 @@
   margin-inline: calc(50% - 50vw);
 }
 
-/* ---------- Story stack, added 2026-08-25 ----------
-   A run of adjacent story bars pins to the top of the window one after another and builds a stack,
-   then the whole stack scrolls away together. The wrapper is what makes it work: `position: sticky`
-   is bounded by the element's containing block, so without `.story-stack` the first bar would pin
-   at the top of the window and stay there for the rest of the article, sitting over the steps the
-   reader had moved on to.
+/* ---------- Story stack, added 2026-08-25, rebuilt 2026-08-26 ----------
+   A pair of story bars pins one after the other and, once both are locked, fills the screen
+   together. That last part is the 2026-08-26 rebuild. Each bar used to be `min-height: 100vh` and
+   pin 4.5rem below the one before it, so a bar was a screen of its own and the second arrived by
+   covering the first. Two consequences: a two-sentence "Savings" panel got a whole viewport to sit
+   in the middle of, and the thing a reader watched happen was one panel sliding over another.
 
-   Every child of the stack is a story bar, which is why `nth-of-type` can index them here and could
-   not have out in the article, where the bars are siblings of the body columns and every one of
-   them is a `div`. Four offsets is the depth any page on this site actually reaches.
+   The pair now splits the screen. The first bar holds the top half, the second locks into the
+   bottom half, and the pair reads as one full-height section assembled out of two pieces rather
+   than as two full-height sections in a row. `--bar-h` is the share, set off the count with
+   `:has()`, so a stack of three would take thirds without anything else changing.
 
-   `padding-bottom` is the dwell: the last bar in a stack has nothing below it inside the stack, so
-   without it the stack's bottom edge arrives the moment the bar does and it releases without ever
-   holding. The padding gives the finished stack a stretch of scrolling to be looked at before it
-   leaves.
+   The gap between them is what makes it worth watching: the second bar starts 30vh below where it
+   ends up, so it travels up into place while the first is already pinned. `padding-bottom` is the
+   dwell — without it the stack's bottom edge arrives the moment the last bar does and the whole
+   thing releases before it has been read.
 
-   Gated on width, on height, and on both reduced-motion controls. Pinned full-width bands on a
-   short window are bands covering the thing the reader is trying to read, and a reader who has
-   asked for less movement has asked for exactly this. Outside the gate the bars are ordinary
-   stacked bands with their own margins, which is what they were before. */
+   Gated on width, on height, and on both reduced-motion controls, unchanged. Pinned bands on a
+   short window are bands covering the thing the reader is trying to read, and a reader who asked
+   for less movement asked for exactly this. Outside the gate the bars are ordinary stacked bands. */
+/* The stack carries the ground and the bars sit on it. While the second bar is climbing into place
+   there is a gap between the two, and against the page's own white that gap read as a hole punched
+   between two dark bands rather than as one band arriving. On the stack's own dark it reads as more
+   of the same section. The stack is what breaks out to the window now; the bars keep `full-bleed`
+   for the case where one is used outside a stack, where it resolves to zero either way. */
+.story-stack {
+  background: var(--color-surface-dark);
+}
+
 .story-stack > .story-bar + .story-bar {
   margin-top: var(--space-6);
 }
 
 @media (min-width: 900px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
   body:not(:has(.reduce-motion-input:checked)) .story-stack {
-    --stack-step: 4.5rem;
-    padding-bottom: 25vh;
+    --bar-h: 100vh;
+    padding-bottom: 15vh;
   }
 
-  /* A screen each. The bar is the section while it is on screen, so its content centers in the
-     window rather than sitting wherever the flow left it. */
+  body:not(:has(.reduce-motion-input:checked)) .story-stack:has(.story-bar:nth-of-type(2)) {
+    --bar-h: 50vh;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .story-stack:has(.story-bar:nth-of-type(3)) {
+    --bar-h: 34vh;
+  }
+
   body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar {
     position: sticky;
     top: var(--stack-top, 0px);
     margin-block: 0;
-    min-height: 100vh;
+    min-height: var(--bar-h);
     display: flex;
     align-items: center;
   }
@@ -590,41 +605,66 @@
     width: 100%;
   }
 
-  /* The gap the bars start apart by. Sticky closes it as the reader scrolls, which is the coming
-     together: without it the second bar is already touching the first and arrives on the stack with
-     nothing having visibly happened. */
+  /* The distance the next bar climbs before it locks. Without it, it is already touching the one
+     above and arrives on the stack with nothing having visibly happened. */
   body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar + .story-bar {
-    margin-top: 25vh;
+    margin-top: 30vh;
   }
 
   body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(2) {
-    --stack-top: var(--stack-step);
+    --stack-top: var(--bar-h);
   }
 
   body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(3) {
-    --stack-top: calc(var(--stack-step) * 2);
+    --stack-top: calc(var(--bar-h) * 2);
   }
 
-  body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar:nth-of-type(4) {
-    --stack-top: calc(var(--stack-step) * 3);
-  }
-
-  /* A stack of one has nothing to stack against, so it neither pins nor reserves the dwell. It
-     still takes the screen, because that is the section treatment rather than the stacking. */
+  /* A stack of one has nothing to stack against. It does not pin and does not reserve the dwell —
+     and since 2026-08-26 it should not exist either: a bar standing on its own is a `.keypoint`
+     now. Kept as the fallback for a stack that ends up with one bar in it. */
   body:not(:has(.reduce-motion-input:checked)) .story-stack:not(:has(.story-bar + .story-bar)) {
     padding-bottom: 0;
   }
 
   body:not(:has(.reduce-motion-input:checked)) .story-stack:not(:has(.story-bar + .story-bar)) > .story-bar {
     position: static;
+    min-height: 0;
     margin-block: var(--space-8);
   }
 }
 
+/* Dark, revised 2026-08-26. The band was `--color-surface`, the same near-white green the cards and
+   callouts sit on, so a bar carrying the one idea the page turns on looked like more page. Dark is
+   what makes it read as a break in the article rather than a paler paragraph of it.
+
+   The two bars in a pair take two darks rather than one, on the same reasoning as the About page's
+   two halves (§3.7): a seam between two fields of the same color is not a seam. 14.5:1 and 8.6:1
+   with white, 1.7:1 between them, which separates two large adjacent fields without either one
+   stopping being the site's green. */
 .story-bar {
   margin-block: var(--space-8);
-  background: var(--color-surface);
-  border-block: 1px solid var(--color-border);
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+}
+
+.story-bar--reverse {
+  background: var(--color-surface-dark-2);
+}
+
+.story-bar__heading,
+.story-bar strong {
+  color: var(--color-text-on-dark);
+}
+
+/* Links inside a bar keep the underline that carries them and take the light brand green, which is
+   the same pairing the dark footer already uses. */
+.story-bar a {
+  color: var(--color-brand);
+}
+
+.story-bar a:hover,
+.story-bar a:focus-visible {
+  color: var(--color-text-on-dark);
 }
 
 .story-bar__inner {
@@ -634,7 +674,7 @@
   align-items: center;
   max-width: 1140px;
   margin-inline: auto;
-  padding: var(--space-8) var(--space-5);
+  padding: var(--space-7) var(--space-5);
 }
 
 @media (min-width: 900px) {
@@ -668,10 +708,12 @@
 /* Bigger than a normal h1, revised 2026-08-20 (was --text-h1) — this is the one place on an
    improvement page a heading is allowed to dominate, since the band around it exists to carry
    exactly these two headings and nothing competes with them for size. Tokenized 2026-08-21 as
-   --text-display, so the page titles could reuse it rather than a second clamp beside this one. */
+   --text-display, so the page titles could reuse it rather than a second clamp beside this one.
+   Capped 2026-08-26: at half a screen each, --text-display's 4.25rem ceiling was a heading taller
+   than the half it was sitting in. */
 .story-bar__heading {
   margin: 0;
-  font-size: var(--text-display);
+  font-size: min(var(--text-display), 3.25rem);
   line-height: 1.05;
 }
 
@@ -752,6 +794,79 @@
 @keyframes story-bar-heading-in-from-right {
   from { transform: translateX(3.5rem) scale(0.9); }
   to { transform: translateX(0) scale(1); }
+}
+
+/* ---------- Key point, added 2026-08-26 ----------
+   What a story bar becomes when it is on its own. Nine pages carried a single bar inside a
+   `.story-stack`, which meant a full-bleed band, a display-size heading and a screen of height for
+   two sentences, with nothing to stack against and so none of the arrival the treatment exists for.
+   A band that big earns its size by being one of a pair.
+
+   This is the alternative: no band, no break in the page's own background, and no full screen. The
+   heading sits in a column of its own beside the body and stays there while the body scrolls past
+   it, which keeps the "holds still for a moment" quality of the stack at a fraction of the cost. A
+   heavy brand rule down the left is what marks it as the page's turning point. It takes exactly the
+   height of its own content.
+
+   `align-self: start` on the heading is what makes `position: sticky` do anything inside a grid
+   cell: a stretched cell is exactly as tall as the row, so there is no room inside it to stick. */
+.keypoint {
+  display: grid;
+  gap: var(--space-4);
+  margin-block: var(--space-8);
+  padding-left: var(--space-5);
+  border-left: 4px solid var(--color-surface-brand);
+}
+
+@media (min-width: 800px) {
+  .keypoint {
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--space-7);
+    padding-left: var(--space-6);
+  }
+
+  .keypoint__heading {
+    position: sticky;
+    top: var(--space-7);
+    align-self: start;
+  }
+}
+
+.keypoint__heading {
+  margin: 0;
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.keypoint__body {
+  font-size: var(--text-h4);
+}
+
+.keypoint__body p {
+  max-width: none;
+}
+
+.keypoint__body p + p {
+  margin-top: var(--space-4);
+}
+
+/* The body arrives a paragraph at a time as it crosses the viewport, on the same `view()` timeline
+   and the same three gates as the story bars above, and transform-only for the same reason: a
+   timeline that never advances must not leave text stuck at partial opacity. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    body:not(:has(.reduce-motion-input:checked)) .keypoint__body > * {
+      animation: keypoint-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 40%;
+    }
+  }
+}
+
+@keyframes keypoint-rise {
+  from { transform: translateY(2rem); }
+  to { transform: translateY(0); }
 }
 
 /* ---------- Glossary term ---------- */
