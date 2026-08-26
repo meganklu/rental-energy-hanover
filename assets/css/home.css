@@ -479,8 +479,7 @@
   text-decoration: none;
   font-size: var(--text-small);
   font-weight: 600;
-  transition: transform var(--motion-base) var(--motion-ease),
-    background var(--motion-base) var(--motion-ease);
+  transition: background var(--motion-base) var(--motion-ease);
 }
 
 .hotspot:hover {
@@ -785,33 +784,30 @@
   bottom: calc(100% + 4px);
 }
 
-/* Hover and keyboard focus lift the piece off the wall, which is the site's own tactile-hover
-   response (§5.1) applied to a drawing rather than to a button. A drop shadow rather than a box
-   shadow, because the thing being lifted is an outline and not a rectangle.
+/* Hover, focus and selection, rebuilt 2026-08-26 after three passes that all stuttered.
+   **Nothing that is part of the hover target moves, and nothing on the drawing changes geometry.**
+   Those are the two rules, and between them they rule out both of the things that were going wrong.
 
-   **It is a lift and nothing else, rebuilt 2026-08-26 after two passes that both stuttered.** The
-   response was a scale, and the drawing it was scaling carries `vector-effect: non-scaling-stroke`
-   (above), which is what keeps a stroke a constant weight in device pixels whatever size the room
-   renders at. Those two do not go together. A stroke that must stay the same width on screen while
-   the shape it belongs to changes size has to have its outline geometry rebuilt from the path on
-   every frame of the change — it cannot be handed to the compositor as a picture and scaled, which
-   is exactly what makes a transform cheap. Seventeen of them on a page, at sixty frames a second,
-   is the stutter.
+   The first was a scale, which cannot be cheap on a drawing carrying `vector-effect:
+   non-scaling-stroke` (above): a stroke that must stay a constant width on screen while its shape
+   changes size has its outline rebuilt from the path every frame instead of being composited.
 
-   A translation does not change the scale factor, so the stroke geometry is untouched and the whole
-   thing composites. The piece rises four pixels and its shadow drops away underneath it, which is
-   what a lift looks like from the front and is what the effect was always described as. Nothing on
-   this page is at a scale other than 1 in any state now, deliberately.
+   Replacing it with a four-pixel lift fixed the cost and not the appearance. Moving an outline drawn
+   in a 1.6px non-scaling stroke through sub-pixel positions is exactly the regime where the stroke
+   snaps between pixel rows frame to frame, so the piece reads as vibrating rather than rising, which
+   is what "it shakes" meant. Four pixels is also small enough that the whole travel happens inside
+   that regime: there is no part of the move that is unambiguously a move.
 
-   The lift and the glow are on the drawing rather than on the link. On the link they also spread
-   around the name plate and the guide tag, which are text on a plate and have no business glowing
-   or moving. The link carries only its position. */
-.room-scene .hotspot .icon {
-  /* Declared rather than left at `none`, so the hover transition has a filter to interpolate from
-     and starts at the shadow's own zero rather than at whatever the engine substitutes. */
-  filter: drop-shadow(0 0 0 rgba(20, 32, 26, 0));
-}
+   So the response is paint. The drawing takes a shadow and the name plate lights up. A plate is a
+   box: its background and its text color animate smoothly at any size with no geometry anywhere.
+   And because nothing moves, nothing can travel out from under the pointer and hand the hover back,
+   which is what "it moves in and out multiple times" describes and is the only mechanism by which
+   that can happen.
 
+   The shadow is not transitioned. It is the one thing left touching the SVG, and a filter change on
+   an SVG is a repaint of the drawing; at 200ms that is forty repaints for an effect that reads
+   perfectly well arriving at once, the way a link's underline does. The plate carries the movement
+   the eye actually follows. */
 .room-scene .hotspot:hover,
 .room-scene .hotspot:focus-visible {
   z-index: 3;
@@ -819,44 +815,46 @@
 
 .room-scene .hotspot:hover .icon,
 .room-scene .hotspot:focus-visible .icon {
-  filter: drop-shadow(0 5px 5px rgba(20, 32, 26, 0.3));
+  filter: drop-shadow(0 3px 4px rgba(20, 32, 26, 0.35));
+}
+
+/* The plate is the affordance now, so it has to look like one at rest as well: a name on a plate
+   with a hairline round it reads as a label attached to something, where a name on a bare plate
+   reads as a caption. `box-shadow` rather than a border, so nothing about the plate's size changes
+   between the three states and the name inside it never moves. */
+.room-scene .hotspot .hotspot__label {
+  box-shadow: 0 0 0 1px var(--color-border);
+}
+
+.room-scene .hotspot:hover .hotspot__label,
+.room-scene .hotspot:focus-visible .hotspot__label {
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+  box-shadow: 0 0 0 1px var(--color-accent);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot .icon {
-    transition: transform var(--motion-base) var(--motion-ease),
-      filter var(--motion-base) var(--motion-ease);
-  }
-
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:hover .icon,
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:focus-visible .icon {
-    transform: translateY(-4px);
-  }
-
-  /* Hovering the piece whose info bar is already open has to lift it further, not drop it back to
-     the ordinary hover height. */
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:hover .icon,
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:focus-visible .icon {
-    transform: translateY(-11px);
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot .hotspot__label {
+    transition: background-color var(--motion-fast) var(--motion-ease-smooth),
+      color var(--motion-fast) var(--motion-ease-smooth),
+      box-shadow var(--motion-fast) var(--motion-ease-smooth);
   }
 }
 
-/* Selected: this piece's info bar is the one open. Revised 2026-08-26 from a 2px accent outline to
-   a glow. The outline was a rectangle drawn around a thing that is not a rectangle — a lamp, a
-   showerhead, a bill on a fridge — so it read as a box that had appeared next to the object rather
-   than as the object being lit up. `drop-shadow` follows the drawn edge instead, which is the same
-   reason hover uses it.
+/* Selected: this piece's info bar is the one open. A glow rather than an outline, because an
+   outline is a rectangle drawn around a thing that is not a rectangle — a lamp, a showerhead, a
+   bill on a fridge — so it reads as a box that has appeared beside the object rather than as the
+   object being lit up. `drop-shadow` follows the drawn edge instead.
 
    Three shadows: a tight one to thicken the outline and two wider ones to spread. White, per the
    token's own note — a green light on a green-ish drawing was the one reading it should least have
-   had.
+   had. It does not pulse: an infinite `filter` animation repaints one drawing for as long as it is
+   on screen, including while the reader is hovering every other drawing on the page.
 
-   **The glow no longer breathes, and the piece no longer grows.** Both were continuous or
-   geometry-changing work on a page with seventeen drawings on it: the loop repainted one piece
-   forever, and the scale rebuilt its stroke outline every frame it moved (see the note above). The
-   second signal is a position rather than a size — the selected piece stands eight pixels clear of
-   the wall and nothing else on the wall does — and the third is the info bar under the house naming
-   it. Neither of those is a color. */
+   Two more signals beside the glow, and neither is a color on its own. The plate is filled where
+   every other plate on the wall is not, in the light brand green rather than hover's dark accent, so
+   the two states cannot be read as each other. And the info bar under the house is open, naming the
+   piece in words. */
 .room-scene .hotspot--selected {
   box-shadow: none;
   outline: none;
@@ -867,7 +865,14 @@
   filter: drop-shadow(0 0 2px var(--color-guide-glow))
           drop-shadow(0 0 9px var(--color-guide-glow))
           drop-shadow(0 0 18px var(--color-guide-glow));
-  transform: translateY(-8px);
+}
+
+.room-scene .hotspot--selected .hotspot__label,
+.room-scene .hotspot--selected:hover .hotspot__label,
+.room-scene .hotspot--selected:focus-visible .hotspot__label {
+  background: var(--color-surface-brand);
+  color: var(--color-text);
+  box-shadow: 0 0 0 2px var(--color-accent);
 }
 
 /* Seen already: the piece fades back rather than out. What is left in full color is what has not
@@ -1091,14 +1096,42 @@
     color: var(--color-accent);
   }
 
+  /* The chip is the affordance down here, so everything the drawing carried upstairs comes off:
+     the shadow on the icon, the plate's hairline, and the plate lighting up on hover. A chip that
+     also turned its own text green-on-white inside its own green border would be two affordances
+     arguing. */
   .room-scene .hotspot:hover,
   .room-scene .hotspot:focus-visible {
-    filter: none;
     background: var(--color-surface);
+  }
+
+  .room-scene .hotspot .icon,
+  .room-scene .hotspot:hover .icon,
+  .room-scene .hotspot:focus-visible .icon,
+  .room-scene .hotspot--selected .icon {
+    filter: none;
+  }
+
+  .room-scene .hotspot .hotspot__label,
+  .room-scene .hotspot:hover .hotspot__label,
+  .room-scene .hotspot:focus-visible .hotspot__label,
+  .room-scene .hotspot--selected .hotspot__label,
+  .room-scene .hotspot--selected:hover .hotspot__label,
+  .room-scene .hotspot--selected:focus-visible .hotspot__label {
+    background: none;
+    color: inherit;
+    box-shadow: none;
   }
 
   .room-scene .hotspot--visited {
     opacity: 0.6;
+  }
+
+  /* A chip whose info bar is open. Upstairs this is a glow on the drawing; here the chip is a
+     bordered box already, so it fills instead. */
+  .room-scene .hotspot--selected {
+    background: var(--color-accent);
+    color: var(--color-text-on-dark);
   }
 
   /* An object personalization has ruled out is a drawing standing in a room upstairs, and there is

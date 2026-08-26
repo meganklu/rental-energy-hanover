@@ -493,3 +493,15 @@ Renters basics articles:
 General design choices:
 - The page transitions are causing the website to move slower, especially when clicking the link to go back to the home page. Remove them please
 - Please use the full width of the page for every section. This is not the case for the lists, paragraphs, cards, etc. These are too narrow and look inconsistent with the other page content. Some of the images are also aligned left when they should be centered because they are by themselves (no text on the side). 
+
+### 2026-08-26 Animations Again and Page Navigation
+
+The width of items looks better now. 
+
+Doll house section:
+- The hover animation is still having problems. When I hover over some of the elements, it shakes/glitches. Sometimes it moves in and out multiple times. Please make these animations smoother. This might mean that the item translates from its original position less if that is causing the glitching appearance
+
+Navigation:
+- I am having issues navigating between pages. Either pages are taking significant amounts of time to load or the links are not working. Either way, I would like to fix this. I am experiencing particular issues navigating to the home and my list pages from another page
+
+Increase spacing between sections and paragraphs on all pages.

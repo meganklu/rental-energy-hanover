@@ -541,39 +541,56 @@ wall and the brown outlines there is enough separation for the lit edge to be ob
 the second signal and the info bar naming the piece is still the third, so nothing here rests on a
 color.
 
-**Hover was fighting itself, and then it was still stuttering, 2026-08-26.** The first pass found
-four causes and fixed four causes:
+**Hover, in three passes, and what it took to stop it stuttering (2026-08-26).** Worth writing out,
+because the first two passes each fixed something real and neither fixed the symptom.
 
-- The `filter` transition on the hotspot ran against the selected piece's own infinite `filter`
-  keyframes, and a running animation beats a transition, so hovering an open piece snapped rather
-  than grew.
-- The scale had no `transform-origin` except when selected, so a piece standing on the floor grew
-  from its middle and sank through the floorboards on the way up, then jumped origin when pressed.
-- The filter sat on the link, so the glow spread around the name plate and the guide tag.
-- The scale sat on the link too, so twelve-pixel text was re-rasterized at a new size on every
-  frame of a 200ms hover.
+*Pass one* found four causes and fixed four causes. The `filter` transition on the hotspot ran
+against the selected piece's own infinite `filter` keyframes, and a running animation beats a
+transition, so hovering an open piece snapped. The scale had no `transform-origin` except when
+selected, so a piece standing on the floor grew from its middle and sank through the floorboards,
+then jumped origin when pressed. The filter sat on the link, so the glow spread around the name
+plate and the guide tag. And the scale sat on the link too, so twelve-pixel text was re-rasterized
+at a new size on every frame.
 
-It still stuttered, and the reason is the fifth cause, which is the interesting one. **A scale and
-`vector-effect: non-scaling-stroke` cannot both be cheap.** That vector-effect is what keeps a
-furniture outline a constant weight in device pixels whatever size the room renders at, and it is
-load-bearing: without it a stroke at furniture size comes out as a marker line, which is the
-difference between a drawing of a sofa and a cartoon of one. But a stroke that has to stay the same
-width on screen while the shape it belongs to changes size has to have its outline geometry rebuilt
-from the path on every frame of the change. It cannot be handed to the compositor as a picture and
-scaled, and being handed to the compositor as a picture is the entire reason a transform is cheap.
-Seventeen drawings on a page, sixty frames a second.
+*Pass two* found the cost. **A scale and `vector-effect: non-scaling-stroke` cannot both be cheap.**
+That vector-effect is what keeps a furniture outline a constant weight in device pixels whatever
+size the room renders at, and it is load-bearing: without it a stroke at furniture size comes out as
+a marker line. But a stroke that must stay the same width on screen while its shape changes size has
+its outline geometry rebuilt from the path every frame. It cannot be handed to the compositor as a
+picture and scaled, and being handed to the compositor as a picture is the entire reason a transform
+is cheap. So the scale became a four-pixel lift.
 
-So the response is a translation. Scale factor unchanged, stroke geometry untouched, layer
-composited. The piece rises four pixels and its shadow drops away underneath it, which is what a
-lift looks like from the front and is what this effect has been described as since it was written.
-Nothing in the house is at a scale other than 1 in any state now, deliberately, and that is a rule
-rather than a coincidence: anything drawn in this pen and animated has to move, not resize.
+*Pass three* found that the lift was the problem too, for a different reason. Moving an outline drawn
+in a 1.6px non-scaling stroke through sub-pixel positions is exactly the regime where the stroke
+snaps between pixel rows frame to frame. The piece reads as vibrating rather than rising, which is
+what "it shakes" described. And four pixels is small enough that the entire travel happens inside
+that regime: there is no part of the move that is unambiguously a move.
+
+**So the response is paint, and there are two rules now.** Nothing that is part of the hover target
+moves, and nothing on the drawing changes geometry. The drawing takes a shadow; the name plate
+lights up, dark accent with white text on hover. A plate is a box: its background and its text color
+animate smoothly at any size with no geometry anywhere in it. The shadow itself is not transitioned,
+because a filter change on an SVG is a repaint of the drawing and forty of them is a lot to spend on
+something that reads perfectly well arriving at once, the way a link's underline does.
+
+The second rule is also what rules out the other half of the report, "it moves in and out multiple
+times". That is hover oscillation, and it has exactly one mechanism: the thing being hovered travels
+out from under the pointer, the hover ends, it comes back, and the cycle repeats. Nothing moves, so
+nothing can.
+
+Two things were checked before rewriting rather than after, since neither is visible by eye. The
+hover targets do not overlap each other — every hotspot is a link box the size of its drawing, plus
+an invisible box at `max(100%, 44px)` centred on it, plus a name plate hanging outside the box, and
+all three take the hover; every pair of those across all six rooms was measured for intersection and
+none intersect. And the link box itself never moved in any of the three passes, only the drawing
+inside it did.
 
 **The selected glow stopped breathing at the same time**, for the same kind of reason. It was an
 infinite `filter` animation, so one drawing repainted forever while a reader hovered every other
-drawing on the page. The second signal for "this one is open" is now a position rather than a size —
-the selected piece stands eight pixels clear of the wall and nothing else on the wall does — and the
-third is still the info bar under the house naming it. Neither is a color.
+drawing on the page. Selected now carries the white glow, a plate filled in the light brand green
+where hover's is dark accent, and the info bar under the house naming the piece. The plate is what
+keeps the two states from being read as each other, and the info bar is the signal that is not a
+color at all.
 
 **An object that does not apply is scenery, revised 2026-08-26.** Personalization used to set
 `hidden` on every hotspot the reader's heat type or who-pays answer ruled out, which took the object
@@ -2797,10 +2814,16 @@ gzip charges very little for prose that repeats itself as much as English does.
   and the ticks that draw themselves are a few short paths.
 - **Put the glow on the drawing, not on its container.** A `filter` on a link is a filter on its
   name plate and its tag as well, which is three times the area to re-rasterize for one lit object.
-- **Never scale something drawn with `vector-effect: non-scaling-stroke`.** The stroke has to stay
-  a constant width on screen while the shape changes size, so the browser rebuilds the outline
-  geometry from the path every frame instead of compositing a picture. Move it instead. This is what
-  was making the doll house hover stutter, twice — see §3.2.
+- **Do not scale, and do not move, something drawn with `vector-effect: non-scaling-stroke`.**
+  Scaling it makes the browser rebuild the stroke's outline geometry from the path every frame
+  rather than compositing a picture, because the stroke has to stay a constant width on screen while
+  the shape changes size. Moving it a few pixels is cheaper and looks worse: a thin non-scaling
+  stroke travelling through sub-pixel positions snaps between pixel rows and reads as vibration. If
+  a drawing in this pen has to respond to something, respond in paint. See §3.2 for the three passes
+  it took to find that.
+- **Nothing that takes a hover may move.** Hover oscillation — the effect playing in and out
+  repeatedly — has one mechanism, which is the target travelling out from under the pointer. A
+  response made of paint cannot have it.
 - **Nothing loops that does not have to.** An infinite `filter` animation on one element repaints
   that element for as long as it is on screen, including while the reader is doing something else
   entirely.
