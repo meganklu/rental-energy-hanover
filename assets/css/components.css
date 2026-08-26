@@ -796,6 +796,90 @@
   to { transform: translateX(0) scale(1); }
 }
 
+/* ---------- Step list, added 2026-08-26 ----------
+   A numbered sequence where each step is a heading and a paragraph rather than a run-on `<li>`
+   opening with a bold phrase. Adapted from the "Ways to close the gap" list on the same team's heat
+   pump site (S25), which is where the shape comes from: a numeral in a filled square, the step's
+   name beside it, the explanation under that.
+
+   What it buys is scanning. "If your apartment is too cold" is five steps a reader is meant to work
+   through in order, and as five paragraphs of prose the order was the only thing telling them so.
+   The numerals say it at a glance, and the step names are now findable without reading the
+   sentences around them.
+
+   The numeral is not `aria-hidden`. `list-style: none` is enough for some engines to drop the list
+   semantics, which takes the ordinal with it, so the number stays in the accessible name where it
+   cannot be lost. `role="list"` is not the fix here: it restores the list, not the counting. */
+.step-list {
+  list-style: none;
+  padding: 0;
+  margin-block: var(--space-6);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.step-list__item {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.step-list__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+  font-family: var(--font-display);
+  font-size: var(--text-h4);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.step-list__title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-h4);
+}
+
+.step-list__body p {
+  margin: 0;
+  max-width: none;
+}
+
+/* The square fills as the step arrives, so working down the list has something happening in it.
+   Behind the same three gates as the rest of the site's scroll motion (§7), and the fallback is a
+   filled square at full size, which is the finished state — freezing this anywhere still leaves a
+   readable numeral on an accent ground. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    body:not(:has(.reduce-motion-input:checked)) .step-list__number {
+      animation: step-number-in linear both;
+      animation-timeline: view();
+      animation-range: entry 15% cover 35%;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .step-list__body {
+      animation: step-body-in linear both;
+      animation-timeline: view();
+      animation-range: entry 15% cover 35%;
+    }
+  }
+}
+
+@keyframes step-number-in {
+  from { transform: scale(0.6); }
+  to { transform: scale(1); }
+}
+
+@keyframes step-body-in {
+  from { transform: translateX(1.5rem); }
+  to { transform: translateX(0); }
+}
+
 /* ---------- Key point, added 2026-08-26 ----------
    What a story bar becomes when it is on its own. Nine pages carried a single bar inside a
    `.story-stack`, which meant a full-bleed band, a display-size heading and a screen of height for
