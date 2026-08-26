@@ -69,7 +69,27 @@ if (buttonsIn().length || counts.length) {
     status.textContent = added
       ? `${name} added to your list.`
       : `${name} removed from your list.`;
+    if (added) ripple();
   });
+
+  // The count in the header pulses when something lands in it, added 2026-08-26. The cart problem
+  // this solves is the oldest one there is: the button is under the reader's finger and the number
+  // that changed is in the far corner of the screen, so the change happens where nobody is looking.
+  // Adding only — a removal is already confirmed by the button under the pointer changing back, and
+  // a badge that flashes on the way down reads like something went wrong.
+  //
+  // Class toggled rather than animated here, so the whole thing (including whether it runs at all)
+  // stays in components.css behind the site's usual motion gates.
+  function ripple() {
+    counts.forEach((count) => {
+      const badge = count.closest(".nav-todo") || count;
+      badge.classList.remove("is-pinged");
+      // Reading a layout property is what restarts a CSS animation that is already running: without
+      // it the class comes off and goes back on inside one frame and nothing replays.
+      void badge.offsetWidth;
+      badge.classList.add("is-pinged");
+    });
+  }
 
   window.addEventListener("todochange", render);
   // Another tab changing the list should not leave this one showing a stale count.

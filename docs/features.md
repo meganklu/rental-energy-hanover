@@ -32,7 +32,7 @@ written as a page instead.
 | F3 | Flip-card myth busters | A wrong belief corrected by their own action, on the explainer pages | Low (code), Medium (copy) | **Must** |
 | F4 | Animated explainer diagrams | A mechanism they cannot see, shown moving. Where heat leaves, how a heat pump runs both ways | Low (code), High (illustration) | **Must** |
 | F5 | Progress through the house | A count of spots viewed, and a suggested order for someone who does not know where to start | Low | **Should** (part of F1) |
-| F6 | My list | Improvements they picked, sorted into buy / ask / do, printable and shareable | Medium | **Shipped 2026-08-25** |
+| F6 | My list | Improvements they picked, sorted into buy / ask / do, printable, shareable, and with a landlord email built from the ask list | Medium | **Shipped 2026-08-25**, extended 2026-08-26 |
 | F7 | Space heater cost-per-hour tool | The real hourly cost of the most expensive misconception in the topic inventory | Low (code), blocked on sourcing | **Won't (v1)** |
 | F8 | Bill estimator | An explanation of what is driving a specific bill | High | **Won't (v1)** |
 | F9 | Landlord request letter generator | Wording for an ask they are nervous about making | Medium | **Won't (v1)** |
@@ -83,6 +83,16 @@ Priority: **Must** / **Should** / **Could** / **Won't (v1)**
   the one who decides, since they press it. The doll house info bar gained the same add control, so
   every place the site states an improvement's cost, time and impact now also offers the action on
   it.
+
+  Revised 2026-08-26, twice. The buy and ask lists tick off now, which they should have from the
+  start: the do list had the only checkboxes on the site, and the two lists a reader actually walks
+  around holding were the two they could not cross anything off. And the ask section ends in a
+  generated email. It had said "send one email covering all of these" since it shipped, and then
+  offered no way to send one; the draft is built from whichever ask rows are showing, following the
+  six things `/learn/ask-your-landlord` says a good ask has in it. Nothing typed into it is stored,
+  which keeps the feature inside [project-brief.md](project-brief.md)'s non-goals, and the composing
+  logic is a module with its own tests rather than a string in a click handler. See
+  [DESIGN.md](../DESIGN.md) §3.8.
 - **F7 and F8** are blocked by sourcing rather than by effort.
   [content-strategy.md](content-strategy.md) §4 bars unsourced numbers, and the Liberty Utilities
   residential rate is not yet in [sources.md](sources.md). A cost-per-hour figure with no citation
@@ -277,12 +287,12 @@ One action: flipping a card.
 The correction, 40 words or fewer, ending with a link to the improvement it argues for.
 
 **Logic / rules**
-None. Static content in `<details>` elements. No scoring, no tracking of right and wrong, no
+None. Static content, both faces in the markup. No scoring, no tracking of right and wrong, no
 sequence to complete.
 
 **Edge cases**
-- A student flips every card without reading. Acceptable. The content is also on the page as plain
-  question-and-answer text for anyone reading straight through.
+- A student flips every card without reading. Acceptable. Without the script the two faces are
+  stacked, which is the same content read straight through.
 - A card touches a safety-critical topic, for example space heaters. Per
   [content-strategy.md](content-strategy.md) §5 the safety framing appears before the instructions
   and never on the back of a card. Cards may correct a cost belief. They may not carry the safety
@@ -292,22 +302,25 @@ sequence to complete.
 None. There is no state to fail.
 
 **Accessibility requirements**
-Native `<details>` and `<summary>`, so the control is a real disclosure with `aria-expanded`
-handled by the browser. Click, Enter and Space all work. Never hover-only. Both faces exist in the
-DOM at all times. Under reduced motion the card swaps without rotating.
+The control is a real `<button>` carrying `aria-expanded` and pointing at the answer's id, so click,
+Enter and Space all work. Never hover-only. Both faces exist in the DOM at all times, and the face
+turned away is `visibility: hidden` so its link leaves the tab order and its text leaves the
+accessibility tree. Focus follows the turn onto the button on the arriving face. Under reduced
+motion the card swaps without rotating.
 
 **Does it work without JavaScript / on a slow connection?**
-Yes, entirely. There is no JavaScript in this feature at all.
+Yes. Without the script the two faces are stacked in normal flow — the question, then the answer —
+and the two flip buttons are not shown. The script does not add content, only the turn.
 
 **Data persistence**
 None.
 
 **Acceptance criteria**
-- [ ] Every card opens and closes by keyboard, with no script running
-- [ ] Both faces are readable by a screen reader without flipping
+- [ ] Every card turns and turns back by keyboard, and focus lands on the face that arrives
+- [ ] With the script blocked, both faces are on the page and readable
+- [ ] The face turned away is out of the tab order
 - [ ] No card carries safety, permission, cost, or source information on its back
-- [ ] The same content appears as plain question-and-answer text for print and straight reading
-- [ ] Reduced motion removes the rotation and keeps the function
+- [ ] Reduced motion removes the rotation, keeps the function, and shows the written-out version
 
 **How we'll know it works**
 Ask a participant the myth question before they see the page, then again after. A changed answer is
@@ -404,7 +417,7 @@ feature and a defect. Check them honestly.
 | F2 | The "utilities included" explanation copy | ☐ |
 | F3 | Myth and correction pairs for topics 4, 7 and 11, through content review | ☐ |
 | F4 | The `/learn/heating-systems` diagram set, adapted 2026-08-21 from the team's own earlier heat pump site (S25) into this site's tokens, icon pen and `--motion-state` motion plumbing. Carries a season toggle scoped to the diagram, which is what shows a heat pump running both directions | ☑ |
-| F4 | One diagram concept per explainer, drawn | ☑ Three drawn (read-your-bill, find-your-drafts, heating-systems). Remaining explainers unwritten |
+| F4 | One diagram concept per explainer, drawn | ☑ Two drawn (read-your-bill, heating-systems). find-your-drafts leads with a photograph instead, 2026-08-26 — its walkthrough is a hand on an edge, not a mechanism. Remaining explainers unwritten |
 | F4 | Figure captions describing each mechanism in words | ☐ |
 | All | Sources in [sources.md](sources.md) for every number that appears | ◐ In progress |
 

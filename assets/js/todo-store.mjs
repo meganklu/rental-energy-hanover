@@ -1,7 +1,14 @@
 // The one shared "my list" record, F6 in features.md. The same shape as the situation store next
 // door (assets/js/situation-store.mjs): one localStorage key, one place the shape is defined, and
-// nothing leaves the browser. A list is improvement slugs and a done flag, which is all it can be
-// without collecting something about the student — see docs/project-brief.md's non-goals.
+// nothing leaves the browser. A list is improvement slugs, a done flag and a set of ticked lines,
+// which is all it can be without collecting something about the student — see
+// docs/project-brief.md's non-goals.
+//
+// `ticks` was added 2026-08-26, when the buy and ask sections got checkboxes of their own. A slug
+// alone could not carry them: one improvement puts three materials in the buy list and one row in
+// the ask list, and those are four separate things to tick off. A tick id only has to be unique
+// within its improvement, so the markup writes short ones ("buy:door-sweep", "ask") and removing
+// the improvement takes its ticks with it rather than leaving them orphaned in storage.
 
 export const STORAGE_KEY = "todo";
 
@@ -16,7 +23,16 @@ function clean(list, knownSlugs) {
     .filter((entry) => entry && typeof entry.slug === "string")
     .filter((entry) => (knownSlugs ? knownSlugs.has(entry.slug) : true))
     .filter((entry) => (seen.has(entry.slug) ? false : seen.add(entry.slug)))
-    .map((entry) => ({ slug: entry.slug, done: entry.done === true }));
+    .map((entry) => ({
+      slug: entry.slug,
+      done: entry.done === true,
+      // Capped and deduped for the same reason the slugs are: this comes back out of storage or off
+      // a URL, and a tick id is the one field the page cannot check against a known set, since the
+      // ids live in the markup of whichever sections happen to be on the page.
+      ticks: Array.isArray(entry.ticks)
+        ? [...new Set(entry.ticks.filter((t) => typeof t === "string" && t.length <= 64))].slice(0, 24)
+        : [],
+    }));
 }
 
 export function read(knownSlugs) {
@@ -43,13 +59,23 @@ export function toggle(slug) {
   const list = read();
   const next = list.some((entry) => entry.slug === slug)
     ? list.filter((entry) => entry.slug !== slug)
-    : [...list, { slug, done: false }];
+    : [...list, { slug, done: false, ticks: [] }];
   write(next);
   return next.some((entry) => entry.slug === slug);
 }
 
 export function setDone(slug, done) {
   write(read().map((entry) => (entry.slug === slug ? { ...entry, done } : entry)));
+}
+
+// One ticked line inside an improvement: a material in the buy list, or its row in the ask list.
+export function setTick(slug, tick, on) {
+  write(read().map((entry) => {
+    if (entry.slug !== slug) return entry;
+    const ticks = new Set(entry.ticks);
+    if (on) ticks.add(tick); else ticks.delete(tick);
+    return { ...entry, ticks: [...ticks] };
+  }));
 }
 
 export function remove(slug) {
@@ -85,5 +111,5 @@ export function merge(list) {
 }
 
 export function addAll(slugs) {
-  merge(slugs.map((slug) => ({ slug, done: false })));
+  merge(slugs.map((slug) => ({ slug, done: false, ticks: [] })));
 }

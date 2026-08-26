@@ -59,8 +59,13 @@ publishes in about a minute. Full reasoning in
 Preview locally by serving the repo root over HTTP:
 
 ```bash
-python3 -m http.server 8000
+node tools/serve.mjs 8000
 ```
+
+That serves what GitHub Pages serves: gzip, one reused connection, correct types, and ETags, so
+moving between pages re-downloads nothing that has not changed. `python3 -m http.server` works too,
+but it sends everything uncompressed over a new connection per request and has no ETag, so every
+page you visit fetches all the CSS, the fonts and the icon sprite again.
 
 ## Documents
 
@@ -74,7 +79,6 @@ Other group members added to a [Google Doc version of the documentation](https:/
 | [DESIGN.md](DESIGN.md) | Information architecture, visual system, components |
 | [AGENTS.md](AGENTS.md) | Instructions for AI coding agents working in this repo |
 | [docs/ai-use.md](docs/ai-use.md) | Every prompt used to build this site, in order |
-| [docs/image-credits.md](docs/image-credits.md) | Every photograph, its photographer, and its licence |
 
 ## License
 

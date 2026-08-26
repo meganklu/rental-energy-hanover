@@ -49,14 +49,23 @@
 <!-- /shell:header -->
 
 <main id="main">
+  <div class="page-hero-hold">
+    <section class="page-hero full-bleed" aria-labelledby="start-h">
+      <div class="page-hero__inner page-shell">
+        <div class="page-hero__text">
+          <h1 id="start-h">Set your situation</h1>
+          <p class="lede">
+            Answer what you can. Every list on this site narrows to match, and the doll house drops
+            anything that does not apply to you. Nothing here is required, and nothing you enter
+            leaves your browser.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <section class="section page-shell">
     <div class="content-column">
-      <h1>Set your situation</h1>
-      <p>
-        Answer what you can. Every list on this site narrows to match, and the doll house dims
-        anything that does not apply to you. Nothing here is required, and nothing you enter
-        leaves your browser.
-      </p>
       <p class="text-small">
         Not sure what heats your place?
         <a href="../learn/heating-systems/">Understanding your heating system</a> shows you how to
@@ -116,7 +125,7 @@
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="btn btn--primary">Show what I can do</button>
+        <button type="submit" class="btn btn--primary" data-magnetic>Show what I can do</button>
         <button type="reset" class="btn btn--secondary">Reset to defaults</button>
       </div>
     </form>
@@ -124,7 +133,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -188,6 +197,7 @@
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <script type="module" src="../assets/js/todo.js"></script>
+<script type="module" src="../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 
 </body>

@@ -72,7 +72,7 @@
             <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
           </div>
         <p class="improvement-actions">
-          <button type="button" class="btn btn--primary todo-add" data-todo-slug="low-flow-showerhead" data-todo-title="Swap in a low-flow showerhead" aria-pressed="false">
+          <button type="button" class="btn btn--primary todo-add" data-magnetic data-todo-slug="low-flow-showerhead" data-todo-title="Swap in a low-flow showerhead" aria-pressed="false">
             <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-plus"/></svg>
             <span data-todo-label>Add to my list</span>
           </button>
@@ -88,16 +88,16 @@
       </div>
 
       <div class="improvement-body">
-        <h2>What you need</h2>
+        <h2 class="reveal">What you need</h2>
         <ul>
           <li>A showerhead carrying the WaterSense label</li>
           <li>A roll of plumber's thread tape</li>
           <li>A cloth, and an adjustable wrench only if the old one will not turn by hand</li>
           <li>A bag to keep the original head in until you move out</li>
         </ul>
-        <p class="text-small">Where to get it: ordered online for delivery, or in person at the West Lebanon stores, reachable on the fare-free Advance Transit bus. <a href="../../where-to-get-it/">Where to get it</a> has the addresses and the routes.</p>
+        <p class="text-small"><a href="../../where-to-get-it/">Where to get it</a></p>
 
-        <h2>Steps</h2>
+        <h2 class="reveal">Steps</h2>
         <ol>
           <li>Ask your landlord first. It is their fixture, and a one-line email saying you would like to fit a water-saving head and will put the original back is usually the whole conversation.</li>
           <li>Turn the old head anticlockwise to unscrew it. Most come off by hand. If it will not budge, wrap the cloth around the nut so the wrench does not mark the finish.</li>
@@ -109,7 +109,7 @@
         </ol>
       </div>
 
-      <div class="story-stack">
+      <div class="story-stack full-bleed">
         <div class="story-bar full-bleed">
           <div class="story-bar__inner">
             <h2 class="story-bar__heading">Why this works</h2>
@@ -139,7 +139,7 @@
             <div class="story-bar__body">
               <p><strong>Estimates are typical ranges, not guarantees.</strong> What you actually save depends on your building, your heating system, and the weather.</p>
               <p>
-                The EPA puts the saving from a WaterSense labelled showerhead at 2,700 gallons of
+                The EPA puts the saving from a WaterSense labeled showerhead at 2,700 gallons of
                 water and more than 330 kilowatt hours of electricity a year for the average family.
                 A student household is not an average family, so read that as the shape of the saving
                 rather than as your number.
@@ -158,7 +158,7 @@
       </div>
 
       <div class="improvement-body">
-        <h2>What to do next</h2>
+        <h2 class="reveal">What to do next</h2>
         <ul>
           <li><a href="../hot-water-showers-and-laundry/">Cut your hot water use</a> covers the free half: shower length, laundry temperature, and the dripping tap that is costing you all winter.</li>
           <li><a href="../../learn/ask-your-landlord/">Ask your landlord</a> has the email to send if the fixture question needs one.</li>
@@ -166,7 +166,7 @@
       </div>
 
       <div class="sources-block improvement-body">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://www.epa.gov/watersense/showerheads">U.S. EPA WaterSense — Showerheads</a></li>
           <li><a href="https://www.epa.gov/watersense/fix-leak-week">U.S. EPA WaterSense — Fix a Leak Week</a></li>
@@ -179,7 +179,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../../start/">
   <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -243,6 +243,7 @@
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <script type="module" src="../../assets/js/todo.js"></script>
+<script type="module" src="../../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 
 <script type="application/json" class="content-meta">
@@ -257,14 +258,14 @@
   "landlordPermission": "ask",
   "reversible": "fully",
   "impact": "medium",
-  "impactNote": "EPA puts a WaterSense labelled showerhead at 2,700 gallons and more than 330 kWh saved a year for an average family",
+  "impactNote": "EPA puts a WaterSense labeled showerhead at 2,700 gallons and more than 330 kWh saved a year for an average family",
   "appliesToHeat": [
     "any"
   ],
   "appliesToPayer": "tenant",
   "phase": "move-in",
   "materials": [
-    "WaterSense labelled showerhead",
+    "WaterSense labeled showerhead",
     "plumber's thread tape"
   ],
   "safety": null,

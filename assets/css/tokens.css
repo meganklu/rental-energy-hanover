@@ -11,6 +11,10 @@
   --color-surface: #F2F6EE;
   --color-surface-brand: #C2E76B;
   --color-surface-dark: #06301F;
+  /* The second dark, added 2026-08-26 for the pair of story bars (DESIGN.md §8). Two bars stacking
+     into one screen need a visible seam between them, and a seam between two fields of the same
+     color is not a seam. 8.6:1 with white, 1.7:1 against --color-surface-dark. */
+  --color-surface-dark-2: #0B573A;
 
   /* Color: text */
   --color-text: #14201A;
@@ -44,19 +48,70 @@
 
      Both sides have to carry white text, which is what rules out pairing the dark green with the
      light --color-surface-brand: the page title, the lede, the float card and the three approach
-     cards all cross the seam, and one element cannot take two text colours depending on which half
+     cards all cross the seam, and one element cannot take two text colors depending on which half
      it happens to sit over. So both halves are dark, and the owner's is the lighter of the two.
      --color-accent was the first try and separated the fields by only 1.8:1, which read as a
      rendering artifact rather than a boundary; this is 2.3:1 between the halves. Contrast with
      white: 14.5:1 on the tenant side, 6.3:1 on the owner side. */
+  /* The three approach cards on that page, added 2026-08-26. --color-surface-dark at two opacities,
+     written out rather than mixed so the file keeps one way of stating a color. The blurred value
+     is used where `backdrop-filter` exists and the opaque one where it does not. White measures
+     9.2:1 and 11.6:1 on them, both over the lighter half of the field. Never carry text themselves;
+     the text sits on them. */
+  --color-approach-card: rgba(6, 48, 31, 0.72);
+  --color-approach-card-blur: rgba(6, 48, 31, 0.45);
+
   --color-split-tenant: var(--color-surface-dark);
   --color-split-owner: #0A6E4B;
 
-  /* The /improvements door only. Added 2026-08-25, see DESIGN.md §3.4. The slab and its panels are
-     the site's greens; these two are the parts of a real front door that are not painted with it.
-     Neither ever carries text. */
-  --color-door-glass: #CBE2EF;
-  --color-door-handle: #7A5230;
+  /* The furnished doll house only. Added 2026-08-25, see DESIGN.md §3.2. The palette is taken from
+     the Calico Critters houses in docs/ai-use.md: cream walls throughout, warm mid-brown floors,
+     heavier beams where one story sits on the next, and light natural wood furniture carrying soft
+     fabric pastels. The color lives in the furniture, not in the walls — a room that is pink from
+     wall to wall leaves nothing for a pink chair to be.
+
+     Decorative throughout. Not one of these ever carries text, and not one is the only signal for
+     anything: every object a reader can press also carries its name.
+
+     They sit outside the site's own palette on purpose. This is a toy drawn at toy scale, and the
+     greens and grays that make a page of advice legible make a doll house look like a wireframe of
+     one. The roof stays the site's green, since the brief scopes the toy reference to the interior. */
+  --toy-outline: #7A5C40;
+  --toy-wall: #F5EDE0;
+  --toy-wall-print: #E8DCC8;
+  --toy-floor: #D8AE7E;
+  --toy-floor-dark: #B08355;
+  --toy-beam: #8B5E3C;
+
+  --toy-wood: #DFB07C;
+  --toy-wood-dark: #B07E4C;
+  --toy-wood-light: #EFD3AE;
+  --toy-cream: #FBF4E7;
+  --toy-white: #FFFFFF;
+
+  /* The name plate under each piece. Declared 2026-08-26: it had been referenced in components.css
+     since the doll house was furnished but never given a value, so every declaration using it was
+     invalid at computed-value time and dropped, and the names sat straight on the wallpaper
+     wherever they happened to fall.
+
+     Decorative, like the rest of the toy palette. The plate carries --color-text at 15.9:1. */
+  --color-room-plate: rgba(251, 244, 231, 0.94);
+  /* The selected piece's glow, white since 2026-08-26. It was --color-brand, the site's light
+     green, which put a green light on a drawing standing on a cream wall among pastel furniture.
+     White is the one value on the toy palette no piece of furniture uses, so a lit edge cannot be
+     mistaken for the piece's own color. Never the only signal: the piece also grows, and the info
+     bar under the house names it. */
+  --color-guide-glow: rgba(255, 255, 255, 0.95);
+
+  --toy-rose: #E7A2A8;
+  --toy-rose-soft: #F6D3D6;
+  --toy-sage: #9CC4A8;
+  --toy-sage-soft: #CDE4D5;
+  --toy-sky: #A9CDE3;
+  --toy-sky-soft: #DCEBF4;
+  --toy-butter: #F4D98B;
+  --toy-slate: #9AA8B2;
+  --toy-slate-soft: #CFD8DE;
 
   /* Hero welcome mat only. Added 2026-08-19, see DESIGN.md §4. */
   --color-mat: #D9BE8A;
@@ -114,8 +169,8 @@
   --motion-room: 240ms;
   --motion-loop: 5s;
   /* A longer, gentler move for something large and continuous, added 2026-08-25. The About page's
-     colour field is most of the screen, and --motion-base's 200ms with a sharp-out curve made a
-     half-page of colour snap rather than slide. */
+     color field is most of the screen, and --motion-base's 200ms with a sharp-out curve made a
+     half-page of color snap rather than slide. */
   --motion-slow: 450ms;
   --motion-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);

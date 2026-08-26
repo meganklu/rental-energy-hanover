@@ -65,14 +65,23 @@ if (dollhouseEl && infoBar) {
     });
   }
 
+  // The tag always sits above the piece with its arrow pointing down, and which element it is
+  // appended to is what puts it there, revised 2026-08-26. It positions itself against its nearest
+  // positioned ancestor. On a wall-hung piece that is the link, whose name plate hangs below the
+  // drawing, so the tag lands above the drawing. On a piece standing on the floor the name plate is
+  // already above the drawing, so the tag goes inside the plate and stacks above the name instead
+  // of landing on it. Appending to the link in that case put the tag below the piece and, on
+  // anything standing near the floor, past the bottom edge of the room.
   function setFlag(hotspot, flag, text) {
-    const label = hotspot?.querySelector(".hotspot__label");
-    if (!label || label.querySelector(`.hotspot__badge-flag[data-flag="${flag}"]`)) return;
+    if (!hotspot || hotspot.querySelector(`.hotspot__badge-flag[data-flag="${flag}"]`)) return;
     const el = document.createElement("span");
     el.className = "hotspot__badge-flag";
     el.dataset.flag = flag;
     el.textContent = text;
-    label.appendChild(el);
+    const host = hotspot.classList.contains("hotspot--stands")
+      ? hotspot.querySelector(".hotspot__label") || hotspot
+      : hotspot;
+    host.appendChild(el);
   }
 
   const clearFlag = (flag) =>
@@ -91,9 +100,9 @@ if (dollhouseEl && infoBar) {
   function updateGuideBadges(from) {
     clearFlag("start");
     clearFlag("next");
-    const unvisited = byOrder(hotspots.filter((h) => !h.hidden && !visited.has(h.dataset.hotspotId)));
+    const unvisited = byOrder(hotspots.filter((h) => !isInactive(h) && !visited.has(h.dataset.hotspotId)));
     if (visited.size === 0) {
-      const home = startBadgeHotspot && !startBadgeHotspot.hidden ? startBadgeHotspot : unvisited[0];
+      const home = startBadgeHotspot && !isInactive(startBadgeHotspot) ? startBadgeHotspot : unvisited[0];
       setFlag(home, "start", "Start here");
       return;
     }
@@ -145,11 +154,15 @@ if (dollhouseEl && infoBar) {
   };
   const IMPACT_LABEL = { low: "Low impact", medium: "Medium impact", high: "High impact" };
 
-  // Filtered-out-by-personalization hotspots (see applyPersonalization below) are skipped by the
-  // guided order, same as if they were never in the house.
+  // A hotspot that personalization has ruled out (see applyPersonalization below). It is still
+  // drawn in its room, so `hidden` is no longer what marks it — the class is.
+  const isInactive = (h) => h.classList.contains("hotspot--inactive");
+
+  // Filtered-out-by-personalization hotspots are skipped by the guided order, same as if they were
+  // never in the house.
   function nextHotspot(currentOrder) {
     const order = Number(currentOrder);
-    const pool = hotspots.filter((h) => !h.hidden);
+    const pool = hotspots.filter((h) => !isInactive(h));
     const sorted = pool.sort((a, b) => a.dataset.order - b.dataset.order);
     const idx = sorted.findIndex((h) => Number(h.dataset.order) === order);
     return sorted[(idx + 1) % sorted.length] || sorted[0];
@@ -335,7 +348,26 @@ if (dollhouseEl && infoBar) {
     };
 
     hotspots.forEach((h) => {
-      h.hidden = active && !relevant(h.dataset.slug);
+      // Revised 2026-08-26: the piece stays in the room and stops being a control, rather than
+      // leaving a gap in the furniture where it used to stand. Removing `href` is what takes it out
+      // of the tab order and out of the link role in one move — an `<a>` with no href is a plain
+      // inline element — and `aria-hidden` finishes the job for anything reading the room. Both are
+      // put back the moment the situation stops ruling it out.
+      const off = active && !relevant(h.dataset.slug);
+      h.classList.toggle("hotspot--inactive", off);
+      if (off) {
+        if (h.hasAttribute("href")) {
+          h.dataset.inactiveHref = h.getAttribute("href");
+          h.removeAttribute("href");
+        }
+        h.setAttribute("aria-hidden", "true");
+      } else {
+        if (h.dataset.inactiveHref) {
+          h.setAttribute("href", h.dataset.inactiveHref);
+          delete h.dataset.inactiveHref;
+        }
+        h.removeAttribute("aria-hidden");
+      }
     });
     roomIndexLinks.forEach(({ li, slug }) => {
       if (li) li.hidden = active && !relevant(slug);
@@ -366,18 +398,18 @@ if (dollhouseEl && infoBar) {
     // has been drawn for that room at all yet.
     dollhouseEl.querySelectorAll(".room").forEach((room) => {
       const roomHotspots = [...room.querySelectorAll(".hotspot")];
-      const noneVisible = roomHotspots.length > 0 && roomHotspots.every((h) => h.hidden);
+      const noneVisible = roomHotspots.length > 0 && roomHotspots.every(isInactive);
       room.classList.toggle("room--filtered-empty", noneVisible);
     });
 
-    TOTAL = hotspots.filter((h) => !h.hidden).length || hotspots.length;
+    TOTAL = hotspots.filter((h) => !isInactive(h)).length || hotspots.length;
     updateProgress();
     // Hiding a hotspot can take whichever badge is showing off the drawing entirely, and can also
     // hide the spot "Next" was pointing at, so both are re-placed here.
     updateGuideBadges(lastTrigger);
 
-    // A stale info bar for a hotspot the new situation just hid would be confusing left open.
-    if (!infoBar.hidden && lastTrigger?.hidden) closeInfoBar();
+    // A stale info bar for a hotspot the new situation just ruled out would be confusing left open.
+    if (!infoBar.hidden && lastTrigger && isInactive(lastTrigger)) closeInfoBar();
   }
 
   // The personalize dialog (situation-modal.js) saves and closes without navigating away, so it

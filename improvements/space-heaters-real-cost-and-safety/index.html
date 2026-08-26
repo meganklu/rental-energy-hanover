@@ -72,7 +72,7 @@
             <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
           </div>
         <p class="improvement-actions">
-          <button type="button" class="btn btn--primary todo-add" data-todo-slug="space-heaters-real-cost-and-safety" data-todo-title="Use a space heater safely" aria-pressed="false">
+          <button type="button" class="btn btn--primary todo-add" data-magnetic data-todo-slug="space-heaters-real-cost-and-safety" data-todo-title="Use a space heater safely" aria-pressed="false">
             <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-plus"/></svg>
             <span data-todo-label>Add to my list</span>
           </button>
@@ -103,13 +103,14 @@
       </div>
 
       <div class="improvement-body">
-        <h2>What you need</h2>
+        <h2 class="reveal">What you need</h2>
         <ul>
           <li>A listed electric space heater</li>
         </ul>
-        <p class="text-small">Where to get it: ordered online for delivery, or in person at the West Lebanon stores, reachable on the fare-free Advance Transit bus. <a href="../../where-to-get-it/">Where to get it</a> has the addresses and the routes. Check the box for a recognized testing-laboratory listing before you buy.</p>
+        <p class="text-small">Check the box for a recognized testing-laboratory listing before you buy.</p>
+        <p class="text-small"><a href="../../where-to-get-it/">Where to get it</a></p>
 
-        <h2>Steps</h2>
+        <h2 class="reveal">Steps</h2>
         <ol>
           <li>Pick a spot with 3 feet of clear space on every side, on a hard, level floor.</li>
           <li>Plug it straight into a wall outlet, not a shared power strip.</li>
@@ -118,7 +119,7 @@
         </ol>
       </div>
 
-      <div class="story-stack">
+      <div class="story-stack full-bleed">
         <div class="story-bar full-bleed">
           <div class="story-bar__inner">
             <h2 class="story-bar__heading">Why this works</h2>
@@ -146,7 +147,7 @@
       </div>
 
       <div class="sources-block improvement-body">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://www.esfi.org/space-heater-safety-tips/">Electrical Safety Foundation International — Space Heater Safety Tips</a></li>
           <li><a href="https://www.nfpa.org/education-and-research/home-fire-safety/carbon-monoxide">National Fire Protection Association — Carbon Monoxide Safety</a></li>
@@ -158,7 +159,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../../start/">
   <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -222,6 +223,7 @@
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <script type="module" src="../../assets/js/todo.js"></script>
+<script type="module" src="../../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 
 <script type="application/json" class="content-meta">

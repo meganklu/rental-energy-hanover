@@ -171,14 +171,14 @@
     "landlordPermission": "ask",
     "reversible": "fully",
     "impact": "medium",
-    "impactNote": "EPA puts a WaterSense labelled showerhead at 2,700 gallons and more than 330 kWh saved a year for an average family",
+    "impactNote": "EPA puts a WaterSense labeled showerhead at 2,700 gallons and more than 330 kWh saved a year for an average family",
     "appliesToHeat": [
       "any"
     ],
     "appliesToPayer": "tenant",
     "phase": "move-in",
     "materials": [
-      "WaterSense labelled showerhead",
+      "WaterSense labeled showerhead",
       "plumber's thread tape"
     ],
     "safety": null,

@@ -72,7 +72,7 @@
             <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-impact-high"/></svg>High impact</span>
           </div>
         <p class="improvement-actions">
-          <button type="button" class="btn btn--primary todo-add" data-todo-slug="thermostat-setback" data-todo-title="Set your thermostat back" aria-pressed="false">
+          <button type="button" class="btn btn--primary todo-add" data-magnetic data-todo-slug="thermostat-setback" data-todo-title="Set your thermostat back" aria-pressed="false">
             <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-plus"/></svg>
             <span data-todo-label>Add to my list</span>
           </button>
@@ -88,13 +88,12 @@
       </div>
 
       <div class="improvement-body">
-        <h2>What you need</h2>
+        <h2 class="reveal">What you need</h2>
         <ul>
           <li>Nothing. Just your existing thermostat.</li>
         </ul>
-        <p class="text-small">Nothing to buy for this one. When something does need buying, <a href="../../where-to-get-it/">Where to get it</a> has the addresses and the bus routes.</p>
 
-        <h2>Steps</h2>
+        <h2 class="reveal">Steps</h2>
         <ol>
           <li>Find your normal comfortable temperature and note it.</li>
           <li>Before bed or before leaving for the day, lower the setting a few degrees.</li>
@@ -103,7 +102,7 @@
         </ol>
       </div>
 
-      <div class="story-stack">
+      <div class="story-stack full-bleed">
         <div class="story-bar full-bleed">
           <div class="story-bar__inner">
             <h2 class="story-bar__heading">Why this works</h2>
@@ -132,7 +131,7 @@
       </div>
 
       <div class="sources-block improvement-body">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://bsesc.energy.gov/energy-basics/hvac-programmable-thermostats">U.S. Department of Energy — Energy Basics: HVAC Programmable Thermostats</a></li>
           <li><a href="https://www.energy.gov/sites/prod/files/2014/01/f6/homeHeating.pdf">U.S. Department of Energy — Energy Saver 101: Home Heating</a></li>
@@ -144,7 +143,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../../start/">
   <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -208,6 +207,7 @@
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <script type="module" src="../../assets/js/todo.js"></script>
+<script type="module" src="../../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 
 <script type="application/json" class="content-meta">

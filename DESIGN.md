@@ -200,8 +200,8 @@ student can send a filtered list to a roommate. Rooms serialize as fragments (`/
 | Room, enlarged `/#room` | Show the three or four things worth knowing about in this room | Tap a hotspot | The room box grows out of the doll house. The same hotspots also render as a plain linked list under the drawing, which is the keyboard, screen reader and no-JavaScript path |
 | Situation selector `/start` | Collect the four inputs that change what we recommend | Answer, then "Show what I can do" | Every question has "I am not sure", which widens results rather than blocking. All four questions on one screen in v1. One question per screen arrives with the mobile layouts in the next version. A plain form, so it submits without JavaScript. Revised 2026-08-19: this is now also the one and only situation form on the site — the improvements library filters against the same four answers rather than keeping a second, separate filter form. Reached directly at `/start`, or as a dialog opened by the "Personalize your recommendations" button (§3.3) from any page, with the same markup either way |
 | Improvements library `/improvements` | Let a student scan everything and narrow it to their situation | Open an improvement | The one screen in the site that is a card grid, because it is the complete index and the direct route for a student who already knows what they want. Default sort: enablers first, then impact, then lowest cost. Empty state never dead-ends |
-| Improvement detail `/improvements/:slug` | Get this done today | Follow the steps | Revised 2026-08-20: the page runs the full page-shell width rather than being capped at the 40rem content measure top to bottom. Title, summary, badges and facts sit in two columns above 900px, a custom SVG illustration of the improvement beside them (below 900px the illustration drops below the heading block and above "What you need"). A safety note, where the item has one, is pulled out of that two-column block into its own full-width band directly beneath it — safety does not share space with the illustration, revised again 2026-08-20 after the first pass put it in the text column. What you need, steps, where to get it (folded into "what you need" rather than a trailing paragraph), why this works and savings (now full-width story bars, §5.1), sources. Visible prose under 200 words still applies to the steps and what-you-need column, which keeps the 40rem measure |
-| Explainer `/learn/:slug` | Correct one wrong idea, fast | Flip the cards, then go do the improvement | Built as flip cards and an animated diagram rather than paragraphs. Every explainer carries one diagram that shows the mechanism, for example where heat leaves a room. See §5.1 |
+| Improvement detail `/improvements/:slug` | Get this done today | Follow the steps | Revised 2026-08-20: the page runs the full page-shell width rather than being capped at the 40rem content measure top to bottom. Title, summary, badges and facts sit in two columns above 900px, a custom SVG illustration of the improvement beside them (below 900px the illustration drops below the heading block and above "What you need"). A safety note, where the item has one, is pulled out of that two-column block into its own full-width band directly beneath it — safety does not share space with the illustration, revised again 2026-08-20 after the first pass put it in the text column. What you need, steps, where to get it (folded into "what you need" rather than a trailing paragraph), why this works and savings (now full-width story bars, §5.1), sources. Visible prose under 200 words still applies. The 40rem measure it kept until 2026-08-26 is gone; the body runs the page shell like everything else on the page (§6) |
+| Explainer `/learn/:slug` | Correct one wrong idea, fast | Flip the cards, then go do the improvement | Built as flip cards (rebuilt 2026-08-26, §5.1) and an animated diagram rather than paragraphs. Every explainer carries one diagram that shows the mechanism, for example where heat leaves a room. See §5.1 |
 | Checklist `/checklist` | Take a list away and act on it over a week | Print, or copy as text to send to roommates | **v2**, cut from v1 per [docs/features.md](docs/features.md) §3. State is local to the browser. Nothing is submitted anywhere |
 | Rights `/your-rights` | Find out whether 58°F is legal and who to call | Reach a real help resource | Legal disclaimer at the top, never collapsed. No advice on a specific dispute |
 | Programs `/programs` | Find out whether a renter can use this | Go to the program's own page | Any program with `state` other than NH is labeled as another state's program or is not rendered |
@@ -389,6 +389,16 @@ jumps instantly when motion is reduced. An arrow with no label is not a control 
 **What it must not do.** It must not become the reason a student never finds the house. The 85svh
 cap, the arrow, and the peeking top edge of the next section are all there for that.
 
+**The shadow holds still, revised 2026-08-26.** The lift was carried by a `filter` swapped between
+three drop-shadows by keyframe, tight and dark when the foot was planted, spread and faint at the
+top of the swing. It reads well and it was the one non-compositable property in a scroll-driven
+animation on the busiest page of the site: `filter` cannot be handed to the compositor, so every
+frame of every scroll through the hero repainted both shoes, and the hero is 220vh of scroll that
+every reader passes through on the way in. The shadow is one static value now and `scale` carries
+the lift on its own, which does composite. The note this replaces said scale alone was not enough,
+and it was right about the six percent it was measured at; the walk runs 0.94 to 1.16, four times
+that range.
+
 **The stride, revised 2026-08-24.** The shoes read as sliding rather than stepping. The cause was
 that the lift was carried entirely by `scale`, running 1 to 1.06, and 6% is not a step. Seen from
 directly overhead there are only two axes available to say a foot has left the ground: it is nearer,
@@ -428,6 +438,232 @@ from.
 ### 3.2 The doll house
 
 The centerpiece. Everything else on the site can be reached from it.
+
+**Furnished rooms, an experiment on `feature/dollhouse-furniture`, 2026-08-25.** The rooms held a
+row of chips, which meant the house was a house in name and a list of buttons in fact, and it meant
+opening a room bought you nothing except bigger buttons. This branch draws each room as a toy house
+room seen with the front wall off, and the furniture is what you press.
+
+**The look comes from the reference, not from the site's palette.** Cream walls under a faint print,
+warm mid-brown floors, a heavier beam under each room where one story sits on the next, arched
+windows in white frames, and light natural wood furniture carrying soft fabric pastels. Two passes
+got here. The first drew scenery out of rounded CSS boxes, and a bed came out as a crate with a
+smaller crate on it. The second drew it in the icon set's flat green line pen, which read as a
+wireframe of a doll house. Thirty-nine furniture symbols now live in `assets/icons/sprite.svg`, each
+in a viewBox of its own real proportion, because forcing a sofa into a 24 square is what makes a
+drawing read as an icon of a sofa rather than as a sofa. The color lives in the furniture rather
+than in the walls: a room that is pink from wall to wall leaves nothing for a pink chair to be. The
+roof stays the site's green, since the brief scopes the toy reference to the interior.
+
+**Two kinds of object, told apart three ways.** A prop is scenery: no name, no interactive state, no
+place in the accessibility tree. An object is the same `.hotspot` link it always was, drawn in full
+color, carrying its name under it, and lifting off the wall under the pointer. Only objects carry a
+name, and that is the signal that does not depend on color. The button frame came off: a bordered
+pill standing on a wall is exactly what this is trying to stop looking like.
+
+**Everything is placed against the floor line.** `--x` across the room, and then either `--b` up
+from the floor to a piece's feet or `--y` down from the ceiling to its top edge. Placing by edges
+rather than by centers is not a detail: the first pass centered on both axes, and a ceiling light
+placed near the top of the wall hung off the top of the room by half its own height. A piece
+standing on the floor takes its name above it, since there is no wall under a bed to put a name on.
+
+**Only three things hang from the ceiling**, revised 2026-08-25: the pendant light, the curtain rail
+and the floor joists over the basement. Everything else in a house is fixed a set distance up from
+the floor, and anchoring it to the ceiling instead means it drifts away from the furniture it
+belongs with as the room's height changes. The bill floated a foot clear of the fridge in the
+enlarged kitchen for exactly this reason. Wall pieces now sit at the heights they sit at in a
+2.5-metre room: a thermostat and a set of key hooks at 1.4m, a window sill at 1.0m, a shower head at
+1.65m, and the bill on the fridge's own upper door.
+
+**Size is a share of the room's height, not its width.** This is the whole scaling rule, and getting
+it wrong is what made the enlarged room look off. Height is the dimension that maps to a real one: a
+bed is about a metre tall in a room about two and a half metres tall, whatever the room's width
+happens to be. Sizing by width share was the first pass, and because the enlarged room is a
+different aspect from the room in the house, every piece came out around forty percent larger
+against the room the moment it opened. Width follows each symbol's own viewBox, so a sofa stays
+sofa-shaped. The enlarged room also holds three by two now, the house room's own proportion, since a
+room that grows in width alone spreads the same furniture over more wall and reads as half empty.
+
+**The 44px press target is an invisible box, not a bigger drawing.** A thermostat drawn to scale in
+a room this size is about twenty pixels across, and inflating it to the site's 44px floor would make
+it the size of a picture frame on the wall next to it. The floor is held by a transparent
+pseudo-element centered on the piece, at least 44px each way, which takes the press without
+changing what is drawn. Verified by hit-testing the center of every drawing and confirming it
+resolves to its own link.
+
+**The bug that made the whole thing look broken.** An outer `<svg>` with no `viewBox` has no
+intrinsic aspect ratio, so `height: auto` fell back to CSS's default 150px and every drawing sat
+letterboxed inside a box far bigger than itself. Furniture floated above the floor, names sat ninety
+pixels from the things they named, and the collision measurements were all measuring the wrong
+boxes. Each referencing element carries its symbol's own viewBox now. The lesson is narrow and
+worth keeping: a `<use>` of a symbol inherits the symbol's aspect ratio for painting but not for
+layout.
+
+**Objects are spread evenly across the rooms, 2026-08-25.** Seventeen objects over six rooms sat at
+3/3/1/4/3/3, with the bathroom holding one thing and the living room four. Two moves fix it, both to
+somewhere the object plausibly is in a real rental: the radiator or baseboard goes to the bathroom,
+and the curtains go to the bedroom. That gives 3/3/2/3/3/3, and the bathroom keeps the two since it
+is the smallest room drawn. The guided order is untouched, because it was never grouped by room.
+
+**Guidance needed no JavaScript.** `dollhouse.js` already flags the next unvisited object with "Start
+here" or "Next"; the branch only restyles that flag into a tag on the piece with an arrowhead
+pointing at it. Two signals for one thing, and neither is a color: the words, and the shape aimed at
+the piece. The tag nods once every five seconds so the eye finds it among seventeen pieces of
+furniture, gated off under reduced motion. The width gate on that animation is load-bearing rather
+than tidiness: the keyframes set `translateX(-50%)` on every frame, a running animation beats a
+declared `transform`, and below the gate the flag would sit pulled half its own width over the name
+it belongs to.
+
+**A token was missing the whole time, fixed 2026-08-26.** `--color-room-plate` was referenced in
+`components.css` from the day the house was furnished and never declared in `tokens.css`, so every
+declaration using it was invalid at computed-value time and dropped, and the names sat directly on
+the wallpaper wherever they fell. That is the exact problem the plate was added to solve. It is
+declared now, and `--color-guide-glow` beside it.
+
+**The guide is the arrow alone, revised 2026-08-26.** Three signals were one too many. The flag
+also put a five-pixel ring and a plate-colored fill behind whichever piece was next, and a rectangle
+drawn around a lamp is the same mistake the selected state had already been corrected for: it read
+as a box that had appeared beside the object rather than as the object being pointed at. The ring
+and the fill are gone and the token behind them, `--color-guide-halo`, is deleted rather than left
+declared. What is left is the tag, its words, and the arrowhead nodding at the piece, which is a
+pointer and a phrase and needs no color to work.
+
+**The arrow always sits above the piece, fixed 2026-08-26.** Putting the tag opposite the name was
+right about collisions and wrong about the room's edges. A piece standing on the floor has its name
+above it, so the tag went below it, which on the space heater and the water heater put the tag and
+its arrowhead past the bottom of the room and under the clip. The rule now is one rule: the tag is
+always above, arrowhead always pointing down. For a wall-hung piece that is above the drawing, and
+for a piece standing on the floor `dollhouse.js` appends it inside the name plate instead, so it
+stacks above the name rather than landing on top of it. Neither case can reach the floor line.
+
+**The room stopped clipping, 2026-08-26.** `overflow: hidden` on the scene was what cut the arrow
+off, and it was there to hold the painted wall and floor inside the room's rounded corners. Those
+two surfaces are one layered background on a full-size `::before` now, which clips itself to its own
+border radius and leaves the scene free to let a tag hang past its edge. Nothing else in a room ever
+crosses the boundary: every prop's drawn width was re-measured against its room at 1150, 1280 and
+1440 after the change.
+
+**The glow is white, revised 2026-08-26.** The selected piece glowed in `--color-brand`, which is
+the site's light green sitting on a cream wall next to furniture drawn in pastels — a green light on
+a green-ish drawing, which is the reading it should least have. White reads as light rather than as
+paint, it is the one value on the toy palette that no piece of furniture uses, and against the cream
+wall and the brown outlines there is enough separation for the lit edge to be obvious. Size is still
+the second signal and the info bar naming the piece is still the third, so nothing here rests on a
+color.
+
+**Hover, in three passes, and what it took to stop it stuttering (2026-08-26).** Worth writing out,
+because the first two passes each fixed something real and neither fixed the symptom.
+
+*Pass one* found four causes and fixed four causes. The `filter` transition on the hotspot ran
+against the selected piece's own infinite `filter` keyframes, and a running animation beats a
+transition, so hovering an open piece snapped. The scale had no `transform-origin` except when
+selected, so a piece standing on the floor grew from its middle and sank through the floorboards,
+then jumped origin when pressed. The filter sat on the link, so the glow spread around the name
+plate and the guide tag. And the scale sat on the link too, so twelve-pixel text was re-rasterized
+at a new size on every frame.
+
+*Pass two* found the cost. **A scale and `vector-effect: non-scaling-stroke` cannot both be cheap.**
+That vector-effect is what keeps a furniture outline a constant weight in device pixels whatever
+size the room renders at, and it is load-bearing: without it a stroke at furniture size comes out as
+a marker line. But a stroke that must stay the same width on screen while its shape changes size has
+its outline geometry rebuilt from the path every frame. It cannot be handed to the compositor as a
+picture and scaled, and being handed to the compositor as a picture is the entire reason a transform
+is cheap. So the scale became a four-pixel lift.
+
+*Pass three* found that the lift was the problem too, for a different reason. Moving an outline drawn
+in a 1.6px non-scaling stroke through sub-pixel positions is exactly the regime where the stroke
+snaps between pixel rows frame to frame. The piece reads as vibrating rather than rising, which is
+what "it shakes" described. And four pixels is small enough that the entire travel happens inside
+that regime: there is no part of the move that is unambiguously a move.
+
+**So the response is paint, and there are two rules now.** Nothing that is part of the hover target
+moves, and nothing on the drawing changes geometry. The name plate lights up, dark accent with white
+text. A plate is a box: its background and its text color animate smoothly at any size with no
+geometry anywhere in it.
+
+*Pass four* took the last thing off the drawing. The lift was replaced by an untransitioned
+`drop-shadow` on the SVG, and it was still enough. The report that settled it was precise: hovering
+the name plate is smooth and hovering the object is not. Both put the link in exactly the same
+state, so the difference could not be in the styling — it had to be in what the pointer was over.
+Applying a filter to an SVG makes the browser render it through a separate buffer, and a
+`non-scaling-stroke` resolves against that buffer's coordinate system rather than the screen's, so
+the outline's weight can visibly snap when the filter turns on and again when it turns off. Over the
+plate the pointer is nowhere near the drawing and there is nothing to see; over the object it is the
+thing being looked at.
+
+**The drawing does not respond to the pointer at all now.** The plate is the whole response, and it
+sits directly under (or over) the thing being pointed at. That is the fourth version of this effect,
+and the rule it leaves behind is the general one: in this pen, a drawing is a picture, and pictures
+do not react. Their labels do.
+
+The second rule is also what rules out the other half of the report, "it moves in and out multiple
+times". That is hover oscillation, and it has exactly one mechanism: the thing being hovered travels
+out from under the pointer, the hover ends, it comes back, and the cycle repeats. Nothing moves, so
+nothing can.
+
+Two things were checked before rewriting rather than after, since neither is visible by eye. The
+hover targets do not overlap each other — every hotspot is a link box the size of its drawing, plus
+an invisible box at `max(100%, 44px)` centred on it, plus a name plate hanging outside the box, and
+all three take the hover; every pair of those across all six rooms was measured for intersection and
+none intersect. And the link box itself never moved in any of the three passes, only the drawing
+inside it did.
+
+**The selected glow stopped breathing at the same time**, for the same kind of reason. It was an
+infinite `filter` animation, so one drawing repainted forever while a reader hovered every other
+drawing on the page. Selected carries the white glow, its name set heavier than every other name on
+the wall, and the info bar under the house naming the piece. The plate was filled in the light brand
+green for a few hours on 2026-08-26 and that came straight back out: a filled plate on the wall
+reads as a second thing competing with the glow it is meant to support, and it made "open" and
+"under the pointer" look like two versions of one state. Weight is the signal that is not a color,
+and the info bar is the one that is not visual at all.
+
+**An object that does not apply is scenery, revised 2026-08-26.** Personalization used to set
+`hidden` on every hotspot the reader's heat type or who-pays answer ruled out, which took the object
+out of the room and left a gap in the furniture where it had been. It stays drawn now: the `href`
+comes off so it is neither focusable nor a link, `aria-hidden` takes it out of the accessibility
+tree, the name plate goes, and it dims to the weight the props around it carry. A washer that is not
+yours to think about is still a washer in the basement. The counts, the guided order and the "next"
+tag all skip it exactly as they skipped a hidden one, and the "Everything in this house" list still
+drops the row outright, because a list of links is not a drawing and an entry with no link in it is
+just a dead line.
+
+**The basement is a different room and now says so, fixed 2026-08-26.** It spans the whole ground
+under the house, so in the house it is four times as wide as it is tall, and the enlarged view gave
+every room the same three-by-two. Furniture is sized off the room's height, so opening the basement
+grew every piece by two and a half while the room itself got no wider, and six pieces ended up
+standing on top of each other. Enlarged, the basement keeps its own three-and-a-half-to-one, which
+is close enough to the shape it has in the house that the same six placements hold in both. The
+stairs were also drawn at 40% of the room's height, which in a basement is a step stool; they run
+from the joists to the floor now, which is what stairs into a basement do.
+
+**The chip rows are chips again, fixed 2026-08-26.** Below 1150px the furnished scene falls back to
+the rows it replaced, and the fallback only ever undid the parts of the scene that were on the
+hotspots. The room itself kept the papered wall, the wood floor and the heavy beam under it, so a
+row of green pills sat on a drawing of a floor at exactly the width where there was no furniture
+standing on it. The room is a plain bordered white box again below the gate, which is what it was
+before the house was furnished and what the rows were designed to sit in.
+
+**Labels are checked by hit-testing, not by eye.** Fifteen points across each name's box are asked
+what is painted on top of them; anything that comes back other than the name itself is something
+covering it. That plus the overflow and overlap checks is what the placement numbers are tuned
+against, at 1150, 1280 and 1440. Eyeballing a screenshot missed a label sitting ninety pixels from
+its own drawing for two passes.
+
+**What it costs, and this is the finding.** A piece's name is sized in text and text does not shrink
+with the room; the placement is a percentage and does. Below about 1150px the two stop agreeing:
+names collide with each other and run off the wall. Measured across 640 to 1600, and re-measured
+after every placement change, which is the only reason it is a number rather than a guess. So the
+furnished scene is a wide-screen treatment, and everything narrower drops back to the chip rows it
+replaced, which were designed for that width and lose nothing — the same links, the same names, the
+same guide flag, in a row instead of on a wall. Below 600px the drawing is hidden entirely and the
+plain "Everything in this house" list takes over, unchanged.
+
+**Is it worth it.** The strongest argument for it is the enlarged room, which is where the request
+started. Opening a room used to give you the same chips at a larger size. It now gives you a room
+you can read. The strongest argument against it is that it is a second layout to maintain for one
+breakpoint band on one page, and that seventeen hand-placed coordinates have to be re-checked
+whenever a name changes length or a piece moves rooms. Not merged. See `docs/ai-use.md` for the
+requests this answers.
 
 **How to play is a callout, not a paragraph, added 2026-08-19.** "Click a room to open it. Click
 each highlighted spot to see what you can do about it." moved off the page by default and into a
@@ -489,7 +725,7 @@ than a new body of content:
 | Water heater | Basement | Hot water, showers, laundry temperature |
 | Outlets and plugs | Living room | Phantom load |
 | Light fixture | Kitchen | LED swaps, keep the originals in a box |
-| Rim joist and attic hatch | Basement | Where the heat actually goes, and the programs page |
+| Where cold air gets in | Basement | Where the heat actually goes, and the programs page |
 | The bill on the fridge | Kitchen | Read your bill. Marked "Start here" |
 
 **Every Renter basics article is in the house, added 2026-08-21.** Two of the three explainers had
@@ -567,8 +803,15 @@ any other part of the site.
 
 **Interaction.** Tap a room box and it enlarges, filling the drawing area, with the rest of the
 house shown small alongside it. Tap a hotspot in the enlarged room to open an info bar under the
-drawing. The open hotspot itself gets a visible selected state (a highlighted ring), so it is clear
-which spot the info bar belongs to. The info bar holds the title, the permission and reversibility
+drawing. The open hotspot itself gets a visible selected state, so it is clear which spot the info
+bar belongs to. Revised 2026-08-26 from a 2px accent outline to a glow: the outline was a rectangle
+drawn around a thing that is not a rectangle — a lamp, a showerhead, a bill on a fridge — so it read
+as a box that had appeared beside the object rather than as the object lighting up. A `drop-shadow`
+follows the drawn edge instead, which is what hover already uses. Size is the second signal and it
+is not a color, so the piece also holds a scale of its own while it is selected, above hover's; the
+third is the info bar itself, open under the house and naming it. A selected piece does not take the
+visited fade, since fading back means "you have read this" and the one on screen is the opposite of
+that. The info bar holds the title, the permission and reversibility
 badges, cost, time and impact — the same facts shown on the improvement page itself, not a
 subset — one sentence, a "Learn more" link to the full improvement, and a "Close" control.
 Revised 2026-08-19: reversibility is worded identically everywhere it appears (improvement pages,
@@ -593,7 +836,7 @@ house reads as one consistent structure rather than a patchwork of surfaces.
 
 **Explainer hotspots carry a "Renter basics" badge** (added 2026-08-19) in place of a permission
 badge, since find-your-drafts and read-your-bill are not upgrades and have no
-`landlordPermission` to state. Same pill shape as the permission badges, but a neutral grey
+`landlordPermission` to state. Same pill shape as the permission badges, but a neutral gray
 (`--color-surface` on `--color-border-strong`) rather than any of success/warning/info, since
 those three already mean the three permission states and reusing one would misread as a claim
 about permission.
@@ -609,7 +852,7 @@ ordinary links. That list is the screen reader path, the no-JavaScript path, and
 below the drawing at every width, which put a twelve-item link list directly under a section whose
 whole point is that you explore it by clicking the drawing. It is now the site's standard
 disclosure bar (§5) — the same closed-by-default `<details>` the improvement pages use for depth —
-labelled "Everything in this house" and closed on load. `<details>` is what makes this safe to do:
+labeled "Everything in this house" and closed on load. `<details>` is what makes this safe to do:
 the summary is a real, keyboard-operable control that is always in the tab order and always
 announced, so the list stays *reachable* at every width even while it is not *shown*, which is what
 the no-JavaScript and zoom paths above actually need. It is still never `display: none`, and it is
@@ -818,12 +1061,13 @@ card's title also carries the same object icon its doll house hotspot uses (`ico
 its hotspot read as the same thing encountered by two different routes, per §2's "both reach the
 same content items" rule.
 
-**The page title, revised 2026-08-21.** "Improvements" now sits centered at the top of the page
-at display size (`--text-display`, §4) rather than left-aligned inside the 40rem content column at
-normal h1 size. The page has no lede sentence under it (see "What the page opens with" above), so
-a normal-size h1 in a narrow left column read as a label someone forgot to finish rather than as
-the start of a page. This is the shared `.page-head` block (§5), and every page built after this
-one uses it, so a page title looks the same everywhere on the site.
+**The page title, revised 2026-08-21.** "Improvements" sits at display size (`--text-display`, §4)
+rather than at normal h1 size inside the content column. The page has no lede sentence under
+it (see "What the page opens with" above), so a normal-size h1 read as a label someone forgot to
+finish rather than as the start of a page. It was centered from 2026-08-21 until 2026-08-26, when
+every page title on the site went back to the left edge for the reason in §6; the size was never the
+part that was wrong. Since 2026-08-24 the title is on the door rather than on a band, which is this
+page's own version of the shared opening (§3.10).
 
 **"Renter basics," moved to the top, added 2026-08-20, renamed 2026-08-21.** The two explainer topics
 (`read-your-bill`, `find-your-drafts`) previously sat in a "Learn" section below the main grid,
@@ -872,19 +1116,19 @@ clipped by the scroll container it sits in.
 **Focused on one card, rebuilt 2026-08-24.** The peek variant showed all three slides at roughly
 equal weight, which meant Previous and Next moved a track that already showed everything and so
 appeared to do nothing. A slide is now 58% of the track and the track carries a matching gutter each
-side, which puts the current card in the middle at full size with roughly a third of each neighbour
+side, which puts the current card in the middle at full size with roughly a third of each neighbor
 showing either side of it. Neighbours drop to `scale(0.9)` and 72% opacity; the current card takes
 the accent border and the raised shadow.
 
 Two things about how that is built are worth keeping. **The slide width is a length, not a
 percentage.** Percentage `flex-basis` resolves against the flex container's content box, percentage
-`padding-inline` shrinks that same content box, and asking for "a slide centred in the leftover
+`padding-inline` shrinks that same content box, and asking for "a slide centered in the leftover
 space" with both at once has no solution short of 50% padding and a zero-width content box. The
-first attempt did exactly that and the focused card sat left of centre. A length breaks the loop and
+first attempt did exactly that and the focused card sat left of center. A length breaks the loop and
 the gutter is then simply half the leftover.
 
 **The scale-down only applies under `.is-enhanced`**, a class `assets/js/carousel.js` adds once it
-can actually track which slide is centred. With the script absent every slide renders at full size
+can actually track which slide is centered. With the script absent every slide renders at full size
 and full contrast, which is the honest fallback: a dimmed card with nothing able to un-dim it would
 be worse than no effect at all. The controls also stop following their own `href` and scroll the
 track directly, so pressing Next moves the row without moving the document or leaving a fragment in
@@ -911,7 +1155,7 @@ between the facts and the button rather than between the title and the facts.
 to scroll past. The peek treatment suits a long entry better than a short one: you read the one in
 front of you and the next is visibly waiting. It takes a wider slide than the Renter basics row,
 since a program entry is a heading, two paragraphs and a definition list, and it sits outside the
-reading column rather than inside it. At 40rem the column was narrower than the slide, which sent
+reading column rather than inside it. At the 40rem measure the column was narrower than the slide, which sent
 the track's gutter calculation negative and clipped the cards.
 
 **Seven cards, 2026-08-24.** Three new explainers (§3.6's topic list) plus `/before-you-sign`, which
@@ -952,23 +1196,36 @@ loaded. This is the kind of thing that only shows up in a screenshot.
 
 **The door is drawn against a real one, 2026-08-25.** An MMI Door quarter fan lite four panel:
 arched glass in the top quarter with grilles radiating from the sill, two panels above the lock rail
-and two below, the door's own stiles left as a margin, and a brickmould casing around the frame. The
-greens are this site's and the white trim and grilles are the reference's. The glass is filled with
-the same green as the doorway behind it, so the colour the door opens onto is already showing
-through the window before anything moves.
+and two below, the door's own stiles left as a margin, and a brickmould casing around the frame.
+
+**Redrawn in the doll house's pen, 2026-08-26.** The shape stayed and the palette changed. This door
+and the exterior door in the doll house's entry room are the same object at two sizes, and they were
+drawn by two different hands: the toy is flat shapes in one warm brown outline (§3.2), the hero was a
+dark green slab with a gray architrave and no outline anywhere on it. The hero takes the toy's
+palette now, matched piece for piece against `#obj-door` in the sprite — white casing, `--toy-wood`
+slab, `--toy-sky-soft` arched glass, `--toy-wood-light` panels, a `--toy-butter` handle, and
+`--toy-outline` around every one of them. The plate keeps the cream and brown of the name plates
+under the doll house furniture.
+
+That retired `--color-door-glass` and `--color-door-handle`, which existed only for this drawing.
+Two tokens for one element were always the sign that the element was outside the system; the fix was
+to bring the element in rather than to keep the tokens.
+
+The doorway behind the door stays `--color-surface-brand`: the green the door opens onto is the
+site's own, and it is the payoff the whole scene is built for.
 
 **The title is signage.** A plate screwed across the lock rail, with a raised edge and a fixing at
 each end, rather than lettering floating on the door face. It is still the page's `h1` and still the
 first heading a screen reader reaches; only its presentation is a plaque.
 
-**The page opens on a door, added 2026-08-24.** `/improvements` opened on a centred page title on a
+**The page opens on a door, added 2026-08-24.** `/improvements` opened on a centered page title on a
 white band, which said nothing the nav had not already said one line above it. It opens on a front
 door now, with the title on the door, and the door swings on its hinge as the reader scrolls until
 the Renter basics band behind it is what they are looking at. The metaphor is the site's own: the
 home page is a doll house you look into, and this is the door you go in through.
 
 The doorway behind the door is filled with `--color-surface-brand`, the same green as the Renter
-basics band below it, so the light coming through the opening is the colour of the thing being
+basics band below it, so the light coming through the opening is the color of the thing being
 revealed rather than an arbitrary panel. Scroll-progress driven rather than timed, the same
 mechanism as the hero shoes (§3.1): scroll position is the animation's progress, so it reverses
 when the reader scrolls back, stops when they stop, and needs no Pause button because nothing moves
@@ -980,7 +1237,7 @@ floor, since a door swinging in a phone-width column is a door filling the scree
 those it stays shut and square on, with the title flat and fully legible, which is the state that
 has to work anyway. The swing stops at 72 degrees rather than going flat to 90: past about 75 the
 door is edge-on, the title is a line, and the reader loses what they were reading. The title sits in
-the door's upper half rather than centred, which is where lettering on a real door goes and which
+the door's upper half rather than centered, which is where lettering on a real door goes and which
 keeps it clear of the knob at the middle right.
 
 ### 3.5 The heating systems explainer, added 2026-08-21
@@ -1029,13 +1286,21 @@ wrong way round for the one image on the page.
 
 **Every improvement page and the heating-systems intro now lead with a photograph** of the real
 object. The rule for what stays drawn is whether the image teaches a mechanism or names an object.
-A photograph cannot show refrigerant carrying heat the wrong way down a temperature gradient, air
-moving both directions through the same gap, or which figure on a bill is the one that moves. Those
-three stayed: the heat pump and furnace cutaways on `/learn/heating-systems` (§3.5), the draft
-figure on `/learn/find-your-drafts`, and the bill figure on `/learn/read-your-bill`. Everything that
-was drawing a noun became a photograph.
+A photograph cannot show refrigerant carrying heat the wrong way down a temperature gradient, or
+which figure on a bill is the one that moves. Those stayed: the heat pump and furnace cutaways on
+`/learn/heating-systems` (§3.5) and the bill figure on `/learn/read-your-bill`. Everything that was
+drawing a noun became a photograph.
 
-**Consequences worth noting.** `.motion-loop` now appears on three pages instead of eleven, so the
+**The draft figure went too, 2026-08-26.** It was the third of the three, on the same reasoning: air
+moves both ways through the same gap and a camera cannot see that. The reasoning was right about
+what the drawing showed and wrong about what the page needed it for. This page is a walkthrough of
+running a hand along an edge, its opening figure sits beside the sentence "you can find one with
+nothing but your hand", and a diagram of arrows through a doorway is a diagram of the phenomenon
+rather than of the thing the reader is about to do. The photograph of a hand held against a cold
+window was already on the page, further down, doing exactly that job. It leads now, and the drawing
+and its animation are gone rather than moved.
+
+**Consequences worth noting.** `.motion-loop` now appears on two pages instead of eleven, so the
 floating Pause button (§7) correctly stops appearing on pages with nothing to pause. The
 `.improvement-illustration` rules and the five `illo-*` keyframes went with the drawings.
 
@@ -1055,8 +1320,28 @@ structural one and prose was the wrong shape for it: in a rental the person who 
 efficiency improvement is not the person who would save from it, so the improvement often does not
 happen. Two parties, two ledgers, one building.
 
-**The treatment.** One colour field runs behind everything from the page title down to a converging
-arrow: the tenant's side in the site's own dark green, the owner's in a deep slate that is
+**It opens on a drawn hero now, 2026-08-26.** `/about` was the one page reachable from the nav that
+did not look like the others: the split color field started at the top of the page and the title sat
+on it, so a reader arriving from `/your-rights` or `/programs` met a different site. It takes the
+same hero as the other three (§3.10) — the band, the title and lede on the left, a drawn scene on
+the right, held while the reader scrolls — and the split starts underneath it.
+
+The scene is the page's own sentence with the words taken out: one building, a line down the middle
+of it, a bill on one side of the line and a key on the other. Three beats through the hold. The roof
+settles onto the walls, which is the "one building" half. The seam then draws down from the peak
+through the middle of what it has just made one building, which is the "two sets of incentives"
+half. Then the bill rises on the tenant's side and the key comes in from the owner's. The seam is
+the only green line in the drawing and the only thing in it that is a mark rather than an object,
+and it is dashed rather than solid because a lease is a boundary both sides live either side of, not
+a wall.
+
+Moving the title off the field also removed the reason `.split-hero` existed — a two-column block
+laid deliberately across the seam so the title sat on one side and the sentence naming the problem
+on the other. The field now starts where the two sides start, which is a plainer answer to the same
+problem: nothing crosses the join except the elements that were always designed to.
+
+**The treatment.** One color field runs behind everything from the two sides down to a converging
+arrow (from the page title down, until the hero moved the title off it 2026-08-26): the tenant's side in the site's own dark green, the owner's in a deep slate that is
 deliberately not another green, because two sides of one lease have to read as two places. Hovering
 or focusing either side widens that side's share of the whole field rather than just its own panel,
 so the emphasis reads as the lease tilting. The pattern is adapted from `split-incentives.html` on
@@ -1066,30 +1351,25 @@ the same team's heat pump site (S25), rebuilt in this site's tokens.
 emphasis and nothing else, so a reader who never hovers and never focuses misses nothing. That is
 what lets the whole thing be CSS: `:has()` on the container moves the field, matching how the
 reduce-motion switch and the carousel already work, with no script involved. Below 860px the panels
-stack and each takes its own colour, since a vertical split would otherwise run down the middle of
+stack and each takes its own color, since a vertical split would otherwise run down the middle of
 each stacked panel.
 
 **One variable drives both halves, fixed 2026-08-24.** The first build set the two background halves
 to 58% and 50% and let flex resolve it. Flex items shrink to fit by default, so a pair whose bases
 sum to 108% both shrink, and the seam moved about 3.7% instead of 8%: small enough that the effect
 read as broken rather than as subtle. The panels moved separately again, on their own `flex-grow`,
-so the colour boundary and the text boundary travelled different distances. Both now read
+so the color boundary and the text boundary travelled different distances. Both now read
 `--split-pos` off the container, at 50% at rest and 62% or 38% on hover, so the seam and the text
 are the same line and move as one.
 
-**The colour, decided the same day.** The owner's side opened as a deep slate blue on the reasoning
+**The color, decided the same day.** The owner's side opened as a deep slate blue on the reasoning
 that two sides of one lease should read as two distinct places. It read as a different website. The
-constraint that decides this is that the page title, the lede, the float card and the three approach
-cards all cross the seam, and one element cannot take two text colours depending on which half it
-sits over. Both halves therefore have to carry white text, which rules out pairing the dark green
+constraint that decides this is that the float card and the three approach cards cross the seam (and
+the page title and lede did too, until the hero moved them off the field 2026-08-26), and one
+element cannot take two text colors depending on which half it sits over. Both halves therefore have to carry white text, which rules out pairing the dark green
 with the light `--color-surface-brand`. It is the site's dark green against its mid green, 2.3:1
 between the fields, which is enough to separate two large adjacent areas without either of them
 leaving the palette.
-
-**The opening block is laid across the seam on purpose.** Title on the tenant's side, the sentence
-that names the problem on the owner's. Centring it instead put the smaller type across the join,
-where one text colour has to work on two fields at once and the eyebrow stopped being readable on
-one of them.
 
 **"How AI was used" lives on this page**, added 2026-08-24. It names the model, says what it wrote,
 and states the three things held back from it: facts, which come from named sources and are gated by
@@ -1155,8 +1435,8 @@ on the list it states that and stops being pressable, rather than sitting there 
 would do something.
 
 **The empty state is a real empty state, revised 2026-08-25.** It was a bare paragraph, and
-`base.css` caps every paragraph at the reading measure, so it rendered as a grey box against the
-left edge of a 1140px page under a centred title. Centred now, and built like the thing it is: the
+`base.css` caps every paragraph at the reading measure, so it rendered as a gray box against the
+left edge of a 1140px page under a centered title. Centered now, and built like the thing it is: the
 list icon at size, one sentence, and a button into `/improvements`. An empty state that names the
 next action is worth more than one that only reports the emptiness.
 
@@ -1178,6 +1458,21 @@ than as the page's primary action. It is the only page with a permission callout
 so the only page where the mistake was possible; the other ten put the actions paragraph directly
 after the fact row and are unchanged.
 
+**The three approach cards got a ground of their own, revised 2026-08-26.** They were a translucent
+white border and nothing else, sitting straight on the color field. The field is two greens with a
+seam down the middle of the page, and the middle card sat on top of that seam, so one paragraph's
+background changed color halfway along the line. They carry their own dark ground now, one shade
+below both halves, blurred where `backdrop-filter` exists so the field still shows through them and
+opaque where it does not. White measures 9.2:1 over the blurred version and 11.6:1 over the
+fallback, both against the lighter half.
+
+**Hanover is a photograph of Hanover now, revised 2026-08-26.** "Hanover in particular" was
+illustrated with a stock brick apartment block that could have been any town in the country, under a
+heading whose entire job is to say this one. It is a view of the town from the ridge above it
+instead. That photograph is the site's one non-Unsplash image and its one share-alike obligation;
+[docs/image-credits.md](docs/image-credits.md) records why, and why the Town of Hanover's own aerial
+photograph is not the file committed here.
+
 ### 3.9 The programs page, revised 2026-08-25
 
 `/programs` is the page a renter arrives at holding a question their landlord asked, or holding a
@@ -1187,7 +1482,7 @@ own. Three changes make that page usable at the size it has grown to.
 **The carousel runs the full width of the window.** It was inside the 1140px page shell, which put a
 46rem slide in a 71rem box and left the peek gutters doing very little. A program entry is the
 longest card on the site, so the width is worth having: the band it sits in is full-bleed, the
-gutters are wide enough for the neighbours to actually peek, and the heading and the filter row
+gutters are wide enough for the neighbors to actually peek, and the heading and the filter row
 above it stay inside the reading column, which is the same "background spans the window, text stays
 put" arrangement the Renter basics band uses.
 
@@ -1210,11 +1505,138 @@ them.
 Same rule as the library (§3.4) and the doll house (§3.2): the page carries every program as markup
 and the script hides what does not match. With JavaScript off the form is inert and all seven
 programs are there, which is the state the page shipped in. The carousel had to learn about hidden
-slides for this — its count, its Previous and Next targets and its centred-slide tracking all read
+slides for this — its count, its Previous and Next targets and its centered-slide tracking all read
 the showing slides now rather than a list captured at load.
 
 "Programs that are not for you" stays outside the carousel and outside the filter. It is one entry,
 it exists to be ruled out, and a filter that can hide it defeats the point of writing it down.
+
+### 3.10a The glossary as a reference page, added 2026-08-26
+
+`/glossary` was fourteen terms set as headings in a narrow reading column with their definitions
+under them, which is the shape of an article. A reader is here to look one thing up, and a term set
+in the flow of prose has to be found by reading past the ones before it.
+
+It is two columns above 900px: the term in a column of its own on the left, everything said about it
+on the right. That makes the list scannable down one edge, and it is the one page on the site whose
+content actually wants the width the left-aligned reading column leaves empty (§6), which is what
+makes this a layout rather than a stretched column.
+
+The term sticks while its definition scrolls past, on the same mechanic and for the same reason as a
+key point's heading: the `dt` spans every row of its own entry, because an element cannot stick
+inside a cell exactly its own height.
+
+An entry arrived at by fragment — every glossary link in a term tooltip elsewhere on the site is one
+— takes a brand rule down its left while it is `:target`. A page of definitions that all look alike
+is a page where a fragment link lands you somewhere and then says nothing about which one it meant.
+
+### 3.10 Page heroes, added 2026-08-26
+
+The home page opens on a doormat and `/improvements` opens on a door. Everything else reachable from
+the nav opened on a centered title over white, which made those pages read as the reference material
+behind the two that had been designed. Three of them have a drawn scene now, in the doll house's pen
+(§3.2): flat shapes, one outline weight, the toy palette for anything that is a physical object and
+the site's greens for anything that is a mark on it.
+
+Since 2026-08-26 every page opens on this block, including the four that had no scene to put in it.
+A page with no object worth drawing takes the band and the single column without one, rather than
+reverting to the centered title it used to have. `/accessibility` is a statement and `/start` is a
+form; neither is a thing, and inventing an object for them would be decoration standing in for a
+subject.
+
+| Page | The scene | What it does through the hold |
+|---|---|---|
+| `/glossary` | A stack of index cards, the top one with a term and a couple of lines under it | The stack squares up and the top card lifts clear of the two behind it |
+| `/where-to-get-it` | A tote bag with a film kit, a bulb and a roll of weatherstripping in it | The three drop into the bag one after another |
+| `/accessibility`, `/start` | None | The band alone |
+| `/your-rights` | A wall thermometer with the state minimum marked on it | The column starts as a bead in the neck and rises, and the 65°F line slides in to meet it |
+| `/programs` | Three application forms, one per permission state, in that state's badge color | They are turned one at a time, front sheet first, each lifting off the stack into its place in the fan; a tick lands last on the one a renter can sign |
+| `/checklist` | A clipboard with four lines | The four lines cross themselves off one after another |
+| `/about` | One house with a line down the middle, a bill on one side and a key on the other | The roof settles onto the walls, the seam draws down from the peak, and the two objects arrive on their own sides |
+
+**Every scene is `aria-hidden`, and nothing in one is the only place its content appears.** The
+65°F is written out in the first key point on that page, the three permission states are on every
+program in the list, the checkboxes on the clipboard are a drawing of the real ones below it, and
+the bill and the key are the two sides the About page then spends a screen each on. That is what
+makes it safe for the scenes to be the part of the page that moves.
+
+**Every scene's resting state is its finished state.** Motion is scroll-driven and gated the site's
+three ways (§7), and a timeline that never advances leaves a thermometer reading 65, three fanned
+forms and three drawn ticks. A drawing that needs the animation to have run in order to make sense
+is a drawing that fails on a browser without scroll timelines, which is the same rule the story bars
+and the door already follow.
+
+**The layout is one grid**, words beside scene, stacked below 800px with the scene first so a phone
+still opens on the drawing.
+
+**The reader is held at the hero, added 2026-08-26.** The three scenes drifted past on a two-level
+parallax, which is something a reader sees on the way somewhere else. Each of these drawings says
+something, and a drawing that says something wants long enough to say it. Every hero sits in a track
+two viewports tall with a one-viewport stage stuck to the top of it, and each scene's animation
+reads `scroll(root block)` over the pinned stretch — the same shape as the doormat on the home page
+(§3.1) and the door on `/improvements` (§3.4), which is now the site's one way of doing this rather
+than its third.
+
+`--hold` is the length of the pinned stretch, declared once on the track and read by every scene, so
+the four scenes' timings are stated as fractions of one number instead of four sets of viewport
+percentages that have to be kept in step by hand. The track is 210vh rather than 200 because the
+site header sits above it, so the pin starts a header's height into the scroll; the extra tenth is
+what the scenes spend finishing before the hero lets go.
+
+The words drift a little across the hold so the pinned screen is not completely still while the
+drawing beside it works. Transform-only, for the reason every other scroll-driven move here is.
+
+Pinning is only worth anything if something happens while it is pinned, so the track and the
+animations sit behind exactly the same gate: scroll-timeline support, both reduced-motion controls,
+a 800px floor and a 640px height floor. Fail any of them and the track collapses to the hero's own
+height, nothing sticks, and the resting drawing is the finished one.
+
+**The real checkboxes on `/checklist` are not animated, and that is deliberate.** The clipboard in
+its hero crosses off four lines as the reader scrolls, and the list below it does not. A drawing of
+a list ticking itself off is a drawing. A control that ticks itself off is a claim about what is on
+somebody's list, and that claim would be wrong.
+
+**Every list ticks off, revised 2026-08-26.** The do list had the only checkboxes on the site, which
+left the two lists a reader actually walks around holding — the shop list and the list of things to
+raise with the landlord — as the two they could not cross anything off. Both have them now, at the
+same 24px, with the material's own name as the label so the target is the word and not just the box.
+
+A slug alone could not carry them. One improvement puts three materials in the buy list and one row
+in the ask list, and those are four separate things to tick at four different moments, so the stored
+entry grew a `ticks` array beside its `done` flag. A tick id only has to be unique within its own
+improvement, so the markup writes short ones, and removing the improvement takes its ticks with it
+rather than leaving them orphaned in storage.
+
+**The email writes itself, added 2026-08-26.** The ask section said "send one email covering all of
+these" and then offered no way to send one. It now ends in a draft built from whichever ask rows are
+showing: one numbered paragraph each, saying what the work is, what the materials cost and whether it
+comes off at move-out, wrapped in the six things `/learn/ask-your-landlord` says a good ask has in
+it — one specific thing per paragraph, what it costs, who pays, what is in it for them, and a date
+to answer by.
+
+Three decisions hold it together:
+
+- **None of the prose is in the script.** Every fixed sentence is in the page's markup, in a hidden
+  template block with braced slots, and every per-improvement sentence is in that improvement's own
+  ask row. `assets/js/ask-email.mjs` decides which sentences apply and in what order, which is the
+  part worth unit-testing, and it is tested. The content conventions say prose belongs in the
+  markup; a generated email is not an exception to that.
+- **Nothing typed into it is stored.** The landlord's name, the apartment and the date are the three
+  things only the reader knows, and they are exactly what
+  [docs/project-brief.md](docs/project-brief.md)'s non-goals rule out keeping. They are read on
+  every keystroke and written down nowhere, and the `mailto:` link carries no address, because who
+  the reader's landlord is is not something this site knows or wants to.
+- **An edited draft is theirs.** From the first keystroke in the textarea the generator stops
+  rewriting it. Regenerating over the top of somebody's edit is the one thing this must not do.
+
+With the script off, the textarea already holds a complete, sendable example covering the general
+case, which is the same rule the rest of the page follows: the markup is the content and the script
+narrows it.
+
+**One sentence is conditional.** "I would buy the materials and do the work myself" is about buying
+and fitting, and one of the four ask rows is telling a landlord you will be away over the break,
+which is neither. The row carries a `data-ask-diy` marker and the sentence only goes in when
+something on the list is actually work the reader would do.
 
 ## 4. Visual system
 
@@ -1252,6 +1674,12 @@ interactive work.
 | `--color-danger` | `#A32014` on `#FCEDEB` | Safety notes | ☑ 6.7:1 |
 | `--color-border` | `#C9D4C6` | Decorative hairlines and card edges only | ☑ decorative, 1.5:1 |
 | `--color-border-strong` | `#6F8272` | Form control borders, hotspot outlines, anything that must meet 3:1 | ☑ 4.1:1 on bg, 3.8:1 on surface |
+| `--color-room-plate` | `rgba(251, 244, 231, 0.94)` | The plate a doll house piece's name sits on, so a caption crossing from wallpaper onto floorboards keeps one contrast (declared 2026-08-26) | ☑ 15.9:1 with `--color-text` |
+| `--color-guide-halo` | `rgba(126, 218, 93, 0.55)` | The ring on the piece carrying "Start here" or "Next" (declared 2026-08-26) | Decorative, never carries text |
+| `--color-guide-glow` | `rgba(126, 218, 93, 0.9)` | The glow on the piece whose info bar is open (added 2026-08-26) | Decorative, never carries text |
+| `--color-approach-card` | `rgba(6, 48, 31, 0.72)` | The three approach cards on `/about`, where `backdrop-filter` is unavailable (added 2026-08-26) | ☑ 11.6:1 with white |
+| `--color-approach-card-blur` | `rgba(6, 48, 31, 0.45)` | The same three, blurred (added 2026-08-26) | ☑ 9.2:1 with white |
+| `--color-surface-dark-2` | `#0B573A` | The second of a pair of story bars, so the seam between them is visible (added 2026-08-26) | ☑ 8.6:1 with white, 1.7:1 against `--color-surface-dark` |
 | `--color-mat` | `#D9BE8A` | Added 2026-08-19. The hero's welcome-mat background. Used nowhere else | ☑ 9.3:1 with `--color-text` |
 | `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
 | `--color-hero-ground` | `#94A0A7` | Added 2026-08-19. The hero section's own background, behind the mat. A bluestone grey, used nowhere else | ☑ 6.3:1 with `--color-text`, 7.9:1 with `--color-mat-border` |
@@ -1310,7 +1738,7 @@ pages carry six to ten headings each, so the scale is compressed.
 **The display size, tokenized 2026-08-21.** One step above h1, and deliberately outside the
 compressed scale above: it is for a heading that is alone on its band with nothing competing for
 attention, which on this site means exactly two things — a story bar's heading (§5.1) and a page
-title in `.page-head` (§5). It shipped 2026-08-20 as a `clamp()` written inline in the story-bar
+title in `.page-hero` (§3.10). It shipped 2026-08-20 as a `clamp()` written inline in the story-bar
 rule; making it a token is what let the page titles reuse it rather than a second, slightly
 different clamp being written next to the first. Anything that is not one of those two cases uses
 h1 and below.
@@ -1326,7 +1754,10 @@ h1 and below.
   counter, so figures line up in the cost meter and the count does not jitter as it changes.
 - **Text inside SVG** uses `--font-body` at 16px minimum and is real `<text>`, never outlined
   paths, so it scales, reflows at 200% zoom, and is read by a screen reader.
-- **Max line length:** 65 characters, and the content column caps at 40rem. Poppins sets wider
+- **Max line length:** the 40rem content column was removed 2026-08-26 (§6), so a line of body copy
+  now runs to about 110 characters at the shell's full width. That is a deliberate trade and the
+  reasoning is recorded there. Where a block is genuinely a long stretch of prose, the answer is two
+  columns inside the full width rather than a narrow block inside it. Poppins sets wider
   than a UI face at the same size, so the measure is tighter than the 70 characters a system stack
   would take.
 
@@ -1334,6 +1765,56 @@ h1 and below.
 
 - **Spacing:** 4px base scale. 4, 8, 12, 16, 24, 32, 48, 64, 96. Tokens `--space-1` through
   `--space-9`. No values off the scale.
+
+**The vertical rhythm, opened up 2026-08-26.** Every step is one notch further up the scale than it
+was, and one table now says what the whole site does:
+
+| Between | Was | Is |
+|---|---|---|
+| Two paragraphs, or any two blocks in a reading column | 24 | 32 |
+| A paragraph and the sub-heading after it | 32 | 48 |
+| A paragraph and the heading that starts a new named section | 64 | 96 |
+| Two items in a list of prose | 0 | 8 |
+| A section and the next one | 48 each side, 96 total | 64 each side below 800px, 96 above, so 128 or 192 |
+| A band and what it holds | 32, 48 above 800px | 48, 64 above 800px |
+| A key point, an improvement page's opening block, a photograph on its own | 48 or 64 | 64 or 96 |
+
+Two things drove it. The columns got wider the same day (§6), and a wider column needs more air
+between blocks than a narrow one before the page reads as having parts; at the old spacing a page
+read as one undifferentiated block of text. And the list spacing had never existed at all, so a
+four-item list ran as four lines of continuous prose, which the reading measure was hiding.
+
+**Both reading columns take one rule.** `.improvement-body` had its own copy of the rhythm that had
+drifted from `.content-column`'s: the same paragraph gap, the same heading gap, and no sub-heading
+rule at all, so an h3 inside an article sat exactly as far from the paragraph above it as the next
+paragraph would have. The two are the same width and the same position since 2026-08-26, so they are
+one selector now.
+
+**Space alone was not dividing the sections, 2026-08-26.** The rhythm above opened the gaps and the
+gaps were not enough: at the full width of a section, 96px of white between two blocks of text reads
+as a wide gap in one column rather than as the end of one part and the start of the next. Four
+things divide a page now, and only the first is whitespace.
+
+| Division | Where |
+|---|---|
+| A rule across the column above the heading | Every h2 that starts a new named section, in either reading column, except the first in a column |
+| A tinted card | The sources block at the foot of every article, which is provenance rather than advice and is read by somebody checking rather than somebody doing |
+| A full-bleed band | A story stack, a `.band`, the Renter basics section, the split field — the treatments that already existed for this |
+| A heavy brand rule down the left | A key point |
+
+**The parts of a page and the parts of an article were never spaced at all.** Two rules were missing
+rather than too small. `.section > * + *` — a page like `/your-rights` is one section holding a run
+of reading columns and key points, and nothing separated those from each other, so a key point's own
+margin was doing all the work and two prose blocks in a row sat flush. And `.improvement > * + *` —
+the rhythm rules reach inside `.improvement-body` and stop at its edges, so an article's opening
+block, its safety card, its body, its story bars and its sources all ran together. The story bars in
+particular began the moment the prose above them ended, with no pause at all before a band that
+takes over the screen.
+
+**A list of prose is a list with no class on it,** which is how the list spacing knows where to
+apply. Every list in the markup that is a component carries the class that makes it one, and every
+list that is just a list carries nothing. That matters because several of the components space their
+own items through a grid `gap`, which a margin would add to rather than replace.
 - **Radius:** `--radius-sm` 4px for inputs and buttons, `--radius-md` 8px for cards and info bars,
   `--radius-pill` 999px for badges and filter chips. Sustainable Hanover uses solid rectangular
   buttons, so ours stay close to square.
@@ -1463,15 +1944,22 @@ to be better than.
 | Room box | One room in the house, and the enlarged view of it | small (in the house), enlarged (`:target`), focused, empty (no hotspots apply to this student) |
 | Next spot control | Carries the guided order from one info bar to the next | default, focus-visible, last spot, removed once all spots are seen (revised 2026-08-19, was a relabeled state) |
 | Back to the house | Returns from an enlarged room to the full view | default, focus-visible |
-| Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker), hidden (does not apply to the student's situation — reversed 2026-08-20, was dimmed with a text reason, see §3.2), 44px hit area |
+| Room prop (experiment, 2026-08-25) | Scenery inside a furnished room. Sixteen furniture symbols in the sprite, each in a viewBox of its own proportion, drawn with a non-scaling stroke. No name, no interactive state, `aria-hidden`, never focusable — the absence of all three is what says it is not the thing to press | standing on the floor (`--b`), hung on the wall (`--y`), hidden below 1000px |
+| Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19; a glow and a scale rather than an outline, revised 2026-08-26), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker; never applied to the selected piece, revised 2026-08-26), hidden (does not apply to the student's situation — reversed 2026-08-20, was dimmed with a text reason, see §3.2), 44px hit area |
 | Info bar | Opens under the drawing with the short answer | closed, opening, open, empty, error, no JavaScript (becomes a link) |
-| Flip card | Flashcards for myths and definitions | front, back, focus-visible, reduced motion. Spec in §5.1 |
+| Flip card | Flashcards for myths and definitions | front, back, mid-turn, focus-visible, reduced motion, no script (both faces stacked). Spec in §5.1 |
 | Carousel | Ordered walkthroughs and before-and-after pairs | first, middle, last, keyboard, no JavaScript. Spec in §5.1 |
 | Animated diagram | Shows a mechanism the student cannot see, for example where heat leaves a room | static (first frame), playing, finished, replay, reduced motion, no JavaScript. Spec in §5.1 |
 | Sticky progress bar | Progress through the house, and position within a long page | at rest, condensed, unstuck on short viewports, no JavaScript. Fill capped at 100% regardless of the raw ratio (added 2026-08-20) |
 | Progress reset (added 2026-08-20) | Clears visited state and restores "Start here," sitting in the same sticky row as the progress bar | default, hover, focus-visible |
 | Disclosure bar | "What if my landlord says no", "How we know this", "Everything in this house" (2026-08-21) | closed, open, focus-visible, deep-linked open |
-| Story bar (added 2026-08-20) | "Why this works" and "Savings" on an improvement page — a full-width, always-open band, heading on one side at a larger size, body on the other. `.story-bar--reverse` swaps which side is which. Spec in §5.1 | default, parallax entrance running, held still (reduced motion or `animation-timeline: view()` unsupported), off below 600px |
+| Story bar (added 2026-08-20) | "Why this works" and "Savings" on an improvement page — a full-width, always-open band, heading on one side at a larger size, body on the other. `.story-bar--reverse` swaps which side is which. Spec in §5.1 | default, pinned as half a screen in a pair (revised 2026-08-26), parallax entrance running, held still (reduced motion or `animation-timeline: view()` unsupported), off below 600px |
+| Key point (added 2026-08-26) | What a story bar is when it is alone: a heavy brand rule, a heading in a sticky column, the body beside it. No band and no full screen. §8 | default, heading pinned, heading released, stacked below 800px, reduced motion (nothing pins) |
+| Step list (added 2026-08-26) | A numbered sequence, each step a heading and a paragraph with its numeral in a filled square. §8 | default, arriving (number scales, body slides), held still |
+| Steps track (added 2026-08-26) | The step list turned on its side above 900px: a scroll-snap row of cards running off the right edge. A real scroll container, not a scroll-hijacked one | column (below 900px, and in print), row, focused (the track takes the focus ring), card arriving |
+| Band (added 2026-08-26) | A full-bleed tinted stretch that is a section rather than a decoration inside one | light, brand, dark |
+| Page hero (added 2026-08-26) | The opening of a nav page: words beside a drawn scene, the two drifting at different rates. §3.10 | default, scene animating, scene at rest (reduced motion, or no scroll timelines), stacked below 800px with the scene first |
+| Email draft (added 2026-08-26) | On `/checklist`, under the ask list: three fields, a subject, and a message built from whichever ask rows are showing. §3.8 | hidden (nothing to ask about), generated, edited by the reader (generation stops), copied, copy refused (falls back to selecting the textarea), no JavaScript (a complete general-case example) |
 | Improvement illustration (added 2026-08-20) | A custom SVG depicting the specific improvement, beside the heading block on a wide screen, below it on a narrow one. Decorative — the page's prose carries the information, the drawing carries the "what does this look like" | single static state, no motion |
 | Improvement card | The unit of the library only | default, hover, focus-visible, visited, filtered-out (removed rather than dimmed) |
 | Permission badge | States `landlordPermission`, three variants | three variants, each with icon and text, inline and card sizes |
@@ -1562,8 +2050,10 @@ times. Five things merged:
 - **`.full-bleed`.** Story bars and the Renter basics band had each written out the same
   `width: 100vw; margin-inline: calc(50% - 50vw)` breakout. One utility now, and the two keep only
   what actually differs — the tint, and Renter basics' clipped point.
-- **`.page-head`.** Every page opened its title differently. One block now: centered `<h1>` at
-  display size, optional lede under it.
+- **`.page-head`, replaced 2026-08-26 by `.page-hero` (§3.10).** Every page opened its title
+  differently. One block now, on every page: a tinted band, a left-aligned `<h1>` at display size,
+  an optional lede under it, and a drawn scene beside it where the page has an object worth
+  drawing.
 - **The switch track color** is a token rather than one hard-coded translucent white serving both a
   dark footer and a light floating control. The footer switch has since been removed, so the token
   has one value again. See §7.
@@ -1589,16 +2079,50 @@ JavaScript adding only what CSS cannot do.
 **Flip card (flashcard).** For myth and correction, and for term and meaning. "Turning the heat
 down and back up costs more than leaving it steady" flips to the correction.
 
-- Built as `<details>` with a `<summary>`, so open and close are native, keyboard operable and
-  announced. CSS does the flip on `[open]`. No JavaScript.
-- The trigger is click, Enter or Space. Never hover alone. Hover adds a small lift and nothing
-  more, so a keyboard user loses nothing now and a touch user loses nothing in v2.
-- Both faces exist in the DOM at all times. Nothing is injected on flip.
-- Back face is 40 words or fewer, and ends with a link to the improvement it argues for.
+- Both faces exist in the DOM at all times, in normal flow, one under the other. Nothing is
+  injected on flip. With no script that stack is the whole card: a question, then its answer.
+- `assets/js/flip-card.js` adds a class and everything keyed to it turns the stack into two faces of
+  one card in the same grid cell. The two buttons — "Show the answer" and "Flip back" — appear only
+  once that has happened, since a button with nothing behind it is worse than no button.
+- The trigger is a button, so click, Enter and Space all work. Never hover alone.
+- Back face is 40 words or fewer, opens with the answer in one word, and ends with a link to the
+  improvement it argues for.
 - Never carries safety, permission, cost, or source information. Those are always visible.
-- Under `prefers-reduced-motion: reduce` the card swaps faces with no rotation.
-- Cards are also listed as plain question-and-answer text on the explainer page for print and for
-  screen reader users who prefer to read straight through.
+- Under either reduced-motion control the card swaps faces with no rotation, and the written-out
+  question and answer appears under it.
+
+**Rebuilt 2026-08-26, and the `<details>` had to go.** It was a `<details>` whose open state swapped
+`display: none` between two boxes, and three things were wrong with it at once. There was no flip:
+one box vanished and another appeared. It sat against the left edge of a reading column under a
+24rem cap, so it read as a stray callout rather than as a card. And it could not be turned back,
+because the summary that would have closed it was the front face, and the front face was the thing
+`display: none` had just removed.
+
+The first two are fixable inside `<details>`. The third is not, and neither is the animation. A turn
+has to have both faces laid out to turn between, and a closed `<details>` does not render its
+content — by definition, and in every engine's own stylesheet. The two requirements are the same
+requirement pointing opposite ways. So the element is a `<div>`, the control is a `<button>` on each
+face, and the no-script path is the two faces stacked, which is a shape this site uses everywhere
+else: the markup is the content and the script narrows it.
+
+**The face turned away is `visibility: hidden`.** That is what keeps its link and its button out of
+the tab order and its text out of the accessibility tree. `backface-visibility` hides a face from
+the eye and from nothing else, which on a card whose back carries a link would leave a tab stop
+sitting on something nobody can see. The transition delay sits on whichever face is leaving, so it
+stays visible for the length of the turn and disappears behind the card rather than in front of it.
+Focus follows the turn onto the button on the arriving face, which is visible from the first frame.
+
+**The two faces are two colors.** Light front with a heavy brand rule along its top edge, the same
+mark the key point carries down its left; dark back, with the one-word answer at heading size above
+the paragraph that explains it. Two faces in the same near-white green would leave a reader to work
+out from the words alone that anything had happened.
+
+**"Read as text" is shown only under reduced motion, 2026-08-26.** It used to sit under every card,
+always, which meant the answer was printed six inches below the question the card was asking — and a
+card whose answer is already on the page is not a card. The card is fully operable under reduced
+motion, where the turn is an instant swap rather than no swap, so the paragraph is a reader's
+preference for having the whole exchange in running prose rather than a fallback for something that
+stopped working. The path that does not depend on it is the no-script stack above.
 
 **Carousel.** For ordered sequences (what to do in October, then November) and before-and-after
 pairs of the same window.
@@ -1737,9 +2261,54 @@ result is a phone design.
 
 | Width | v1 status | Layout |
 |---|---|---|
-| 900px and up | **Designed.** This is the target | House and info bar side by side, so opening a hotspot does not push the drawing. An enlarged room keeps the rest of the house visible beside it. Library gets a persistent left filter rail. Parallax layers run. The hero holds 85svh. Detail pages keep the 40rem measure. Page shell caps at 1140px |
-| 600 to 900px | **Works.** Falls out of the same CSS | Single column. The whole house stays visible, with the info bar below it. Content column caps at 40rem and centers. Library cards go to two columns. Filters become a horizontal chip row |
+| 900px and up | **Designed.** This is the target | House and info bar side by side, so opening a hotspot does not push the drawing. An enlarged room keeps the rest of the house visible beside it. Library gets a persistent left filter rail. The hero holds 85svh. Page shell caps at 1140px and every section fills it |
+| 600 to 900px | **Works.** Falls out of the same CSS | Single column. The whole house stays visible, with the info bar below it. Sections fill the shell, which at this width is the window less its gutters. Library cards go to two columns. Filters become a horizontal chip row |
 | Below 600px | **Reflow floor, not a designed experience** | One column, no horizontal scrolling down to 320px. Parallax holds still. The hero shrinks to its content. The doll house gives way to "Everything in this house", the room-by-room link list, which carries every hotspot as an ordinary link. Filters become a plain stacked form. Everything is reachable and readable. Nothing is tuned |
+
+**Two widths and one left edge, settled 2026-08-26.** Every page had been assembling its own layout
+out of whatever it needed, and a reader moving between them met a title that was sometimes centered
+and sometimes not, over prose that was sometimes centered and sometimes not, and the two did not
+always agree on the same page. There are two widths on this site and one axis:
+
+| Width | What takes it |
+|---|---|
+| The window | Anything whose background is the point: the page hero band, story bars and the stack, the Renter basics band, a `.band`, a photo band, the split color field |
+| 1140px, the page shell | Everything else, including the prose. The doll house, the library's card grid, a key point, a steps track, an improvement page's two-column intro, and every reading column |
+
+And the axis is the left edge of the page shell. The wordmark in the header starts there, so the
+page title starts there, so the lede under it starts there, so the prose under that starts there.
+
+**There was a third width and it is gone, 2026-08-26.** The 40rem reading measure, `--measure`, used
+to cap `.content-column`, `.improvement-body`, `.improvement-intro__text`, a standalone photograph,
+a glossary definition and — through a rule in `base.css` — every `<p>` on the site wherever it sat.
+Two passes moved that column around, first centering it and then left-aligning it, and both left the
+same thing on the screen: a narrow strip of text with two thirds of a page empty beside it, in among
+bands, key points and card grids that all ran the full shell. It read as a column that had failed to
+fill its page rather than as a measure, and it was the single most-reported inconsistency across two
+rounds of feedback.
+
+So a section is as wide as the shell and everything in a section is as wide as the section. The
+global `<p>` cap is gone with it, along with the dozen `max-width: none` declarations that existed
+around the site to undo it locally.
+
+**What this costs, stated plainly.** At the shell's full width a line of body copy runs to roughly
+110 characters, which is past the 45-to-75 a typographer would ask for. That is a real cost and it
+was the reason the measure existed. The judgement made here is that it is the smaller of the two
+costs: an inconsistent page is noticed by every reader on every page, and a long line is noticed
+while reading a long stretch of prose, of which this site has deliberately little (§8 caps body copy
+at 60 consecutive words). Where a block genuinely is a long stretch — the safety card's list — the
+answer is two columns inside the full width rather than a narrow block inside it, which is a pattern
+this file already had.
+
+If the long lines turn out to be the worse trade, the way back is one number: reinstate a cap on
+`.content-column` and `.improvement-body`, at something like 54rem rather than the 40 it was.
+
+**A figure with nothing beside it centers.** A photograph set into a section on its own used to keep
+the reading measure and sit against the left edge. Against a full-width section that put a
+photograph in the left third of the page with nothing in the other two. It centers now, capped under
+the image files' own 1000px width, because a 1000px photograph stretched to 1140 is a blurred
+photograph. A figure that is one half of a two-column block — an improvement page's intro, an info
+panel — is not this case and has not changed.
 
 **Pointer targets:** 44×44px minimum stays in v1, on hotspots, carousel controls, disclosure bars
 and filter chips, with 8px between adjacent targets. Dense hit areas on a drawing are hard to hit
@@ -1898,7 +2467,61 @@ sliding, info bars appear without animating, scroll-expanding bands render finis
 stops condensing, and carousel and anchor scrolling become instant (`scroll-behavior: auto`). Every
 response transition resolves to 1ms. No component loses a state, a control, or a piece of content.
 
-## 8. Content presentation patterns
+**Microinteractions, added 2026-08-26.** Three, all response rather than ambient, all behind
+`prefers-reduced-motion` and the switch, and all losing nothing that carries meaning when they are
+off.
+
+- **Magnetic hover** on primary buttons and the Personalize FAB. The control leans a few pixels
+  toward the pointer while the pointer is over it and lets go when it leaves. Four gates before it
+  does anything: a fine pointer (a magnet has nothing to follow on a touch screen, where the first
+  the element hears about the pointer is the tap that already landed), the media query, the switch,
+  and a `--magnet-range` that only exists inside the gate — so `assets/js/magnetic.js` reads zero
+  and does nothing rather than the CSS having to undo it. The offset is written to a custom property
+  and applied with `translate` rather than `transform`, so a button that already lifts on hover
+  keeps doing that and leans as well.
+- **The list count pings** when something is added to it. The oldest cart problem there is: the
+  button is under the reader's finger and the number that changed is in the far corner of the
+  screen. A ring expands out of the control once and the count bumps. Adding only — a removal is
+  already confirmed by the button under the pointer changing back, and a badge that flashes on the
+  way down reads like something went wrong. The page-level live region has already said it out loud
+  either way.
+- **The add button's plus turns into a tick.** `assets/js/todo.js` swaps which sprite symbol the
+  `<use>` points at, which is instant and correct and reads as the icon having been replaced rather
+  than as the thing the reader just did. Rotating and squeezing through the swap gives the change a
+  direction. The animation fires on its own, because the selector only starts matching when
+  `aria-pressed` flips.
+
+**Scroll reveals, added 2026-08-26.** Section headings wipe in from behind their own baseline as
+they reach the viewport, `clip-path` rather than `overflow: hidden` so a descender and a focus ring
+are not clipped with them. Step numbers scale up as their step arrives and step bodies slide in from
+the side. All of it is `animation-timeline: view()` behind `@supports`, the media query, the switch
+and a 600px floor, and all of it is transform-only or clip-only for the reason the story bars are: a
+timeline that never advances leaves the element wherever the range started, and that has to be fully
+legible, full-contrast text.
+
+**Page transitions, added and removed 2026-08-26.** Moving between pages was a white flash and a
+redraw, and the fix was cross-document view transitions: the page left upward and the next one wiped
+up from the bottom edge underneath it, in one at-rule and three keyframes with no JavaScript.
+
+They are gone, and the reason they are gone is the reason they were shortened first. A
+cross-document transition freezes the outgoing page from the moment a link is pressed until the
+incoming document is ready to paint, and only then plays. So it takes away the one piece of feedback
+the white flash was giving — something is happening — and then adds its own duration on top of the
+load rather than overlapping it. Shortening it from 540ms to 300ms made that better and did not make
+it good: the freeze is the problem and the freeze is structural. It was most obvious going back to
+the home page, which is the heaviest document on the site and therefore the longest silence.
+
+A navigation that feels instant is worth more here than a navigation that looks designed. The site
+navigates the way a multi-page site does.
+
+What went with it: the `view-transition-name`s on the header and the two floating controls, which
+existed so those three would hold still while the page under them changed, and the `.motion-reduced`
+class `assets/js/motion.js` put on the root element. That class had exactly one job. A transition's
+pseudo-elements hang off the root, `body:has(...)` cannot select the root, and the site's own
+reduce-motion switch had to be able to reach them. With no transition to reach, the switch is back to
+being entirely `:has()` and needing no script at all for its effect.
+
+## 8. Content presentation patterns## 8. Content presentation patterns
 
 ### Keeping pages short
 
@@ -1971,6 +2594,73 @@ length is a tier to delete.
 - **Enablers.** The four enabler topics are labeled "Start here" rather than given an impact
   rating, in the library and on their hotspots, so a student is never told that reading their bill
   saves nothing.
+
+### Section furniture, revised 2026-08-26
+
+Five things a page can be made of, beyond a paragraph. The rules above say to reach for a paragraph
+last; these are what to reach for first.
+
+**The story stack.** Two full-bleed dark bands that pin one after the other and, once both are
+locked, fill the screen together. Reserved for the pair of connective explanations on an improvement
+page, "Why this works" and "Savings", where one alternates its heading to the other side so the two
+read as a matched pair.
+
+Rebuilt 2026-08-26. Each bar used to be `min-height: 100vh` and pin 4.5rem below the one before it,
+which had two consequences: a two-sentence "Savings" panel was given a whole viewport to sit in the
+middle of, and what a reader watched happen was one panel sliding over another. The pair splits the
+screen now, first bar in the top half and second in the bottom, so the stack is one full-height
+section assembled out of two pieces rather than two full-height sections in a row. The share is set
+off the count with `:has()`, so a stack of three would take thirds.
+
+The band went from `--color-surface` to the site's two darks at the same time. A bar carrying the
+one idea a page turns on had been sitting on the same near-white green as the cards and the
+callouts, which made it read as more page rather than as a break in it. Two darks rather than one,
+for the reason the About page's two halves are two darks (§3.7): a seam between two fields of the
+same color is not a seam.
+
+The ground under the pair is the last bar's color, fixed 2026-08-26. It was the first bar's. That is
+right for the gap the second bar climbs through, where the ground is the color arriving, and wrong
+below the second bar, where the stack reserves a dwell so the pair does not release the moment the
+last bar lands. The dwell was a stripe of the first bar's darker green sitting under the second one,
+which read as the first bar showing through from behind rather than as the section ending.
+
+**The key point.** What a story bar becomes when it is alone. Nine pages carried a single bar inside
+a stack, which meant a full-bleed band, a display-size heading and a screen of height for two
+sentences, with nothing to stack against and so none of the arrival the treatment exists for. A band
+that big earns its size by being one of a pair.
+
+A key point is no band, no break in the page's background, and no full screen. The heading sits in a
+column beside the body and stays there while the body scrolls past it, which keeps the "holds still
+for a moment" quality at a fraction of the cost, and a heavy brand rule down the left marks it as
+the page's turning point. It takes exactly the height of its own content.
+
+**The step list.** A numbered sequence where each step is a heading and a paragraph, with the
+numeral in a filled square beside it. Adapted from the "Ways to close the gap" list on the same
+team's heat pump site (S25). It replaces a run of `<li>` items that each opened with a bold phrase:
+the phrases were already headings, and formatting them as headings is what makes the sequence
+scannable without reading the sentences around it.
+
+The numeral is not `aria-hidden`. `list-style: none` is enough for some engines to drop list
+semantics, which takes the ordinal with it, so the number stays in the accessible name where it
+cannot be lost.
+
+**The steps track.** The step list turned on its side. Below 900px, and in print, it is the step list
+again; above it the same list becomes a row of cards running off the right edge of the window, so a
+sequence reads as continuing rather than as a grid that happens to have seven cells.
+
+It is a real scroll container with `tabindex="0"`, not a track driven by page scroll. That is a
+decision about keyboard access rather than about taste: a scroll-hijacked row moves content out of
+view without moving focus, so a keyboard reader can land on a link nobody can see. Here arrow keys
+move the row, focus inside a card scrolls that card into view by itself, and `scroll-snap` stops
+between cards rather than mid-sentence. `scroll-padding-inline-start` has to match the row's start
+inset exactly, or the first card snaps flush to the window edge and the row starts a page gutter to
+the left of its own heading.
+
+**The band.** A full-bleed tinted stretch that is a section of the page rather than a decoration
+inside one. `/programs` was one white column from the title to the sources, so the carousel — the
+part a reader came for — began with nothing marking it as a different kind of thing from the two
+paragraphs above it. The tint is what a band is for; the extra vertical room is what makes the tint
+read as a section break instead of a highlighted paragraph.
 
 ## 9. Voice in the interface
 
@@ -2137,3 +2827,111 @@ credit has to survive that move.
 | Do the looping diagrams distract from the text beside them, even with a pause control? | Watch in usability round 2 / loop only while in view / pause by default and play on press | Loop while in view, pause control always visible | 2026-08-19 |
 | Does parallax survive the accessibility pass, given it is scroll-linked movement? | Capped at 20% travel, decoration only, off below 600px, stoppable, as specified / drop it | Keep, under the §5.1 limits | 2026-08-19 |
 | Dark mode | Not in v1, as specified / v1 | Not in v1 | 2026-08-18 |
+
+## 12. Load and responsiveness, added 2026-08-26
+
+Written after a round of feedback that the site had got slower. It had, and the cause was not the
+one that gets blamed first. Everything below is measured rather than estimated, and the numbers are
+reproducible from the repository.
+
+### What a page actually costs
+
+Seventeen or eighteen requests, of which the render-blocking ones are the HTML and three
+stylesheets. Gzipped, blocking: about 74KB on the home page and 54 to 58KB everywhere else. The
+photographs are all 1000×750 WebP, one per page, `loading="lazy"` with width and height on every
+one, so none of them is on the critical path. The two font files are subset, preloaded and
+`font-display: swap`, behind a metrics-matched fallback so the swap does not reflow. Every script is
+`type="module"`, which defers by default, and none of them exceeds 20KB.
+
+None of that is the problem, and it is worth saying so plainly before the part that is.
+
+### The thing that made it feel slower
+
+Cross-document view transitions, added and removed 2026-08-26 (§7). A transition freezes the
+outgoing page from the moment a link is pressed until the incoming document is ready to paint, and
+then plays its animation. Two consequences, and they compound:
+
+1. **The load has no visible progress any more.** The white flash it replaced was ugly and it was
+   also feedback. A frozen page that looks exactly like the page you were reading is not.
+2. **The animation is added to the load rather than overlapping it.** 200ms out plus 340ms in was
+   more than half a second on top of a page that was otherwise ready in a fraction of that.
+
+Half a second is roughly the difference between a navigation that feels instant and one that feels
+like it is fetching something. Shortening it to 120 and 180 halved the second problem and did
+nothing about the first, and the first is the one that made going back to the home page — the
+heaviest document on the site, so the longest silence — feel worst. There is no page transition now.
+
+### The stylesheet split
+
+`components.css` had reached 190KB, and every page paid all of it before it could paint. About a
+fifth of it was the home page and nothing else. That fifth is `home.css` now, loaded only by
+`index.html`. Measured both ways, because gzip compresses one large file better than two small ones
+and the split costs some of that before it saves anything:
+
+| | Blocking CSS, gzipped |
+|---|---|
+| Before, every page | 57.3 KB |
+| After, `index.html` | 58.9 KB |
+| After, every other page | 42.3 KB |
+
+One page pays 1.6KB, twenty-seven save fifteen. That trade is what justifies this one file and not
+the next one — see [docs/architecture.md](docs/architecture.md) §D4a for the rule a future block has
+to meet.
+
+Roughly half of what is left is comments. They stay. They are how this codebase explains itself, and
+gzip charges very little for prose that repeats itself as much as English does.
+
+### Rules for anything added after this
+
+- **Animate `transform`, `opacity` and `clip-path`.** Those composite. `filter` and
+  `stroke-dashoffset` do not, so anything using them re-rasterizes every frame. Both are used here,
+  deliberately and in small numbers: the selected doll-house piece's glow is one element at a time,
+  and the ticks that draw themselves are a few short paths.
+- **Put the glow on the drawing, not on its container.** A `filter` on a link is a filter on its
+  name plate and its tag as well, which is three times the area to re-rasterize for one lit object.
+- **Do not scale, and do not move, something drawn with `vector-effect: non-scaling-stroke`.**
+  Scaling it makes the browser rebuild the stroke's outline geometry from the path every frame
+  rather than compositing a picture, because the stroke has to stay a constant width on screen while
+  the shape changes size. Moving it a few pixels is cheaper and looks worse: a thin non-scaling
+  stroke travelling through sub-pixel positions snaps between pixel rows and reads as vibration. If
+  a drawing in this pen has to respond to something, respond in paint. See §3.2 for the three passes
+  it took to find that.
+- **Nothing that takes a hover may move.** Hover oscillation — the effect playing in and out
+  repeatedly — has one mechanism, which is the target travelling out from under the pointer. A
+  response made of paint cannot have it.
+- **Nothing loops that does not have to.** An infinite `filter` animation on one element repaints
+  that element for as long as it is on screen, including while the reader is doing something else
+  entirely.
+- **Never measure layout in a pointer handler.** `getBoundingClientRect` forces the browser to
+  resolve layout before it can answer. `assets/js/magnetic.js` called it on every `pointermove`,
+  which is sixty forced layouts a second for a rectangle that cannot change while the pointer is
+  inside it. It is read once, on enter.
+- **A scroll-driven animation is cheaper than a scroll listener**, which is most of why the site
+  uses `animation-timeline` for all of it. There is no scroll handler anywhere in `assets/js/`.
+- **The dev server is not the site.** Measured 2026-08-26, after a report that pages were taking a
+  long time to load and that the worst were the home page and the list. Those are the two largest
+  pages, which is consistent, and the numbers say the rest:
+
+  | | Home page | The list |
+  |---|---|---|
+  | GitHub Pages, gzipped | 113 KB | 92 KB |
+  | `python3 -m http.server` | 351 KB | 298 KB |
+
+  It answers in HTTP/1.0 with no keep-alive, so each of the seventeen requests opens and closes its
+  own connection, and it never compresses anything however the browser asks.
+
+  **Revalidation is the half of this that shows up when moving between pages**, and it is worth its
+  own number. Going to the home page *from another page* should cost almost nothing: the reader
+  already has the CSS, the fonts and the icon sprite. The home page makes 53 references into that
+  sprite and the list page 65, which is why those two are the ones a reader notices.
+
+  | Arriving at the home page from `/about` | Requests | Transferred |
+  |---|---|---|
+  | `python3 -m http.server` | 17, each on its own connection | 106 KB |
+  | `tools/serve.mjs` | 17, one connection | **31 KB** |
+
+  The difference is entirely 304s. `tools/serve.mjs` sends an ETag and a Last-Modified on every
+  response and answers a conditional request with an empty 304, so a second page costs its own HTML
+  and nothing else. It caches nothing past the navigation, so a reload still shows the file as it is
+  on disk — revalidation is what makes that cheap rather than free in name only. Judge load time
+  with that or on the deployed site.

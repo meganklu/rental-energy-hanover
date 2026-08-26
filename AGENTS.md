@@ -78,8 +78,14 @@ structural.
 # install
 # nothing to install. There is no package.json
 
-# dev server (file:// breaks the fetch of content/improvements.json, so serve over HTTP)
-python3 -m http.server 8000
+# dev server. Serves what GitHub Pages serves: gzip, keep-alive, correct types, no caching.
+# file:// breaks the fetch of content/improvements.json, so preview over HTTP either way.
+node tools/serve.mjs 8000
+
+# `python3 -m http.server` also works and is misleading about load time: HTTP/1.0 with a new
+# connection per request, no compression, and no ETag. Arriving at the home page from another page
+# costs 106KB over 17 connections from it and 31KB over one from tools/serve.mjs, because the
+# second answers a conditional request with a 304. Judge speed with tools/serve.mjs or on Pages.
 
 # build
 # none. The committed files are the published site
@@ -118,12 +124,13 @@ browser, tab through it with the keyboard, and check it at 320px.
 ├── where-to-get-it/ glossary/ about/ accessibility/
 ├── assets/
 │   ├── css/    tokens.css · base.css · components.css · print.css
+│   │           home.css — the doll house and the hero mat, loaded only by index.html
 │   ├── js/     situation.js · library.js · checklist.js (v2)
 │   ├── fonts/  poppins-500.woff2 · poppins-600.woff2
 │   ├── icons/  inline SVG source
 │   └── img/
 ├── content/improvements.json     generated, committed
-├── tools/check-content.mjs · shell.html
+├── tools/check-content.mjs · serve.mjs · shell.html
 ├── .github/workflows/check.yml
 ├── docs/                         planning & specification documents
 ├── AGENTS.md · DESIGN.md · README.md · LICENSE
@@ -172,6 +179,7 @@ sitemap in [DESIGN.md](DESIGN.md) §2.
 
 ## Writing style for agent-authored copy
 
+- Use American English spelling and conventions.
 - Lead with the action, then the reason.
 - State cost and time in student terms ("$12, 20 minutes").
 - Talk about money and comfort first. Leave out guilt-based climate framing.

@@ -9,6 +9,8 @@ I would like to make a website to provide information to student renters in Hano
 ### 2026-08-18 Style Guide
 Please help me fill out the DESIGN.md file using similar design features and styling as the existing Sustainable Hanover website.
 
+> Note: Additional prompts were used to generate some of the content on the documentation pages. These were used before this document was created and were not recorded. The initial creation was largely written without generative AI, particularly finding sources and defining website features and content. However, these documents have be modified significantly by generative AI during the website build process as the AI agents are instructed to document changes before implementation.
+
 ## Website Build
 
 ### 2026-08-19 Initial Build
@@ -379,9 +381,137 @@ Programs page:
 
 I think it could be cool to have the items in the house layed out like an actual doll house with furniture/features that a user could tap on. They could be guided to the item by color or arrows. This would make the clicking to expand certain rooms more relevant. I'm not sure how this would look or if it would be usable and helpful. Please try out a version of this in a new branch after completing the other edits I've described. 
 
-## Claude Design
+### 2026-08-25 Doll House
 
-I started to use Claude Design to visually edit the website. This is the initial prompt I gave with the code base attatched:
+Use color for the doll house. Take inspiration from a Calico Critters toy house for the interior furniture. Make the entry/porch the height of the first floor only like it was before. Make the drawings more realistic and easy to understand what they are. Also, position them in a logical way that matches typical house layouts.
+
+### 2026-08-25 Doll House Objects
+
+Redistribute the objects in the doll house so that they are more evenly distributed between the rooms. Only move to areas that are logical. For example, the radiator can move to the bathroom. 
+
+### 2026-08-25 Doll House Objects Size
+
+Scale the size of the objects in the doll house appropriately. Also check that the labels are not blocked at all. Check that the proportions and design look correct when clicked on a specific room.
+
+### 2026-08-25 Claude Design Attempt
+
+I tried to use Claude Design to visually edit the website. This is the initial prompt I gave with the code base attatched:
 
 > I am currently refining the design elements of this website. Please show me the site so I can make comments on specific elements.
 
+I was unable to connect the codebase and edit in the way I wanted to using Claude Design, so I went back to writing descriptions of the changes I wanted to make.
+
+### 2026-08-26 Design Edits and To Do List Feature
+
+To do list:
+- Add checkboxes to the other sections of the to do list (shopping list and ask your landlord)
+- Draft an example email for the user to send to their landlord based on the improvements they've added to their list. Can this email be generated based on what they add?
+
+Improvements page:
+- When on reduced motion, the door does not open so don't include the label that says "Keep scrolling to open the door"
+- Remove "Where to get this stuff" from this page now that it is linked on all the individual improvement articles that have items to purchase and in the to do list
+
+Doll house section:
+- Change "Rim joist and attic hatch" to something that is easier to interpret and recognize in the design but is still relevent to checking for drafts
+- Some of the labels are beneath the icons so the arrow for "Next" is harder to see
+- For the selected element, add a glowing effect instead of the green border
+
+Improvement articles:
+- When there is nothing to purchase, remove this "Nothing to buy for this one. When something does need buying, Where to get it has the addresses and the bus routes."
+- When there is something to purchase edit the where to get it paragraph to just a link to the where to get it page
+
+About page:
+- Make the cards under "So this site starts on your side of the line" easier to read by adding a solid color or blur background
+- Use a picture of Hanover, New Hampshire such as the aerial picture from the Hanover town website https://www.hanovernh.org/
+
+General design choices:
+- I'm not sure that I like the current design of the story bars. I like having more animation and having them stick to the screen for a moment, but I don't like the current color background and how they are each the full height of the screen. I like when multiple story bars overall take up the full height, but not each individual one. For the story bars that are by themselves, see if there is another design element that would be more appropriate for that section
+- Break apart sections with different color backgrounds, spacing, and other design elements. For example, separate out the "Programs to look at" carousel with a different background. This will make the page look less text dense
+- Experiment with different creative ways to present the text. For example, the list under the "If your apartment is too cold" could be shown like the list for "Ways to close the gap" on the split incentives page of the heat pumps website https://meganklu.github.io/heat-pumps-hanover/split-incentives.html
+- Add more interactive web animation elements including, but not limited to:
+    - Real-time microinteractions
+        - Magnetic hover states
+        - Morphing SVG icons
+        - Live data ripples
+    -  Scroll-driven and narrative motion
+        - Multi-level parallax
+        - Horizontal layout switches
+        - Scroll reveals and masking
+    - Structural transitions and environments
+        - Creative page transitions (such as those seen in this article: https://qodeinteractive.com/magazine/examples-of-creative-page-transitions/#lama-lama)
+- There are also some design elements for inspiration in the heat pumps website: https://meganklu.github.io/heat-pumps-hanover/index.html
+- Here is additional visual storytelling inspiration
+- Check for consistency in vector designs. Match the vectors, including the door on the improvements page hero section, to the design style of the doll house section
+- Check for consistency with the style guide colors
+- Check for cards and other sections taking up the appropriate margins and width. For example, the text in the safety card in the article "Use a space heater safely" does not take up the full width of the card
+- All of the pages accessible from the nav bar should have a more interesting and interactive hero section, like the home page hero section and improvements page hero section
+
+Put major design changes in a new branch
+
+### 2026-08-26 Design Edits
+
+Home page:
+- Remove the green outline around the spot that is up next. Just keep the animated arrow
+- The hover effects are glitching and not smooth
+- Make the items glow white instead of green
+- Make sure that the next arrow can be seen. For example, when the next arrow is on the space heater, it is below and gets cut off by the boundary of the room
+- The basement stairs look out of place because of how small they are
+- The basement, when in room view, has all the components pushed together and overlapping
+- When the items are not available for the user's situation, keep them in the house just as static images instead of buttons
+- When the screen is resized and the spots become buttons instead of a doll house image, make the rooms look like the initial design in the main branch. In other words, remove the floor from the rooms
+
+Improvement articles:
+- For the story bars, don't let the first story bar color background (darker green) be shown below the second story bar
+
+Your rights page:
+- Have the thermometer starting lower and start increasing as you scroll. Use a similar scroll effect and hold as the Home and Improvements pages
+
+Programs page:
+- Make the papers shuffle/flip through as you scroll. Again, use a scroll effect and hold
+
+Your list page:
+- Add an animation of list items getting checked off as you scroll
+
+About page:d
+- Make the hero section something that matches the aesthetic and design of the other pages. Put the split part lower on the screen
+
+General design choices:
+- The pages have a mix of widths and alignment. Make this more consistent 
+- Continue working on adding more interactive web animation elements and different section designs/layouts
+- Fix the flashcard flip on some of the renter basics articles. This should be centered and the flip should be animated. The user should be able to flip back to the front. Read as text should only be shown on reduced motion settings. Text layout and styling should be more visually interesting 
+
+The website seems to be slower (e.g., pages are taking longer to load). Why is this? Is there ways to fix this?
+
+### 2026-08-26 Page Transitions and Animations
+
+Doll house section:
+- The hover animation for hotspots is still glitching. Earlier version of this were smoother
+
+Renters basics articles:
+- Please remove the animations from "Find your drafts" and use the image instead
+
+General design choices:
+- The page transitions are causing the website to move slower, especially when clicking the link to go back to the home page. Remove them please
+- Please use the full width of the page for every section. This is not the case for the lists, paragraphs, cards, etc. These are too narrow and look inconsistent with the other page content. Some of the images are also aligned left when they should be centered because they are by themselves (no text on the side). 
+
+### 2026-08-26 Animations Again and Page Navigation
+
+The width of items looks better now. 
+
+Doll house section:
+- The hover animation is still having problems. When I hover over some of the elements, it shakes/glitches. Sometimes it moves in and out multiple times. Please make these animations smoother. This might mean that the item translates from its original position less if that is causing the glitching appearance
+
+Navigation:
+- I am having issues navigating between pages. Either pages are taking significant amounts of time to load or the links are not working. Either way, I would like to fix this. I am experiencing particular issues navigating to the home and my list pages from another page
+
+Increase spacing between sections and paragraphs on all pages.
+
+### 2026-08-26 Page Access and Spacing
+
+I still am unable to access the home page from other pages via the nav bar button on logo.
+
+Home page:
+- Remove the light green background for selected spot labels
+- The hover animation glitching is still occuring when hovering over the actual object rather than the label
+
+Increase spacing before story bars and between every section. Use different backgrounds, cards, and other divisions to denote different sections.

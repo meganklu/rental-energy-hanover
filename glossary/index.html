@@ -50,15 +50,42 @@
 
 <main id="main">
 
-  <section class="section page-shell">
-    <div class="page-head">
-      <h1>Glossary</h1>
-      <p class="lede">
-        Every term this site uses, in a couple of sentences, plus why it matters to what you pay.
-      </p>
-    </div>
+  <!-- A stack of index cards, added 2026-08-26. The page is a set of short definitions, and a card
+       with a term on it and a couple of lines underneath is what one of those is. Through the hold
+       the stack squares up and the top card lifts clear of the two behind it. Decorative and
+       aria-hidden; every term is written out below. -->
+  <div class="page-hero-hold">
+    <section class="page-hero full-bleed" aria-labelledby="glossary-h">
+      <div class="page-hero__inner page-shell">
+        <div class="page-hero__text">
+          <h1 id="glossary-h">Glossary</h1>
+          <p class="lede">
+            Every term this site uses, in a couple of sentences, plus why it matters to what you pay.
+          </p>
+        </div>
+        <div class="page-hero__scene" aria-hidden="true">
+          <svg class="cards" viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+            <g class="cards__card cards__card--back">
+              <rect x="42" y="86" width="176" height="150" rx="10"/>
+            </g>
+            <g class="cards__card cards__card--mid">
+              <rect x="42" y="72" width="176" height="150" rx="10"/>
+            </g>
+            <g class="cards__card cards__card--front">
+              <rect x="42" y="58" width="176" height="150" rx="10"/>
+              <rect class="cards__tab" x="150" y="42" width="52" height="24" rx="8"/>
+              <text class="cards__letter" x="176" y="60" text-anchor="middle">A</text>
+              <path class="cards__term" d="M64 106 h84"/>
+              <path class="cards__rule" d="M64 138 h132 M64 160 h132 M64 182 h88"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
 
-    <div class="content-column">
+  <section class="section page-shell">
+    <div class="glossary-page">
       <dl class="glossary">
         <div id="baseboard-electric-heat">
           <dt>Baseboard electric heat</dt>
@@ -144,7 +171,7 @@
       </dl>
 
       <div class="sources-block">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://sustainablehanovernh.org/">Sustainable Hanover</a>, for the definition of weatherization</li>
           <li><a href="https://gc.nh.gov/rsa/html/III/48-A/48-A-14.htm">RSA 48-A:14</a> and <a href="https://courts-state-nh-us.libguides.com/c.php?g=898401&amp;p=6463426">NH Law About Winter Heating</a>, for the minimum heat standard</li>
@@ -161,7 +188,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -225,6 +252,7 @@
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <script type="module" src="../assets/js/todo.js"></script>
+<script type="module" src="../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 </body>
 </html>

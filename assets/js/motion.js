@@ -13,7 +13,9 @@ if (toggles.length) {
   const stored = localStorage.getItem(STORAGE_KEY);
   const osPrefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const setToggles = (checked) => toggles.forEach((toggle) => { toggle.checked = checked; });
+  const setToggles = (checked) => {
+    toggles.forEach((toggle) => { toggle.checked = checked; });
+  };
 
   if (stored === "reduce") {
     setToggles(true);

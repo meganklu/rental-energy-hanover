@@ -72,7 +72,7 @@
             <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-impact-low"/></svg>Low impact</span>
           </div>
         <p class="improvement-actions">
-          <button type="button" class="btn btn--primary todo-add" data-todo-slug="led-lighting-swaps" data-todo-title="Swap in LED bulbs" aria-pressed="false">
+          <button type="button" class="btn btn--primary todo-add" data-magnetic data-todo-slug="led-lighting-swaps" data-todo-title="Swap in LED bulbs" aria-pressed="false">
             <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-plus"/></svg>
             <span data-todo-label>Add to my list</span>
           </button>
@@ -88,14 +88,14 @@
       </div>
 
       <div class="improvement-body">
-        <h2>What you need</h2>
+        <h2 class="reveal">What you need</h2>
         <ul>
           <li>LED bulbs matching the base and brightness of your existing bulbs</li>
           <li>A small box to keep the originals in</li>
         </ul>
-        <p class="text-small">Where to get it: ordered online for delivery, or in person at the West Lebanon stores, reachable on the fare-free Advance Transit bus. <a href="../../where-to-get-it/">Where to get it</a> has the addresses and the routes.</p>
+        <p class="text-small"><a href="../../where-to-get-it/">Where to get it</a></p>
 
-        <h2>Steps</h2>
+        <h2 class="reveal">Steps</h2>
         <ol>
           <li>Check the base type and wattage printed on your current bulbs before you shop.</li>
           <li>Unscrew each incandescent bulb and set it aside.</li>
@@ -104,7 +104,7 @@
         </ol>
       </div>
 
-      <div class="story-stack">
+      <div class="story-stack full-bleed">
         <div class="story-bar full-bleed">
           <div class="story-bar__inner">
             <h2 class="story-bar__heading">Why this works</h2>
@@ -131,7 +131,7 @@
       </div>
 
       <div class="sources-block improvement-body">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://www.energy.gov/articles/5-tips-energy-saving-renters">U.S. Department of Energy — 5 Energy-Saving Tips for Renters</a></li>
         </ul>
@@ -142,7 +142,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../../start/">
   <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -206,6 +206,7 @@
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <script type="module" src="../../assets/js/todo.js"></script>
+<script type="module" src="../../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 
 <script type="application/json" class="content-meta">

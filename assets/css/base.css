@@ -179,9 +179,11 @@ small, .text-small {
   font-size: var(--text-small);
 }
 
-p {
-  max-width: var(--measure);
-}
+/* No cap, revised 2026-08-26. Every paragraph on the site was held to the 40rem reading measure
+   wherever it sat, which meant a paragraph inside a full-width section was a 40rem paragraph with
+   two thirds of a section empty beside it, and a dozen components had to declare `max-width: none`
+   to get their own text back. A paragraph is as wide as whatever it is in now, and what decides how
+   wide that is is the section, which is where the decision belongs. See DESIGN.md §6. */
 
 /* `overflow-wrap` added 2026-08-21: an email address or a URL written out as link text is one
    unbreakable thirty-character token, and at the 320px reflow floor it can be wider than the
@@ -293,14 +295,12 @@ a:hover {
   overflow-wrap: anywhere;
 }
 
-/* Centered, revised 2026-08-21. It was left-aligned, which under the centered page title
-   (`.page-head`, components.css) read as a column that had failed to line up rather than as a
-   deliberate measure — the improvement pages get away with left-aligning because an illustration
-   fills the other side, and these prose pages have nothing there. */
-.content-column {
-  max-width: var(--measure);
-  margin-inline: auto;
-}
+/* `.content-column` used to cap here at the 40rem reading measure, centered until 2026-08-26 and
+   left-aligned after it. Both left two thirds of the page shell empty beside a page whose bands,
+   key points and card grids all run the shell's full width, which reads as a column that has failed
+   to fill its page rather than as a measure. A section is as wide as the shell now and everything
+   in one is as wide as the section, so the class carries only the word-breaking above — which is
+   about a long URL in a narrow window and not about measure at all. See DESIGN.md §6. */
 
 .visually-hidden-focusable:not(:focus):not(:focus-within) {
   position: absolute;

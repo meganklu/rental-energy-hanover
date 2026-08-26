@@ -84,7 +84,7 @@
       </div>
 
       <div class="improvement-body">
-        <h2>Find it before you read the rest</h2>
+        <h2 class="reveal">Find it before you read the rest</h2>
         <p>
           Walk into the room you sleep in and look along the base of the walls, under the windows,
           and up near the ceiling. One of these is what you have. Most Hanover rentals burn fuel
@@ -128,7 +128,7 @@
       </ul>
 
       <div class="improvement-body">
-        <h2>The one that runs both ways</h2>
+        <h2 class="reveal">The one that runs both ways</h2>
         <p>
           A furnace and a boiler make heat by burning fuel. A heat pump does not make heat at all.
           It moves heat that is already there, using refrigerant, the same way a refrigerator moves
@@ -242,7 +242,7 @@
       </figure>
 
       <div class="improvement-body">
-        <h2>What burning fuel looks like</h2>
+        <h2 class="reveal">What burning fuel looks like</h2>
         <p>
           A furnace or a boiler burns oil, propane or gas to make heat directly, then moves that
           heat into the home as warm air or hot water. Some of the energy always leaves as exhaust
@@ -288,7 +288,7 @@
       </figure>
 
       <div class="improvement-body">
-        <h2>Side by side</h2>
+        <h2 class="reveal">Side by side</h2>
         <div class="table-wrap">
           <table class="data-table">
             <caption class="visually-hidden">Heating systems compared by fuel, whether they cool, and what a renter can change</caption>
@@ -337,7 +337,7 @@
       </div>
 
       <div class="improvement-body">
-        <h2>Do not close vents to save money</h2>
+        <h2 class="reveal">Do not close vents to save money</h2>
         <p>
           On a forced-air system, shutting the vents in a room you are not using seems like it
           should help. It does the opposite. Closing vents throws the system's balance off and
@@ -351,24 +351,35 @@
           is heating the back of your couch.
         </p>
 
-        <details class="flip-card">
-          <summary>
+        <div class="flip-card">
+          <div class="flip-card__inner">
             <div class="flip-card__face flip-card__front">
-              <p>True or false: your heat type does not really change what you should do about your bill.</p>
+              <p class="flip-card__tag">Quick check</p>
+              <p class="flip-card__q">True or false: your heat type does not really change what you should do about your bill.</p>
+              <button type="button" class="flip-card__btn" data-flip="back">
+                <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-flip"/></svg>
+                Show the answer
+              </button>
             </div>
-          </summary>
-          <div class="flip-card__face flip-card__back">
-            <p>
-              False. Electric baseboard bills straight to you and is controlled room by room, so
-              almost everything on this site applies. A radiator on a building-wide boiler may not
-              even have a thermostat you can reach, and there your best moves are sealing drafts
-              and asking your landlord.
-            </p>
-            <a href="../../start/">Set your heat type</a>
+            <div class="flip-card__face flip-card__back">
+              <p class="flip-card__tag">The answer</p>
+              <p class="flip-card__verdict">False</p>
+              <p>
+                Electric baseboard bills straight to you and is controlled room by room, so
+                almost everything on this site applies. A radiator on a building-wide boiler may not
+                even have a thermostat you can reach, and there your best moves are sealing drafts
+                and asking your landlord.
+              </p>
+              <p><a href="../../start/">Set your heat type</a></p>
+              <button type="button" class="flip-card__btn" data-flip="front">
+                <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-flip"/></svg>
+                Flip back
+              </button>
+            </div>
           </div>
-        </details>
+        </div>
 
-        <p class="text-small">
+        <p class="text-small flip-card__plain">
           <strong>Read as text:</strong> True or false, does your heat type change what you should
           do about your bill? False. It changes it a great deal. Electric baseboard is billed to
           you and controlled room by room, so nearly everything here applies. A radiator on a
@@ -377,7 +388,7 @@
         </p>
       </div>
 
-      <div class="story-stack">
+      <div class="story-stack full-bleed">
         <div class="story-bar full-bleed">
           <div class="story-bar__inner">
             <h2 class="story-bar__heading">Why it matters</h2>
@@ -413,7 +424,7 @@
       </div>
 
       <div class="sources-block improvement-body">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://www.hgtv.com/how-to/home-improvement/types-of-hvac-systems">A Guide to the Different Types of HVAC Systems</a>, HGTV. Cited for how each kind of equipment works, never for a cost figure</li>
           <li><a href="https://meganklu.github.io/heat-pumps-hanover/">Heat Pumps in Hanover</a>, the same project team. The diagrams on this page are adapted from it</li>
@@ -429,7 +440,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../../start/">
   <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -493,7 +504,9 @@
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <script type="module" src="../../assets/js/todo.js"></script>
+<script type="module" src="../../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
+<script type="module" src="../../assets/js/flip-card.js"></script>
 
 <script type="application/json" class="content-meta">
 {

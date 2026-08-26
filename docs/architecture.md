@@ -30,6 +30,7 @@ manager, and no server.
 | D2 | Framework | None | React, Astro, Eleventy, Jekyll | A framework adds a toolchain that will rot before the content does. The site is roughly 25 pages with four interactive behaviors, which is below the size where a framework pays for itself |
 | D3 | Language | HTML5, CSS with custom properties, JavaScript as ES modules targeting ES2020 | TypeScript, JSX | No transpiling means no build step. Browsers run the files in the repo as written |
 | D4 | Styling | Plain CSS in `assets/css/`, design tokens from [DESIGN.md](../DESIGN.md) §4 declared once in `tokens.css` | Sass, Tailwind, CSS-in-JS | Custom properties, nesting and `@media` cover everything the design system needs. No compiler |
+| D4a | CSS file split, 2026-08-26 | Four shared files plus `home.css`, which only `index.html` loads | One `components.css`; a stylesheet per page | See below |
 | D5 | Content storage | The prose and the metadata for a content item live together in its own HTML file. Metadata sits in an embedded JSON block. `content/improvements.json` is a generated index of that metadata, used only by the client-side filters | Markdown plus a generator; a JSON file as the single source with pages rendered by JavaScript | Keeps a single editable source per item, keeps every page readable without JavaScript, and still gives the library page structured data to filter |
 | D6 | Hosting | GitHub Pages, deployed from a branch, source `main` at `/` (root) | Netlify, Vercel, Cloudflare Pages, hosting inside sustainablehanovernh.org | Free, no account for anyone to maintain beyond GitHub, and the branch-deploy mode has no workflow file that can break. The Squarespace partner site cannot host custom interactive pages |
 | D7 | Domain | Default `https://meganklu.github.io/rental-energy-hanover/` for v1. A custom domain stays possible later through a `CNAME` file | Buying a domain; a subdomain of hanovernh.org | $0 budget, and [project-brief.md](project-brief.md) §4 expects the site may fold into Sustainable Hanover's site later. See §13 |
@@ -173,7 +174,7 @@ per [AGENTS.md](../AGENTS.md) rule 6.
 - **Steps:** none. The files are served as committed.
 - **`.nojekyll`:** an empty file at the repo root, so Pages skips Jekyll processing and serves
   every file literally, including any directory beginning with an underscore.
-- **Preview environments:** none. Preview locally with `python3 -m http.server 8000` from the repo
+- **Preview environments:** none. Preview locally with `node tools/serve.mjs 8000` from the repo
   root and open `http://localhost:8000`. Opening the files with `file://` breaks the `fetch` of
   `content/improvements.json`, so use the server.
 - **Rollback:** find the last good commit with `git log --oneline`, then run
@@ -206,7 +207,7 @@ per [AGENTS.md](../AGENTS.md) rule 6.
 ├── about/index.html
 ├── accessibility/index.html      the public accessibility statement
 ├── assets/
-│   ├── css/    tokens.css · base.css · components.css · print.css
+│   ├── css/    tokens.css · base.css · components.css · home.css · print.css
 │   ├── js/     situation.js · library.js · checklist.js (v2)
 │   ├── fonts/  poppins-500.woff2 · poppins-600.woff2
 │   ├── icons/  inline SVG source, copied into pages
@@ -223,6 +224,32 @@ per [AGENTS.md](../AGENTS.md) rule 6.
 
 Every page is a directory with an `index.html`, so URLs carry no `.html` extension and match the
 sitemap in [DESIGN.md](../DESIGN.md) §2 exactly.
+
+### D4a — why there is one page-scoped stylesheet and not eight
+
+`components.css` had reached 190KB, 57KB over the wire, and every page paid all of it before it
+could paint. About a fifth of it was the home page: the welcome mat, the shoes that walk up it, the
+doll house and its furnished rooms, the info bar, the progress pill and the room-by-room list. No
+other page refers to a single selector in that block, which is what made it worth cutting out.
+
+Measured, because the arithmetic is not obvious. Gzip compresses one large file better than two
+smaller ones, so splitting costs some compression before it saves anything:
+
+| | Blocking CSS, gzipped |
+|---|---|
+| Before, every page | 57.3 KB |
+| After, `index.html` | 58.9 KB |
+| After, every other page | 42.3 KB |
+
+The home page pays 1.6KB for one extra request; the other twenty-seven pages save fifteen. That
+trade is what justifies this one file. It does not justify the next one: the door scene on
+`/improvements`, the split field on `/about` and the list page's own block are each a third the size
+or less, and at that size the compression the split costs is close to what it saves. `home.css`
+loads after `components.css`, so a rule in it still beats one there at equal specificity, which is
+the order those rules were written in.
+
+**The rule for a future block:** measure it the same way before cutting it out, and only cut it if
+no other page uses any of its selectors.
 
 ## 10. Testing
 

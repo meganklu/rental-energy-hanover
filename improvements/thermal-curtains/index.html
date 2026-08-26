@@ -72,7 +72,7 @@
             <span class="fact"><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-impact-medium"/></svg>Medium impact</span>
           </div>
         <p class="improvement-actions">
-          <button type="button" class="btn btn--primary todo-add" data-todo-slug="thermal-curtains" data-todo-title="Hang thermal curtains" aria-pressed="false">
+          <button type="button" class="btn btn--primary todo-add" data-magnetic data-todo-slug="thermal-curtains" data-todo-title="Hang thermal curtains" aria-pressed="false">
             <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-plus"/></svg>
             <span data-todo-label>Add to my list</span>
           </button>
@@ -88,15 +88,15 @@
       </div>
 
       <div class="improvement-body">
-        <h2>What you need</h2>
+        <h2 class="reveal">What you need</h2>
         <ul>
           <li>Lined or thermal curtains wide enough to overlap the window frame on both sides</li>
           <li>A rod, or a tension rod that sits inside the window recess and needs no screws</li>
           <li>If the existing rod stays up, nothing else</li>
         </ul>
-        <p class="text-small">Where to get it: ordered online for delivery, or in person at the West Lebanon stores, reachable on the fare-free Advance Transit bus. <a href="../../where-to-get-it/">Where to get it</a> has the addresses and the routes.</p>
+        <p class="text-small"><a href="../../where-to-get-it/">Where to get it</a></p>
 
-        <h2>Before you drill anything</h2>
+        <h2 class="reveal">Before you drill anything</h2>
         <p>
           A tension rod inside the window recess holds by friction and leaves no holes, so it needs
           no permission. A bracket screwed into the wall or the frame does leave holes, and that is
@@ -104,7 +104,7 @@
           decoration, so get a yes in writing before the drill comes out.
         </p>
 
-        <h2>Steps</h2>
+        <h2 class="reveal">Steps</h2>
         <ol>
           <li>Measure the window opening, then buy curtains wider than it. Overlap at the sides is what stops air sliding around the edge.</li>
           <li>Hang the rod as high and as wide as it will go, so the curtain covers frame as well as glass.</li>
@@ -114,7 +114,7 @@
         </ol>
       </div>
 
-      <div class="story-stack">
+      <div class="story-stack full-bleed">
         <div class="story-bar full-bleed">
           <div class="story-bar__inner">
             <h2 class="story-bar__heading">Why this works</h2>
@@ -157,7 +157,7 @@
       </div>
 
       <div class="sources-block improvement-body">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://sustainablehanovernh.org/weatherize">Sustainable Hanover — Weatherize</a></li>
           <li><a href="https://sustainablehanovernh.org/windows">Sustainable Hanover — Window Inserts</a></li>
@@ -171,7 +171,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../../start/">
   <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -235,6 +235,7 @@
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <script type="module" src="../../assets/js/todo.js"></script>
+<script type="module" src="../../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 
 <script type="application/json" class="content-meta">

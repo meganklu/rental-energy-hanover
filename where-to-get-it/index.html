@@ -50,15 +50,40 @@
 
 <main id="main">
 
-  <section class="section page-shell">
-    <div class="page-head">
-      <h1>Where to get it</h1>
-      <p class="lede">
-        Nothing on this site needs a car, but a few things need planning. Here is where the
-        materials actually are.
-      </p>
-    </div>
+  <!-- A bag of the materials, added 2026-08-26. Everything this page sends a reader out for is a
+       stocked item that fits in one bag: a film kit, a bulb, a roll of weatherstripping. Through the
+       hold the three drop into it one after another. Decorative and aria-hidden; the list of what to
+       buy and where is below. -->
+  <div class="page-hero-hold">
+    <section class="page-hero full-bleed" aria-labelledby="where-h">
+      <div class="page-hero__inner page-shell">
+        <div class="page-hero__text">
+          <h1 id="where-h">Where to get it</h1>
+          <p class="lede">
+            Nothing on this site needs a car, but a few things need planning. Here is where the
+            materials actually are.
+          </p>
+        </div>
+        <div class="page-hero__scene" aria-hidden="true">
+          <svg class="tote" viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+            <g class="tote__goods">
+              <rect class="tote__box" x="78" y="96" width="52" height="52" rx="5"/>
+              <path class="tote__box-tape" d="M104 96 V148"/>
+              <circle class="tote__bulb" cx="160" cy="112" r="21"/>
+              <path class="tote__bulb-cap" d="M150 134 h20 M152 142 h16"/>
+              <circle class="tote__roll" cx="196" cy="146" r="18"/>
+              <circle class="tote__roll-eye" cx="196" cy="146" r="6"/>
+            </g>
+            <path class="tote__handle" d="M92 148 V126 a38 30 0 0 1 76 0 V148"/>
+            <path class="tote__bag" d="M46 146 H214 L202 268 H58 Z"/>
+            <path class="tote__seam" d="M58 178 H202"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
 
+  <section class="section page-shell">
     <div class="content-column">
       <figure class="prose-figure">
         <img class="photo" src="../assets/img/photos/hardware-store.webp"
@@ -67,7 +92,7 @@
         <figcaption class="photo-credit">Photo by <a href="https://unsplash.com/photos/ciY4tc7539I">Darien Attridge</a> on Unsplash</figcaption>
       </figure>
 
-      <h2>Order it online</h2>
+      <h2 class="reveal">Order it online</h2>
       <p>
         Everything this site recommends is a stocked category rather than a specialty item. Window
         insulation film kits, V-seal weatherstripping, door sweeps, LED bulbs and switched power
@@ -81,7 +106,7 @@
         specific one.
       </p>
 
-      <h2>Go in person in West Lebanon</h2>
+      <h2 class="reveal">Go in person in West Lebanon</h2>
       <p>The nearest full selection is on the Route 12A strip and around it in West Lebanon.</p>
       <ul>
         <li>
@@ -97,34 +122,30 @@
 
     </div>
 
-    <div class="story-stack">
-      <div class="story-bar full-bleed">
-        <div class="story-bar__inner">
-          <h2 class="story-bar__heading">Getting there without a car</h2>
-          <div class="story-bar__body">
-            <p>
-              <a href="https://advancetransit.com/">Advance Transit</a> runs fare-free across the Upper
-              Valley. There is no ticket to buy and no pass to show. The Blue route connects Hanover and
-              Lebanon on weekdays at roughly fifteen-minute frequency, and West Lebanon's hub is at the
-              Kilton Library.
-            </p>
-            <p>
-              Check Advance Transit's own route map for which service reaches the Route 12A stores and
-              how far you would be walking from the nearest stop. Service is weekday-only on most
-              routes, so a Saturday trip needs a different plan.
-            </p>
-            <p class="text-small">
-              Plan the return trip before you go. Carrying a window film kit and a door sweep is easy.
-              Waiting an hour for the next bus with them is less so.
-            </p>
-          </div>
-        </div>
+    <div class="keypoint">
+      <h2 class="keypoint__heading">Getting there without a car</h2>
+      <div class="keypoint__body">
+        <p>
+        <a href="https://advancetransit.com/">Advance Transit</a> runs fare-free across the Upper
+          Valley. There is no ticket to buy and no pass to show. The Blue route connects Hanover and
+          Lebanon on weekdays at roughly fifteen-minute frequency, and West Lebanon's hub is at the
+          Kilton Library.
+        </p>
+        <p>
+          Check Advance Transit's own route map for which service reaches the Route 12A stores and
+          how far you would be walking from the nearest stop. Service is weekday-only on most
+          routes, so a Saturday trip needs a different plan.
+        </p>
+        <p class="text-small">
+          Plan the return trip before you go. Carrying a window film kit and a door sweep is easy.
+          Waiting an hour for the next bus with them is less so.
+        </p>
       </div>
     </div>
 
     <div class="content-column">
 
-      <h2>What each improvement needs</h2>
+      <h2 class="reveal">What each improvement needs</h2>
       <ul>
         <li><a href="../improvements/seal-your-windows-with-film/">Seal your windows with film</a>: a film kit sized to your window, scissors, a hair dryer.</li>
         <li><a href="../improvements/door-sweeps-and-weatherstripping/">Seal your door with a sweep</a>: weatherstripping and a door sweep.</li>
@@ -145,7 +166,7 @@
       </div>
 
       <div class="sources-block">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://vnews.com/2023/04/17/hanover-hardware-set-to-close-50553064/">"As owners retire, downtown Hanover loses legacy hardware store"</a>, Valley News</li>
           <li><a href="https://www.homedepot.com/l/W-Lebanon/NH/West-Lebanon/03784/3406">The Home Depot, West Lebanon</a></li>
@@ -160,7 +181,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -224,6 +245,7 @@
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <script type="module" src="../assets/js/todo.js"></script>
+<script type="module" src="../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 </body>
 </html>

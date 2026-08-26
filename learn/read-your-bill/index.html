@@ -104,30 +104,41 @@
       </div>
 
       <div class="improvement-body">
-        <h2>Where to find each number</h2>
+        <h2 class="reveal">Where to find each number</h2>
         <ul>
           <li>Usage in <a href="../../glossary/#kwh">kWh</a>, usually near the middle of the bill, sometimes with a chart of the last several months.</li>
           <li>The rate, in cents or dollars per kWh, often printed near the usage figure or in a rate schedule.</li>
           <li>The total, at the bottom, which is usage times rate plus any fixed monthly charges.</li>
         </ul>
 
-        <details class="flip-card">
-          <summary>
+        <div class="flip-card">
+          <div class="flip-card__inner">
             <div class="flip-card__face flip-card__front">
-              <p>True or false: the total dollar amount on your bill tells you how much electricity you used.</p>
+              <p class="flip-card__tag">Quick check</p>
+              <p class="flip-card__q">True or false: the total dollar amount on your bill tells you how much electricity you used.</p>
+              <button type="button" class="flip-card__btn" data-flip="back">
+                <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-flip"/></svg>
+                Show the answer
+              </button>
             </div>
-          </summary>
-          <div class="flip-card__face flip-card__back">
-            <p>
-              False. The dollar total mixes your usage with the rate and any fixed charges. The kWh
-              figure is the actual amount of energy you used, and it is the number that changes when
-              you change a habit.
-            </p>
-            <a href="../find-your-drafts/">Find where that energy is going</a>
+            <div class="flip-card__face flip-card__back">
+              <p class="flip-card__tag">The answer</p>
+              <p class="flip-card__verdict">False</p>
+              <p>
+                The dollar total mixes your usage with the rate and any fixed charges. The kWh
+                figure is the actual amount of energy you used, and it is the number that changes
+                when you change a habit.
+              </p>
+              <p><a href="../find-your-drafts/">Find where that energy is going</a></p>
+              <button type="button" class="flip-card__btn" data-flip="front">
+                <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-flip"/></svg>
+                Flip back
+              </button>
+            </div>
           </div>
-        </details>
+        </div>
 
-        <p class="text-small">
+        <p class="text-small flip-card__plain">
           <strong>Read as text:</strong> True or false, does the total dollar amount on your bill
           tell you how much electricity you used? False. The dollar total mixes your usage with the
           rate and any fixed charges. The kWh figure is the actual amount of energy you used.
@@ -142,31 +153,27 @@
 
       </div>
 
-      <div class="story-stack">
-        <div class="story-bar full-bleed">
-          <div class="story-bar__inner">
-            <h2 class="story-bar__heading">What a kilowatt hour actually is</h2>
-            <div class="story-bar__body">
-              <p>
-                A <span class="term" tabindex="0" aria-describedby="term-kwh">kilowatt hour<span class="term__tooltip" id="term-kwh">The unit your electric bill is priced in.<a class="term__more" href="../../glossary/#kwh">Read the full entry</a></span></span> is one unit of energy: a thousand watts drawn for one hour. A 100-watt
-                device left on for ten hours uses one. Anything that makes heat is in a different class
-                entirely, and its nameplate will tell you so, which is the whole reason
-                <a href="../../improvements/space-heaters-real-cost-and-safety/">a space heater costs
-                what it does</a> to run.
-              </p>
-              <p>
-                Your bill is that number multiplied by a rate, plus fixed charges that do not move whatever you
-                do. Which is why the useful question is never "why is the bill high" but "which line moved, and
-                what did I plug in". Howe Library lends an electricity usage monitor if you want to measure a
-                particular device rather than guess at it.
-              </p>
-            </div>
-          </div>
+        <div class="keypoint">
+        <h2 class="keypoint__heading">What a kilowatt hour actually is</h2>
+        <div class="keypoint__body">
+          <p>
+            A <span class="term" tabindex="0" aria-describedby="term-kwh">kilowatt hour<span class="term__tooltip" id="term-kwh">The unit your electric bill is priced in.<a class="term__more" href="../../glossary/#kwh">Read the full entry</a></span></span> is one unit of energy: a thousand watts drawn for one hour. A 100-watt
+            device left on for ten hours uses one. Anything that makes heat is in a different class
+            entirely, and its nameplate will tell you so, which is the whole reason
+          <a href="../../improvements/space-heaters-real-cost-and-safety/">a space heater costs
+            what it does</a> to run.
+          </p>
+          <p>
+            Your bill is that number multiplied by a rate, plus fixed charges that do not move whatever you
+            do. Which is why the useful question is never "why is the bill high" but "which line moved, and
+            what did I plug in". Howe Library lends an electricity usage monitor if you want to measure a
+            particular device rather than guess at it.
+          </p>
         </div>
       </div>
 
       <div class="improvement-body">
-        <h2>Who serves Hanover</h2>
+        <h2 class="reveal">Who serves Hanover</h2>
         <p>
           Liberty Utilities (Granite State Electric) is the electric utility serving Hanover.
           Knowing your provider is what lets you find your actual rate instead of guessing at one.
@@ -174,7 +181,7 @@
       </div>
 
       <div class="sources-block improvement-body">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://www.energy.nh.gov/utilities-providers/regulated-utility-services/electric">NH Department of Energy — Regulated Utility Services: Electric</a></li>
           <li><a href="https://www.thehowe.org/library-of-things">Howe Library — Library of Things</a></li>
@@ -186,7 +193,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../../start/">
   <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -250,7 +257,9 @@
 <script type="module" src="../../assets/js/situation.js"></script>
 <script type="module" src="../../assets/js/situation-modal.js"></script>
 <script type="module" src="../../assets/js/todo.js"></script>
+<script type="module" src="../../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
+<script type="module" src="../../assets/js/flip-card.js"></script>
 
 <script type="module" src="../../assets/js/diagram.js"></script>
 

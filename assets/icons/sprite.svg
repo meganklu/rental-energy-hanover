@@ -211,6 +211,16 @@
     <polyline points="1 4 1 10 7 10"/>
   </symbol>
 
+  <symbol id="icon-mail" viewBox="0 0 24 24">
+    <rect x="3" y="5" width="18" height="14" rx="1.5"/>
+    <polyline points="3.8,6.4 12,13 20.2,6.4"/>
+  </symbol>
+
+  <symbol id="icon-copy" viewBox="0 0 24 24">
+    <rect x="9" y="9" width="11" height="12" rx="1.5"/>
+    <path d="M15 6.5V5.5A1.5 1.5 0 0 0 13.5 4H5.5A1.5 1.5 0 0 0 4 5.5v8A1.5 1.5 0 0 0 5.5 15h1"/>
+  </symbol>
+
   <symbol id="icon-print" viewBox="0 0 24 24">
     <rect x="7" y="3" width="10" height="6" rx="0.5"/>
     <rect x="5" y="9" width="14" height="7" rx="1"/>
@@ -283,6 +293,324 @@
   <symbol id="icon-code" viewBox="0 0 24 24">
     <polyline points="8.5 6.5 3 12 8.5 17.5"/>
     <polyline points="15.5 6.5 21 12 15.5 17.5"/>
+  </symbol>
+
+  <!-- ================= Doll house furniture, added 2026-08-25, redrawn twice =====================
+       DESIGN.md 3.2. Drawn against the Calico Critters sets and the built doll house in
+       docs/ai-use.md: light natural wood, cream and white, soft fabric pastels, arched windows with
+       white frames, and legs and spindles left visible the way toy furniture has them.
+
+       Color comes in through a `style` declaration on each shape rather than through a `fill`
+       attribute, because a presentation attribute cannot hold a var() reference while a CSS
+       declaration can, and custom properties are one of the few things that cross into a `use`
+       shadow tree. The outline color is set once on each symbol root and inherited down, so a
+       shape only has to say what it is filled with.
+
+       Each symbol sits in a viewBox of its own real proportion rather than a 24 square: forcing a
+       sofa into a square is what makes a drawing read as an icon of a sofa rather than as a sofa.
+
+       A `prop` id is scenery and is never pressed. An `obj` id is a thing the reader can open, and
+       every one of those is drawn here rather than borrowed from the icon set above, because a flat
+       green line drawing standing in a colored room reads as a sticker on a photograph.
+       ===================================================================================== -->
+
+  <!-- Scenery -->
+
+  <symbol id="prop-bed" viewBox="0 0 58 36" style="stroke: var(--toy-outline)">
+    <path d="M3 22 L3 12 Q3 5 11 5 Q19 5 19 12 L19 22 Z" style="fill: var(--toy-sage)"/>
+    <rect x="49" y="16" width="6" height="14" rx="2" style="fill: var(--toy-wood)"/>
+    <rect x="6" y="20" width="47" height="8" rx="2" style="fill: var(--toy-white)"/>
+    <path d="M24 20 L51 20 Q53 20 53 22 L53 26 Q53 28 51 28 L24 28 Z" style="fill: var(--toy-rose-soft)"/>
+    <rect x="9" y="14" width="13" height="7" rx="3" style="fill: var(--toy-white)"/>
+    <path d="M9 28 L9 33 M50 28 L50 33" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-sofa" viewBox="0 0 54 34" style="stroke: var(--toy-outline)">
+    <path d="M8 23 L8 9 Q8 4 13 4 L41 4 Q46 4 46 9 L46 23 Z" style="fill: var(--toy-cream)"/>
+    <rect x="2" y="13" width="8" height="13" rx="3" style="fill: var(--toy-cream)"/>
+    <rect x="44" y="13" width="8" height="13" rx="3" style="fill: var(--toy-cream)"/>
+    <path d="M9 18 L45 18 Q47 18 47 20 L47 25 Q47 27 45 27 L9 27 Q7 27 7 25 L7 20 Q7 18 9 18 Z"
+          style="fill: var(--toy-sage-soft)"/>
+    <path d="M27 18 L27 27" style="fill: none"/>
+    <rect x="12" y="8" width="8" height="8" rx="2" style="fill: var(--toy-rose-soft)"/>
+    <path d="M10 27 L10 32 M44 27 L44 32" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-armchair" viewBox="0 0 28 32" style="stroke: var(--toy-outline)">
+    <path d="M6 22 L6 8 Q6 3 11 3 L17 3 Q22 3 22 8 L22 22 Z" style="fill: var(--toy-rose)"/>
+    <rect x="1" y="13" width="7" height="12" rx="3" style="fill: var(--toy-rose)"/>
+    <rect x="20" y="13" width="7" height="12" rx="3" style="fill: var(--toy-rose)"/>
+    <path d="M7 18 L21 18 Q23 18 23 20 L23 24 Q23 26 21 26 L7 26 Q5 26 5 24 L5 20 Q5 18 7 18 Z"
+          style="fill: var(--toy-rose-soft)"/>
+    <path d="M8 26 L8 30 M20 26 L20 30" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-tub" viewBox="0 0 46 30" style="stroke: var(--toy-outline)">
+    <path d="M4 7 Q3 20 10 24 L34 24 Q41 20 40 7 Z" style="fill: var(--toy-white)"/>
+    <path d="M6 11 Q22 15 38 11 L38 16 Q22 20 6 16 Z" style="fill: var(--toy-sky-soft)"/>
+    <path d="M2 7 L42 7" style="fill: none"/>
+    <path d="M10 24 Q8 26 8 29 M34 24 Q36 26 36 29" style="fill: none"/>
+    <path d="M42 7 L42 3 L38 3" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-sink" viewBox="0 0 24 30" style="stroke: var(--toy-outline)">
+    <path d="M2 11 Q2 9 4 9 L20 9 Q22 9 22 11 L18 18 L6 18 Z" style="fill: var(--toy-white)"/>
+    <path d="M10 18 L10 26 L14 26 L14 18 Z" style="fill: var(--toy-white)"/>
+    <path d="M12 9 L12 5 Q12 3 14 3 L17 3" style="fill: none"/>
+    <path d="M4 26 L20 26" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-toilet" viewBox="0 0 20 30" style="stroke: var(--toy-outline)">
+    <rect x="3" y="2" width="14" height="10" rx="2" style="fill: var(--toy-white)"/>
+    <path d="M3 15 L17 15 Q17 24 10 24 Q3 24 3 15 Z" style="fill: var(--toy-white)"/>
+    <ellipse cx="10" cy="16" rx="5" ry="2" style="fill: var(--toy-sky-soft)"/>
+    <path d="M10 24 L10 27 M5 27 L15 27" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-fridge" viewBox="0 0 26 54" style="stroke: var(--toy-outline)">
+    <rect x="2" y="2" width="22" height="50" rx="3" style="fill: var(--toy-white)"/>
+    <path d="M2 19 L24 19" style="fill: none"/>
+    <path d="M19 9 L19 15 M19 24 L19 33" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-counter" viewBox="0 0 56 30" style="stroke: var(--toy-outline)">
+    <rect x="2" y="7" width="52" height="4" rx="1.5" style="fill: var(--toy-wood-light)"/>
+    <rect x="4" y="11" width="48" height="17" rx="1.5" style="fill: var(--toy-white)"/>
+    <path d="M28 11 L28 28" style="fill: none"/>
+    <path d="M12 15 L20 15 M36 15 L44 15" style="fill: none"/>
+    <circle cx="11" cy="5" r="2.4" style="fill: var(--toy-slate-soft)"/>
+    <circle cx="19" cy="5" r="2.4" style="fill: var(--toy-slate-soft)"/>
+    <rect x="38" y="2" width="10" height="5" rx="1.5" style="fill: var(--toy-slate-soft)"/>
+  </symbol>
+
+  <symbol id="prop-table" viewBox="0 0 42 28" style="stroke: var(--toy-outline)">
+    <rect x="3" y="8" width="36" height="4" rx="2" style="fill: var(--toy-wood)"/>
+    <path d="M8 12 L8 25 M34 12 L34 25" style="fill: none"/>
+    <path d="M10 18 L32 18" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-chair" viewBox="0 0 18 30" style="stroke: var(--toy-outline)">
+    <path d="M4 3 L14 3 Q15 3 15 5 L15 15 L3 15 L3 5 Q3 3 4 3 Z" style="fill: var(--toy-wood)"/>
+    <path d="M6.5 5 L6.5 13 M11.5 5 L11.5 13" style="fill: none"/>
+    <rect x="2" y="15" width="14" height="4" rx="1.5" style="fill: var(--toy-wood-light)"/>
+    <path d="M4 19 L4 28 M14 19 L14 28" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-dresser" viewBox="0 0 32 32" style="stroke: var(--toy-outline)">
+    <rect x="2" y="4" width="28" height="23" rx="2" style="fill: var(--toy-wood)"/>
+    <path d="M2 11.5 L30 11.5 M2 19 L30 19" style="fill: none"/>
+    <path d="M13 8 L19 8 M13 15.5 L19 15.5 M13 23 L19 23" style="fill: none"/>
+    <path d="M4 27 L4 30 M28 27 L28 30" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-console" viewBox="0 0 32 26" style="stroke: var(--toy-outline)">
+    <rect x="2" y="6" width="28" height="4" rx="1.5" style="fill: var(--toy-wood)"/>
+    <path d="M5 10 L5 24 M27 10 L27 24" style="fill: none"/>
+    <rect x="7" y="14" width="18" height="5" rx="1" style="fill: var(--toy-wood-light)"/>
+  </symbol>
+
+  <symbol id="prop-stairs" viewBox="0 0 30 40" style="stroke: var(--toy-outline)">
+    <path d="M2 38 L2 30 L9 30 L9 22 L16 22 L16 14 L23 14 L23 6 L28 6 L28 38 Z"
+          style="fill: var(--toy-wood-light)"/>
+    <path d="M2 38 L28 38" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-lamp" viewBox="0 0 22 42" style="stroke: var(--toy-outline)">
+    <path d="M5 13 L8 3 L14 3 L17 13 Z" style="fill: var(--toy-butter)"/>
+    <path d="M11 13 L11 37" style="fill: none"/>
+    <path d="M6 39 Q11 35 16 39 Z" style="fill: var(--toy-wood-dark)"/>
+  </symbol>
+
+  <symbol id="prop-plant" viewBox="0 0 24 32" style="stroke: var(--toy-outline)">
+    <path d="M7 20 L17 20 L15.5 30 L8.5 30 Z" style="fill: var(--toy-rose-soft)"/>
+    <path d="M12 20 L12 9" style="fill: none"/>
+    <path d="M12 15 Q4 14 3.5 6 Q11.5 7 12 15 Z" style="fill: var(--toy-sage)"/>
+    <path d="M12 12 Q20 11 20.5 4 Q12.5 5 12 12 Z" style="fill: var(--toy-sage)"/>
+  </symbol>
+
+  <symbol id="prop-shelf" viewBox="0 0 34 26" style="stroke: var(--toy-outline)">
+    <rect x="2" y="2" width="30" height="22" rx="1.5" style="fill: var(--toy-wood-light)"/>
+    <path d="M2 13 L32 13" style="fill: none"/>
+    <rect x="5" y="4" width="3" height="9" style="fill: var(--toy-rose)"/>
+    <rect x="9" y="5" width="3" height="8" style="fill: var(--toy-sky)"/>
+    <rect x="13" y="4" width="3" height="9" style="fill: var(--toy-butter)"/>
+    <rect x="21" y="16" width="8" height="8" rx="1" style="fill: var(--toy-sage-soft)"/>
+  </symbol>
+
+  <symbol id="prop-washer" viewBox="0 0 28 32" style="stroke: var(--toy-outline)">
+    <rect x="2" y="2" width="24" height="28" rx="2.5" style="fill: var(--toy-white)"/>
+    <circle cx="14" cy="19" r="7" style="fill: var(--toy-sky-soft)"/>
+    <circle cx="14" cy="19" r="3" style="fill: var(--toy-white)"/>
+    <path d="M5 8 L14 8" style="fill: none"/>
+    <circle cx="21" cy="8" r="1.5" style="fill: var(--toy-slate-soft)"/>
+  </symbol>
+
+  <!-- A band on the floor with fringed ends. The first pass put a white panel inside the outline
+       and at the size a rug renders that read as a fluorescent tube lying in the room. -->
+  <symbol id="prop-rug" viewBox="0 0 120 14" style="stroke: var(--toy-outline)">
+    <rect x="8" y="3" width="104" height="8" rx="3" style="fill: var(--toy-sky-soft)"/>
+    <path d="M8 5 L2 5 M8 9 L2 9 M112 5 L118 5 M112 9 L118 9" style="fill: none"/>
+    <path d="M20 3 L20 11 M100 3 L100 11" style="fill: none"/>
+  </symbol>
+
+  <symbol id="prop-mirror" viewBox="0 0 22 22" style="stroke: var(--toy-outline)">
+    <circle cx="11" cy="11" r="9" style="fill: var(--toy-sky-soft)"/>
+    <circle cx="11" cy="11" r="6" style="fill: var(--toy-white)"/>
+  </symbol>
+
+  <symbol id="prop-art" viewBox="0 0 24 20" style="stroke: var(--toy-outline)">
+    <rect x="2" y="2" width="20" height="16" rx="1" style="fill: var(--toy-cream)"/>
+    <path d="M4 14 L9 8 L13 12 L16 9 L20 14 Z" style="fill: var(--toy-sage-soft)"/>
+  </symbol>
+
+  <symbol id="prop-coathook" viewBox="0 0 32 16" style="stroke: var(--toy-outline)">
+    <rect x="2" y="2" width="28" height="4" rx="1.5" style="fill: var(--toy-wood)"/>
+    <path d="M9 6 L9 12 M16 6 L16 12 M23 6 L23 12" style="fill: none"/>
+  </symbol>
+
+  <!-- The window the reference houses use everywhere: an arched head in a white frame. -->
+  <symbol id="prop-window" viewBox="0 0 30 38" style="stroke: var(--toy-outline)">
+    <path d="M2 36 L2 15 Q2 2 15 2 Q28 2 28 15 L28 36 Z" style="fill: var(--toy-white)"/>
+    <path d="M5 33 L5 16 Q5 5 15 5 Q25 5 25 16 L25 33 Z" style="fill: var(--toy-sky-soft)"/>
+    <path d="M15 5 L15 33 M5 20 L25 20 M5 27 L25 27" style="fill: none"/>
+  </symbol>
+
+  <!-- Things a reader can open -->
+
+  <symbol id="obj-door" viewBox="0 0 32 56" style="stroke: var(--toy-outline)">
+    <rect x="1" y="1" width="30" height="54" rx="1.5" style="fill: var(--toy-white)"/>
+    <path d="M5 53 L5 16 Q5 5 16 5 Q27 5 27 16 L27 53 Z" style="fill: var(--toy-wood)"/>
+    <path d="M9 20 Q9 9 16 9 Q23 9 23 20 L23 24 L9 24 Z" style="fill: var(--toy-sky-soft)"/>
+    <path d="M16 9 L16 24 M9 17 L23 17" style="fill: none"/>
+    <rect x="9" y="31" width="14" height="16" rx="1" style="fill: var(--toy-wood-light)"/>
+    <circle cx="24" cy="30" r="1.7" style="fill: var(--toy-butter)"/>
+  </symbol>
+
+  <symbol id="obj-keys" viewBox="0 0 30 26" style="stroke: var(--toy-outline)">
+    <rect x="2" y="2" width="26" height="4" rx="1.5" style="fill: var(--toy-wood)"/>
+    <path d="M9 6 L9 10 M21 6 L21 10" style="fill: none"/>
+    <circle cx="9" cy="15" r="4" style="fill: var(--toy-butter)"/>
+    <path d="M9 19 L9 24 M9 21.5 L12 21.5" style="fill: none"/>
+    <circle cx="21" cy="14" r="3" style="fill: var(--toy-slate-soft)"/>
+    <path d="M21 17 L21 21 M21 19 L23.5 19" style="fill: none"/>
+  </symbol>
+
+  <symbol id="obj-letter" viewBox="0 0 30 22" style="stroke: var(--toy-outline)">
+    <rect x="2" y="4" width="26" height="16" rx="1.5" style="fill: var(--toy-white)"/>
+    <path d="M2 5 L15 13 L28 5" style="fill: none"/>
+    <path d="M9 1 L27 1 L27 4" style="fill: var(--toy-cream)"/>
+  </symbol>
+
+  <!-- A window with the film going on: the same arched frame as the scenery window, with a sheet
+       taped over the lower half and a squeegee line across it. -->
+  <symbol id="obj-window-film" viewBox="0 0 30 38" style="stroke: var(--toy-outline)">
+    <path d="M2 36 L2 15 Q2 2 15 2 Q28 2 28 15 L28 36 Z" style="fill: var(--toy-white)"/>
+    <path d="M5 33 L5 16 Q5 5 15 5 Q25 5 25 16 L25 33 Z" style="fill: var(--toy-sky-soft)"/>
+    <path d="M15 5 L15 33 M5 20 L25 20" style="fill: none"/>
+    <path d="M7 31 L9 12 M12 31 L13 22" style="fill: none; stroke: var(--toy-white); stroke-width: 2.6"/>
+    <rect x="6" y="22" width="18" height="4" rx="1" style="fill: var(--toy-cream)"/>
+  </symbol>
+
+  <symbol id="obj-curtains" viewBox="0 0 34 34" style="stroke: var(--toy-outline)">
+    <path d="M1 3 L33 3" style="fill: none"/>
+    <path d="M3 4 L3 30 Q8 33 12 30 L12 4 Z" style="fill: var(--toy-rose)"/>
+    <path d="M22 4 L22 30 Q26 33 31 30 L31 4 Z" style="fill: var(--toy-rose)"/>
+    <path d="M7 5 L7 31 M27 5 L27 31" style="fill: none"/>
+    <path d="M13 8 L13 26 L21 26 L21 8 Q21 6 17 6 Q13 6 13 8 Z" style="fill: var(--toy-sky-soft)"/>
+  </symbol>
+
+  <symbol id="obj-thermostat" viewBox="0 0 24 28" style="stroke: var(--toy-outline)">
+    <rect x="2" y="2" width="20" height="24" rx="3" style="fill: var(--toy-white)"/>
+    <circle cx="12" cy="12" r="7" style="fill: var(--toy-sky-soft)"/>
+    <path d="M12 12 L12 7" style="fill: none"/>
+    <path d="M8 21 L16 21" style="fill: none"/>
+  </symbol>
+
+  <symbol id="obj-outlet" viewBox="0 0 32 24" style="stroke: var(--toy-outline)">
+    <rect x="2" y="4" width="13" height="17" rx="2" style="fill: var(--toy-white)"/>
+    <path d="M6.5 9 L6.5 12.5 M10.5 9 L10.5 12.5" style="fill: none"/>
+    <path d="M6.5 16.5 L10.5 16.5" style="fill: none"/>
+    <rect x="18" y="11" width="13" height="6" rx="2" style="fill: var(--toy-butter)"/>
+    <path d="M21 11 L21 17 M25 11 L25 17" style="fill: none"/>
+    <path d="M15 13 Q17 13 18 14" style="fill: none"/>
+  </symbol>
+
+  <symbol id="obj-radiator" viewBox="0 0 36 26" style="stroke: var(--toy-outline)">
+    <rect x="2" y="4" width="32" height="17" rx="2" style="fill: var(--toy-white)"/>
+    <path d="M8 4 L8 21 M13 4 L13 21 M18 4 L18 21 M23 4 L23 21 M28 4 L28 21" style="fill: none"/>
+    <path d="M5 21 L5 24 M31 21 L31 24" style="fill: none"/>
+  </symbol>
+
+  <symbol id="obj-space-heater" viewBox="0 0 28 28" style="stroke: var(--toy-outline)">
+    <rect x="2" y="4" width="24" height="18" rx="2.5" style="fill: var(--toy-white)"/>
+    <rect x="5" y="7" width="18" height="9" rx="1.5" style="fill: var(--toy-butter)"/>
+    <path d="M9 7 L9 16 M14 7 L14 16 M19 7 L19 16" style="fill: none"/>
+    <circle cx="22" cy="19" r="1.3" style="fill: var(--toy-rose)"/>
+    <path d="M5 22 L5 26 M23 22 L23 26" style="fill: none"/>
+  </symbol>
+
+  <symbol id="obj-suitcase" viewBox="0 0 32 28" style="stroke: var(--toy-outline)">
+    <rect x="2" y="8" width="28" height="18" rx="2.5" style="fill: var(--toy-sky)"/>
+    <path d="M12 8 L12 4 Q12 2 14 2 L18 2 Q20 2 20 4 L20 8" style="fill: none"/>
+    <path d="M2 15 L30 15" style="fill: none"/>
+    <rect x="13" y="13" width="6" height="4" rx="1" style="fill: var(--toy-butter)"/>
+  </symbol>
+
+  <symbol id="obj-showerhead" viewBox="0 0 26 30" style="stroke: var(--toy-outline)">
+    <path d="M4 2 L4 9 Q4 12 8 12 L14 12" style="fill: none"/>
+    <path d="M13 9 L22 9 L20 15 L15 15 Z" style="fill: var(--toy-slate-soft)"/>
+    <path d="M16 18 L16 23 M19 18 L19 24 M13 18 L13 24"
+          style="fill: none; stroke: var(--toy-sky)"/>
+  </symbol>
+
+  <symbol id="obj-bill" viewBox="0 0 24 30" style="stroke: var(--toy-outline)">
+    <rect x="2" y="3" width="20" height="25" rx="1.5" style="fill: var(--toy-white)"/>
+    <path d="M6 10 L18 10 M6 15 L18 15 M6 20 L13 20" style="fill: none"/>
+    <circle cx="12" cy="2" r="2" style="fill: var(--toy-rose)"/>
+  </symbol>
+
+  <symbol id="obj-lease" viewBox="0 0 28 24" style="stroke: var(--toy-outline)">
+    <rect x="6" y="2" width="18" height="20" rx="1.5" style="fill: var(--toy-cream)"/>
+    <rect x="2" y="5" width="18" height="18" rx="1.5" style="fill: var(--toy-white)"/>
+    <path d="M6 10 L16 10 M6 14 L16 14 M6 18 L12 18" style="fill: none"/>
+  </symbol>
+
+  <symbol id="obj-ceiling-light" viewBox="0 0 28 32" style="stroke: var(--toy-outline)">
+    <path d="M14 0 L14 9" style="fill: none"/>
+    <path d="M4 20 L10 9 L18 9 L24 20 Z" style="fill: var(--toy-butter)"/>
+    <path d="M4 20 L24 20" style="fill: none"/>
+    <circle cx="14" cy="24" r="3.5" style="fill: var(--toy-cream)"/>
+  </symbol>
+
+  <symbol id="obj-boiler" viewBox="0 0 30 36" style="stroke: var(--toy-outline)">
+    <rect x="3" y="7" width="24" height="27" rx="2" style="fill: var(--toy-slate-soft)"/>
+    <path d="M15 7 L15 1" style="fill: none"/>
+    <rect x="7" y="12" width="16" height="9" rx="1.5" style="fill: var(--toy-butter)"/>
+    <circle cx="10" cy="27" r="1.7" style="fill: var(--toy-white)"/>
+    <path d="M15 27 L23 27" style="fill: none"/>
+  </symbol>
+
+  <symbol id="obj-tank" viewBox="0 0 26 38" style="stroke: var(--toy-outline)">
+    <path d="M3 10 Q3 4 13 4 Q23 4 23 10 L23 31 Q23 34 20 34 L6 34 Q3 34 3 31 Z"
+          style="fill: var(--toy-slate-soft)"/>
+    <path d="M9 4 L9 1 M17 4 L17 1" style="fill: none"/>
+    <path d="M3 21 L23 21" style="fill: none"/>
+    <circle cx="13" cy="27" r="2" style="fill: var(--toy-rose)"/>
+  </symbol>
+
+  <!-- The seam at the top of a basement wall, where the framing for the floor above sits on the
+       foundation. Renamed from obj-rimjoist 2026-08-26 along with its label: the old drawing was a
+       beam over a pink box and read as furniture, and "rim joist" is a term docs/glossary.md
+       already lists under "terms we avoid". Wood above, foundation below, and two arrows of cold
+       air coming through the gap between them, which is the thing the reader is being sent to
+       look for. -->
+  <symbol id="obj-draft-gap" viewBox="0 0 36 24" style="stroke: var(--toy-outline)">
+    <rect x="1" y="1" width="34" height="7" rx="1" style="fill: var(--toy-wood)"/>
+    <path d="M9 1 L9 8 M18 1 L18 8 M27 1 L27 8" style="fill: none"/>
+    <rect x="1" y="15" width="34" height="8" rx="1" style="fill: var(--toy-slate-soft)"/>
+    <path d="M13 15 L13 23 M24 15 L24 23" style="fill: none"/>
+    <path d="M2 11.5 L14 11.5 M11 9 L14 11.5 L11 14" style="fill: none; stroke: var(--toy-sky)"/>
+    <path d="M34 11.5 L22 11.5 M25 9 L22 11.5 L25 14" style="fill: none; stroke: var(--toy-sky)"/>
   </symbol>
 
 </svg>

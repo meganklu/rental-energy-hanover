@@ -50,28 +50,72 @@
 
 <main id="main">
 
-  <div class="split-continuum">
-    <div class="split-continuum__bg" aria-hidden="true"><span></span><span></span></div>
+  <!-- One house, one seam, added 2026-08-26. /about opened straight onto the split color field,
+       which made it the one page reachable from the nav that did not look like the others. It opens
+       on a drawn scene now, in the same shape and the same pen as the other three (DESIGN.md §3.10
+       and §3.2), and the split starts below it.
 
-    <section class="section page-shell">
-      <div class="split-hero">
-        <div>
-          <span class="eyebrow">Why this site exists</span>
-          <h1>One building, two sets of incentives</h1>
+       The drawing is the page's own sentence: one building, a line down the middle of it, a bill on
+       one side of the line and a key on the other. Through the hold the roof settles onto the
+       walls, the seam draws down from the peak, and the two objects arrive on their own sides.
+       Decorative and aria-hidden; both sides are written out in full below. -->
+  <div class="page-hero-hold">
+    <section class="page-hero page-hero--about full-bleed" aria-labelledby="about-h">
+      <div class="page-hero__inner page-shell">
+        <div class="page-hero__text">
+          <h1 id="about-h">One building, two sets of incentives</h1>
+          <p class="lede">
+            Almost every guide to a warmer, cheaper home is written for the person who owns it. In a
+            rental, the person who pays to heat the place and the person who can change it are two
+            different people. That gap is the reason this site is here.
+          </p>
         </div>
-        <p class="lede">
-          Almost every guide to a warmer, cheaper home is written for the person who owns it. In a
-          rental, the person who pays to heat the place and the person who can change it are two
-          different people. That gap is the reason this site is here.
-        </p>
+
+        <div class="page-hero__scene" aria-hidden="true">
+          <svg class="onehouse" viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+            <path class="onehouse__ground" d="M14 272 H246"/>
+
+            <g class="onehouse__roof">
+              <path class="onehouse__roof-slab" d="M22 128 L130 42 L238 128 Z"/>
+            </g>
+
+            <rect class="onehouse__wall" x="46" y="126" width="168" height="146" rx="4"/>
+
+            <rect class="onehouse__window" x="66" y="146" width="44" height="32" rx="3"/>
+            <path class="onehouse__mullion" d="M88 146 V178"/>
+            <rect class="onehouse__window" x="150" y="146" width="44" height="32" rx="3"/>
+            <path class="onehouse__mullion" d="M172 146 V178"/>
+
+            <!-- What the tenant pays. -->
+            <g class="onehouse__bill">
+              <rect class="onehouse__note" x="60" y="200" width="56" height="36" rx="4"/>
+              <circle class="onehouse__coin" cx="88" cy="218" r="9"/>
+              <path class="onehouse__note-rule" d="M68 208 h8 M100 228 h8"/>
+            </g>
+
+            <!-- What the owner holds. -->
+            <g class="onehouse__key">
+              <circle class="onehouse__bow" cx="158" cy="218" r="14"/>
+              <circle class="onehouse__bow-eye" cx="158" cy="218" r="5"/>
+              <path class="onehouse__bit" d="M172 218 H202 M190 218 V228 M202 218 V226"/>
+            </g>
+
+            <!-- The line down the middle, drawn last so it sits over everything it divides. -->
+            <path class="onehouse__seam" d="M130 42 V272"/>
+          </svg>
+        </div>
       </div>
     </section>
+  </div>
+
+  <div class="split-continuum">
+    <div class="split-continuum__bg" aria-hidden="true"><span></span><span></span></div>
 
     <section class="split-sides" aria-label="The two sides of a rental">
       <div class="split-side split-side--tenant">
         <div class="split-side__inner">
           <p class="split-side__tag">You rent it</p>
-          <h2>You pay to heat it.</h2>
+          <h2 class="reveal">You pay to heat it.</h2>
           <h3>What you are up against</h3>
           <ul>
             <li>The heating bill arrives with your name on it.</li>
@@ -92,7 +136,7 @@
       <div class="split-side split-side--owner">
         <div class="split-side__inner">
           <p class="split-side__tag">They own it</p>
-          <h2>They pay to improve it.</h2>
+          <h2 class="reveal">They pay to improve it.</h2>
           <h3>What they are up against</h3>
           <ul>
             <li>Insulation, windows and heating equipment are theirs to buy.</li>
@@ -100,7 +144,7 @@
             <li>A tenant who leaves in a year makes the payback period hard to justify.</li>
             <li>When something breaks mid-winter, the cheapest working replacement is the fast one.</li>
           </ul>
-          <h3>What changes the maths</h3>
+          <h3>What changes the math</h3>
           <ul>
             <li>Rebates and income-eligible programs that cover part or all of the cost.</li>
             <li>A unit that is easier to rent, and cheaper to run between tenants.</li>
@@ -113,7 +157,7 @@
 
     <section class="section page-shell">
       <div class="split-card">
-        <h2>Economists call this a split incentive</h2>
+        <h2 class="reveal">Economists call this a split incentive</h2>
         <p>
           The person who would pay for an efficiency improvement is not the person who would save
           from it, so the improvement often does not happen. Nobody has to behave badly for this to
@@ -124,7 +168,7 @@
     </section>
 
     <section class="section page-shell">
-      <h2>So this site starts on your side of the line</h2>
+      <h2 class="reveal">So this site starts on your side of the line</h2>
       <ul class="split-approach">
         <li>
           <h3>Permission first</h3>
@@ -163,13 +207,13 @@
   <section class="section page-shell">
     <div class="info-panel">
       <figure class="info-panel__media">
-        <img class="photo" src="../assets/img/photos/brick-apartment.webp"
-             alt="A brick apartment building with rows of identical windows."
-             width="1600" height="800" loading="lazy" decoding="async">
-        <figcaption class="photo-credit">Photo by <a href="https://unsplash.com/photos/XCCAVA3BjhM">Seyi Ariyo</a> on Unsplash</figcaption>
+        <img class="photo" src="../assets/img/photos/hanover-from-above.webp"
+             alt="Hanover seen from a ridge above it: the town's rooftops and Baker Tower in a clearing, with wooded hills all around."
+             width="1000" height="750" loading="lazy" decoding="async">
+        <figcaption class="photo-credit">Photo by Sam Kovak, <a href="https://commons.wikimedia.org/wiki/File:Hanover_from_indian_ridge_-_panoramio.jpg">via Wikimedia Commons</a>, cropped, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
       </figure>
       <div class="info-panel__text">
-        <h2>Hanover in particular</h2>
+        <h2 class="reveal">Hanover in particular</h2>
         <p>
           At the May 2017 Town Meeting, Hanover voted to move to 100% renewable electricity by
           2030, and renewable heating, cooling and transportation by 2050. Sustainable Hanover
@@ -187,7 +231,7 @@
 
   <section class="section page-shell">
     <div class="content-column">
-      <h2>What this site adds</h2>
+      <h2 class="reveal">What this site adds</h2>
       <p>
         Sustainable Hanover already publishes weatherization guidance for people who own a home in
         town. That guidance assumes a contractor, an attic and a basement, and a decision the reader
@@ -201,7 +245,7 @@
         glued to the frame, which is what makes them work in a rental.
       </p>
 
-      <h2>Who made it</h2>
+      <h2 class="reveal">Who made it</h2>
       <p>
         Built by Megan Lu, Ryan Lee and Katharine Morley as a Social Impact Practicum (SIP) for
         Sustainable Futures (ENVS080.22), in partnership with Sustainable Hanover, a committee of
@@ -212,7 +256,7 @@
         <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a>.
       </p>
 
-      <h2>How the content is sourced</h2>
+      <h2 class="reveal">How the content is sourced</h2>
       <p>
         Every number on this site traces to a named source, and each page lists its own at the
         bottom with the date it was last checked. Where no source exists, the number does not go on
@@ -229,7 +273,7 @@
         <a href="https://github.com/meganklu/rental-energy-hanover">View the source code</a>.
       </p>
 
-      <h2>How AI was used</h2>
+      <h2 class="reveal">How AI was used</h2>
       <p>
         This site was built with generative AI. Anthropic's Claude Opus 5 wrote most of the HTML,
         CSS and JavaScript, drafted the explanatory copy, and drew the diagrams, working from written
@@ -249,7 +293,7 @@
         <a href="https://github.com/meganklu/rental-energy-hanover/blob/main/AGENTS.md">AGENTS.md</a>.
       </p>
 
-      <h2>What this site will not do</h2>
+      <h2 class="reveal">What this site will not do</h2>
       <ul>
         <li>Name a specific landlord or a specific property.</li>
         <li>Recommend a brand, or link to a product for commission.</li>
@@ -259,7 +303,7 @@
           <a href="../your-rights/">Your rights</a> says who.</li>
       </ul>
 
-      <h2>The disclaimers</h2>
+      <h2 class="reveal">The disclaimers</h2>
       <div class="callout callout--legal">
         <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-bill"/></svg>
         <div>
@@ -283,7 +327,7 @@
       </div>
 
       <div class="sources-block">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://sustainablehanovernh.org/energy">Sustainable Hanover — Energy Overview</a></li>
           <li><a href="https://sustainablehanovernh.org/weatherize">Sustainable Hanover — Weatherize</a></li>
@@ -299,7 +343,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -363,6 +407,7 @@
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <script type="module" src="../assets/js/todo.js"></script>
+<script type="module" src="../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 </body>
 </html>

@@ -50,14 +50,52 @@
 
 <main id="main">
 
+  <!-- Three applications, added 2026-08-26. A program is a form somebody signs, and the question
+       this page answers is which of them a renter can sign themselves. The hero holds while the
+       reader scrolls and the sheets are turned one at a time, top one first, each lifting off the
+       stack and settling into its place in the fan; the tick lands last, on the one a renter can
+       sign. Each carries the color of one of the three permission badges the entries below use.
+       Decorative and aria-hidden: the same three states are written out on every program in the
+       list. -->
+  <div class="page-hero-hold">
+    <section class="page-hero page-hero--programs full-bleed" aria-labelledby="programs-h">
+      <div class="page-hero__inner page-shell">
+        <div class="page-hero__text">
+          <h1 id="programs-h">Programs</h1>
+          <p class="lede">
+            Most energy programs are written for whoever owns the building. Here is which ones reach a
+            renter, and what your landlord has to sign for the rest.
+          </p>
+        </div>
+
+        <div class="page-hero__scene" aria-hidden="true">
+          <svg class="forms" viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+            <g class="forms__sheet forms__sheet--back">
+              <rect x="40" y="30" width="180" height="230" rx="10"/>
+              <rect class="forms__chip" x="60" y="52" width="76" height="18" rx="9"/>
+              <path class="forms__rule" d="M60 96 h140 M60 122 h140 M60 148 h104"/>
+              <path class="forms__sign" d="M60 214 h80"/>
+            </g>
+            <g class="forms__sheet forms__sheet--mid">
+              <rect x="40" y="30" width="180" height="230" rx="10"/>
+              <rect class="forms__chip" x="60" y="52" width="92" height="18" rx="9"/>
+              <path class="forms__rule" d="M60 96 h140 M60 122 h140 M60 148 h122"/>
+              <path class="forms__sign" d="M60 214 h80"/>
+            </g>
+            <g class="forms__sheet forms__sheet--front">
+              <rect x="40" y="30" width="180" height="230" rx="10"/>
+              <rect class="forms__chip" x="60" y="52" width="68" height="18" rx="9"/>
+              <path class="forms__rule" d="M60 96 h140 M60 122 h140 M60 148 h90"/>
+              <path class="forms__sign" d="M60 214 h80"/>
+              <path class="forms__tick" d="M150 208 l14 14 l26 -34"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <section class="section page-shell">
-    <div class="page-head">
-      <h1>Programs</h1>
-      <p class="lede">
-        Most energy programs are written for whoever owns the building. Here is which ones reach a
-        renter, and what your landlord has to sign for the rest.
-      </p>
-    </div>
 
     <div class="info-panel info-panel--reverse">
       <figure class="info-panel__media">
@@ -67,7 +105,7 @@
         <figcaption class="photo-credit">Photo by <a href="https://unsplash.com/photos/wOBH1cXktKY">Qian Shawn</a> on Unsplash</figcaption>
       </figure>
       <div class="info-panel__text">
-        <h2>Why so many of these need your landlord</h2>
+        <h2 class="reveal">Why so many of these need your landlord</h2>
         <p>
           <span class="term" tabindex="0" aria-describedby="term-weatherization">Weatherizing<span class="term__tooltip" id="term-weatherization">Keeping indoor air from escaping and outdoor air from getting in, which is how you cut what heating costs.<a class="term__more" href="../glossary/#weatherization">Read the full entry</a></span></span> an apartment means changing the building, and the building is not yours.
           That is the whole reason a program asks for an owner's signature: it is a permanent
@@ -83,6 +121,13 @@
       </div>
     </div>
 
+  </section>
+
+  <!-- The seven programs get a band of their own, added 2026-08-26. The page was one white column
+       from the title to the sources, and the carousel — the part a reader actually came for — began
+       with nothing marking it as a different kind of thing from the two paragraphs above it. -->
+  <section class="theme-light full-bleed band" aria-labelledby="programs-to-look-at">
+    <div class="section page-shell">
     <div class="content-column">
       <h2 id="programs-to-look-at">Programs to look at</h2>
     </div>
@@ -373,9 +418,12 @@
         </div>
       </div>
     </div>
+    </div>
+  </section>
 
+  <section class="section page-shell">
     <div class="content-column">
-      <h2>Programs that are not for you</h2>
+      <h2 class="reveal">Programs that are not for you</h2>
       <p>
         These come up in a search and cost an afternoon to rule out. Ruling them out here is
         faster.
@@ -395,7 +443,7 @@
         </li>
       </ul>
 
-      <h2>How to ask your landlord</h2>
+      <h2 class="reveal">How to ask your landlord</h2>
       <p>
         Ask in writing, name the specific program, and say what it costs them. "Would you consider
         insulating" is a request. "NHSaves has a program that covers the cost of weatherizing this
@@ -423,7 +471,7 @@
       </div>
 
       <div class="sources-block">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://nhsaves.com/residential/income-eligible-energy-assistance-program/">Income-Eligible Energy Assistance Program</a>, NHSaves</li>
           <li><a href="https://nhsaves.com/residential/weatherization/">Energy Audits &amp; Weatherization</a>, NHSaves</li>
@@ -443,7 +491,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -507,6 +555,7 @@
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <script type="module" src="../assets/js/todo.js"></script>
+<script type="module" src="../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 
 <script type="module" src="../assets/js/carousel.js"></script>
