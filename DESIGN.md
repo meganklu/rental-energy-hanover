@@ -2882,7 +2882,20 @@ gzip charges very little for prose that repeats itself as much as English does.
   | `python3 -m http.server` | 351 KB | 298 KB |
 
   It answers in HTTP/1.0 with no keep-alive, so each of the seventeen requests opens and closes its
-  own connection, and it never compresses anything however the browser asks. On loopback that costs
-  nothing but bytes; across a real network each of those connections also pays for its own round
-  trip. `tools/serve.mjs` was written for this: gzip, one connection, correct types, no caching,
-  no dependencies. Judge load time with that or on the deployed site.
+  own connection, and it never compresses anything however the browser asks.
+
+  **Revalidation is the half of this that shows up when moving between pages**, and it is worth its
+  own number. Going to the home page *from another page* should cost almost nothing: the reader
+  already has the CSS, the fonts and the icon sprite. The home page makes 53 references into that
+  sprite and the list page 65, which is why those two are the ones a reader notices.
+
+  | Arriving at the home page from `/about` | Requests | Transferred |
+  |---|---|---|
+  | `python3 -m http.server` | 17, each on its own connection | 106 KB |
+  | `tools/serve.mjs` | 17, one connection | **31 KB** |
+
+  The difference is entirely 304s. `tools/serve.mjs` sends an ETag and a Last-Modified on every
+  response and answers a conditional request with an empty 304, so a second page costs its own HTML
+  and nothing else. It caches nothing past the navigation, so a reload still shows the file as it is
+  on disk — revalidation is what makes that cheap rather than free in name only. Judge load time
+  with that or on the deployed site.

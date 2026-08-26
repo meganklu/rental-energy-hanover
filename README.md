@@ -62,9 +62,10 @@ Preview locally by serving the repo root over HTTP:
 node tools/serve.mjs 8000
 ```
 
-That serves what GitHub Pages serves: gzip, one reused connection, correct types, and no caching.
-`python3 -m http.server` works too, but it sends everything uncompressed over a new connection per
-request, so it makes the site look about three times heavier than it is.
+That serves what GitHub Pages serves: gzip, one reused connection, correct types, and ETags, so
+moving between pages re-downloads nothing that has not changed. `python3 -m http.server` works too,
+but it sends everything uncompressed over a new connection per request and has no ETag, so every
+page you visit fetches all the CSS, the fonts and the icon sprite again.
 
 ## Documents
 

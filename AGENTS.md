@@ -83,8 +83,9 @@ structural.
 node tools/serve.mjs 8000
 
 # `python3 -m http.server` also works and is misleading about load time: HTTP/1.0 with a new
-# connection per request and no compression at all, so the home page costs 351KB over 17
-# connections instead of 113KB over one. Judge speed with tools/serve.mjs or on the deployed site.
+# connection per request, no compression, and no ETag. Arriving at the home page from another page
+# costs 106KB over 17 connections from it and 31KB over one from tools/serve.mjs, because the
+# second answers a conditional request with a 304. Judge speed with tools/serve.mjs or on Pages.
 
 # build
 # none. The committed files are the published site

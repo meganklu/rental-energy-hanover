@@ -505,3 +505,13 @@ Navigation:
 - I am having issues navigating between pages. Either pages are taking significant amounts of time to load or the links are not working. Either way, I would like to fix this. I am experiencing particular issues navigating to the home and my list pages from another page
 
 Increase spacing between sections and paragraphs on all pages.
+
+### 2026-08-26 Page Access and Spacing
+
+I still am unable to access the home page from other pages via the nav bar button on logo.
+
+Home page:
+- Remove the light green background for selected spot labels
+- The hover animation glitching is still occuring when hovering over the actual object rather than the label
+
+Increase spacing before story bars and between every section. Use different backgrounds, cards, and other divisions to denote different sections.
