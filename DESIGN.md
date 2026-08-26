@@ -2349,6 +2349,16 @@ instead: the transition runs and completes in one frame, which is an instant swa
 `assets/js/motion.js` puts `.motion-reduced` on the root element for that, and it is the only thing
 about the switch that needs script — everything else it does still works with JavaScript off.
 
+**Shortened 2026-08-26, and it is a load-time decision.** It shipped at 200ms out and 340ms in, and
+the effect a reader reported a day later was that pages had got slower to load. They had, in the
+only sense that matters. A cross-document transition freezes the outgoing page from the moment the
+link is pressed until the incoming document is ready to paint, and only then plays. There is no
+white flash any more, and there is also no sign that anything is happening, so the whole of the load
+is silent and half a second of animation is added on top of it. The transition is 120 and 180 now,
+and the incoming wipe starts a bit over half way up rather than at the bottom edge, because at that
+speed a full-height wipe is a blur. That is a quarter of a second back on every navigation, and it
+still reads as a wipe. See §12.
+
 ## 8. Content presentation patterns
 
 ### Keeping pages short
@@ -2655,3 +2665,73 @@ credit has to survive that move.
 | Do the looping diagrams distract from the text beside them, even with a pause control? | Watch in usability round 2 / loop only while in view / pause by default and play on press | Loop while in view, pause control always visible | 2026-08-19 |
 | Does parallax survive the accessibility pass, given it is scroll-linked movement? | Capped at 20% travel, decoration only, off below 600px, stoppable, as specified / drop it | Keep, under the §5.1 limits | 2026-08-19 |
 | Dark mode | Not in v1, as specified / v1 | Not in v1 | 2026-08-18 |
+
+## 12. Load and responsiveness, added 2026-08-26
+
+Written after a round of feedback that the site had got slower. It had, and the cause was not the
+one that gets blamed first. Everything below is measured rather than estimated, and the numbers are
+reproducible from the repository.
+
+### What a page actually costs
+
+Seventeen or eighteen requests, of which the render-blocking ones are the HTML and three
+stylesheets. Gzipped, blocking: about 74KB on the home page and 54 to 58KB everywhere else. The
+photographs are all 1000×750 WebP, one per page, `loading="lazy"` with width and height on every
+one, so none of them is on the critical path. The two font files are subset, preloaded and
+`font-display: swap`, behind a metrics-matched fallback so the swap does not reflow. Every script is
+`type="module"`, which defers by default, and none of them exceeds 20KB.
+
+None of that is the problem, and it is worth saying so plainly before the part that is.
+
+### The thing that made it feel slower
+
+Cross-document view transitions, shipped 2026-08-26 (§7). A transition freezes the outgoing page
+from the moment a link is pressed until the incoming document is ready to paint, and then plays its
+animation. Two consequences, and they compound:
+
+1. **The load has no visible progress any more.** The white flash it replaced was ugly and it was
+   also feedback. A frozen page that looks exactly like the page you were reading is not.
+2. **The animation is added to the load rather than overlapping it.** 200ms out plus 340ms in was
+   more than half a second on top of a page that was otherwise ready in a fraction of that.
+
+Half a second is roughly the difference between a navigation that feels instant and one that feels
+like it is fetching something. The durations are 120 and 180 now, and the incoming wipe starts
+partway up the screen rather than at the bottom edge so it still reads as a wipe at that speed.
+
+### The stylesheet split
+
+`components.css` had reached 190KB, and every page paid all of it before it could paint. About a
+fifth of it was the home page and nothing else. That fifth is `home.css` now, loaded only by
+`index.html`. Measured both ways, because gzip compresses one large file better than two small ones
+and the split costs some of that before it saves anything:
+
+| | Blocking CSS, gzipped |
+|---|---|
+| Before, every page | 57.3 KB |
+| After, `index.html` | 58.9 KB |
+| After, every other page | 42.3 KB |
+
+One page pays 1.6KB, twenty-seven save fifteen. That trade is what justifies this one file and not
+the next one — see [docs/architecture.md](docs/architecture.md) §D4a for the rule a future block has
+to meet.
+
+Roughly half of what is left is comments. They stay. They are how this codebase explains itself, and
+gzip charges very little for prose that repeats itself as much as English does.
+
+### Rules for anything added after this
+
+- **Animate `transform`, `opacity` and `clip-path`.** Those composite. `filter` and
+  `stroke-dashoffset` do not, so anything using them re-rasterizes every frame. Both are used here,
+  deliberately and in small numbers: the selected doll-house piece's glow is one element at a time,
+  and the ticks that draw themselves are a few short paths.
+- **Put the glow on the drawing, not on its container.** A `filter` on a link is a filter on its
+  name plate and its tag as well, which is three times the area to re-rasterize for one lit object.
+- **Never measure layout in a pointer handler.** `getBoundingClientRect` forces the browser to
+  resolve layout before it can answer. `assets/js/magnetic.js` called it on every `pointermove`,
+  which is sixty forced layouts a second for a rectangle that cannot change while the pointer is
+  inside it. It is read once, on enter.
+- **A scroll-driven animation is cheaper than a scroll listener**, which is most of why the site
+  uses `animation-timeline` for all of it. There is no scroll handler anywhere in `assets/js/`.
+- **The dev server is not the site.** `python3 -m http.server` sends everything uncompressed, so a
+  page that costs 55KB over the wire on GitHub Pages costs 250KB locally. Judge load time on the
+  deployed site or in a throttled profile, not on `localhost`.

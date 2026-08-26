@@ -118,6 +118,7 @@ browser, tab through it with the keyboard, and check it at 320px.
 ├── where-to-get-it/ glossary/ about/ accessibility/
 ├── assets/
 │   ├── css/    tokens.css · base.css · components.css · print.css
+│   │           home.css — the doll house and the hero mat, loaded only by index.html
 │   ├── js/     situation.js · library.js · checklist.js (v2)
 │   ├── fonts/  poppins-500.woff2 · poppins-600.woff2
 │   ├── icons/  inline SVG source

@@ -27,15 +27,21 @@ if (els.length) {
     // style system for it sixty times a second is sixty style recalculations for one number.
     let range = 0;
 
+    // The box is measured on enter as well, added 2026-08-26. It was measured on every move, and
+    // `getBoundingClientRect` forces the browser to resolve layout before it can answer — sixty
+    // forced layouts a second, for a rectangle that cannot change while the pointer is inside it.
+    // Anything that could change it (a scroll, a resize) also ends the hover or is worth one stale
+    // frame, and the value is re-read on the next enter either way.
+    let box = null;
+
     el.addEventListener("pointerenter", () => {
-      range = allowed()
-        ? parseFloat(getComputedStyle(el).getPropertyValue("--magnet-range")) || 0
-        : 0;
+      const on = allowed();
+      range = on ? parseFloat(getComputedStyle(el).getPropertyValue("--magnet-range")) || 0 : 0;
+      box = range ? el.getBoundingClientRect() : null;
     });
 
     el.addEventListener("pointermove", (event) => {
-      if (!range) return;
-      const box = el.getBoundingClientRect();
+      if (!range || !box) return;
       // -1 to 1 across the control, so the pull is strongest at the edges and nothing at the middle.
       const x = (event.clientX - box.left) / box.width - 0.5;
       const y = (event.clientY - box.top) / box.height - 0.5;
