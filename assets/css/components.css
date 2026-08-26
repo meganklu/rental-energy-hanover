@@ -379,7 +379,7 @@
   grid-template-areas: "text" "media";
   gap: var(--space-6);
   align-items: center;
-  margin-bottom: var(--space-8);
+  margin-bottom: var(--space-9);
 }
 
 @media (min-width: 900px) {
@@ -458,7 +458,7 @@
    Capped under the files' own 1000px width rather than filled to the shell, because a 1000px
    photograph stretched to 1140 is a blurred photograph. */
 .prose-figure {
-  margin-block: var(--space-7);
+  margin-block: var(--space-8);
   margin-inline: auto;
   max-width: min(100%, 52rem);
 }
@@ -537,19 +537,6 @@
    width now, like everything else on the page. */
 .improvement-body {
   max-width: none;
-}
-
-/* Base.css resets every heading and paragraph to zero margin, so vertical rhythm inside an
-   article's prose has to be opted back in explicitly rather than inherited from the browser
-   default. Added 2026-08-21 alongside the wider "more room between sections" pass: every direct
-   child gets space above it except the first, and an h2 (a new named section, not just the next
-   paragraph) gets more than that. */
-.improvement-body > * + * {
-  margin-top: var(--space-5);
-}
-
-.improvement-body > h2 {
-  margin-top: var(--space-8);
 }
 
 /* ---------- Story bar, added 2026-08-20 ----------
@@ -1060,7 +1047,7 @@
 .keypoint {
   display: grid;
   gap: var(--space-4);
-  margin-block: var(--space-8);
+  margin-block: var(--space-9);
   padding-left: var(--space-5);
   border-left: 4px solid var(--color-surface-brand);
 }
@@ -3995,8 +3982,18 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 }
 
 /* ---------- Utility layout ---------- */
+/* Opened up 2026-08-26, and this is the number that separates one section of a page from the next.
+   Two adjacent sections each contribute their own padding, so the gap between them is twice this.
+   It steps up on a wide window for the same reason the band below does: the wider the measure, the
+   more vertical air a break needs before it reads as a break. */
 .section {
-  padding-block: var(--space-7);
+  padding-block: var(--space-8);
+}
+
+@media (min-width: 800px) {
+  .section {
+    padding-block: var(--space-9);
+  }
 }
 
 /* ---------- Band, added 2026-08-26 ----------
@@ -4008,13 +4005,13 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
    `.section` inside a band keeps its own padding, so the band's own padding is what sets it apart
    from the white above and below it. */
 .band {
-  padding-block: var(--space-6);
+  padding-block: var(--space-7);
   border-block: 1px solid var(--color-border);
 }
 
 @media (min-width: 800px) {
   .band {
-    padding-block: var(--space-7);
+    padding-block: var(--space-8);
   }
 }
 
@@ -4046,20 +4043,47 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
   margin-bottom: var(--space-4);
 }
 
-/* Vertical rhythm inside a plain reading column, added 2026-08-21. base.css resets every heading
-   and paragraph to zero margin, so prose has to opt back in — the same rule `.improvement-body`
-   already carries, now shared by the pages that are mostly prose (about, rights, programs and the
-   rest). An h2 starts a new named section rather than the next paragraph, so it gets more room. */
-.content-column > * + * {
-  margin-top: var(--space-5);
-}
+/* Vertical rhythm inside a reading column, added 2026-08-21, unified and opened up 2026-08-26.
+   base.css resets every heading and paragraph to zero margin, so prose has to opt back in.
 
-.content-column > h2 {
-  margin-top: var(--space-8);
-}
+   One rule for both columns now. `.improvement-body` had its own copy that had drifted — same
+   paragraph gap, same h2 gap, and no h3 rule at all, so a sub-heading inside an article sat exactly
+   as far from the paragraph above it as the next paragraph would have. The two columns are the same
+   width and the same position since 2026-08-26, so they take the same rhythm as well.
 
-.content-column > h3 {
+   Every step is one notch up the scale from where it was: a paragraph gap of 32 rather than 24, a
+   sub-heading at 48 rather than 32, and a heading that starts a new named section at 96 rather than
+   64. Wider columns need more air between lines of type than narrow ones do, and the columns got
+   wider the same day (§6); at the old spacing the page read as one undifferentiated block. */
+.content-column > * + *,
+.improvement-body > * + * {
   margin-top: var(--space-6);
+}
+
+.content-column > h2,
+.improvement-body > h2 {
+  margin-top: var(--space-9);
+}
+
+.content-column > h3,
+.improvement-body > h3 {
+  margin-top: var(--space-7);
+}
+
+/* Room between items in a list, added 2026-08-26. There was none, so a four-item list ran as four
+   lines of continuous text — which at the reading measure was survivable and at the full width of a
+   section is not.
+
+   `:not([class])` is the test for "this is a list of prose", and it is exact rather than
+   approximate: every list in the markup that is a component carries the class that makes it one
+   (`.step-list`, `.todo-buy`, `.program-list`, `.split-approach`), and every list that is just a
+   list carries nothing. Those components space their own items, several through a grid `gap` that a
+   margin would add to rather than replace. */
+.content-column > ul:not([class]) > li + li,
+.content-column > ol:not([class]) > li + li,
+.improvement-body > ul:not([class]) > li + li,
+.improvement-body > ol:not([class]) > li + li {
+  margin-top: var(--space-2);
 }
 
 /* ---------- Page hero, added 2026-08-26, and the site's only page opening since ----------

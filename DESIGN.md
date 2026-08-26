@@ -1750,6 +1750,35 @@ h1 and below.
 
 - **Spacing:** 4px base scale. 4, 8, 12, 16, 24, 32, 48, 64, 96. Tokens `--space-1` through
   `--space-9`. No values off the scale.
+
+**The vertical rhythm, opened up 2026-08-26.** Every step is one notch further up the scale than it
+was, and one table now says what the whole site does:
+
+| Between | Was | Is |
+|---|---|---|
+| Two paragraphs, or any two blocks in a reading column | 24 | 32 |
+| A paragraph and the sub-heading after it | 32 | 48 |
+| A paragraph and the heading that starts a new named section | 64 | 96 |
+| Two items in a list of prose | 0 | 8 |
+| A section and the next one | 48 each side, 96 total | 64 each side below 800px, 96 above, so 128 or 192 |
+| A band and what it holds | 32, 48 above 800px | 48, 64 above 800px |
+| A key point, an improvement page's opening block, a photograph on its own | 48 or 64 | 64 or 96 |
+
+Two things drove it. The columns got wider the same day (§6), and a wider column needs more air
+between blocks than a narrow one before the page reads as having parts; at the old spacing a page
+read as one undifferentiated block of text. And the list spacing had never existed at all, so a
+four-item list ran as four lines of continuous prose, which the reading measure was hiding.
+
+**Both reading columns take one rule.** `.improvement-body` had its own copy of the rhythm that had
+drifted from `.content-column`'s: the same paragraph gap, the same heading gap, and no sub-heading
+rule at all, so an h3 inside an article sat exactly as far from the paragraph above it as the next
+paragraph would have. The two are the same width and the same position since 2026-08-26, so they are
+one selector now.
+
+**A list of prose is a list with no class on it,** which is how the list spacing knows where to
+apply. Every list in the markup that is a component carries the class that makes it one, and every
+list that is just a list carries nothing. That matters because several of the components space their
+own items through a grid `gap`, which a margin would add to rather than replace.
 - **Radius:** `--radius-sm` 4px for inputs and buttons, `--radius-md` 8px for cards and info bars,
   `--radius-pill` 999px for badges and filter chips. Sustainable Hanover uses solid rectangular
   buttons, so ours stay close to square.
