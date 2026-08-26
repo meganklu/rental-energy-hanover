@@ -4,8 +4,9 @@
 // which is still a usable thing to print and take to the shop.
 
 import {
-  read, write, setDone, remove, clear, readFromQuery, toQuery, merge,
+  read, write, setDone, setTick, remove, clear, readFromQuery, toQuery, merge,
 } from "./todo-store.mjs";
+import { composeEmail } from "./ask-email.mjs";
 
 const sections = [...document.querySelectorAll("[data-todo-section]")];
 if (sections.length) {
@@ -37,6 +38,17 @@ if (sections.length) {
       box.closest(".todo-item")?.classList.toggle("is-done", box.checked);
     });
 
+    // The buy and ask sections tick per line rather than per improvement, added 2026-08-26: one
+    // improvement puts three materials in the shop list and one row in the ask list, and those get
+    // crossed off at different moments.
+    const ticks = new Map(viewing.map((entry) => [entry.slug, new Set(entry.ticks)]));
+    document.querySelectorAll("[data-todo-tick]").forEach((box) => {
+      box.checked = ticks.get(box.dataset.todoTickSlug)?.has(box.dataset.todoTick) === true;
+      box.closest("li")?.classList.toggle("is-ticked", box.checked);
+    });
+
+    renderEmail();
+
     const isEmpty = viewing.length === 0;
     if (empty) empty.hidden = !isEmpty;
     if (toolbar) toolbar.hidden = isEmpty;
@@ -44,12 +56,37 @@ if (sections.length) {
   }
 
   document.addEventListener("change", (event) => {
-    const box = event.target.closest("[data-todo-done]");
-    if (!box) return;
-    const slug = box.dataset.todoDone;
-    viewing = viewing.map((entry) => (entry.slug === slug ? { ...entry, done: box.checked } : entry));
-    if (!shared) setDone(slug, box.checked);
-    render();
+    const doneBox = event.target.closest("[data-todo-done]");
+    if (doneBox) {
+      const slug = doneBox.dataset.todoDone;
+      viewing = viewing.map((entry) => (
+        entry.slug === slug ? { ...entry, done: doneBox.checked } : entry));
+      if (!shared) setDone(slug, doneBox.checked);
+      render();
+      return;
+    }
+
+    const tickBox = event.target.closest("[data-todo-tick]");
+    if (tickBox) {
+      const { todoTickSlug: slug, todoTick: tick } = tickBox.dataset;
+      viewing = viewing.map((entry) => {
+        if (entry.slug !== slug) return entry;
+        const next = new Set(entry.ticks);
+        if (tickBox.checked) next.add(tick); else next.delete(tick);
+        return { ...entry, ticks: [...next] };
+      });
+      if (!shared) setTick(slug, tick, tickBox.checked);
+      render();
+      return;
+    }
+
+    // The three fields under the draft. They are read on every keystroke and never written down:
+    // a name and an address are exactly what docs/project-brief.md's non-goals rule out storing.
+    if (event.target.closest("[data-ask-email] input")) renderEmail();
+  });
+
+  document.addEventListener("input", (event) => {
+    if (event.target.closest("[data-ask-email] input")) renderEmail();
   });
 
   document.addEventListener("click", (event) => {
@@ -93,6 +130,11 @@ if (sections.length) {
 
     if (button.dataset.todoCopy !== undefined) {
       copyLink(button);
+      return;
+    }
+
+    if (button.dataset.askCopy !== undefined) {
+      copyEmail(button);
     }
   });
 
@@ -105,7 +147,7 @@ if (sections.length) {
       if (!visible.length) return;
       lines.push(section.querySelector("h2").textContent.trim().toUpperCase(), "");
       visible.forEach((row) => {
-        const box = row.querySelector("[data-todo-done]");
+        const box = row.querySelector("[data-todo-done], [data-todo-tick]");
         const mark = box ? (box.checked ? "[x] " : "[ ] ") : "- ";
         const title = row.querySelector("h3, .todo-buy__what, .todo-ask__what");
         lines.push(mark + (title ? title.textContent.trim().replace(/\s+/g, " ") : ""));
@@ -146,6 +188,76 @@ if (sections.length) {
       }
       if (label) label.textContent = "Press Ctrl+C to copy";
       window.prompt("Copy this link:", url);
+    }
+    if (label && restore) setTimeout(() => { label.textContent = restore; }, 2500);
+  }
+
+  /* ---------- The email draft, added 2026-08-26 ----------
+     The ask list already knows which improvements need the landlord and what each one involves, so
+     the email writes itself from the rows that are showing. It follows the six things
+     /learn/ask-your-landlord says a good ask has in it: one specific thing per paragraph, what it
+     costs, who pays, what is in it for them, and a date to answer by.
+
+     Every fixed sentence comes out of the page's own markup rather than out of a string here, per
+     the content conventions. The three fields are the parts only the reader knows, and none of them
+     is read back from or written to storage: a name and an address are what
+     docs/project-brief.md's non-goals rule out keeping. */
+  const emailEl = document.querySelector("[data-ask-email]");
+  const body = document.getElementById("ask-email-body");
+  const subject = document.getElementById("ask-email-subject");
+  const mailto = document.querySelector("[data-ask-mailto]");
+  const parts = (name) =>
+    document.querySelector(`[data-ask-template] [data-ask-part="${name}"]`)?.textContent.trim() || "";
+  // A textarea the reader has typed into is theirs. Regenerating over the top of an edit is the one
+  // thing this must not do, so from the first keystroke the draft stops being rewritten.
+  let edited = false;
+  body?.addEventListener("input", () => { edited = true; });
+
+  function renderEmail() {
+    if (!emailEl || !body) return;
+
+    const askSection = document.querySelector('[data-todo-section="ask"]');
+    const rows = askSection
+      ? [...askSection.querySelectorAll("[data-todo-item]:not([hidden])")]
+      : [];
+    emailEl.hidden = rows.length === 0;
+    if (!rows.length || edited) { syncMailto(); return; }
+
+    body.value = composeEmail({
+      parts,
+      items: rows.map((row) => ({
+        title: row.querySelector(".todo-ask__what")?.textContent.trim() || "",
+        line: row.querySelector("[data-ask-line]")?.textContent.trim().replace(/\s+/g, " ") || "",
+        diy: row.dataset.askDiy !== undefined,
+      })),
+      landlord: document.getElementById("ask-email-landlord")?.value.trim() || "",
+      address: document.getElementById("ask-email-address")?.value.trim() || "",
+      by: document.getElementById("ask-email-date")?.value || "",
+    });
+    syncMailto();
+  }
+
+  function syncMailto() {
+    if (!mailto || !body) return;
+    // No address in it. The reader's landlord is not something this site knows or wants to know, so
+    // the link opens a blank To: field with the draft already in it.
+    mailto.href = `mailto:?subject=${encodeURIComponent(subject?.value || "")}`
+      + `&body=${encodeURIComponent(body.value)}`;
+  }
+
+  async function copyEmail(button) {
+    const label = button.querySelector("[data-ask-copy-label]");
+    const restore = label?.textContent;
+    const text = `${subject?.value || ""}\n\n${body?.value || ""}`;
+    try {
+      await navigator.clipboard.writeText(text);
+      if (label) label.textContent = "Email copied";
+    } catch {
+      // Same two-step fallback as the share link above: clipboard access can be refused and is
+      // absent over plain HTTP. Selecting the textarea leaves the reader one keystroke from copying.
+      body?.focus();
+      body?.select();
+      if (label) label.textContent = "Press Ctrl+C to copy";
     }
     if (label && restore) setTimeout(() => { label.textContent = restore; }, 2500);
   }

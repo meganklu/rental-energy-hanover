@@ -44,7 +44,7 @@
 
      Both sides have to carry white text, which is what rules out pairing the dark green with the
      light --color-surface-brand: the page title, the lede, the float card and the three approach
-     cards all cross the seam, and one element cannot take two text colours depending on which half
+     cards all cross the seam, and one element cannot take two text colors depending on which half
      it happens to sit over. So both halves are dark, and the owner's is the lighter of the two.
      --color-accent was the first try and separated the fields by only 1.8:1, which read as a
      rendering artifact rather than a boundary; this is 2.3:1 between the halves. Contrast with
@@ -149,8 +149,8 @@
   --motion-room: 240ms;
   --motion-loop: 5s;
   /* A longer, gentler move for something large and continuous, added 2026-08-25. The About page's
-     colour field is most of the screen, and --motion-base's 200ms with a sharp-out curve made a
-     half-page of colour snap rather than slide. */
+     color field is most of the screen, and --motion-base's 200ms with a sharp-out curve made a
+     half-page of color snap rather than slide. */
   --motion-slow: 450ms;
   --motion-ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);

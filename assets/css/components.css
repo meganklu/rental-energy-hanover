@@ -134,7 +134,7 @@
 /* Added 2026-08-19: explainer hotspots (not upgrades) carry this instead of a permission badge.
    Deliberately not success/warning/info, which already mean the three permission states.
    Revised 2026-08-21: takes the fill of the Renter basics band itself (--color-surface-brand,
-   11.9:1 with --color-text) rather than the generic surface grey, so the badge and the section
+   11.9:1 with --color-text) rather than the generic surface gray, so the badge and the section
    those pages live in are visibly the same thing. DESIGN.md §4. */
 .badge--basics {
   background: var(--color-surface-brand);
@@ -211,12 +211,12 @@
    improvement page carried no icon at all, both legal notes borrowed the safety warning triangle,
    and one legal note on /your-rights was wearing the red safety variant outright. Every variant
    now shares one card — same padding, radius, gap, icon size, type size and 4px leading rule — and
-   differs only in the rule colour and the icon.
+   differs only in the rule color and the icon.
 
    Safety is the single variant that keeps a tinted background, and that is a content decision
    rather than a style one: AGENTS.md treats space heaters, carbon monoxide and electrical load as
    a category that must not read as one more caveat. It is still the same card, and the word
-   "Safety" carries the meaning on its own for anyone who cannot see the colour. */
+   "Safety" carries the meaning on its own for anyone who cannot see the color. */
 .callout {
   --callout-rule: var(--color-accent);
   --callout-bg: var(--color-surface);
@@ -575,7 +575,7 @@
     padding-bottom: 25vh;
   }
 
-  /* A screen each. The bar is the section while it is on screen, so its content centres in the
+  /* A screen each. The bar is the section while it is on screen, so its content centers in the
      window rather than sitting wherever the flow left it. */
   body:not(:has(.reduce-motion-input:checked)) .story-stack > .story-bar {
     position: sticky;
@@ -792,7 +792,7 @@
 .term__tooltip {
   position: absolute;
   bottom: 100%;
-  /* Anchored to the term's left edge rather than centred on it. Centring meant half the panel hung
+  /* Anchored to the term's left edge rather than centered on it. Centring meant half the panel hung
      to the left of the word, which runs off the screen for any term near the start of a line, and
      CSS has no way to clamp an absolutely positioned box against the viewport. Extending rightward
      is safe everywhere except a term hard against the right margin, which `.term--end` handles. */
@@ -1073,7 +1073,7 @@
 /* The filter row, in the same `.sort-control` label shape the library toolbar uses so the two pages
    ask their questions in the same voice. Mobile-first: the label sits above its select and the
    select fills the column, because at 360px "What it helps with" beside a select wraps to four
-   words on four lines. Above 620px both fit on one line and the row centres under the heading. */
+   words on four lines. Above 620px both fit on one line and the row centers under the heading. */
 .program-filter {
   display: flex;
   flex-direction: column;
@@ -1319,9 +1319,9 @@
   color: var(--color-text-muted);
 }
 
-/* Centred, revised 2026-08-25. It was a bare `<p>`, and base.css caps every paragraph at the
+/* Centered, revised 2026-08-25. It was a bare `<p>`, and base.css caps every paragraph at the
    reading measure, so the box stopped 40rem in and sat against the left edge of a 1140px page
-   under a centred title. The margin is what fixes that; the rest is the box earning its place —
+   under a centered title. The margin is what fixes that; the rest is the box earning its place —
    an icon, one sentence, and the next action, rather than a report that there is nothing here. */
 .empty-state {
   display: flex;
@@ -1338,7 +1338,7 @@
 }
 
 /* The paragraph inside carries base.css's own measure cap, which is narrower than this box and
-   would push its text off-centre inside a centred box. */
+   would push its text off-center inside a centered box. */
 .empty-state > p {
   max-width: none;
   margin: 0;
@@ -1648,6 +1648,150 @@
 
 .todo-shared {
   margin-block: var(--space-5);
+}
+
+/* ---------- Ticking off the buy and ask lines, added 2026-08-26 ----------
+   The do list had the only checkboxes on the site, which left the two lists a reader actually walks
+   around holding — the shop list and the list of things to raise with the landlord — as the two
+   they could not cross anything off. Same 24px box as `.todo-item__check`, since it is the same
+   gesture in a different section, and the same rule about what a tick does to the row: it stays in
+   place and stays legible. The material's own name is the label, so the target is the word and not
+   just the box. */
+.todo-tick {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  accent-color: var(--color-accent);
+}
+
+.todo-buy__item .todo-tick {
+  /* Baseline alignment puts a 24px box a long way below a line of text, so the buy rows align their
+     box to the top of the row instead and nudge it onto the text's own optical line. */
+  align-self: center;
+}
+
+.todo-buy__what {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.todo-buy__item.is-ticked .todo-buy__what {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+/* The ask rows grew a body when they grew a tick box: the title is the checkbox's label, so it
+   cannot also be the link, and the badge and the note moved underneath it. */
+.todo-ask__item {
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  gap: var(--space-4);
+}
+
+.todo-ask__body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.todo-ask__what {
+  margin: 0;
+  font-size: var(--text-h4);
+}
+
+.todo-ask__what label {
+  cursor: pointer;
+}
+
+.todo-ask__item.is-ticked .todo-ask__what {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.todo-ask__note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  max-width: none;
+  font-size: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+/* ---------- The email draft, added 2026-08-26 ----------
+   Sits at the bottom of the ask section because it is what that section is for: four rows saying
+   "ask your landlord" and no way to do the asking was the gap. Tinted rather than bordered, so it
+   reads as the outcome of the list above it rather than as a fifth row of it. */
+.ask-email {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.ask-email__heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--text-h4);
+}
+
+.ask-email__intro {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+.ask-email__fields {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  margin-block: var(--space-5);
+}
+
+/* The grid's own gap is the spacing between these three; their own block margin would double it. */
+.ask-email__fields > .field {
+  margin-block: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-block: var(--space-4);
+  max-width: none;
+}
+
+.field > label {
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.field > input,
+.field > textarea {
+  width: 100%;
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.field > textarea {
+  line-height: var(--leading-body);
+  resize: vertical;
+}
+
+.ask-email__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  max-width: none;
 }
 
 @media (max-width: 720px) {
@@ -2732,7 +2876,7 @@ body:has(.motion-loop) .motion-fab__pause {
 
 /* The site's 44px floor, kept without inflating the drawing. A thermostat drawn to scale in a room
    this size is about twenty pixels across, and scaling it up to forty-four would make it the size
-   of a picture frame. This is an invisible box centred on the piece, at least 44px each way, which
+   of a picture frame. This is an invisible box centered on the piece, at least 44px each way, which
    takes the press without changing what is drawn (DESIGN.md §6). */
 .room-scene .hotspot::after {
   content: "";
@@ -3323,9 +3467,9 @@ body:has(.motion-loop) .motion-fab__pause {
    it swipes, scrolls and tabs with no JavaScript at all and Previous/Next stay ordinary anchors to
    slide IDs. What changed is the geometry and the emphasis: a slide is 58% of the track and the
    track carries a 20% gutter each side, which is what lets the centered slide sit in the middle
-   with roughly a third of each neighbour showing either side of it. DESIGN.md §3.4.
+   with roughly a third of each neighbor showing either side of it. DESIGN.md §3.4.
 
-   The scale-down of the neighbours is applied only under `.is-enhanced`, a class
+   The scale-down of the neighbors is applied only under `.is-enhanced`, a class
    assets/js/carousel.js adds once it can actually track which slide is centered. Without the
    script every slide renders at full size and full contrast, which is the honest fallback — a
    dimmed card with nothing able to un-dim it would be worse than no effect at all. */
@@ -3345,7 +3489,7 @@ body:has(.motion-loop) .motion-fab__pause {
 .carousel--peek .carousel__track {
   gap: var(--space-4);
   padding-inline: calc(50% - var(--peek-slide) / 2);
-  /* The neighbours scale up to 1 as they become current, and a scroll container clips at its
+  /* The neighbors scale up to 1 as they become current, and a scroll container clips at its
      padding box, so the block padding has to leave room for the taller state. */
   padding-block: var(--space-4);
 }
@@ -3371,7 +3515,7 @@ body:has(.motion-loop) .motion-fab__pause {
   box-shadow: var(--shadow-raised);
 }
 
-/* A neighbour is dimmed, not hidden, and its link is still a real link. Anything reached by
+/* A neighbor is dimmed, not hidden, and its link is still a real link. Anything reached by
    keyboard pulls itself to the middle rather than being read at 72% contrast: the browser scrolls
    a focused element into view, the scroll listener sees the new center, and the class moves. */
 .carousel--peek.is-enhanced .carousel__slide:focus-within {
@@ -3381,7 +3525,7 @@ body:has(.motion-loop) .motion-fab__pause {
 
 /* A wider slide, added 2026-08-25 for the programs list. A program entry is a heading, two
    paragraphs and a definition list, and at the Renter basics width that is a very tall, very narrow
-   column. The peek behaviour is unchanged; only the slide's width moves. Widened again the same day
+   column. The peek behavior is unchanged; only the slide's width moves. Widened again the same day
    when the track came out of the 1140px page shell and started spanning the window (§3.9). */
 .carousel--peek.carousel--wide {
   --peek-slide: min(52rem, 74vw);
@@ -3993,8 +4137,8 @@ body:has(.motion-loop) .motion-fab__pause {
   color: var(--color-text-muted);
 }
 
-/* The colour coming through the doorway, once the door is out of the way. A plain rectangle the
-   size of the opening, scaled up from the doorway's own centre until it covers the stage, so the
+/* The color coming through the doorway, once the door is out of the way. A plain rectangle the
+   size of the opening, scaled up from the doorway's own center until it covers the stage, so the
    green arrives from where the light was rather than fading in over everything at once. Above the
    door in paint order on purpose: the reader is walking through, and what is behind them stops
    being the subject. */
@@ -4022,7 +4166,7 @@ body:has(.motion-loop) .motion-fab__pause {
     }
 
     /* Three viewports of scroll for one viewport of view: the first two thirds swing the door, the
-       last third floods the colour out. */
+       last third floods the color out. */
     body:not(:has(.reduce-motion-input:checked)) .door-scene__stage {
       position: sticky;
       top: 0;
@@ -4066,7 +4210,7 @@ body:has(.motion-loop) .motion-fab__pause {
 /* Starts at nothing rather than at the doorway's own size. `animation-fill-mode: both` back-fills
    the `from` keyframe for the whole scroll before the range opens, so a `from` of `scale(1)` left a
    full-size green rectangle sitting over the shut door from the moment the page loaded. 9 is enough
-   for the doorway rectangle to cover a 100vh stage from its own centre at every viewport this runs
+   for the doorway rectangle to cover a 100vh stage from its own center at every viewport this runs
    at. */
 @keyframes door-flood {
   from { transform: translate(-50%, -50%) scale(0); }
@@ -4078,7 +4222,7 @@ body:has(.motion-loop) .motion-fab__pause {
    who would pay for an efficiency improvement is not the person who would save from it. The
    two-sided treatment is adapted from the same project team's earlier heat pump site (S25).
 
-   One colour field runs behind everything from the page title down to the converging arrow, split
+   One color field runs behind everything from the page title down to the converging arrow, split
    down the middle. Hovering or focusing either side widens that side's share of the whole field,
    not just its own panel, so the emphasis reads as one lease tilting rather than two boxes
    resizing. That shift is done with `:has()` rather than script, matching how the reduce-motion
@@ -4088,7 +4232,7 @@ body:has(.motion-loop) .motion-fab__pause {
    halves to 58% and 50% and let flex sort it out. Flex items shrink to fit by default, so a pair
    with bases summing to 108% both shrank and the seam moved about 3.7% instead of 8% — a shift too
    small to notice, which is why the effect read as broken. Worse, the panels themselves moved on a
-   separate `flex-grow` rule, so the colour and the text it sat behind travelled different
+   separate `flex-grow` rule, so the color and the text it sat behind travelled different
    distances. Both now read `--split-pos` off the container, so the seam and the text move together
    and by the same amount, and the shift is large enough to see.
 
@@ -4147,9 +4291,9 @@ body:has(.motion-loop) .motion-fab__pause {
   color: var(--color-text-on-dark);
 }
 
-/* Beats `.page-head .lede` further down this file, which sets the muted body colour and would
+/* Beats `.page-head .lede` further down this file, which sets the muted body color and would
    otherwise win on equal specificity by being declared later. On a dark field that rule renders
-   the lede in near-invisible grey-green. */
+   the lede in near-invisible gray-green. */
 .split-continuum .page-head .lede,
 .split-continuum .lede {
   color: rgba(255, 255, 255, 0.92);
@@ -4157,7 +4301,7 @@ body:has(.motion-loop) .motion-fab__pause {
 
 /* The opening block is laid out across the seam on purpose: the title sits on the tenant's side,
    the sentence that names the problem on the owner's. Centering it instead put both across the
-   join, where a single text colour has to work on two different fields at once and the smaller
+   join, where a single text color has to work on two different fields at once and the smaller
    type stopped being readable on one of them. */
 .split-hero {
   display: grid;
@@ -4207,8 +4351,8 @@ body:has(.motion-loop) .motion-fab__pause {
   display: flex;
 }
 
-/* Above the stacking breakpoint the panels track the same `--split-pos` the colour field does, so
-   the text boundary and the colour boundary are the same line and move as one. */
+/* Above the stacking breakpoint the panels track the same `--split-pos` the color field does, so
+   the text boundary and the color boundary are the same line and move as one. */
 @media (min-width: 860px) {
   .split-side {
     flex-wrap: nowrap;
@@ -4225,7 +4369,7 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* Each panel's text keeps a readable measure and hugs the centre line, so the two columns read as
+/* Each panel's text keeps a readable measure and hugs the center line, so the two columns read as
    one spread rather than as two pages that happen to be adjacent. */
 .split-side__inner {
   max-width: 34rem;
@@ -4276,9 +4420,9 @@ body:has(.motion-loop) .motion-fab__pause {
 
 /* Below the point where the two panels can sit side by side they stack, and a background split
    down the vertical middle would then run straight through the middle of each stacked panel. The
-   field is dropped at that width and each part carries its own colour instead: the continuum takes
+   field is dropped at that width and each part carries its own color instead: the continuum takes
    the tenant's, and the owner's panel keeps its own. Stated as an explicit breakpoint rather than
-   left to flex-wrap, so the colour change and the reflow happen at the same width. */
+   left to flex-wrap, so the color change and the reflow happen at the same width. */
 @media (max-width: 859px) {
   .split-continuum {
     background: var(--color-split-tenant);
@@ -4301,7 +4445,7 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* A light card lifted out of the colour field, for the sentence that names the problem. */
+/* A light card lifted out of the color field, for the sentence that names the problem. */
 .split-card {
   background: var(--color-bg);
   color: var(--color-text);
@@ -4322,7 +4466,7 @@ body:has(.motion-loop) .motion-fab__pause {
   margin-inline: auto;
 }
 
-/* The three approaches, sitting directly on the colour field rather than in cards, so the field
+/* The three approaches, sitting directly on the color field rather than in cards, so the field
    stays continuous behind them. Bordered in translucent white to keep them separable. */
 .split-approach {
   display: grid;
