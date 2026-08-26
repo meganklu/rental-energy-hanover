@@ -1737,6 +1737,105 @@
   line-height: 1;
 }
 
+/* The ping on the count, added 2026-08-26. Something dropped into the list, and the number that
+   changed is in the far corner from the button that changed it. A ring expands out of the control
+   once, which is where the reader's eye needs to go rather than where their finger already is.
+
+   The ring is a pseudo-element so nothing in the layout moves, and the whole thing is one
+   non-repeating animation behind the site's two motion gates (§7). Losing it costs nothing: the
+   count itself has already changed, and one page-level live region has already said so out loud. */
+.nav-todo {
+  position: relative;
+}
+
+.nav-todo::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 2px solid var(--color-accent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body:not(:has(.reduce-motion-input:checked)) .nav-todo.is-pinged::after {
+    animation: cart-ping 600ms var(--motion-ease) 1;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .nav-todo.is-pinged .nav-todo__count {
+    animation: cart-bump 400ms var(--motion-ease) 1;
+  }
+}
+
+@keyframes cart-ping {
+  from { opacity: 0.9; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.35); }
+}
+
+@keyframes cart-bump {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.28); }
+}
+
+/* ---------- Magnetic hover, added 2026-08-26 ----------
+   assets/js/magnetic.js writes --magnet-x/--magnet-y while the pointer is over a control marked
+   `data-magnetic`; this is what decides whether that goes anywhere. `--magnet-range` is the
+   distance in pixels and it is only set inside the gate, so under reduced motion, on a touch
+   screen, or on a control that never asked for it, the script reads zero and does nothing.
+
+   The offset is its own transform layer rather than a rewrite of the control's `transform`, so a
+   button that already lifts on hover keeps doing that and leans as well. */
+@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
+  body:not(:has(.reduce-motion-input:checked)) [data-magnetic] {
+    --magnet-range: 6;
+    translate: var(--magnet-x, 0) var(--magnet-y, 0);
+    transition: translate var(--motion-fast) var(--motion-ease-smooth);
+  }
+
+  /* The floating button is the largest and the least anchored thing on the screen, so it can take
+     a longer pull without reading as a glitch. */
+  body:not(:has(.reduce-motion-input:checked)) .fab[data-magnetic] {
+    --magnet-range: 10;
+  }
+}
+
+/* ---------- Scroll reveal, added 2026-08-26 ----------
+   A heading that wipes in from behind its own baseline as it reaches the viewport. The mask is what
+   makes it a reveal rather than a slide: the text moves up inside a box clipped to its own line
+   box, so it arrives from nowhere rather than from off the top of the screen.
+
+   Applied by adding `reveal` to a heading. Behind the same three gates as everything else here, and
+   the resting state is the finished state — no timeline, no support, or reduced motion all leave a
+   heading sitting exactly where it belongs, unclipped. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
+    body:not(:has(.reduce-motion-input:checked)) .reveal {
+      /* `clip-path` rather than `overflow: hidden`, which on a heading would also clip a descender
+         and any focus ring inside it. The inset is generous on three sides for exactly that. */
+      animation: reveal-wipe linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .reveal-up {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+  }
+}
+
+@keyframes reveal-wipe {
+  from { clip-path: inset(-0.35em 100% -0.35em -0.35em); }
+  to { clip-path: inset(-0.35em -0.35em -0.35em -0.35em); }
+}
+
+@keyframes reveal-up {
+  from { transform: translateY(1.75rem); }
+  to { transform: translateY(0); }
+}
+
 /* The add control, on an article and on a card. `aria-pressed` carries the state rather than a
    swapped class, so the button is one toggle rather than two buttons pretending to be one, and the
    label changes with it because a pressed state nobody can see is not a state. */
@@ -1748,6 +1847,26 @@
   background: var(--color-success-bg);
   border-color: var(--color-accent);
   color: var(--color-accent);
+}
+
+/* The plus turning into a tick, added 2026-08-26. assets/js/todo.js swaps which symbol the `<use>`
+   points at, which is instant and correct and reads as the icon having been replaced rather than as
+   the thing the reader just did. Rotating and squeezing through the swap gives the change a
+   direction, and the animation fires on its own because the selector only starts matching when
+   `aria-pressed` flips.
+
+   Behind the site's two motion gates (§7). Without it the icon still changes, which is the part
+   that carries meaning; this is the part that carries the gesture. */
+@media (prefers-reduced-motion: no-preference) {
+  body:not(:has(.reduce-motion-input:checked)) .todo-add[aria-pressed="true"] .icon {
+    animation: add-morph var(--motion-flip) var(--motion-ease) 1;
+  }
+}
+
+@keyframes add-morph {
+  0% { transform: rotate(-90deg) scale(0.4); }
+  60% { transform: rotate(8deg) scale(1.18); }
+  100% { transform: rotate(0) scale(1); }
 }
 
 /* A card's title link stretches an invisible overlay across the whole card (§3.4), which would

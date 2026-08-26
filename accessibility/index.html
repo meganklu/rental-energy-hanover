@@ -60,7 +60,7 @@
     </div>
 
     <div class="content-column">
-      <h2>What we are building to</h2>
+      <h2 class="reveal">What we are building to</h2>
       <p>
         We build this site to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2 Level AA</a>.
         That is a requirement while each part is written, not a goal for later.
@@ -71,7 +71,7 @@
         conformance, because a claim would need an audit that has not happened.
       </p>
 
-      <h2>What is built in</h2>
+      <h2 class="reveal">What is built in</h2>
       <ul>
         <li>Every control works from the keyboard alone, in a visible order, with a focus outline
           that is never removed.</li>
@@ -88,7 +88,7 @@
           well above that. The measurements are recorded in the design documentation.</li>
       </ul>
 
-      <h2>Motion</h2>
+      <h2 class="reveal">Motion</h2>
       <p>
         This site moves more than most. Diagrams loop so you can watch a mechanism you cannot
         otherwise see, and a few things shift as you scroll.
@@ -109,7 +109,7 @@
         carries information that is not also written down.
       </p>
 
-      <h2>What has been checked</h2>
+      <h2 class="reveal">What has been checked</h2>
       <ul>
         <li>Automated scans with axe DevTools and Lighthouse, before each change goes live.</li>
         <li>A keyboard-only pass on each component as it was built.</li>
@@ -122,7 +122,7 @@
         that the obvious things are right. It is not evidence that the site conforms.
       </p>
 
-      <h2>What has not been tested</h2>
+      <h2 class="reveal">What has not been tested</h2>
       <p>These are known gaps, listed so that nobody has to discover them the hard way.</p>
       <ul>
         <li>No screen reader pass has been run on any page. Semantic HTML and native elements are
@@ -137,7 +137,7 @@
           are the first item in the next version.</li>
       </ul>
 
-      <h2>Tell us about a barrier</h2>
+      <h2 class="reveal">Tell us about a barrier</h2>
       <p>
         If something here does not work for you, we want to hear about it, including the things
         listed above. Email
@@ -150,7 +150,7 @@
       </p>
 
       <div class="sources-block">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines (WCAG) 2.2</a>, W3C</li>
         </ul>
@@ -162,7 +162,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -226,6 +226,7 @@
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <script type="module" src="../assets/js/todo.js"></script>
+<script type="module" src="../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 </body>
 </html>

@@ -100,7 +100,7 @@
       <div>
         <p><strong>Shared list:</strong> you are looking at a list someone sent you. Nothing has
           been saved to this browser yet.</p>
-        <p><button type="button" class="btn btn--primary" data-todo-save>Save these to my list</button></p>
+        <p><button type="button" class="btn btn--primary" data-magnetic data-todo-save>Save these to my list</button></p>
       </div>
     </div>
 
@@ -112,7 +112,7 @@
         in this browser.
       </p>
       <p>
-        <a class="btn btn--primary" href="../improvements/">
+        <a class="btn btn--primary" data-magnetic href="../improvements/">
           <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-plus"/></svg>
           Browse improvements
         </a>
@@ -138,7 +138,7 @@
     <div class="content-column todo-sections">
 
       <section class="todo-section" data-todo-section="buy">
-        <h2>Buy this</h2>
+        <h2 class="reveal">Buy this</h2>
         <p class="text-small">
           One trip covers all of it. <a href="../where-to-get-it/">Where to get it</a> has the
           West Lebanon addresses and the fare-free bus that reaches them.
@@ -220,7 +220,7 @@
       </section>
 
       <section class="todo-section" data-todo-section="ask">
-        <h2>Ask your landlord</h2>
+        <h2 class="reveal">Ask your landlord</h2>
         <p class="text-small">
           Send one email covering all of these rather than one per item.
           <a href="../learn/ask-your-landlord/">Ask your landlord</a> has what to put in it.
@@ -355,7 +355,7 @@ Thanks,</textarea>
               <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-copy"/></svg>
               <span data-ask-copy-label>Copy the email</span>
             </button>
-            <a class="btn btn--primary" href="mailto:" data-ask-mailto>
+            <a class="btn btn--primary" data-magnetic href="mailto:" data-ask-mailto>
               <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-mail"/></svg>
               Open in your email app
             </a>
@@ -364,7 +364,7 @@ Thanks,</textarea>
       </section>
 
       <section class="todo-section" data-todo-section="do">
-        <h2>Do this</h2>
+        <h2 class="reveal">Do this</h2>
         <ul class="todo-do">
         <li class="todo-item" data-todo-item="dont-block-your-radiator-or-baseboard">
           <input type="checkbox" class="todo-item__check" id="done-dont-block-your-radiator-or-baseboard" data-todo-done="dont-block-your-radiator-or-baseboard">
@@ -584,7 +584,7 @@ Thanks,</textarea>
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -648,6 +648,7 @@ Thanks,</textarea>
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <script type="module" src="../assets/js/todo.js"></script>
+<script type="module" src="../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 
 <script type="module" src="../assets/js/todo-list.js"></script>

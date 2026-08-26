@@ -70,7 +70,7 @@
       <div class="split-side split-side--tenant">
         <div class="split-side__inner">
           <p class="split-side__tag">You rent it</p>
-          <h2>You pay to heat it.</h2>
+          <h2 class="reveal">You pay to heat it.</h2>
           <h3>What you are up against</h3>
           <ul>
             <li>The heating bill arrives with your name on it.</li>
@@ -91,7 +91,7 @@
       <div class="split-side split-side--owner">
         <div class="split-side__inner">
           <p class="split-side__tag">They own it</p>
-          <h2>They pay to improve it.</h2>
+          <h2 class="reveal">They pay to improve it.</h2>
           <h3>What they are up against</h3>
           <ul>
             <li>Insulation, windows and heating equipment are theirs to buy.</li>
@@ -112,7 +112,7 @@
 
     <section class="section page-shell">
       <div class="split-card">
-        <h2>Economists call this a split incentive</h2>
+        <h2 class="reveal">Economists call this a split incentive</h2>
         <p>
           The person who would pay for an efficiency improvement is not the person who would save
           from it, so the improvement often does not happen. Nobody has to behave badly for this to
@@ -123,7 +123,7 @@
     </section>
 
     <section class="section page-shell">
-      <h2>So this site starts on your side of the line</h2>
+      <h2 class="reveal">So this site starts on your side of the line</h2>
       <ul class="split-approach">
         <li>
           <h3>Permission first</h3>
@@ -168,7 +168,7 @@
         <figcaption class="photo-credit">Photo by Sam Kovak, <a href="https://commons.wikimedia.org/wiki/File:Hanover_from_indian_ridge_-_panoramio.jpg">via Wikimedia Commons</a>, cropped, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a></figcaption>
       </figure>
       <div class="info-panel__text">
-        <h2>Hanover in particular</h2>
+        <h2 class="reveal">Hanover in particular</h2>
         <p>
           At the May 2017 Town Meeting, Hanover voted to move to 100% renewable electricity by
           2030, and renewable heating, cooling and transportation by 2050. Sustainable Hanover
@@ -186,7 +186,7 @@
 
   <section class="section page-shell">
     <div class="content-column">
-      <h2>What this site adds</h2>
+      <h2 class="reveal">What this site adds</h2>
       <p>
         Sustainable Hanover already publishes weatherization guidance for people who own a home in
         town. That guidance assumes a contractor, an attic and a basement, and a decision the reader
@@ -200,7 +200,7 @@
         glued to the frame, which is what makes them work in a rental.
       </p>
 
-      <h2>Who made it</h2>
+      <h2 class="reveal">Who made it</h2>
       <p>
         Built by Megan Lu, Ryan Lee and Katharine Morley as a Social Impact Practicum (SIP) for
         Sustainable Futures (ENVS080.22), in partnership with Sustainable Hanover, a committee of
@@ -211,7 +211,7 @@
         <a href="mailto:sustainablehanovernh@gmail.com">sustainablehanovernh@gmail.com</a>.
       </p>
 
-      <h2>How the content is sourced</h2>
+      <h2 class="reveal">How the content is sourced</h2>
       <p>
         Every number on this site traces to a named source, and each page lists its own at the
         bottom with the date it was last checked. Where no source exists, the number does not go on
@@ -228,7 +228,7 @@
         <a href="https://github.com/meganklu/rental-energy-hanover">View the source code</a>.
       </p>
 
-      <h2>How AI was used</h2>
+      <h2 class="reveal">How AI was used</h2>
       <p>
         This site was built with generative AI. Anthropic's Claude Opus 5 wrote most of the HTML,
         CSS and JavaScript, drafted the explanatory copy, and drew the diagrams, working from written
@@ -248,7 +248,7 @@
         <a href="https://github.com/meganklu/rental-energy-hanover/blob/main/AGENTS.md">AGENTS.md</a>.
       </p>
 
-      <h2>What this site will not do</h2>
+      <h2 class="reveal">What this site will not do</h2>
       <ul>
         <li>Name a specific landlord or a specific property.</li>
         <li>Recommend a brand, or link to a product for commission.</li>
@@ -258,7 +258,7 @@
           <a href="../your-rights/">Your rights</a> says who.</li>
       </ul>
 
-      <h2>The disclaimers</h2>
+      <h2 class="reveal">The disclaimers</h2>
       <div class="callout callout--legal">
         <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-bill"/></svg>
         <div>
@@ -282,7 +282,7 @@
       </div>
 
       <div class="sources-block">
-        <h2>Sources</h2>
+        <h2 class="reveal">Sources</h2>
         <ul>
           <li><a href="https://sustainablehanovernh.org/energy">Sustainable Hanover — Energy Overview</a></li>
           <li><a href="https://sustainablehanovernh.org/weatherize">Sustainable Hanover — Weatherize</a></li>
@@ -298,7 +298,7 @@
 </main>
 
 <!-- shell:fab -->
-<a class="fab" id="situation-fab" href="../start/">
+<a class="fab" id="situation-fab" data-magnetic href="../start/">
   <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-sliders"/></svg>
   <span>Personalize<span class="fab__rest"> your recommendations</span></span>
 </a>
@@ -362,6 +362,7 @@
 <script type="module" src="../assets/js/situation.js"></script>
 <script type="module" src="../assets/js/situation-modal.js"></script>
 <script type="module" src="../assets/js/todo.js"></script>
+<script type="module" src="../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
 </body>
 </html>
