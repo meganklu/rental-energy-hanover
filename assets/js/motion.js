@@ -13,7 +13,14 @@ if (toggles.length) {
   const stored = localStorage.getItem(STORAGE_KEY);
   const osPrefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  const setToggles = (checked) => toggles.forEach((toggle) => { toggle.checked = checked; });
+  // The class exists for one thing the `:has()` selectors cannot do: reach a view transition.
+  // A transition's pseudo-elements hang off the root element, and `body:has(...)` does not select
+  // the root, so the page-transition rules in components.css key off this instead. Added
+  // 2026-08-26. Everything else about the switch still works with no script at all.
+  const setToggles = (checked) => {
+    toggles.forEach((toggle) => { toggle.checked = checked; });
+    document.documentElement.classList.toggle("motion-reduced", checked);
+  };
 
   if (stored === "reduce") {
     setToggles(true);

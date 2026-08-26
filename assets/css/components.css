@@ -1924,6 +1924,78 @@
   }
 }
 
+/* ---------- Page transitions, added 2026-08-26 ----------
+   Cross-document view transitions. Moving between pages on this site used to be a white flash and a
+   redraw, which on a multi-page site is most of what a reader experiences of it. The page now leaves
+   upward and the next one wipes up from the bottom edge underneath it.
+
+   This is an at-rule and three keyframes, and no JavaScript. A browser without cross-document view
+   transitions ignores `@view-transition` entirely and navigates the way it always did, which is
+   what makes this safe to ship on a site with no build step and no framework.
+
+   The header and the two floating controls take names of their own, so they are captured as their
+   own elements and hold still while the page under them changes. Without that they belong to the
+   root snapshot and slide off with everything else, which reads as the whole browser moving rather
+   than as the page changing inside it.
+
+   Gated twice, and the two gates are not equivalent. `prefers-reduced-motion` turns the transition
+   off at the at-rule, so it never starts. The site's own switch cannot reach an at-rule from a class
+   on the document, so it neutralizes the animations instead: the transition still runs and
+   completes in one frame, which is an instant swap. `assets/js/motion.js` puts `.motion-reduced` on
+   the root element for exactly this. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+.site-header {
+  view-transition-name: site-header;
+}
+
+.motion-fab {
+  view-transition-name: motion-fab;
+}
+
+.fab {
+  view-transition-name: personalize-fab;
+}
+
+::view-transition-old(root) {
+  animation: page-leave 200ms var(--motion-ease-smooth) both;
+}
+
+::view-transition-new(root) {
+  animation: page-enter 340ms var(--motion-ease) both;
+}
+
+/* The switch, applied to the transition rather than to the navigation. `animation-duration: 0s`
+   rather than `animation: none`, because `none` hands the pseudo-element back to the browser's own
+   default cross-fade instead of removing it. */
+html.motion-reduced::view-transition-old(*),
+html.motion-reduced::view-transition-new(*),
+html.motion-reduced::view-transition-group(*) {
+  animation-duration: 0s;
+}
+
+@keyframes page-leave {
+  to {
+    opacity: 0;
+    transform: translateY(-1.5rem);
+  }
+}
+
+/* Wipes up from the bottom edge. `clip-path` rather than a height animation, so nothing in the
+   incoming page reflows on the way in. */
+@keyframes page-enter {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
 /* ---------- Scroll reveal, added 2026-08-26 ----------
    A heading that wipes in from behind its own baseline as it reaches the viewport. The mask is what
    makes it a reveal rather than a slide: the text moves up inside a box clipped to its own line

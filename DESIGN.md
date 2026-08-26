@@ -2166,6 +2166,25 @@ and a 600px floor, and all of it is transform-only or clip-only for the reason t
 timeline that never advances leaves the element wherever the range started, and that has to be fully
 legible, full-contrast text.
 
+**Page transitions, added 2026-08-26.** Moving between pages on this site was a white flash and a
+redraw, which on a multi-page site with no framework is most of what a reader experiences of it. The
+page leaves upward now and the next one wipes up from the bottom edge underneath it, using
+cross-document view transitions: one at-rule, three keyframes, and no JavaScript. A browser without
+them ignores `@view-transition` and navigates the way it always did, which is what makes this safe
+to ship on a site with no build step.
+
+The header and the two floating controls take `view-transition-name`s of their own, so they are
+captured as their own elements and hold still while the page under them changes. Without that they
+belong to the root snapshot and slide off with everything else, which reads as the whole browser
+moving rather than as the page changing inside it.
+
+It is gated twice, and the two gates are not equivalent, which is worth being honest about.
+`prefers-reduced-motion` turns the transition off at the at-rule, so it never starts. The site's own
+switch cannot reach an at-rule from a class on the document, so it neutralizes the animations
+instead: the transition runs and completes in one frame, which is an instant swap and not a fade.
+`assets/js/motion.js` puts `.motion-reduced` on the root element for that, and it is the only thing
+about the switch that needs script — everything else it does still works with JavaScript off.
+
 ## 8. Content presentation patterns
 
 ### Keeping pages short
