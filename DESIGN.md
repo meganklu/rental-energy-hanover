@@ -2360,36 +2360,29 @@ and a 600px floor, and all of it is transform-only or clip-only for the reason t
 timeline that never advances leaves the element wherever the range started, and that has to be fully
 legible, full-contrast text.
 
-**Page transitions, added 2026-08-26.** Moving between pages on this site was a white flash and a
-redraw, which on a multi-page site with no framework is most of what a reader experiences of it. The
-page leaves upward now and the next one wipes up from the bottom edge underneath it, using
-cross-document view transitions: one at-rule, three keyframes, and no JavaScript. A browser without
-them ignores `@view-transition` and navigates the way it always did, which is what makes this safe
-to ship on a site with no build step.
+**Page transitions, added and removed 2026-08-26.** Moving between pages was a white flash and a
+redraw, and the fix was cross-document view transitions: the page left upward and the next one wiped
+up from the bottom edge underneath it, in one at-rule and three keyframes with no JavaScript.
 
-The header and the two floating controls take `view-transition-name`s of their own, so they are
-captured as their own elements and hold still while the page under them changes. Without that they
-belong to the root snapshot and slide off with everything else, which reads as the whole browser
-moving rather than as the page changing inside it.
+They are gone, and the reason they are gone is the reason they were shortened first. A
+cross-document transition freezes the outgoing page from the moment a link is pressed until the
+incoming document is ready to paint, and only then plays. So it takes away the one piece of feedback
+the white flash was giving — something is happening — and then adds its own duration on top of the
+load rather than overlapping it. Shortening it from 540ms to 300ms made that better and did not make
+it good: the freeze is the problem and the freeze is structural. It was most obvious going back to
+the home page, which is the heaviest document on the site and therefore the longest silence.
 
-It is gated twice, and the two gates are not equivalent, which is worth being honest about.
-`prefers-reduced-motion` turns the transition off at the at-rule, so it never starts. The site's own
-switch cannot reach an at-rule from a class on the document, so it neutralizes the animations
-instead: the transition runs and completes in one frame, which is an instant swap and not a fade.
-`assets/js/motion.js` puts `.motion-reduced` on the root element for that, and it is the only thing
-about the switch that needs script — everything else it does still works with JavaScript off.
+A navigation that feels instant is worth more here than a navigation that looks designed. The site
+navigates the way a multi-page site does.
 
-**Shortened 2026-08-26, and it is a load-time decision.** It shipped at 200ms out and 340ms in, and
-the effect a reader reported a day later was that pages had got slower to load. They had, in the
-only sense that matters. A cross-document transition freezes the outgoing page from the moment the
-link is pressed until the incoming document is ready to paint, and only then plays. There is no
-white flash any more, and there is also no sign that anything is happening, so the whole of the load
-is silent and half a second of animation is added on top of it. The transition is 120 and 180 now,
-and the incoming wipe starts a bit over half way up rather than at the bottom edge, because at that
-speed a full-height wipe is a blur. That is a quarter of a second back on every navigation, and it
-still reads as a wipe. See §12.
+What went with it: the `view-transition-name`s on the header and the two floating controls, which
+existed so those three would hold still while the page under them changed, and the `.motion-reduced`
+class `assets/js/motion.js` put on the root element. That class had exactly one job. A transition's
+pseudo-elements hang off the root, `body:has(...)` cannot select the root, and the site's own
+reduce-motion switch had to be able to reach them. With no transition to reach, the switch is back to
+being entirely `:has()` and needing no script at all for its effect.
 
-## 8. Content presentation patterns
+## 8. Content presentation patterns## 8. Content presentation patterns
 
 ### Keeping pages short
 
@@ -2715,9 +2708,9 @@ None of that is the problem, and it is worth saying so plainly before the part t
 
 ### The thing that made it feel slower
 
-Cross-document view transitions, shipped 2026-08-26 (§7). A transition freezes the outgoing page
-from the moment a link is pressed until the incoming document is ready to paint, and then plays its
-animation. Two consequences, and they compound:
+Cross-document view transitions, added and removed 2026-08-26 (§7). A transition freezes the
+outgoing page from the moment a link is pressed until the incoming document is ready to paint, and
+then plays its animation. Two consequences, and they compound:
 
 1. **The load has no visible progress any more.** The white flash it replaced was ugly and it was
    also feedback. A frozen page that looks exactly like the page you were reading is not.
@@ -2725,8 +2718,9 @@ animation. Two consequences, and they compound:
    more than half a second on top of a page that was otherwise ready in a fraction of that.
 
 Half a second is roughly the difference between a navigation that feels instant and one that feels
-like it is fetching something. The durations are 120 and 180 now, and the incoming wipe starts
-partway up the screen rather than at the bottom edge so it still reads as a wipe at that speed.
+like it is fetching something. Shortening it to 120 and 180 halved the second problem and did
+nothing about the first, and the first is the one that made going back to the home page — the
+heaviest document on the site, so the longest silence — feel worst. There is no page transition now.
 
 ### The stylesheet split
 

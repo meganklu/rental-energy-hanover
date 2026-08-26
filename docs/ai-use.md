@@ -9,6 +9,8 @@ I would like to make a website to provide information to student renters in Hano
 ### 2026-08-18 Style Guide
 Please help me fill out the DESIGN.md file using similar design features and styling as the existing Sustainable Hanover website.
 
+> Note: Additional prompts were used to generate some of the content on the documentation pages. These were used before this document was created and were not recorded. The initial creation was largely written without generative AI, particularly finding sources and defining website features and content. However, these documents have be modified significantly by generative AI during the website build process as the AI agents are instructed to document changes before implementation.
+
 ## Website Build
 
 ### 2026-08-19 Initial Build
@@ -479,3 +481,15 @@ General design choices:
 - Fix the flashcard flip on some of the renter basics articles. This should be centered and the flip should be animated. The user should be able to flip back to the front. Read as text should only be shown on reduced motion settings. Text layout and styling should be more visually interesting 
 
 The website seems to be slower (e.g., pages are taking longer to load). Why is this? Is there ways to fix this?
+
+### 2026-08-26 Page Transitions and Animations
+
+Doll house section:
+- The hover animation for hotspots is still glitching. Earlier version of this were smoother
+
+Renters basics articles:
+- Please remove the animations from "Find your drafts" and use the image instead
+
+General design choices:
+- The page transitions are causing the website to move slower, especially when clicking the link to go back to the home page. Remove them please
+- Please use the full width of the page for every section. This is not the case for the lists, paragraphs, cards, etc. These are too narrow and look inconsistent with the other page content. Some of the images are also aligned left when they should be centered because they are by themselves (no text on the side). 
