@@ -4803,6 +4803,31 @@ body:has(.motion-loop) .motion-fab__pause {
   padding-block: var(--space-7);
 }
 
+/* ---------- Band, added 2026-08-26 ----------
+   A full-bleed themed stretch that is a section of the page rather than a decoration inside one.
+   The tint is what it is for; the extra breathing room is what makes the tint read as a section
+   break instead of a highlighted paragraph. Two rules only, because everything else a band needs —
+   the width breakout, the tint, the inner shell — already exists.
+
+   `.section` inside a band keeps its own padding, so the band's own padding is what sets it apart
+   from the white above and below it. */
+.band {
+  padding-block: var(--space-6);
+  border-block: 1px solid var(--color-border);
+}
+
+@media (min-width: 800px) {
+  .band {
+    padding-block: var(--space-7);
+  }
+}
+
+/* The band sets the breathing room. A `.section` inside one would otherwise add its own on top and
+   open a gap the height of a heading before anything appeared in it. */
+.band > .section {
+  padding-block: 0;
+}
+
 /* Added 2026-08-20 as "Rental basics", renamed "Renter basics" 2026-08-21 (the badge on the same
    items already read that, so the site had two names for one thing). The two explainers moved to
    the top of /improvements in their own tinted band (theme-brand) so they read as a distinct,
