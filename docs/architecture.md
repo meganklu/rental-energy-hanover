@@ -174,7 +174,7 @@ per [AGENTS.md](../AGENTS.md) rule 6.
 - **Steps:** none. The files are served as committed.
 - **`.nojekyll`:** an empty file at the repo root, so Pages skips Jekyll processing and serves
   every file literally, including any directory beginning with an underscore.
-- **Preview environments:** none. Preview locally with `python3 -m http.server 8000` from the repo
+- **Preview environments:** none. Preview locally with `node tools/serve.mjs 8000` from the repo
   root and open `http://localhost:8000`. Opening the files with `file://` breaks the `fetch` of
   `content/improvements.json`, so use the server.
 - **Rollback:** find the last good commit with `git log --oneline`, then run

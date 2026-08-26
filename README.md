@@ -59,8 +59,12 @@ publishes in about a minute. Full reasoning in
 Preview locally by serving the repo root over HTTP:
 
 ```bash
-python3 -m http.server 8000
+node tools/serve.mjs 8000
 ```
+
+That serves what GitHub Pages serves: gzip, one reused connection, correct types, and no caching.
+`python3 -m http.server` works too, but it sends everything uncompressed over a new connection per
+request, so it makes the site look about three times heavier than it is.
 
 ## Documents
 

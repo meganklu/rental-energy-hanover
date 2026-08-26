@@ -389,6 +389,16 @@ jumps instantly when motion is reduced. An arrow with no label is not a control 
 **What it must not do.** It must not become the reason a student never finds the house. The 85svh
 cap, the arrow, and the peeking top edge of the next section are all there for that.
 
+**The shadow holds still, revised 2026-08-26.** The lift was carried by a `filter` swapped between
+three drop-shadows by keyframe, tight and dark when the foot was planted, spread and faint at the
+top of the swing. It reads well and it was the one non-compositable property in a scroll-driven
+animation on the busiest page of the site: `filter` cannot be handed to the compositor, so every
+frame of every scroll through the hero repainted both shoes, and the hero is 220vh of scroll that
+every reader passes through on the way in. The shadow is one static value now and `scale` carries
+the lift on its own, which does composite. The note this replaces said scale alone was not enough,
+and it was right about the six percent it was measured at; the walk runs 0.94 to 1.16, four times
+that range.
+
 **The stride, revised 2026-08-24.** The shoes read as sliding rather than stepping. The cause was
 that the lift was carried entirely by `scale`, running 1 to 1.06, and 6% is not a step. Seen from
 directly overhead there are only two axes available to say a foot has left the ground: it is nearer,
@@ -2833,6 +2843,17 @@ gzip charges very little for prose that repeats itself as much as English does.
   inside it. It is read once, on enter.
 - **A scroll-driven animation is cheaper than a scroll listener**, which is most of why the site
   uses `animation-timeline` for all of it. There is no scroll handler anywhere in `assets/js/`.
-- **The dev server is not the site.** `python3 -m http.server` sends everything uncompressed, so a
-  page that costs 55KB over the wire on GitHub Pages costs 250KB locally. Judge load time on the
-  deployed site or in a throttled profile, not on `localhost`.
+- **The dev server is not the site.** Measured 2026-08-26, after a report that pages were taking a
+  long time to load and that the worst were the home page and the list. Those are the two largest
+  pages, which is consistent, and the numbers say the rest:
+
+  | | Home page | The list |
+  |---|---|---|
+  | GitHub Pages, gzipped | 113 KB | 92 KB |
+  | `python3 -m http.server` | 351 KB | 298 KB |
+
+  It answers in HTTP/1.0 with no keep-alive, so each of the seventeen requests opens and closes its
+  own connection, and it never compresses anything however the browser asks. On loopback that costs
+  nothing but bytes; across a real network each of those connections also pays for its own round
+  trip. `tools/serve.mjs` was written for this: gzip, one connection, correct types, no caching,
+  no dependencies. Judge load time with that or on the deployed site.

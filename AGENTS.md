@@ -78,8 +78,13 @@ structural.
 # install
 # nothing to install. There is no package.json
 
-# dev server (file:// breaks the fetch of content/improvements.json, so serve over HTTP)
-python3 -m http.server 8000
+# dev server. Serves what GitHub Pages serves: gzip, keep-alive, correct types, no caching.
+# file:// breaks the fetch of content/improvements.json, so preview over HTTP either way.
+node tools/serve.mjs 8000
+
+# `python3 -m http.server` also works and is misleading about load time: HTTP/1.0 with a new
+# connection per request and no compression at all, so the home page costs 351KB over 17
+# connections instead of 113KB over one. Judge speed with tools/serve.mjs or on the deployed site.
 
 # build
 # none. The committed files are the published site
@@ -124,7 +129,7 @@ browser, tab through it with the keyboard, and check it at 320px.
 │   ├── icons/  inline SVG source
 │   └── img/
 ├── content/improvements.json     generated, committed
-├── tools/check-content.mjs · shell.html
+├── tools/check-content.mjs · serve.mjs · shell.html
 ├── .github/workflows/check.yml
 ├── docs/                         planning & specification documents
 ├── AGENTS.md · DESIGN.md · README.md · LICENSE
