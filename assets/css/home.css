@@ -789,19 +789,24 @@
    response (§5.1) applied to a drawing rather than to a button. A drop shadow rather than a box
    shadow, because the thing being lifted is an outline and not a rectangle.
 
-   The lift and the glow are on the drawing rather than on the link, fixed 2026-08-26. On the link
-   they also spread around the name plate and the guide tag, which are text on a plate and have no
-   business glowing, and they scaled the name up along with the piece. The link now carries only its
-   position; everything that responds to a pointer happens inside `.hotspot .icon`.
+   **It is a lift and nothing else, rebuilt 2026-08-26 after two passes that both stuttered.** The
+   response was a scale, and the drawing it was scaling carries `vector-effect: non-scaling-stroke`
+   (above), which is what keeps a stroke a constant weight in device pixels whatever size the room
+   renders at. Those two do not go together. A stroke that must stay the same width on screen while
+   the shape it belongs to changes size has to have its outline geometry rebuilt from the path on
+   every frame of the change — it cannot be handed to the compositor as a picture and scaled, which
+   is exactly what makes a transform cheap. Seventeen of them on a page, at sixty frames a second,
+   is the stutter.
 
-   One `transform-origin`, on the bottom edge, in every state. It used to appear once — on a
-   selected standing piece — so hovering a bed grew it from its middle and sank it through the
-   floorboards on the way up, and then jumped origin the moment it was selected. Growing from the
-   bottom edge is what a piece standing on the floor has to do, and it is also what a wall-hung one
-   wants: a wall-hung piece carries its name underneath, so growing upward takes the drawing away
-   from its own name rather than into it. */
+   A translation does not change the scale factor, so the stroke geometry is untouched and the whole
+   thing composites. The piece rises four pixels and its shadow drops away underneath it, which is
+   what a lift looks like from the front and is what the effect was always described as. Nothing on
+   this page is at a scale other than 1 in any state now, deliberately.
+
+   The lift and the glow are on the drawing rather than on the link. On the link they also spread
+   around the name plate and the guide tag, which are text on a plate and have no business glowing
+   or moving. The link carries only its position. */
 .room-scene .hotspot .icon {
-  transform-origin: bottom center;
   /* Declared rather than left at `none`, so the hover transition has a filter to interpolate from
      and starts at the shadow's own zero rather than at whatever the engine substitutes. */
   filter: drop-shadow(0 0 0 rgba(20, 32, 26, 0));
@@ -814,7 +819,7 @@
 
 .room-scene .hotspot:hover .icon,
 .room-scene .hotspot:focus-visible .icon {
-  filter: drop-shadow(0 3px 4px rgba(20, 32, 26, 0.3));
+  filter: drop-shadow(0 5px 5px rgba(20, 32, 26, 0.3));
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -825,14 +830,14 @@
 
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:hover .icon,
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:focus-visible .icon {
-    transform: scale(1.08);
+    transform: translateY(-4px);
   }
 
-  /* Hovering the piece whose info bar is already open has to grow it, not shrink it back to the
-     ordinary hover size. */
+  /* Hovering the piece whose info bar is already open has to lift it further, not drop it back to
+     the ordinary hover height. */
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:hover .icon,
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:focus-visible .icon {
-    transform: scale(1.18);
+    transform: translateY(-11px);
   }
 }
 
@@ -842,12 +847,16 @@
    than as the object being lit up. `drop-shadow` follows the drawn edge instead, which is the same
    reason hover uses it.
 
-   Three shadows: a tight one to thicken the outline and two wider ones to spread. White since
-   2026-08-26, per the token's own note — a green light on a green-ish drawing was the one reading
-   it should least have had. Size is the second signal and it is not a color: the piece holds a
-   scale of its own while it is selected, above hover's, so a reader who cannot separate the glow
-   from the wall still sees which one grew. The third is that the info bar under the house is open
-   and names it. */
+   Three shadows: a tight one to thicken the outline and two wider ones to spread. White, per the
+   token's own note — a green light on a green-ish drawing was the one reading it should least have
+   had.
+
+   **The glow no longer breathes, and the piece no longer grows.** Both were continuous or
+   geometry-changing work on a page with seventeen drawings on it: the loop repainted one piece
+   forever, and the scale rebuilt its stroke outline every frame it moved (see the note above). The
+   second signal is a position rather than a size — the selected piece stands eight pixels clear of
+   the wall and nothing else on the wall does — and the third is the info bar under the house naming
+   it. Neither of those is a color. */
 .room-scene .hotspot--selected {
   box-shadow: none;
   outline: none;
@@ -858,50 +867,7 @@
   filter: drop-shadow(0 0 2px var(--color-guide-glow))
           drop-shadow(0 0 9px var(--color-guide-glow))
           drop-shadow(0 0 18px var(--color-guide-glow));
-  transform: scale(1.12);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected .icon {
-    animation: hotspot-glow var(--motion-loop) var(--motion-ease-smooth) infinite;
-    /* The loop owns `filter` while it runs, and a transition on the same property under a running
-       animation is what made hovering an open piece snap instead of grow. The transform half of the
-       transition is left alone, since the keyframes below never touch it. */
-    transition: transform var(--motion-base) var(--motion-ease);
-  }
-}
-
-/* The glow breathes rather than sitting still, which is what separates "this one is open" from
-   "this one is drawn a bit brighter". Filter-only, so freezing it at any point still leaves a fully
-   drawn, fully legible piece (§7). */
-@keyframes hotspot-glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 2px var(--color-guide-glow))
-            drop-shadow(0 0 9px var(--color-guide-glow))
-            drop-shadow(0 0 18px var(--color-guide-glow));
-  }
-  50% {
-    filter: drop-shadow(0 0 3px var(--color-guide-glow))
-            drop-shadow(0 0 15px var(--color-guide-glow))
-            drop-shadow(0 0 26px var(--color-guide-glow));
-  }
-}
-
-/* Not for this reader: the piece stays in the room and stops being a control, added 2026-08-26.
-   Personalization used to set `hidden` on anything the stored heat type or who-pays answer ruled
-   out, which left a gap in the furniture where a washer or a radiator had been. `dollhouse.js`
-   takes the `href` off instead, so it is neither a link nor focusable, and marks it `aria-hidden`,
-   so it is out of the accessibility tree as well. All that is left here is making it look like the
-   scenery it now is: no name plate, nothing under the pointer, and the weight the props around it
-   carry. The counts and the guided order skip it exactly as they skipped a hidden one. */
-.room-scene .hotspot--inactive {
-  pointer-events: none;
-  opacity: 0.72;
-  z-index: 0;
-}
-
-.room-scene .hotspot--inactive .hotspot__label {
-  display: none;
+  transform: translateY(-8px);
 }
 
 /* Seen already: the piece fades back rather than out. What is left in full color is what has not

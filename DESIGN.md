@@ -541,25 +541,39 @@ wall and the brown outlines there is enough separation for the lit edge to be ob
 the second signal and the info bar naming the piece is still the third, so nothing here rests on a
 color.
 
-**Hover was fighting itself, fixed 2026-08-26.** Four separate causes, all of them visible as a
-stutter:
+**Hover was fighting itself, and then it was still stuttering, 2026-08-26.** The first pass found
+four causes and fixed four causes:
 
 - The `filter` transition on the hotspot ran against the selected piece's own infinite `filter`
   keyframes, and a running animation beats a transition, so hovering an open piece snapped rather
   than grew.
 - The scale had no `transform-origin` except when selected, so a piece standing on the floor grew
-  from its middle and sank through the floorboards on the way up — and then jumped origin the moment
-  it was pressed.
-- The filter sat on the link, so the glow spread around the name plate and the guide tag as well as
-  the drawing.
-- The scale sat on the link too, so twelve-pixel text was re-rasterized at a new size on every frame
-  of a 200ms hover.
+  from its middle and sank through the floorboards on the way up, then jumped origin when pressed.
+- The filter sat on the link, so the glow spread around the name plate and the guide tag.
+- The scale sat on the link too, so twelve-pixel text was re-rasterized at a new size on every
+  frame of a 200ms hover.
 
-The glow and the scale are on the drawing now and the link transitions nothing. There is one origin,
-the bottom edge, in every state: a piece standing on the floor has to grow from its feet, and a
-wall-hung piece carries its name underneath, so growing upward takes the drawing away from its own
-name rather than into it. The name plate gained two pixels of clearance, which is what it needed
-once it stopped growing along with the drawing.
+It still stuttered, and the reason is the fifth cause, which is the interesting one. **A scale and
+`vector-effect: non-scaling-stroke` cannot both be cheap.** That vector-effect is what keeps a
+furniture outline a constant weight in device pixels whatever size the room renders at, and it is
+load-bearing: without it a stroke at furniture size comes out as a marker line, which is the
+difference between a drawing of a sofa and a cartoon of one. But a stroke that has to stay the same
+width on screen while the shape it belongs to changes size has to have its outline geometry rebuilt
+from the path on every frame of the change. It cannot be handed to the compositor as a picture and
+scaled, and being handed to the compositor as a picture is the entire reason a transform is cheap.
+Seventeen drawings on a page, sixty frames a second.
+
+So the response is a translation. Scale factor unchanged, stroke geometry untouched, layer
+composited. The piece rises four pixels and its shadow drops away underneath it, which is what a
+lift looks like from the front and is what this effect has been described as since it was written.
+Nothing in the house is at a scale other than 1 in any state now, deliberately, and that is a rule
+rather than a coincidence: anything drawn in this pen and animated has to move, not resize.
+
+**The selected glow stopped breathing at the same time**, for the same kind of reason. It was an
+infinite `filter` animation, so one drawing repainted forever while a reader hovered every other
+drawing on the page. The second signal for "this one is open" is now a position rather than a size —
+the selected piece stands eight pixels clear of the wall and nothing else on the wall does — and the
+third is still the info bar under the house naming it. Neither is a color.
 
 **An object that does not apply is scenery, revised 2026-08-26.** Personalization used to set
 `hidden` on every hotspot the reader's heat type or who-pays answer ruled out, which took the object
@@ -2750,6 +2764,13 @@ gzip charges very little for prose that repeats itself as much as English does.
   and the ticks that draw themselves are a few short paths.
 - **Put the glow on the drawing, not on its container.** A `filter` on a link is a filter on its
   name plate and its tag as well, which is three times the area to re-rasterize for one lit object.
+- **Never scale something drawn with `vector-effect: non-scaling-stroke`.** The stroke has to stay
+  a constant width on screen while the shape changes size, so the browser rebuilds the outline
+  geometry from the path every frame instead of compositing a picture. Move it instead. This is what
+  was making the doll house hover stutter, twice — see §3.2.
+- **Nothing loops that does not have to.** An infinite `filter` animation on one element repaints
+  that element for as long as it is on screen, including while the reader is doing something else
+  entirely.
 - **Never measure layout in a pointer handler.** `getBoundingClientRect` forces the browser to
   resolve layout before it can answer. `assets/js/magnetic.js` called it on every `pointermove`,
   which is sixty forced layouts a second for a rectangle that cannot change while the pointer is
