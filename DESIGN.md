@@ -643,6 +643,19 @@ row of green pills sat on a drawing of a floor at exactly the width where there 
 standing on it. The room is a plain bordered white box again below the gate, which is what it was
 before the house was furnished and what the rows were designed to sit in.
 
+**And the target ended exactly where the picture did, fixed 2026-08-26.** The last of it, and the
+simplest. The invisible press target was `max(100%, 44px)`, which on anything already bigger than
+44px is the drawing's own size — so the edge of the hover target sat on the edge of the picture. A
+pointer resting on the outline of a lamp is a pointer sitting on the boundary, and the half-pixel
+wobble of a hand crossing it turns the name plate on and off. There are eight pixels of tolerance on
+every side now, so the boundary is out in the wallpaper where nobody aims.
+
+Sixteen pixels total is measured rather than chosen. Every hover target in a room — the box, the
+link inside it and the name plate hanging outside it — stays disjoint from every other one across
+all six rooms up to 26px of padding and touches at 28. Sixteen leaves room to nudge a piece without
+silently making two of them fight over the pointer, and that check is worth re-running whenever one
+moves.
+
 **The hover was crossing four pixels of nothing, fixed 2026-08-26.** The fourth and last cause. The
 name plate sat at `calc(100% + 4px)` from the link's box, so between the bottom of that box and the
 top of the plate were four pixels belonging to neither of them. Crossing them on the way from the

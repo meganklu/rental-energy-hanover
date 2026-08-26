@@ -532,3 +532,13 @@ About page:
 
 Articles:
 - Within an article, add a way to go to the next one after reading (near the bottom after finished reading). For example, access the next article in the renters basics section
+
+### 2026-08-26 Revert Change and Bug Fixes
+
+About page:
+- Bring back the arrow even if it cannot slide with the rest of the background
+
+Doll house section:
+- Glitching hover effect seems to also be happening when hoving at the edge of the object. Is there a way to get around this. For example, would making the area that you can hover over and still have the effect larger help?
+
+Fix the site-review date. It should be 2026-08-26.

@@ -4103,15 +4103,44 @@ main {
 }
 
 /* The two sides meeting. Ends the coloured stretch and hands the page back to the ordinary white
-   background, which is the point being made: the two halves have somewhere to meet. */
+   background, which is the point being made: the two halves have somewhere to meet.
+
+   **It travels with the field above it, 2026-08-26.** It was an SVG with two polygons meeting at
+   x=100 of a 200-wide viewBox — a hard half, which meant that leaning on one side moved the seam
+   through the whole colour field above and then the wedge underneath stayed put, and the two came
+   apart at the join. A polygon's `points` attribute cannot read a custom property. Two boxes clipped
+   to triangles can: each takes its share of the width from `--split-pos` and is clipped to a
+   triangle whose point falls on its own inner edge, so the two points are one point and that point
+   is the seam.
+
+   `--split-pos` is declared on `main` for this (§3.7), since the wedge is a sibling of the field
+   rather than a child of it and the two have to inherit the same number. Where the lean is off —
+   under either reduced-motion control, or below 860px — the variable simply stays at 50% and this
+   is the same symmetrical wedge it has always been. */
 .split-converge {
+  display: flex;
+  height: clamp(4rem, 9vw, 8.5rem);
   line-height: 0;
 }
 
-.split-converge svg {
+.split-converge__side {
   display: block;
-  width: 100%;
-  height: clamp(4rem, 9vw, 8.5rem);
+  height: 100%;
+}
+
+.split-converge__side--tenant {
+  flex: none;
+  width: var(--split-pos);
+  background: var(--color-split-tenant);
+  /* Top-left, top-right, then down to the point on its own right edge. */
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.split-converge__side--owner {
+  flex: 1;
+  background: var(--color-split-owner);
+  /* The mirror of it: the point is on its own left edge, which is the same line. */
+  clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
 /* ---------- Utility layout ---------- */

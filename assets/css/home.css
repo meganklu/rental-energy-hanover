@@ -713,19 +713,33 @@
   border-radius: 6px;
   background: none;
   z-index: 1;
+  /* How far the invisible press target extends past the drawing, total across each axis. See the
+     note on `::after` below for why it is this number. */
+  --hotspot-catch: 16px;
 }
 
 /* The site's 44px floor, kept without inflating the drawing. A thermostat drawn to scale in a room
    this size is about twenty pixels across, and scaling it up to forty-four would make it the size
    of a picture frame. This is an invisible box centered on the piece, at least 44px each way, which
-   takes the press without changing what is drawn (DESIGN.md §6). */
+   takes the press without changing what is drawn (DESIGN.md §6).
+
+   **It is bigger than the drawing on purpose, 2026-08-26.** It used to be exactly the drawing's size
+   on anything already over 44px, which put the edge of the hover target on the edge of the picture.
+   A pointer resting on the outline of a lamp is then a pointer sitting on the boundary, and the
+   half-pixel wobble of a hand crossing it turns the name plate on and off. Eight pixels of tolerance
+   on every side means the boundary is out in the wallpaper where nobody aims.
+
+   Sixteen is a measured number, not a guess. The hover targets in a room are this box, the link box
+   inside it and the name plate hanging outside it, and all three take the hover; every pair of them
+   across all six rooms stays disjoint up to 26px of padding and touches at 28. Sixteen leaves room
+   to nudge a piece without silently making two of them fight over the pointer. */
 .room-scene .hotspot::after {
   content: "";
   position: absolute;
   left: 50%;
   top: 50%;
-  width: max(100%, var(--target-min));
-  height: max(100%, var(--target-min));
+  width: max(100% + var(--hotspot-catch), var(--target-min));
+  height: max(100% + var(--hotspot-catch), var(--target-min));
   transform: translate(-50%, -50%);
 }
 
