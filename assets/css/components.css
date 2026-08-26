@@ -5451,13 +5451,7 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
   margin-top: var(--space-6);
 }
 
-/* ---------- Page head, added 2026-08-21 ----------
-   The block every page opens with, so a page title looks the same everywhere on the site instead
-   of each page inventing its own. Centered, at display size (§4) — one step above h1, because a
-   page title is alone on its band with nothing competing for attention, which is the same reason
-   a story bar's heading gets that size. The lede under it is optional and keeps the reading
-   measure even though the block is centered. */
-/* ---------- Page hero, added 2026-08-26 ----------
+/* ---------- Page hero, added 2026-08-26, and the site's only page opening since ----------
    The home page opens on a doormat and /improvements opens on a door. Everything else reachable
    from the nav opened on a centered title over white, which made those pages read as the reference
    material behind the two that had been designed. Three of them have a drawn scene now, in the same
@@ -5471,7 +5465,19 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 
    Motion is scroll-driven and gated the site's three ways (§7): `@supports (animation-timeline:
    view())`, `prefers-reduced-motion`, the reduce-motion switch. Every scene's resting state is its
-   finished state, so a timeline that never advances leaves a complete drawing. */
+   finished state, so a timeline that never advances leaves a complete drawing.
+
+   **Every page opens on one now, revised 2026-08-26.** Four pages carried `.page-head` instead — a
+   centered title over white — so the site had two page openings that were not variants of each
+   other, one centered and one left. The band is the only one left, `.page-head` is deleted, and a
+   page with no object worth drawing takes the band without a scene rather than reverting to the
+   other shape. `/accessibility` is a statement and `/start` is a form; neither is a thing, and
+   inventing an object for them would be decoration standing in for a subject.
+
+   **Left, at every width.** It was centered below 800px and left above it, which put the title on a
+   different axis from the prose under it on the same page depending on the window. Everything on
+   every page now starts on the shell's own left edge: the wordmark in the header, the page title,
+   the lede, and the reading column below. See §6. */
 .page-hero {
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
@@ -5481,9 +5487,7 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 .page-hero__inner {
   display: grid;
   gap: var(--space-6);
-  justify-items: center;
   padding-block: var(--space-7);
-  text-align: center;
 }
 
 .page-hero h1 {
@@ -5495,7 +5499,7 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 
 .page-hero .lede {
   max-width: var(--measure);
-  margin: var(--space-4) auto 0;
+  margin: var(--space-4) 0 0;
   font-size: var(--text-h4);
   color: var(--color-text-muted);
 }
@@ -5514,19 +5518,20 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 
 @media (min-width: 800px) {
   .page-hero__inner {
-    grid-template-columns: 1.35fr 1fr;
     align-items: center;
     gap: var(--space-8);
     padding-block: var(--space-8);
-    text-align: left;
+  }
+
+  /* Two columns only where there is a drawing to put in the second one. A hero with no scene keeps
+     the single column it has at every other width, so its title and lede sit at the reading measure
+     against the shell's left edge rather than being stretched across 1140px. */
+  .page-hero__inner:has(.page-hero__scene) {
+    grid-template-columns: 1.35fr 1fr;
   }
 
   .page-hero__text {
     justify-self: start;
-  }
-
-  .page-hero .lede {
-    margin-inline: 0;
   }
 
   .page-hero__scene {
@@ -5819,6 +5824,144 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
   to { stroke-dashoffset: 0; }
 }
 
+/* ---------- Hero scene: the index cards, /glossary ---------- */
+/* A definition is a term and a couple of lines under it, which is a card. Three of them, squaring up
+   into a stack through the hold with the top one lifting clear. Drawn in the doll house's pen. */
+.cards {
+  stroke: var(--toy-outline);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.cards__card > rect:first-child { fill: var(--toy-white); }
+.cards__tab { fill: var(--color-surface-brand); }
+
+.cards__letter {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  fill: var(--color-text);
+  stroke: none;
+}
+
+.cards__term {
+  stroke: var(--color-accent);
+  stroke-width: 6;
+}
+
+.cards__rule {
+  stroke: var(--color-border-strong);
+  stroke-width: 2;
+}
+
+.cards__card {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+/* The resting state is the squared stack with the front card standing clear. The animation starts
+   from a loose pile, so a browser that never runs it shows three cards you can tell apart. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 800px) and (min-height: 640px) {
+    body:not(:has(.reduce-motion-input:checked)) .cards__card {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .cards__card--back {
+      animation-name: cards-square-back;
+      animation-range: 0 calc(var(--hold) * 0.4);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .cards__card--mid {
+      animation-name: cards-square-mid;
+      animation-range: calc(var(--hold) * 0.22) calc(var(--hold) * 0.62);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .cards__card--front {
+      animation-name: cards-lift-front;
+      animation-range: calc(var(--hold) * 0.5) calc(var(--hold) * 0.94);
+    }
+  }
+}
+
+@keyframes cards-square-back {
+  from { transform: rotate(6deg) translate(18px, 10px); }
+  to { transform: rotate(0deg) translate(0, 0); }
+}
+
+@keyframes cards-square-mid {
+  from { transform: rotate(-5deg) translate(-16px, 6px); }
+  to { transform: rotate(0deg) translate(0, 0); }
+}
+
+@keyframes cards-lift-front {
+  from { transform: translateY(26px) scale(0.94); }
+  to { transform: translateY(0) scale(1); }
+}
+
+/* ---------- Hero scene: the bag, /where-to-get-it ---------- */
+/* Everything this page sends a reader out for fits in one bag, which is the page's own argument.
+   The three things drop into it one after another through the hold. */
+.tote {
+  stroke: var(--toy-outline);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.tote__bag { fill: var(--toy-sage-soft); }
+.tote__seam { stroke-width: 2; }
+.tote__handle { stroke-width: 5; }
+.tote__box { fill: var(--toy-wood-light); }
+.tote__box-tape { stroke-width: 2; }
+.tote__bulb { fill: var(--toy-butter); }
+.tote__bulb-cap { stroke-width: 2.5; }
+.tote__roll { fill: var(--toy-rose-soft); }
+.tote__roll-eye { fill: var(--toy-white); stroke-width: 2; }
+
+/* One origin for all three, because they all fall from above the bag rather than from their own
+   middles. The bag is drawn after them in the markup, so a thing on its way down goes behind it. */
+.tote__goods > * {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 800px) and (min-height: 640px) {
+    body:not(:has(.reduce-motion-input:checked)) .tote__goods > * {
+      animation-name: tote-drop;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .tote__box,
+    body:not(:has(.reduce-motion-input:checked)) .tote__box-tape {
+      animation-range: calc(var(--hold) * 0.08) calc(var(--hold) * 0.38);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .tote__bulb,
+    body:not(:has(.reduce-motion-input:checked)) .tote__bulb-cap {
+      animation-range: calc(var(--hold) * 0.34) calc(var(--hold) * 0.64);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .tote__roll,
+    body:not(:has(.reduce-motion-input:checked)) .tote__roll-eye {
+      animation-range: calc(var(--hold) * 0.6) calc(var(--hold) * 0.9);
+    }
+  }
+}
+
+@keyframes tote-drop {
+  from { transform: translateY(-88px); }
+  to { transform: translateY(0); }
+}
+
 /* ---------- Hero scene: one house and one seam, /about ---------- */
 /* Drawn in the doll house's pen (§3.2): flat shapes, one outline weight, the toy palette for the
    building and the two objects, and the site's green for the line down the middle, which is the one
@@ -6030,31 +6173,10 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
   to { transform: scale(1); }
 }
 
-.page-head {
-  text-align: center;
-  margin-bottom: var(--space-7);
-}
-
-.page-head h1 {
-  font-size: var(--text-display);
-  line-height: 1.05;
-}
-
-.page-head .lede {
-  max-width: var(--measure);
-  margin: var(--space-4) auto 0;
-  font-size: var(--text-h4);
-  color: var(--color-text-muted);
-}
-
 .stack {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-}
-
-.center-text {
-  text-align: center;
 }
 
 .eyebrow {

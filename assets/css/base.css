@@ -293,13 +293,20 @@ a:hover {
   overflow-wrap: anywhere;
 }
 
-/* Centered, revised 2026-08-21. It was left-aligned, which under the centered page title
-   (`.page-head`, components.css) read as a column that had failed to line up rather than as a
-   deliberate measure — the improvement pages get away with left-aligning because an illustration
-   fills the other side, and these prose pages have nothing there. */
+/* Left, revised 2026-08-26, and this is the site's one reading column now. It was centered from
+   2026-08-21, on the reasoning that a left column under a centered page title reads as a column
+   that failed to line up rather than as a deliberate measure. That was true and the fix was aimed
+   at the wrong half: the page titles were what was centered, and every article on the site was
+   already left-aligning its own prose at the same width. So there were two reading columns on two
+   axes, and which one a reader got depended on whether the page was an article.
+
+   There is one axis now. Page titles are left (`.page-hero`, components.css), and every reading
+   column starts on the shell's own left edge, which is the same edge the wordmark in the header
+   starts on. `.improvement-body` is the same width and has never needed a rule of its own for the
+   position. See DESIGN.md §6. */
 .content-column {
   max-width: var(--measure);
-  margin-inline: auto;
+  margin-inline: 0;
 }
 
 .visually-hidden-focusable:not(:focus):not(:focus-within) {

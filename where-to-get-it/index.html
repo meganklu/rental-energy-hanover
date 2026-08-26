@@ -50,15 +50,40 @@
 
 <main id="main">
 
-  <section class="section page-shell">
-    <div class="page-head">
-      <h1>Where to get it</h1>
-      <p class="lede">
-        Nothing on this site needs a car, but a few things need planning. Here is where the
-        materials actually are.
-      </p>
-    </div>
+  <!-- A bag of the materials, added 2026-08-26. Everything this page sends a reader out for is a
+       stocked item that fits in one bag: a film kit, a bulb, a roll of weatherstripping. Through the
+       hold the three drop into it one after another. Decorative and aria-hidden; the list of what to
+       buy and where is below. -->
+  <div class="page-hero-hold">
+    <section class="page-hero full-bleed" aria-labelledby="where-h">
+      <div class="page-hero__inner page-shell">
+        <div class="page-hero__text">
+          <h1 id="where-h">Where to get it</h1>
+          <p class="lede">
+            Nothing on this site needs a car, but a few things need planning. Here is where the
+            materials actually are.
+          </p>
+        </div>
+        <div class="page-hero__scene" aria-hidden="true">
+          <svg class="tote" viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+            <g class="tote__goods">
+              <rect class="tote__box" x="78" y="96" width="52" height="52" rx="5"/>
+              <path class="tote__box-tape" d="M104 96 V148"/>
+              <circle class="tote__bulb" cx="160" cy="112" r="21"/>
+              <path class="tote__bulb-cap" d="M150 134 h20 M152 142 h16"/>
+              <circle class="tote__roll" cx="196" cy="146" r="18"/>
+              <circle class="tote__roll-eye" cx="196" cy="146" r="6"/>
+            </g>
+            <path class="tote__handle" d="M92 148 V126 a38 30 0 0 1 76 0 V148"/>
+            <path class="tote__bag" d="M46 146 H214 L202 268 H58 Z"/>
+            <path class="tote__seam" d="M58 178 H202"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+  </div>
 
+  <section class="section page-shell">
     <div class="content-column">
       <figure class="prose-figure">
         <img class="photo" src="../assets/img/photos/hardware-store.webp"

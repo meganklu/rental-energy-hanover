@@ -994,12 +994,13 @@ card's title also carries the same object icon its doll house hotspot uses (`ico
 its hotspot read as the same thing encountered by two different routes, per §2's "both reach the
 same content items" rule.
 
-**The page title, revised 2026-08-21.** "Improvements" now sits centered at the top of the page
-at display size (`--text-display`, §4) rather than left-aligned inside the 40rem content column at
-normal h1 size. The page has no lede sentence under it (see "What the page opens with" above), so
-a normal-size h1 in a narrow left column read as a label someone forgot to finish rather than as
-the start of a page. This is the shared `.page-head` block (§5), and every page built after this
-one uses it, so a page title looks the same everywhere on the site.
+**The page title, revised 2026-08-21.** "Improvements" sits at display size (`--text-display`, §4)
+rather than at normal h1 size inside the 40rem content column. The page has no lede sentence under
+it (see "What the page opens with" above), so a normal-size h1 read as a label someone forgot to
+finish rather than as the start of a page. It was centered from 2026-08-21 until 2026-08-26, when
+every page title on the site went back to the left edge for the reason in §6; the size was never the
+part that was wrong. Since 2026-08-24 the title is on the door rather than on a band, which is this
+page's own version of the shared opening (§3.10).
 
 **"Renter basics," moved to the top, added 2026-08-20, renamed 2026-08-21.** The two explainer topics
 (`read-your-bill`, `find-your-drafts`) previously sat in a "Learn" section below the main grid,
@@ -1443,8 +1444,17 @@ behind the two that had been designed. Three of them have a drawn scene now, in 
 (§3.2): flat shapes, one outline weight, the toy palette for anything that is a physical object and
 the site's greens for anything that is a mark on it.
 
+Since 2026-08-26 every page opens on this block, including the four that had no scene to put in it.
+A page with no object worth drawing takes the band and the single column without one, rather than
+reverting to the centered title it used to have. `/accessibility` is a statement and `/start` is a
+form; neither is a thing, and inventing an object for them would be decoration standing in for a
+subject.
+
 | Page | The scene | What it does through the hold |
 |---|---|---|
+| `/glossary` | A stack of index cards, the top one with a term and a couple of lines under it | The stack squares up and the top card lifts clear of the two behind it |
+| `/where-to-get-it` | A tote bag with a film kit, a bulb and a roll of weatherstripping in it | The three drop into the bag one after another |
+| `/accessibility`, `/start` | None | The band alone |
 | `/your-rights` | A wall thermometer with the state minimum marked on it | The column starts as a bead in the neck and rises, and the 65°F line slides in to meet it |
 | `/programs` | Three application forms, one per permission state, in that state's badge color | They are turned one at a time, front sheet first, each lifting off the stack into its place in the fan; a tick lands last on the one a renter can sign |
 | `/checklist` | A clipboard with four lines | The four lines cross themselves off one after another |
@@ -1634,7 +1644,7 @@ pages carry six to ten headings each, so the scale is compressed.
 **The display size, tokenized 2026-08-21.** One step above h1, and deliberately outside the
 compressed scale above: it is for a heading that is alone on its band with nothing competing for
 attention, which on this site means exactly two things — a story bar's heading (§5.1) and a page
-title in `.page-head` (§5). It shipped 2026-08-20 as a `clamp()` written inline in the story-bar
+title in `.page-hero` (§3.10). It shipped 2026-08-20 as a `clamp()` written inline in the story-bar
 rule; making it a token is what let the page titles reuse it rather than a second, slightly
 different clamp being written next to the first. Anything that is not one of those two cases uses
 h1 and below.
@@ -1893,8 +1903,10 @@ times. Five things merged:
 - **`.full-bleed`.** Story bars and the Renter basics band had each written out the same
   `width: 100vw; margin-inline: calc(50% - 50vw)` breakout. One utility now, and the two keep only
   what actually differs — the tint, and Renter basics' clipped point.
-- **`.page-head`.** Every page opened its title differently. One block now: centered `<h1>` at
-  display size, optional lede under it.
+- **`.page-head`, replaced 2026-08-26 by `.page-hero` (§3.10).** Every page opened its title
+  differently. One block now, on every page: a tinted band, a left-aligned `<h1>` at display size,
+  an optional lede under it, and a drawn scene beside it where the page has an object worth
+  drawing.
 - **The switch track color** is a token rather than one hard-coded translucent white serving both a
   dark footer and a light floating control. The footer switch has since been removed, so the token
   has one value again. See §7.
@@ -2103,8 +2115,31 @@ result is a phone design.
 | Width | v1 status | Layout |
 |---|---|---|
 | 900px and up | **Designed.** This is the target | House and info bar side by side, so opening a hotspot does not push the drawing. An enlarged room keeps the rest of the house visible beside it. Library gets a persistent left filter rail. Parallax layers run. The hero holds 85svh. Detail pages keep the 40rem measure. Page shell caps at 1140px |
-| 600 to 900px | **Works.** Falls out of the same CSS | Single column. The whole house stays visible, with the info bar below it. Content column caps at 40rem and centers. Library cards go to two columns. Filters become a horizontal chip row |
+| 600 to 900px | **Works.** Falls out of the same CSS | Single column. The whole house stays visible, with the info bar below it. Content column caps at 40rem against the left edge. Library cards go to two columns. Filters become a horizontal chip row |
 | Below 600px | **Reflow floor, not a designed experience** | One column, no horizontal scrolling down to 320px. Parallax holds still. The hero shrinks to its content. The doll house gives way to "Everything in this house", the room-by-room link list, which carries every hotspot as an ordinary link. Filters become a plain stacked form. Everything is reachable and readable. Nothing is tuned |
+
+**Three widths and one left edge, settled 2026-08-26.** Every page had been assembling its own
+layout out of whatever it needed, and a reader moving between them met a title that was sometimes
+centered and sometimes not, over prose that was sometimes centered and sometimes not, and the two
+did not always agree on the same page. There are three widths on this site and one axis:
+
+| Width | What takes it |
+|---|---|
+| The window | Anything whose background is the point: the page hero band, story bars and the stack, the Renter basics band, a `.band`, a photo band, the split color field |
+| 1140px, the page shell | The frame everything else sits in, and directly: the doll house, the library's card grid, a key point, a steps track, an improvement page's two-column intro |
+| 40rem, the measure | Every reading column, whatever page it is on. `.content-column` and `.improvement-body` are the same width, and since 2026-08-26 the same position |
+
+And the axis is the left edge of the page shell. The wordmark in the header starts there, so the
+page title starts there, so the lede under it starts there, so the prose under that starts there.
+Nothing is centered any more except things that are objects rather than text: a flip card in the
+middle of a column, the float card on `/about`, an empty state.
+
+`.content-column` was centered from 2026-08-21 and the reasoning was sound about the symptom — a
+left column under a centered page title reads as a column that failed to line up. It was aimed at
+the wrong half. The page titles were what was centered, and every article on the site was already
+left-aligning prose at the identical width, so the site ended up with one measure on two axes and
+which one a reader got depended on whether the page happened to be an article. Moving the titles
+left costs one rule and settles it for both.
 
 **Pointer targets:** 44×44px minimum stays in v1, on hotspots, carousel controls, disclosure bars
 and filter chips, with 8px between adjacent targets. Dense hit areas on a drawing are hard to hit

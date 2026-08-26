@@ -470,7 +470,7 @@ Programs page:
 Your list page:
 - Add an animation of list items getting checked off as you scroll
 
-About page:
+About page:d
 - Make the hero section something that matches the aesthetic and design of the other pages. Put the split part lower on the screen
 
 General design choices:
