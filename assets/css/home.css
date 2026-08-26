@@ -751,13 +751,20 @@
 /* The name sits under the piece on a plate of its own, out of the link's own box so a long name
    does not stretch the drawing. It is still inside the link in the markup, so it is still part of
    the accessible name and still reads in order. The plate is there because a caption that crosses
-   from the papered wall onto the wood floor changes contrast halfway along. */
-/* The gap is 4px rather than 2px since 2026-08-26, because the drawing above it grows on hover and
-   the name does not. Scaling the link scaled the name with it, which never collided and which also
-   re-rasterized twelve-pixel text sixty times a second on the way. */
+   from the papered wall onto the wood floor changes contrast halfway along.
+
+   **The gap between the drawing and the plate is a transparent border, not an offset**, fixed
+   2026-08-26. It was `calc(100% + 4px)`, which put four pixels between the bottom of the link's box
+   and the top of the plate that belonged to neither of them. Crossing that strip on the way from
+   the object to its name dropped the hover and picked it back up, so the plate flashed off and on —
+   and only on the larger pieces, because on a small one the invisible 44px press target is bigger
+   than the drawing and happened to cover the strip. That is the "depends where you come from and
+   how fast" half of the report. The plate's box now touches the link's; the border is what holds
+   the four pixels, and a transparent border paints nothing and takes the pointer. */
 .room-scene .hotspot .hotspot__label {
   position: absolute;
-  top: calc(100% + 4px);
+  top: 100%;
+  border-top: 4px solid transparent;
   left: 50%;
   transform: translateX(-50%);
   width: max-content;
@@ -778,10 +785,12 @@
 /* A piece standing on the floor takes its name above it instead of below. Below would put the name
    under the floor: the whole point of standing a bed on the floor line is that there is nothing
    under it, and a name is about thirty pixels tall. Wall-hung pieces keep the name underneath,
-   where there is wall to put it on. */
+   where there is wall to put it on. Same transparent border, on the other edge. */
 .room-scene .hotspot--stands .hotspot__label {
   top: auto;
-  bottom: calc(100% + 4px);
+  bottom: 100%;
+  border-top: 0;
+  border-bottom: 4px solid transparent;
 }
 
 /* Hover, focus and selection, rebuilt 2026-08-26 after three passes that all stuttered.
@@ -879,6 +888,26 @@
   font-weight: 700;
 }
 
+/* Not for this reader: the piece stays in the room and stops being a control. Personalization used
+   to set `hidden` on anything the stored heat type or who-pays answer ruled out, which left a gap in
+   the furniture where a washer or a radiator had been. `dollhouse.js` takes the `href` off instead,
+   so it is neither a link nor focusable, and marks it `aria-hidden`, so it is out of the
+   accessibility tree as well. All that is left here is making it look like the scenery it now is:
+   no name plate, nothing under the pointer, and the weight the props around it carry.
+
+   Restored 2026-08-26 after being deleted by accident: the hover rules around it were rewritten and
+   this went with them, which left every ruled-out piece still taking clicks. A room could say
+   "Nothing here for your situation" and the shower head in it would still open. */
+.room-scene .hotspot--inactive {
+  pointer-events: none;
+  opacity: 0.72;
+  z-index: 0;
+}
+
+.room-scene .hotspot--inactive .hotspot__label {
+  display: none;
+}
+
 /* Seen already: the piece fades back rather than out. What is left in full color is what has not
    been opened yet. `--visited` also puts "Viewed" into the accessible name (dollhouse.js), so this
    is the second signal rather than the only one. */
@@ -935,6 +964,11 @@
   transform: translateX(-50%);
   margin: 0;
   white-space: nowrap;
+  /* It sits nine pixels clear of the piece, and unlike the name plate that gap is not worth closing:
+     the tag says nothing the piece does not and nobody needs to point at it. Taking it out of hit
+     testing is the cheaper fix for the same flicker, and it also means a tag overhanging a
+     neighbouring room cannot take that room's hover. */
+  pointer-events: none;
 }
 
 /* Measured against the name plate rather than the drawing, since that is what it hangs off on a

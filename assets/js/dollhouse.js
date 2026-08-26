@@ -293,6 +293,11 @@ if (dollhouseEl && infoBar) {
 
   hotspots.forEach((hotspot) => {
     hotspot.addEventListener("click", (event) => {
+      // A piece personalization has ruled out is scenery: no href, out of the accessibility tree,
+      // and `pointer-events: none` in components. This is the belt to that pair of braces, and it
+      // is here because the CSS half was deleted by accident once and nothing caught it — a room
+      // read "Nothing here for your situation" and the shower head in it still opened.
+      if (isInactive(hotspot)) return;
       event.preventDefault();
       openHotspot(hotspot);
     });

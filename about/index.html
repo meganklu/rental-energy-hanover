@@ -195,11 +195,13 @@
 
   </div>
 
+  <!-- The two sides meeting. Two boxes clipped to triangles rather than an SVG with two polygons in
+       it, since 2026-08-26: the point where they meet is `--split-pos`, the same variable the colour
+       field above reads, so the seam here travels with the seam up there when a reader leans on one
+       side. A polygon's `points` cannot take a custom property; a `clip-path` can. -->
   <div class="split-converge" aria-hidden="true">
-    <svg viewBox="0 0 200 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="0,0 100,0 100,100" fill="var(--color-split-tenant)"/>
-      <polygon points="100,0 200,0 100,100" fill="var(--color-split-owner)"/>
-    </svg>
+    <span class="split-converge__side split-converge__side--tenant"></span>
+    <span class="split-converge__side split-converge__side--owner"></span>
   </div>
 
   <section class="section page-shell">
@@ -430,7 +432,7 @@
         <svg class="icon" aria-hidden="true"><use href="../assets/icons/sprite.svg#icon-code"/></svg>
         View the source code
       </a>
-      <p class="footer-meta">Site content last reviewed 2026-08-24.</p>
+      <p class="footer-meta">Site content last reviewed 2026-08-26.</p>
     </div>
   </div>
 </footer>

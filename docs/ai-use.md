@@ -472,7 +472,7 @@ Programs page:
 Your list page:
 - Add an animation of list items getting checked off as you scroll
 
-About page:d
+About page:
 - Make the hero section something that matches the aesthetic and design of the other pages. Put the split part lower on the screen
 
 General design choices:
@@ -515,3 +515,20 @@ Home page:
 - The hover animation glitching is still occuring when hovering over the actual object rather than the label
 
 Increase spacing before story bars and between every section. Use different backgrounds, cards, and other divisions to denote different sections.
+
+### 2026-08-26 Interactive Feature Bugs
+
+Doll house section:
+- The doll house is not showing only the relevant improvements as buttons. For example, "shower head" can still be clicked on even when the bathroom says "Nothing here for your situation". These items should be visible but they should not act as buttons (i.e., they should be like the other decorations in the doll house like the plants)
+- The hover effect is still having some glitching animations depending on how fast the cursor is and the position on the spot the mouse (e.g., coming from a different direction, on the label vs. on the object). I think this is due to the magnetic hover effect. Remove magnetic hover from all components
+- Make the mirror in the bathroombigger and directly over the sink 
+- Move the space heater to the other side of the bedroom in the empty space on the left side
+- Move the outlet slightly left to not overlap with the plant
+- Put the radiator on the other side of the sink in the bathroom
+
+About page:
+- On reduced motion, the split incentives divided section should not slide back and forth
+- Is there a way to make the triangle/arrow part of the color divided section slide too with the rest of the background?
+
+Articles:
+- Within an article, add a way to go to the next one after reading (near the bottom after finished reading). For example, access the next article in the renters basics section

@@ -1953,28 +1953,6 @@
   40% { transform: scale(1.28); }
 }
 
-/* ---------- Magnetic hover, added 2026-08-26 ----------
-   assets/js/magnetic.js writes --magnet-x/--magnet-y while the pointer is over a control marked
-   `data-magnetic`; this is what decides whether that goes anywhere. `--magnet-range` is the
-   distance in pixels and it is only set inside the gate, so under reduced motion, on a touch
-   screen, or on a control that never asked for it, the script reads zero and does nothing.
-
-   The offset is its own transform layer rather than a rewrite of the control's `transform`, so a
-   button that already lifts on hover keeps doing that and leans as well. */
-@media (prefers-reduced-motion: no-preference) and (pointer: fine) {
-  body:not(:has(.reduce-motion-input:checked)) [data-magnetic] {
-    --magnet-range: 6;
-    translate: var(--magnet-x, 0) var(--magnet-y, 0);
-    transition: translate var(--motion-fast) var(--motion-ease-smooth);
-  }
-
-  /* The floating button is the largest and the least anchored thing on the screen, so it can take
-     a longer pull without reading as a glitch. */
-  body:not(:has(.reduce-motion-input:checked)) .fab[data-magnetic] {
-    --magnet-range: 10;
-  }
-}
-
 /* ---------- Scroll reveal, added 2026-08-26 ----------
    A heading that wipes in from behind its own baseline as it reaches the viewport. The mask is what
    makes it a reveal rather than a slide: the text moves up inside a box clipped to its own line
@@ -3759,21 +3737,35 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
    Nothing is hidden in the narrow state. Both panels carry all of their text at 50/50, and the
    widening is emphasis alone, which is what makes it safe for it to be a hover effect at all,
    since a reader who never hovers and never focuses misses nothing. */
-.split-continuum {
+/* **The variable is declared on `main`, not on the field**, revised 2026-08-26. The converging wedge
+   that ends the section is a sibling of the field rather than a child of it, and it has to arrive at
+   the same seam, so both need to inherit the same number from somewhere they share. `main` is the
+   nearest such thing. On a page with no `.split-side` in it the `:has()` tests never match and the
+   declaration costs nothing.
+
+   **The lean is gated on motion**, added 2026-08-26. It is half a page of colour sliding under fixed
+   text, driven by a pointer rather than by a scroll, and a reader who has asked for less movement
+   has asked for exactly this. Under either control the seam sits at 50% and stays there. Both panels
+   still carry all of their text at 50/50, so nothing is lost, which is the same reason the effect
+   was safe to put on hover at all. */
+main {
   --split-pos: 50%;
+}
+
+.split-continuum {
   position: relative;
   isolation: isolate;
   color: var(--color-text-on-dark);
 }
 
-@media (min-width: 860px) {
-  .split-continuum:has(.split-side--tenant:hover),
-  .split-continuum:has(.split-side--tenant:focus-within) {
+@media (min-width: 860px) and (prefers-reduced-motion: no-preference) {
+  body:not(:has(.reduce-motion-input:checked)) main:has(.split-side--tenant:hover),
+  body:not(:has(.reduce-motion-input:checked)) main:has(.split-side--tenant:focus-within) {
     --split-pos: 62%;
   }
 
-  .split-continuum:has(.split-side--owner:hover),
-  .split-continuum:has(.split-side--owner:focus-within) {
+  body:not(:has(.reduce-motion-input:checked)) main:has(.split-side--owner:hover),
+  body:not(:has(.reduce-motion-input:checked)) main:has(.split-side--owner:focus-within) {
     --split-pos: 38%;
   }
 }
@@ -3793,7 +3785,17 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
   flex: none;
   width: var(--split-pos);
   background: var(--color-split-tenant);
-  transition: width var(--motion-slow) var(--motion-ease-smooth);
+}
+
+/* The three things that carry the seam all animate or none of them do, and under reduced motion
+   none of them do — the seam simply stays at 50%, so there is nothing to animate anyway. Declared
+   together so a fourth cannot be added later that slides when the others hold still. */
+@media (prefers-reduced-motion: no-preference) {
+  body:not(:has(.reduce-motion-input:checked)) .split-continuum__bg span:first-child,
+  body:not(:has(.reduce-motion-input:checked)) .split-side,
+  body:not(:has(.reduce-motion-input:checked)) .split-converge__side--tenant {
+    transition: width var(--motion-slow) var(--motion-ease-smooth);
+  }
 }
 
 .split-continuum__bg span:last-child {
@@ -3846,7 +3848,6 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 @media (min-width: 860px) {
   .split-side {
     flex-wrap: nowrap;
-    transition: width var(--motion-slow) var(--motion-ease-smooth);
   }
 
   .split-side--tenant {
