@@ -1790,6 +1790,27 @@ rule at all, so an h3 inside an article sat exactly as far from the paragraph ab
 paragraph would have. The two are the same width and the same position since 2026-08-26, so they are
 one selector now.
 
+**Space alone was not dividing the sections, 2026-08-26.** The rhythm above opened the gaps and the
+gaps were not enough: at the full width of a section, 96px of white between two blocks of text reads
+as a wide gap in one column rather than as the end of one part and the start of the next. Four
+things divide a page now, and only the first is whitespace.
+
+| Division | Where |
+|---|---|
+| A rule across the column above the heading | Every h2 that starts a new named section, in either reading column, except the first in a column |
+| A tinted card | The sources block at the foot of every article, which is provenance rather than advice and is read by somebody checking rather than somebody doing |
+| A full-bleed band | A story stack, a `.band`, the Renter basics section, the split field — the treatments that already existed for this |
+| A heavy brand rule down the left | A key point |
+
+**The parts of a page and the parts of an article were never spaced at all.** Two rules were missing
+rather than too small. `.section > * + *` — a page like `/your-rights` is one section holding a run
+of reading columns and key points, and nothing separated those from each other, so a key point's own
+margin was doing all the work and two prose blocks in a row sat flush. And `.improvement > * + *` —
+the rhythm rules reach inside `.improvement-body` and stop at its edges, so an article's opening
+block, its safety card, its body, its story bars and its sources all ran together. The story bars in
+particular began the moment the prose above them ended, with no pause at all before a band that
+takes over the screen.
+
 **A list of prose is a list with no class on it,** which is how the list spacing knows where to
 apply. Every list in the markup that is a component carries the class that makes it one, and every
 list that is just a list carries nothing. That matters because several of the components space their

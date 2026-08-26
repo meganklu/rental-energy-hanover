@@ -342,12 +342,26 @@
 }
 
 /* ---------- Sources block ---------- */
+/* A card since 2026-08-26, where it was a hairline rule and some smaller text. It is a different
+   kind of thing from the article above it — provenance rather than advice, read by somebody
+   checking rather than somebody doing — and on a page whose parts are now divided by rules of their
+   own, a rule was no longer saying anything the other rules were not. A tinted panel says it is not
+   more article. */
 .sources-block {
-  margin-block: var(--space-7);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--color-border);
+  margin-block: var(--space-9);
+  padding: var(--space-5) var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   font-size: var(--text-small);
   color: var(--color-text-muted);
+}
+
+/* It carries `.improvement-body` as well, for the prose rhythm inside it, and that brings the
+   96px above a section heading with it. Inside a panel this size the heading is the top of the
+   panel, not the start of a new section of the page. */
+.sources-block.improvement-body > h2 {
+  margin-top: 0;
 }
 
 .sources-block h2, .sources-block h3 {
@@ -379,7 +393,14 @@
   grid-template-areas: "text" "media";
   gap: var(--space-6);
   align-items: center;
-  margin-bottom: var(--space-9);
+}
+
+/* The parts of an article: the opening block, a safety card, the body, the story bars, the sources.
+   Nothing had ever spaced these from each other — the rhythm rules reach inside `.improvement-body`
+   and stop at its edges — so the story bars in particular began the moment the prose above them
+   ended, with no pause before a band that takes over the screen. Added 2026-08-26. */
+.improvement > * + * {
+  margin-top: var(--space-9);
 }
 
 @media (min-width: 900px) {
@@ -586,6 +607,14 @@
    Gated on width, on height, and on both reduced-motion controls, unchanged. Pinned bands on a
    short window are bands covering the thing the reader is trying to read, and a reader who asked
    for less movement asked for exactly this. Outside the gate the bars are ordinary stacked bands. */
+/* Room before and after, added 2026-08-26. A story stack is the one thing on a page that takes over
+   the whole screen, and it was starting flush against the paragraph above it. Margins collapse
+   against the article's own sibling spacing rather than adding to it, so this is the floor rather
+   than a second helping: a stack used outside an article gets the same pause. */
+.story-stack {
+  margin-block: var(--space-9);
+}
+
 /* The stack carries the ground and the bars sit on it. While the second bar is climbing into place
    there is a gap between the two, and against the page's own white that gap read as a hole punched
    between two dark bands rather than as one band arriving. On the stack's own dark it reads as more
@@ -3982,6 +4011,14 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 }
 
 /* ---------- Utility layout ---------- */
+/* The parts of a section, added 2026-08-26. A page like /your-rights is one `.section` holding a
+   run of reading columns and key points, and nothing was spacing those from each other — each block
+   ended and the next began. A key point's own margin was doing all the work, so two prose blocks in
+   a row sat flush together. */
+.section > * + * {
+  margin-top: var(--space-8);
+}
+
 /* Opened up 2026-08-26, and this is the number that separates one section of a page from the next.
    Two adjacent sections each contribute their own padding, so the gap between them is twice this.
    It steps up on a wide window for the same reason the band below does: the wider the measure, the
@@ -4060,9 +4097,21 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
   margin-top: var(--space-6);
 }
 
+/* A rule above the heading, added 2026-08-26. Space alone was not dividing these: at the full width
+   of a section, 96px of white between two blocks of text reads as a wide gap in one column rather
+   than as the end of one part and the start of another. A line across the column says it outright.
+
+   Not on the first heading in a column, which has the block above it to divide from — either the
+   opening of the page or a band, both of which already separate themselves. */
 .content-column > h2,
 .improvement-body > h2 {
   margin-top: var(--space-9);
+}
+
+.content-column > h2:not(:first-child),
+.improvement-body > h2:not(:first-child) {
+  padding-top: var(--space-6);
+  border-top: 2px solid var(--color-border);
 }
 
 .content-column > h3,
