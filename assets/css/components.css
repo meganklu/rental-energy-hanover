@@ -4872,6 +4872,326 @@ body:has(.motion-loop) .motion-fab__pause {
    page title is alone on its band with nothing competing for attention, which is the same reason
    a story bar's heading gets that size. The lede under it is optional and keeps the reading
    measure even though the block is centered. */
+/* ---------- Page hero, added 2026-08-26 ----------
+   The home page opens on a doormat and /improvements opens on a door. Everything else reachable
+   from the nav opened on a centered title over white, which made those pages read as the reference
+   material behind the two that had been designed. Three of them have a drawn scene now, in the same
+   pen as the doll house (§3.2): flat shapes, one outline weight, the toy palette for anything that
+   is a physical object and the site's greens for anything that is a mark on it.
+
+   The layout is one grid: words on the left, scene on the right, stacked below 800px with the scene
+   first so a phone still opens on the drawing. The scene never carries information — every one of
+   them is `aria-hidden`, and whatever it says is said in words somewhere on the page — which is
+   what makes it safe for the scenes to be the part that moves.
+
+   Motion is scroll-driven and gated the site's three ways (§7): `@supports (animation-timeline:
+   view())`, `prefers-reduced-motion`, the reduce-motion switch. Every scene's resting state is its
+   finished state, so a timeline that never advances leaves a complete drawing. */
+.page-hero {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.page-hero__inner {
+  display: grid;
+  gap: var(--space-6);
+  justify-items: center;
+  padding-block: var(--space-7);
+  text-align: center;
+}
+
+.page-hero h1 {
+  font-size: var(--text-display);
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.page-hero .lede {
+  max-width: var(--measure);
+  margin: var(--space-4) auto 0;
+  font-size: var(--text-h4);
+  color: var(--color-text-muted);
+}
+
+.page-hero__scene {
+  width: min(100%, 15rem);
+  order: -1;
+}
+
+.page-hero__scene svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+@media (min-width: 800px) {
+  .page-hero__inner {
+    grid-template-columns: 1.35fr 1fr;
+    align-items: center;
+    gap: var(--space-8);
+    padding-block: var(--space-8);
+    text-align: left;
+  }
+
+  .page-hero__text {
+    justify-self: start;
+  }
+
+  .page-hero .lede {
+    margin-inline: 0;
+  }
+
+  .page-hero__scene {
+    order: 0;
+    width: min(100%, 19rem);
+    justify-self: center;
+  }
+}
+
+/* The title arrives from the side and the scene from the other, at different rates, which is the
+   two-level parallax the rest of the site's scroll motion uses (§7). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 800px) {
+    body:not(:has(.reduce-motion-input:checked)) .page-hero__text {
+      animation: page-hero-text linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 60%;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .page-hero__scene {
+      animation: page-hero-scene linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 70%;
+    }
+  }
+}
+
+@keyframes page-hero-text {
+  from { transform: translateY(0); }
+  to { transform: translateY(-2rem); }
+}
+
+@keyframes page-hero-scene {
+  from { transform: translateY(2.5rem); }
+  to { transform: translateY(-2.5rem); }
+}
+
+/* ---------- Hero scene: the thermometer, /your-rights ---------- */
+.thermo {
+  stroke: var(--toy-outline);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.thermo__wall {
+  stroke: var(--color-border);
+  stroke-width: 2;
+}
+
+.thermo__wall rect {
+  fill: var(--toy-wall);
+}
+
+.thermo__tube,
+.thermo__bulb {
+  fill: var(--toy-white);
+}
+
+/* The column and the bulb are the one warm thing in the drawing, which is the whole subject. */
+.thermo__mercury,
+.thermo__mercury-bulb {
+  fill: var(--toy-rose);
+  stroke: none;
+}
+
+/* Grows from the bulb rather than from the middle. `transform-box: fill-box` is what makes a
+   percentage origin mean anything on an SVG shape. */
+.thermo__mercury {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+.thermo__ticks {
+  stroke: var(--toy-outline);
+  stroke-width: 2;
+}
+
+.thermo__mark path {
+  stroke: var(--color-accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 7 6;
+}
+
+.thermo__mark text {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  fill: var(--color-text);
+  stroke: none;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body:not(:has(.reduce-motion-input:checked)) .thermo__mercury {
+      animation: thermo-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 55%;
+    }
+  }
+}
+
+/* Ends at full height, which is the column standing at the 65°F line — so the drawing frozen at any
+   point is a thermometer reading something, and frozen at the end it is the page's own number. */
+@keyframes thermo-rise {
+  from { transform: scaleY(0.18); }
+  to { transform: scaleY(1); }
+}
+
+/* ---------- Hero scene: the applications, /programs ---------- */
+.forms {
+  stroke: var(--toy-outline);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.forms__sheet > rect:first-child {
+  fill: var(--toy-white);
+}
+
+.forms__rule,
+.forms__sign {
+  stroke: var(--color-border-strong);
+  stroke-width: 2;
+}
+
+.forms__sign {
+  stroke-dasharray: 6 5;
+}
+
+.forms__chip {
+  stroke: none;
+}
+
+/* One chip per permission state, in the same three colors the badges on the entries below use. */
+.forms__sheet--back .forms__chip { fill: var(--color-warning-bg); }
+.forms__sheet--mid .forms__chip { fill: var(--color-info-bg); }
+.forms__sheet--front .forms__chip { fill: var(--color-success-bg); }
+
+.forms__tick {
+  stroke: var(--color-accent);
+  stroke-width: 4;
+}
+
+.forms__sheet {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+/* The resting state is the fanned one. Closed is where the animation starts, not where it ends, so
+   a browser that never runs it shows three distinguishable sheets rather than one. */
+.forms__sheet--back { transform: rotate(-9deg) translateX(-14px); }
+.forms__sheet--mid { transform: rotate(-3deg) translateX(-4px); }
+.forms__sheet--front { transform: rotate(5deg) translateX(10px); }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body:not(:has(.reduce-motion-input:checked)) .forms__sheet {
+      animation: forms-fan linear both;
+      animation-timeline: view();
+      animation-range: entry 15% cover 50%;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .forms__sheet--back {
+      animation-name: forms-fan-back;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .forms__sheet--mid {
+      animation-name: forms-fan-mid;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .forms__sheet--front {
+      animation-name: forms-fan-front;
+    }
+  }
+}
+
+@keyframes forms-fan-back {
+  from { transform: rotate(0deg) translateX(0); }
+  to { transform: rotate(-9deg) translateX(-14px); }
+}
+
+@keyframes forms-fan-mid {
+  from { transform: rotate(0deg) translateX(0); }
+  to { transform: rotate(-3deg) translateX(-4px); }
+}
+
+@keyframes forms-fan-front {
+  from { transform: rotate(0deg) translateX(0); }
+  to { transform: rotate(5deg) translateX(10px); }
+}
+
+/* ---------- Hero scene: the clipboard, /checklist ---------- */
+.clipboard {
+  stroke: var(--toy-outline);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.clipboard__board { fill: var(--toy-wood); }
+.clipboard__paper { fill: var(--toy-white); }
+.clipboard__clip { fill: var(--toy-slate-soft); }
+.clipboard__box { fill: var(--toy-white); stroke-width: 2.5; }
+
+.clipboard__rule {
+  stroke: var(--color-border-strong);
+  stroke-width: 2;
+}
+
+.clipboard__tick {
+  stroke: var(--color-accent);
+  stroke-width: 3.5;
+  /* One length for all three, longer than any of them, so the dash offset can be written once. */
+  stroke-dasharray: 40;
+  stroke-dashoffset: 0;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__tick {
+      animation: tick-draw linear both;
+      animation-timeline: view();
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(2) .clipboard__tick {
+      animation-range: entry 20% cover 42%;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(3) .clipboard__tick {
+      animation-range: entry 30% cover 52%;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .clipboard__row:nth-of-type(4) .clipboard__tick {
+      animation-range: entry 40% cover 62%;
+    }
+  }
+}
+
+/* Draws itself in one stroke. The finished state is the tick fully drawn, so the fallback and the
+   frozen state are both a checked box rather than an empty one. */
+@keyframes tick-draw {
+  from { stroke-dashoffset: 40; }
+  to { stroke-dashoffset: 0; }
+}
+
 .page-head {
   text-align: center;
   margin-bottom: var(--space-7);

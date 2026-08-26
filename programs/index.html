@@ -50,14 +50,48 @@
 
 <main id="main">
 
-  <section class="section page-shell">
-    <div class="page-head">
-      <h1>Programs</h1>
-      <p class="lede">
-        Most energy programs are written for whoever owns the building. Here is which ones reach a
-        renter, and what your landlord has to sign for the rest.
-      </p>
+  <!-- Three applications, added 2026-08-26. A program is a form somebody signs, and the question
+       this page answers is which of them a renter can sign themselves. The three fan apart as the
+       reader scrolls, top one first, and each carries the color of one of the three permission
+       badges the entries below use. Decorative and aria-hidden: the same three states are written
+       out on every program in the list. -->
+  <section class="page-hero page-hero--programs full-bleed" aria-labelledby="programs-h">
+    <div class="page-hero__inner page-shell">
+      <div class="page-hero__text">
+        <h1 id="programs-h">Programs</h1>
+        <p class="lede">
+          Most energy programs are written for whoever owns the building. Here is which ones reach a
+          renter, and what your landlord has to sign for the rest.
+        </p>
+      </div>
+
+      <div class="page-hero__scene" aria-hidden="true">
+        <svg class="forms" viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+          <g class="forms__sheet forms__sheet--back">
+            <rect x="40" y="30" width="180" height="230" rx="10"/>
+            <rect class="forms__chip" x="60" y="52" width="76" height="18" rx="9"/>
+            <path class="forms__rule" d="M60 96 h140 M60 122 h140 M60 148 h104"/>
+            <path class="forms__sign" d="M60 214 h80"/>
+          </g>
+          <g class="forms__sheet forms__sheet--mid">
+            <rect x="40" y="30" width="180" height="230" rx="10"/>
+            <rect class="forms__chip" x="60" y="52" width="92" height="18" rx="9"/>
+            <path class="forms__rule" d="M60 96 h140 M60 122 h140 M60 148 h122"/>
+            <path class="forms__sign" d="M60 214 h80"/>
+          </g>
+          <g class="forms__sheet forms__sheet--front">
+            <rect x="40" y="30" width="180" height="230" rx="10"/>
+            <rect class="forms__chip" x="60" y="52" width="68" height="18" rx="9"/>
+            <path class="forms__rule" d="M60 96 h140 M60 122 h140 M60 148 h90"/>
+            <path class="forms__sign" d="M60 214 h80"/>
+            <path class="forms__tick" d="M150 208 l14 14 l26 -34"/>
+          </g>
+        </svg>
+      </div>
     </div>
+  </section>
+
+  <section class="section page-shell">
 
     <div class="info-panel info-panel--reverse">
       <figure class="info-panel__media">
