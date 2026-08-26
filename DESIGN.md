@@ -577,11 +577,24 @@ what "it shakes" described. And four pixels is small enough that the entire trav
 that regime: there is no part of the move that is unambiguously a move.
 
 **So the response is paint, and there are two rules now.** Nothing that is part of the hover target
-moves, and nothing on the drawing changes geometry. The drawing takes a shadow; the name plate
-lights up, dark accent with white text on hover. A plate is a box: its background and its text color
-animate smoothly at any size with no geometry anywhere in it. The shadow itself is not transitioned,
-because a filter change on an SVG is a repaint of the drawing and forty of them is a lot to spend on
-something that reads perfectly well arriving at once, the way a link's underline does.
+moves, and nothing on the drawing changes geometry. The name plate lights up, dark accent with white
+text. A plate is a box: its background and its text color animate smoothly at any size with no
+geometry anywhere in it.
+
+*Pass four* took the last thing off the drawing. The lift was replaced by an untransitioned
+`drop-shadow` on the SVG, and it was still enough. The report that settled it was precise: hovering
+the name plate is smooth and hovering the object is not. Both put the link in exactly the same
+state, so the difference could not be in the styling — it had to be in what the pointer was over.
+Applying a filter to an SVG makes the browser render it through a separate buffer, and a
+`non-scaling-stroke` resolves against that buffer's coordinate system rather than the screen's, so
+the outline's weight can visibly snap when the filter turns on and again when it turns off. Over the
+plate the pointer is nowhere near the drawing and there is nothing to see; over the object it is the
+thing being looked at.
+
+**The drawing does not respond to the pointer at all now.** The plate is the whole response, and it
+sits directly under (or over) the thing being pointed at. That is the fourth version of this effect,
+and the rule it leaves behind is the general one: in this pen, a drawing is a picture, and pictures
+do not react. Their labels do.
 
 The second rule is also what rules out the other half of the report, "it moves in and out multiple
 times". That is hover oscillation, and it has exactly one mechanism: the thing being hovered travels
@@ -597,10 +610,12 @@ inside it did.
 
 **The selected glow stopped breathing at the same time**, for the same kind of reason. It was an
 infinite `filter` animation, so one drawing repainted forever while a reader hovered every other
-drawing on the page. Selected now carries the white glow, a plate filled in the light brand green
-where hover's is dark accent, and the info bar under the house naming the piece. The plate is what
-keeps the two states from being read as each other, and the info bar is the signal that is not a
-color at all.
+drawing on the page. Selected carries the white glow, its name set heavier than every other name on
+the wall, and the info bar under the house naming the piece. The plate was filled in the light brand
+green for a few hours on 2026-08-26 and that came straight back out: a filled plate on the wall
+reads as a second thing competing with the glow it is meant to support, and it made "open" and
+"under the pointer" look like two versions of one state. Weight is the signal that is not a color,
+and the info bar is the one that is not visual at all.
 
 **An object that does not apply is scenery, revised 2026-08-26.** Personalization used to set
 `hidden` on every hotspot the reader's heat type or who-pays answer ruled out, which took the object

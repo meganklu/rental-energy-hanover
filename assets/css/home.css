@@ -804,18 +804,22 @@
    which is what "it moves in and out multiple times" describes and is the only mechanism by which
    that can happen.
 
-   The shadow is not transitioned. It is the one thing left touching the SVG, and a filter change on
-   an SVG is a repaint of the drawing; at 200ms that is forty repaints for an effect that reads
-   perfectly well arriving at once, the way a link's underline does. The plate carries the movement
-   the eye actually follows. */
+   That left one thing still changing on the drawing itself, an untransitioned `drop-shadow`, and it
+   was still enough. The report that settled it was precise: hovering the name plate is smooth and
+   hovering the object is not. Both put the link in exactly the same state, so the difference cannot
+   be in the styling — it has to be in what the pointer is over. Applying a filter to an SVG makes
+   the browser render it through a separate buffer, and a `non-scaling-stroke` resolves against that
+   buffer's coordinate system rather than the screen's, so the outline's weight can visibly snap the
+   moment the filter turns on and again when it turns off. Over the plate the pointer is nowhere
+   near the drawing and there is nothing to see; over the object it is the thing being looked at.
+
+   So the drawing does not respond to the pointer at all now. The name plate is the whole response:
+   it fills with the accent green and its text turns white, directly underneath the thing being
+   pointed at. Nothing about the SVG changes in any state except selection, which happens once, on a
+   click, and stays. */
 .room-scene .hotspot:hover,
 .room-scene .hotspot:focus-visible {
   z-index: 3;
-}
-
-.room-scene .hotspot:hover .icon,
-.room-scene .hotspot:focus-visible .icon {
-  filter: drop-shadow(0 3px 4px rgba(20, 32, 26, 0.35));
 }
 
 /* The plate is the affordance now, so it has to look like one at rest as well: a name on a plate
@@ -851,10 +855,9 @@
    had. It does not pulse: an infinite `filter` animation repaints one drawing for as long as it is
    on screen, including while the reader is hovering every other drawing on the page.
 
-   Two more signals beside the glow, and neither is a color on its own. The plate is filled where
-   every other plate on the wall is not, in the light brand green rather than hover's dark accent, so
-   the two states cannot be read as each other. And the info bar under the house is open, naming the
-   piece in words. */
+   Two more signals beside the glow, and neither of them is a color. The name is set heavier than
+   every other name on the wall, and the info bar under the house is open, naming the piece in
+   words. */
 .room-scene .hotspot--selected {
   box-shadow: none;
   outline: none;
@@ -867,12 +870,13 @@
           drop-shadow(0 0 18px var(--color-guide-glow));
 }
 
-.room-scene .hotspot--selected .hotspot__label,
-.room-scene .hotspot--selected:hover .hotspot__label,
-.room-scene .hotspot--selected:focus-visible .hotspot__label {
-  background: var(--color-surface-brand);
-  color: var(--color-text);
-  box-shadow: 0 0 0 2px var(--color-accent);
+/* The selected piece's name is set heavier than the others rather than sitting on a tinted plate.
+   The tint was removed 2026-08-26 on request: a filled plate on the wall reads as a second thing
+   competing with the glow it is meant to support, and it made "open" and "under the pointer" look
+   like two versions of the same state. Weight is the signal that is not a color; the glow and the
+   info bar naming the piece are the other two. */
+.room-scene .hotspot--selected .hotspot__label {
+  font-weight: 700;
 }
 
 /* Seen already: the piece fades back rather than out. What is left in full color is what has not
@@ -888,9 +892,18 @@
 
 /* Except the one that is open. Fading back is how a piece says "you have already read this"; the
    piece whose info bar is on screen right now is the opposite of that, and dimming it the moment it
-   was pressed made the glow look like it was lighting something up on its way out. */
+   was pressed made the glow look like it was lighting something up on its way out.
+
+   The name goes with it. Opening a piece is what marks it visited, so the piece that is open is
+   always also a visited one, and the two rules meet on the same element at the same specificity —
+   with `--visited` declared second and winning. Every open piece would have taken the lighter name
+   meant for one already read. */
 .room-scene .hotspot--visited.hotspot--selected {
   opacity: 1;
+}
+
+.room-scene .hotspot--visited.hotspot--selected .hotspot__label {
+  font-weight: 700;
 }
 
 /* The guide, and why it is two signals. `:has()` keys off the flag dollhouse.js already places on
