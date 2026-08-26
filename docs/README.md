@@ -20,9 +20,9 @@ Fill them roughly in this order — later documents depend on decisions made in 
 | # | Document | Purpose | Status |
 |---|---|---|---|
 | 1 | [project-brief.md](project-brief.md) | Why this exists, who it serves, what is in and out of scope | ● Complete |
-| 2 | [research-plan.md](research-plan.md) | User interviews and usability testing with student renters | ◐ Draft |
-| 3 | [interviews.md](interviews.md) | Raw notes + synthesis from Round 1 interviews | ◐ Draft |
-| 4 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ◐ Draft |
+| 2 | [research-plan.md](research-plan.md) | User interviews and usability testing with student renters | ● Complete |
+| 3 | [interviews.md](interviews.md) | Raw notes + synthesis from Round 1 interviews | ● Complete |
+| 4 | [audience.md](audience.md) | Personas, renter lifecycle, what students actually don't know | ● Complete |
 | 5 | [content-strategy.md](content-strategy.md) | Topic inventory, sourcing rules, voice, disclaimers | ● Complete |
 | 6 | [features.md](features.md) | Interactive features, specs, acceptance criteria, priority | ● Complete |
 | 7 | [DESIGN.md](../DESIGN.md) | Visual system, IA, sitemap, components | ● Complete |

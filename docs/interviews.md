@@ -1,6 +1,6 @@
 # Interviews
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-19 · **Owner:** Ryan
+> **Status:** ● Complete · **Last updated:** 2026-08-19 · **Owner:** Ryan
 
 Raw notes from Round 1 discovery interviews. The plan, method, and question guide live in
 [research-plan.md](research-plan.md) §2 — this file is only for capture and synthesis.

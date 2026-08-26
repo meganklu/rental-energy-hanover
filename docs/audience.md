@@ -1,6 +1,6 @@
 # Audience
 
-> **Status:** ◐ Draft · **Last updated:** 2026-08-26 · **Owner:** Ryan
+> **Status:** ● Complete · **Last updated:** 2026-08-26 · **Owner:** Ryan
 
 <!-- GUIDANCE: The core insight driving this project is that first-time renters don't know
      what they don't know. This document is where you write down specifically what that is.
