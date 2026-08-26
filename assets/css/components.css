@@ -3155,13 +3155,6 @@ body:has(.motion-loop) .motion-fab__pause {
 .room--kitchen { grid-area: kitchen; background: var(--color-bg); }
 .room--basement { grid-area: basement; background: var(--color-bg); min-height: 100px; }
 
-.room__heading {
-  font-size: var(--text-small);
-  font-family: var(--font-display);
-  font-weight: 600;
-  margin: 0 0 var(--space-2);
-}
-
 .room-hotspots {
   display: flex;
   flex-wrap: wrap;
@@ -3280,9 +3273,6 @@ body:has(.motion-loop) .motion-fab__pause {
   transition: min-height var(--motion-room) var(--motion-ease);
 }
 
-.dollhouse:has(.room:target) .room:target .room__heading {
-  font-size: var(--text-h3);
-}
 
 .dollhouse:has(.room:target) .room:target .room-hotspots {
   display: flex;
@@ -3319,44 +3309,49 @@ body:has(.motion-loop) .motion-fab__pause {
   display: block;
   flex: 1 1 auto;
   min-height: 250px;
-  border-radius: 2px;
   /* Where the back wall meets the floor. Named because everything is placed against it: a piece at
      this height stands against the wall and a lower one stands forward of it, which is the only
      depth cue a flat elevation gets. */
   --room-floor: 15%;
-  /* Cream wall, warm wood floor, and a skirting board where they meet. The wall carries a very
-     faint print, which is what the reference houses have and what stops a large flat cream field
-     reading as unpainted card. A vertical stripe was tried first and read as a barcode at the size
-     a room actually renders; a sparse dot at low contrast survives the same test, which is the
-     lesson §3.1 records about the hero mat's coir texture. */
-  background:
-    radial-gradient(var(--toy-wall-print) 1px, transparent 1.2px) 0 0 / 16px 16px,
-    var(--toy-wall);
-  overflow: hidden;
+  --room-floor-fill: var(--toy-floor);
+  --room-floor-line: var(--toy-floor-dark);
+  /* Not clipped, revised 2026-08-26. `overflow: hidden` lived here to hold the painted surfaces
+     inside the room's rounded corners, and it also cut the guide tag off whenever the tag hung past
+     an edge — which on anything standing near the floor it did. The surfaces clip themselves on the
+     layer below now and the scene lets a tag out. Nothing else in a room reaches the boundary:
+     every prop's drawn width is measured against its own room at 1150, 1280 and 1440. */
+  overflow: visible;
 }
 
-/* The wall print belongs on the wall, so the floor gets a plain band painted over it. Cheaper than
-   masking the gradient and it also gives the floor its own soft top edge. */
+/* Wall and floor as one layered background, so the room paints itself inside its own radius without
+   the scene having to clip. Top to bottom in the stack: the floor band with its skirting line, the
+   faint wall print, and the cream wall under both. The print is what the reference houses have and
+   what stops a large flat cream field reading as unpainted card. A vertical stripe was tried first
+   and read as a barcode at the size a room actually renders; a sparse dot at low contrast survives
+   the same test, which is the lesson §3.1 records about the hero mat's coir texture. */
 .room-scene::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: var(--room-floor);
-  background: var(--toy-floor);
-  border-top: 3px solid var(--toy-floor-dark);
+  inset: 0;
+  border-radius: 2px;
+  background:
+    linear-gradient(
+      to top,
+      var(--room-floor-fill) 0 var(--room-floor),
+      var(--room-floor-line) var(--room-floor),
+      var(--room-floor-line) calc(var(--room-floor) + 3px),
+      transparent calc(var(--room-floor) + 3px)
+    ),
+    radial-gradient(var(--toy-wall-print) 1px, transparent 1.2px) 0 0 / 16px 16px,
+    var(--toy-wall);
 }
 
 /* A basement has a concrete floor and one wide room across the bottom of the house, so its floor
    reads as a field rather than as a strip at the share the rooms upstairs use. */
 .room--basement .room-scene {
   --room-floor: 12%;
-}
-
-.room--basement .room-scene::before {
-  background: var(--toy-slate-soft);
-  border-top-color: var(--toy-slate);
+  --room-floor-fill: var(--toy-slate-soft);
+  --room-floor-line: var(--toy-slate);
 }
 
 /* The house is built like the reference: each room is a box with a heavy wood beam under it, the
@@ -3413,7 +3408,7 @@ body:has(.motion-loop) .motion-fab__pause {
      measured to its top edge, and `--b` is how far above the floor it stands, measured to its feet.
      Centering on the vertical too was the first pass and it meant a ceiling light placed near the
      top of the wall hung off the top of the room by half its own height. */
-  transform: translateX(-50%) scale(var(--hotspot-scale, 1));
+  transform: translateX(-50%);
   padding: 0;
   border: 0;
   border-radius: 6px;
@@ -3489,29 +3484,54 @@ body:has(.motion-loop) .motion-fab__pause {
 
 /* Hover and keyboard focus lift the piece off the wall, which is the site's own tactile-hover
    response (§5.1) applied to a drawing rather than to a button. A drop shadow rather than a box
-   shadow, because the thing being lifted is an outline and not a rectangle. */
+   shadow, because the thing being lifted is an outline and not a rectangle.
+
+   The lift and the glow are on the drawing rather than on the link, fixed 2026-08-26. On the link
+   they also spread around the name plate and the guide tag, which are text on a plate and have no
+   business glowing, and they scaled the name up along with the piece. The link now carries only its
+   position; everything that responds to a pointer happens inside `.hotspot .icon`.
+
+   `transform-origin` is declared for both kinds of piece in every state for the same reason. It
+   used to appear once, on a selected standing piece, so hovering a bed grew it from its middle and
+   sank it through the floorboards on the way up. A piece standing on the floor grows from its feet
+   and a wall-hung one from its middle, whether it is hovered, focused, selected or all three. */
+.room-scene .hotspot .icon {
+  transform-origin: center;
+  /* Declared rather than left at `none`, so the hover transition has a filter to interpolate from
+     and starts at the shadow's own zero rather than at whatever the engine substitutes. */
+  filter: drop-shadow(0 0 0 rgba(20, 32, 26, 0));
+}
+
+.room-scene .hotspot--stands .icon {
+  transform-origin: bottom center;
+}
+
 .room-scene .hotspot:hover,
 .room-scene .hotspot:focus-visible {
   z-index: 3;
+}
+
+.room-scene .hotspot:hover .icon,
+.room-scene .hotspot:focus-visible .icon {
   filter: drop-shadow(0 3px 4px rgba(20, 32, 26, 0.3));
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot {
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot .icon {
     transition: transform var(--motion-base) var(--motion-ease),
       filter var(--motion-base) var(--motion-ease);
   }
 
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:hover,
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:focus-visible {
-    --hotspot-scale: 1.08;
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:hover .icon,
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:focus-visible .icon {
+    transform: scale(1.08);
   }
 
   /* Hovering the piece whose info bar is already open has to grow it, not shrink it back to the
      ordinary hover size. */
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:hover,
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:focus-visible {
-    --hotspot-scale: 1.18;
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:hover .icon,
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:focus-visible .icon {
+    transform: scale(1.18);
   }
 }
 
@@ -3521,28 +3541,32 @@ body:has(.motion-loop) .motion-fab__pause {
    than as the object being lit up. `drop-shadow` follows the drawn edge instead, which is the same
    reason hover uses it.
 
-   Two shadows: a tight one to thicken the outline and a wide one to spread. Size is the second
-   signal and it is not a color: the piece holds a scale of its own while it is selected, above
-   hover's, so a reader who cannot separate the glow from the wall still sees which one grew. The
-   third is that the info bar under the house is open and names it. */
+   Three shadows: a tight one to thicken the outline and two wider ones to spread. White since
+   2026-08-26, per the token's own note — a green light on a green-ish drawing was the one reading
+   it should least have had. Size is the second signal and it is not a color: the piece holds a
+   scale of its own while it is selected, above hover's, so a reader who cannot separate the glow
+   from the wall still sees which one grew. The third is that the info bar under the house is open
+   and names it. */
 .room-scene .hotspot--selected {
   box-shadow: none;
   outline: none;
   z-index: 3;
-  filter: drop-shadow(0 0 2px var(--color-guide-glow))
-          drop-shadow(0 0 10px var(--color-guide-glow));
-  --hotspot-scale: 1.12;
 }
 
-/* A selected piece that stands on the floor grows from its feet, so it does not sink through the
-   floorboards on the way up. */
-.room-scene .hotspot--stands.hotspot--selected {
-  transform-origin: bottom center;
+.room-scene .hotspot--selected .icon {
+  filter: drop-shadow(0 0 2px var(--color-guide-glow))
+          drop-shadow(0 0 9px var(--color-guide-glow))
+          drop-shadow(0 0 18px var(--color-guide-glow));
+  transform: scale(1.12);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected {
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected .icon {
     animation: hotspot-glow var(--motion-loop) var(--motion-ease-smooth) infinite;
+    /* The loop owns `filter` while it runs, and a transition on the same property under a running
+       animation is what made hovering an open piece snap instead of grow. The transform half of the
+       transition is left alone, since the keyframes below never touch it. */
+    transition: transform var(--motion-base) var(--motion-ease);
   }
 }
 
@@ -3552,12 +3576,31 @@ body:has(.motion-loop) .motion-fab__pause {
 @keyframes hotspot-glow {
   0%, 100% {
     filter: drop-shadow(0 0 2px var(--color-guide-glow))
-            drop-shadow(0 0 10px var(--color-guide-glow));
+            drop-shadow(0 0 9px var(--color-guide-glow))
+            drop-shadow(0 0 18px var(--color-guide-glow));
   }
   50% {
     filter: drop-shadow(0 0 3px var(--color-guide-glow))
-            drop-shadow(0 0 18px var(--color-guide-glow));
+            drop-shadow(0 0 15px var(--color-guide-glow))
+            drop-shadow(0 0 26px var(--color-guide-glow));
   }
+}
+
+/* Not for this reader: the piece stays in the room and stops being a control, added 2026-08-26.
+   Personalization used to set `hidden` on anything the stored heat type or who-pays answer ruled
+   out, which left a gap in the furniture where a washer or a radiator had been. `dollhouse.js`
+   takes the `href` off instead, so it is neither a link nor focusable, and marks it `aria-hidden`,
+   so it is out of the accessibility tree as well. All that is left here is making it look like the
+   scenery it now is: no name plate, nothing under the pointer, and the weight the props around it
+   carry. The counts and the guided order skip it exactly as they skipped a hidden one. */
+.room-scene .hotspot--inactive {
+  pointer-events: none;
+  opacity: 0.72;
+  z-index: 0;
+}
+
+.room-scene .hotspot--inactive .hotspot__label {
+  display: none;
 }
 
 /* Seen already: the piece fades back rather than out. What is left in full color is what has not
@@ -3578,24 +3621,28 @@ body:has(.motion-loop) .motion-fab__pause {
   opacity: 1;
 }
 
-/* The guide, and why it is three signals. `:has()` keys off the flag dollhouse.js already places on
+/* The guide, and why it is two signals. `:has()` keys off the flag dollhouse.js already places on
    whichever piece is next, so the pointer needs no new JavaScript at all. The tag's own words
-   ("Start here", "Next") are the first signal, the arrowhead aimed down at the piece is the second,
-   and the glow is the third. Only the glow is a color. */
+   ("Start here", "Next") are the first signal and the arrowhead aimed down at the piece is the
+   second. Neither is a color.
+
+   A ring and a plate-colored fill used to sit behind the piece as a third. Both are gone as of
+   2026-08-26: a rectangle drawn around a lamp is the same mistake the selected state had already
+   been corrected for, and it read as a box that had appeared beside the object rather than as the
+   object being pointed at. */
 .room-scene .hotspot:has(.hotspot__badge-flag) {
   z-index: 2;
-  box-shadow: 0 0 0 5px var(--color-guide-halo);
-  background: var(--color-room-plate);
 }
 
-/* The flag is a tag on the piece rather than a badge inside its name, so it does not push the name
-   onto a second line and so it reads as a pointer aimed at something.
+/* The tag is always above the piece with its arrow pointing down, fixed 2026-08-26.
 
-   Which side it goes on follows the name, revised 2026-08-26. A wall-hung piece carries its name
-   underneath, so the tag goes above and its arrowhead points down. A piece standing on the floor
-   carries its name above (there is no floor to put it on), so the tag goes below and the arrowhead
-   points up. Before this the tag was inside the name plate and measured against it, which on every
-   wall-hung piece landed the tag and its arrow across the drawing itself. */
+   It used to go opposite the name — below a piece standing on the floor, since that piece carries
+   its name above it — which was right about collisions and wrong about the room's edges. On the
+   space heater and the water heater "below" was past the bottom of the room. There is only one rule
+   now, and where it lands depends on what the tag is a child of. On a wall-hung piece the tag is a
+   child of the link and sits above the drawing, with the name below it. On a piece standing on the
+   floor `dollhouse.js` appends it inside the name plate instead, so it stacks above the name that
+   is already above the drawing. Neither can reach the floor line. */
 .room-scene .hotspot__badge-flag {
   position: absolute;
   bottom: calc(100% + 9px);
@@ -3605,9 +3652,10 @@ body:has(.motion-loop) .motion-fab__pause {
   white-space: nowrap;
 }
 
-.room-scene .hotspot--stands .hotspot__badge-flag {
-  bottom: auto;
-  top: calc(100% + 9px);
+/* Measured against the name plate rather than the drawing, since that is what it hangs off on a
+   standing piece. The plate is `position: absolute`, so it is already the containing block. */
+.room-scene .hotspot__label > .hotspot__badge-flag {
+  bottom: calc(100% + 7px);
 }
 
 .room-scene .hotspot__badge-flag::after {
@@ -3619,13 +3667,6 @@ body:has(.motion-loop) .motion-fab__pause {
   border: 5px solid transparent;
   border-top-color: var(--color-accent);
   border-bottom: 0;
-}
-
-.room-scene .hotspot--stands .hotspot__badge-flag::after {
-  top: auto;
-  bottom: 100%;
-  border-top: 0;
-  border-bottom: 5px solid var(--color-accent);
 }
 
 /* The pointer nods, so the eye finds it among seventeen pieces of furniture. Gated the way the
@@ -3659,8 +3700,7 @@ body:has(.motion-loop) .motion-fab__pause {
   text-align: center;
 }
 
-/* The room's name, as a plate on the box rather than a heading floating over the furniture. The
-   base rule for this was `.room__heading`, a class the markup has never carried. */
+/* The room's name, as a plate on the box rather than a heading floating over the furniture. */
 .room > h3 {
   margin: 0 0 var(--space-2);
   font-size: var(--text-small);
@@ -3674,6 +3714,12 @@ body:has(.motion-loop) .motion-fab__pause {
 
 .room > h3 a:hover {
   text-decoration: underline;
+}
+
+/* Enlarged, the room's name is a heading on a room rather than a tab on a thumbnail. */
+.dollhouse:has(.room:target) .room:target > h3 {
+  font-size: var(--text-h3);
+  margin-bottom: var(--space-3);
 }
 
 /* Rooms need height for furniture to stand in, which the chip layout never did, and the entry needs
@@ -3699,6 +3745,17 @@ body:has(.motion-loop) .motion-fab__pause {
   max-height: 72vh;
 }
 
+/* Except the basement, fixed 2026-08-26. It runs the whole width of the house and is about four
+   times as wide as it is tall in place, so three by two enlarged it downward: the room grew from
+   250px to about 700px tall and stayed the same width, and since every piece is sized off the
+   room's height the six things standing in it grew by two and a half and ended up on top of each
+   other. Three and a half to one is close enough to the shape it has in the house that one set of
+   placements holds in both, which is the whole reason the placements can be numbers in the markup
+   rather than a second set for the enlarged view. */
+.dollhouse:has(.room--basement:target) .room--basement:target .room-scene {
+  aspect-ratio: 3.4 / 1;
+}
+
 .dollhouse:has(.room:target) .room:target .room-scene .hotspot__label {
   font-size: var(--text-small);
   max-width: 12rem;
@@ -3713,6 +3770,21 @@ body:has(.motion-loop) .motion-fab__pause {
    row instead of on a wall. Below 600px the drawing is hidden altogether and the plain "Everything
    in this house" list takes over, which is a rule this block does not touch. */
 @media (max-width: 1149px) {
+  /* The room is a plain bordered box again, fixed 2026-08-26. The fallback only ever undid the
+     parts of the scene that were on the hotspots, so the papered wall, the wood floor and the heavy
+     beam under the room stayed painted at exactly the width where nothing is standing on them, and
+     a row of green pills sat on a drawing of floorboards. This is the room as it was before the
+     house was furnished, which is what the chip rows were designed to sit in. */
+  .room {
+    border: 2px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+  }
+
+  .room-scene::before {
+    content: none;
+  }
+
   .room-scene {
     display: flex;
     flex-wrap: wrap;

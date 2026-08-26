@@ -497,28 +497,84 @@ is the smallest room drawn. The guided order is untouched, because it was never 
 
 **Guidance needed no JavaScript.** `dollhouse.js` already flags the next unvisited object with "Start
 here" or "Next"; the branch only restyles that flag into a tag on the piece with an arrowhead
-pointing at it, and `:has()` puts a glow on whichever piece is carrying it. Three signals for
-one thing: the words, the pointer's shape, the glow. The tag nods once every five seconds so the eye
-finds it among seventeen pieces of furniture, gated off under reduced motion. The width gate on that
-animation is load-bearing rather than tidiness: the keyframes set `translateX(-50%)` on every frame,
-a running animation beats a declared `transform`, and below the gate the flag would sit pulled half
-its own width over the name it belongs to.
+pointing at it. Two signals for one thing, and neither is a color: the words, and the shape aimed at
+the piece. The tag nods once every five seconds so the eye finds it among seventeen pieces of
+furniture, gated off under reduced motion. The width gate on that animation is load-bearing rather
+than tidiness: the keyframes set `translateX(-50%)` on every frame, a running animation beats a
+declared `transform`, and below the gate the flag would sit pulled half its own width over the name
+it belongs to.
 
-**The tag goes opposite the name, fixed 2026-08-26.** It was written as "a tag above the piece", and
-it was not: `dollhouse.js` appended it inside `.hotspot__label`, so the tag measured itself against
-the name plate rather than against the drawing. A wall-hung piece carries its name underneath, which
-put "above the name" squarely on top of the piece, arrowhead and all. The flag is appended to the
-hotspot now, and the side follows the name: name below the drawing means tag above with the arrow
-pointing down, name above the drawing (anything standing on the floor, §3.2's "placed by its feet")
-means tag below with the arrow pointing up.
+**A token was missing the whole time, fixed 2026-08-26.** `--color-room-plate` was referenced in
+`components.css` from the day the house was furnished and never declared in `tokens.css`, so every
+declaration using it was invalid at computed-value time and dropped, and the names sat directly on
+the wallpaper wherever they fell. That is the exact problem the plate was added to solve. It is
+declared now, and `--color-guide-glow` beside it.
 
-**Two tokens were missing the whole time, fixed 2026-08-26.** `--color-room-plate` and
-`--color-guide-halo` were referenced in `components.css` from the day the house was furnished and
-never declared in `tokens.css`. Both declarations using them were therefore invalid at
-computed-value time and dropped: the names sat directly on the wallpaper wherever they fell, which
-is the exact problem the plate was added to solve, and the glow — the third of the three signals
-above — was never drawn at all. Both are declared now, and the glow the selected piece carries is a
-third token beside them.
+**The guide is the arrow alone, revised 2026-08-26.** Three signals were one too many. The flag
+also put a five-pixel ring and a plate-colored fill behind whichever piece was next, and a rectangle
+drawn around a lamp is the same mistake the selected state had already been corrected for: it read
+as a box that had appeared beside the object rather than as the object being pointed at. The ring
+and the fill are gone and the token behind them, `--color-guide-halo`, is deleted rather than left
+declared. What is left is the tag, its words, and the arrowhead nodding at the piece, which is a
+pointer and a phrase and needs no color to work.
+
+**The arrow always sits above the piece, fixed 2026-08-26.** Putting the tag opposite the name was
+right about collisions and wrong about the room's edges. A piece standing on the floor has its name
+above it, so the tag went below it, which on the space heater and the water heater put the tag and
+its arrowhead past the bottom of the room and under the clip. The rule now is one rule: the tag is
+always above, arrowhead always pointing down. For a wall-hung piece that is above the drawing, and
+for a piece standing on the floor `dollhouse.js` appends it inside the name plate instead, so it
+stacks above the name rather than landing on top of it. Neither case can reach the floor line.
+
+**The room stopped clipping, 2026-08-26.** `overflow: hidden` on the scene was what cut the arrow
+off, and it was there to hold the painted wall and floor inside the room's rounded corners. Those
+two surfaces are one layered background on a full-size `::before` now, which clips itself to its own
+border radius and leaves the scene free to let a tag hang past its edge. Nothing else in a room ever
+crosses the boundary: every prop's drawn width was re-measured against its room at 1150, 1280 and
+1440 after the change.
+
+**The glow is white, revised 2026-08-26.** The selected piece glowed in `--color-brand`, which is
+the site's light green sitting on a cream wall next to furniture drawn in pastels — a green light on
+a green-ish drawing, which is the reading it should least have. White reads as light rather than as
+paint, it is the one value on the toy palette that no piece of furniture uses, and against the cream
+wall and the brown outlines there is enough separation for the lit edge to be obvious. Size is still
+the second signal and the info bar naming the piece is still the third, so nothing here rests on a
+color.
+
+**Hover was fighting itself, fixed 2026-08-26.** Three separate causes, all of them visible as a
+stutter. The `filter` transition on the hotspot ran against the selected piece's own infinite
+`filter` keyframes, and a running animation beats a transition, so hovering an open piece snapped
+rather than grew. The scale had no `transform-origin` except when selected, so a piece standing on
+the floor grew from its middle and sank through the floorboards on the way up. And the filter sat on
+the link, which meant the glow spread around the name plate and the guide tag as well as the
+drawing. The glow and the scale are on the drawing now, the origin is declared for both kinds of
+piece in every state, and the hotspot itself transitions nothing.
+
+**An object that does not apply is scenery, revised 2026-08-26.** Personalization used to set
+`hidden` on every hotspot the reader's heat type or who-pays answer ruled out, which took the object
+out of the room and left a gap in the furniture where it had been. It stays drawn now: the `href`
+comes off so it is neither focusable nor a link, `aria-hidden` takes it out of the accessibility
+tree, the name plate goes, and it dims to the weight the props around it carry. A washer that is not
+yours to think about is still a washer in the basement. The counts, the guided order and the "next"
+tag all skip it exactly as they skipped a hidden one, and the "Everything in this house" list still
+drops the row outright, because a list of links is not a drawing and an entry with no link in it is
+just a dead line.
+
+**The basement is a different room and now says so, fixed 2026-08-26.** It spans the whole ground
+under the house, so in the house it is four times as wide as it is tall, and the enlarged view gave
+every room the same three-by-two. Furniture is sized off the room's height, so opening the basement
+grew every piece by two and a half while the room itself got no wider, and six pieces ended up
+standing on top of each other. Enlarged, the basement keeps its own three-and-a-half-to-one, which
+is close enough to the shape it has in the house that the same six placements hold in both. The
+stairs were also drawn at 40% of the room's height, which in a basement is a step stool; they run
+from the joists to the floor now, which is what stairs into a basement do.
+
+**The chip rows are chips again, fixed 2026-08-26.** Below 1150px the furnished scene falls back to
+the rows it replaced, and the fallback only ever undid the parts of the scene that were on the
+hotspots. The room itself kept the papered wall, the wood floor and the heavy beam under it, so a
+row of green pills sat on a drawing of a floor at exactly the width where there was no furniture
+standing on it. The room is a plain bordered white box again below the gate, which is what it was
+before the house was furnished and what the rows were designed to sit in.
 
 **Labels are checked by hit-testing, not by eye.** Fifteen points across each name's box are asked
 what is painted on top of them; anything that comes back other than the name itself is something

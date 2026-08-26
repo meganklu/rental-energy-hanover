@@ -445,3 +445,37 @@ General design choices:
 - All of the pages accessible from the nav bar should have a more interesting and interactive hero section, like the home page hero section and improvements page hero section
 
 Put major design changes in a new branch
+
+### 2026-08-26 Design Edits
+
+Home page:
+- Remove the green outline around the spot that is up next. Just keep the animated arrow
+- The hover effects are glitching and not smooth
+- Make the items glow white instead of green
+- Make sure that the next arrow can be seen. For example, when the next arrow is on the space heater, it is below and gets cut off by the boundary of the room
+- The basement stairs look out of place because of how small they are
+- The basement, when in room view, has all the components pushed together and overlapping
+- When the items are not available for the user's situation, keep them in the house just as static images instead of buttons
+- When the screen is resized and the spots become buttons instead of a doll house image, make the rooms look like the initial design in the main branch. In other words, remove the floor from the rooms
+
+Improvement articles:
+- For the story bars, don't let the first story bar color background (darker green) be shown below the second story bar
+
+Your rights page:
+- Have the thermometer starting lower and start increasing as you scroll. Use a similar scroll effect and hold as the Home and Improvements pages
+
+Programs page:
+- Make the papers shuffle/flip through as you scroll. Again, use a scroll effect and hold
+
+Your list page:
+- Add an animation of list items getting checked off as you scroll
+
+About page:
+- Make the hero section something that matches the aesthetic and design of the other pages. Put the split part lower on the screen
+
+General design choices:
+- The pages have a mix of widths and alignment. Make this more consistent 
+- Continue working on adding more interactive web animation elements and different section designs/layouts
+- Fix the flashcard flip on some of the renter basics articles. This should be centered and the flip should be animated. The user should be able to flip back to the front. Read as text should only be shown on reduced motion settings. Text layout and styling should be more visually interesting 
+
+The website seems to be slower (e.g., pages are taking longer to load). Why is this? Is there ways to fix this?

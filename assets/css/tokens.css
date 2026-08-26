@@ -89,18 +89,19 @@
   --toy-cream: #FBF4E7;
   --toy-white: #FFFFFF;
 
-  /* The name plate under each piece, and the two lights on the guide. Declared 2026-08-26: the
-     plate and the halo had been referenced in components.css since the doll house was furnished but
-     never given a value, so both declarations were invalid at computed-value time and dropped. The
-     effect was that the names sat straight on the wallpaper wherever they happened to fall, and the
-     ring meant to be the third signal on the "Next" tag was not being drawn at all.
+  /* The name plate under each piece. Declared 2026-08-26: it had been referenced in components.css
+     since the doll house was furnished but never given a value, so every declaration using it was
+     invalid at computed-value time and dropped, and the names sat straight on the wallpaper
+     wherever they happened to fall.
 
      Decorative, like the rest of the toy palette. The plate carries --color-text at 15.9:1. */
   --color-room-plate: rgba(251, 244, 231, 0.94);
-  --color-guide-halo: rgba(126, 218, 93, 0.55);
-  /* The selected piece's glow. Warmer and stronger than the halo, because it sits on the thing the
-     reader just pressed rather than on the thing they have not reached yet. */
-  --color-guide-glow: rgba(126, 218, 93, 0.9);
+  /* The selected piece's glow, white since 2026-08-26. It was --color-brand, the site's light
+     green, which put a green light on a drawing standing on a cream wall among pastel furniture.
+     White is the one value on the toy palette no piece of furniture uses, so a lit edge cannot be
+     mistaken for the piece's own color. Never the only signal: the piece also grows, and the info
+     bar under the house names it. */
+  --color-guide-glow: rgba(255, 255, 255, 0.95);
 
   --toy-rose: #E7A2A8;
   --toy-rose-soft: #F6D3D6;

@@ -74,7 +74,6 @@ Other group members added to a [Google Doc version of the documentation](https:/
 | [DESIGN.md](DESIGN.md) | Information architecture, visual system, components |
 | [AGENTS.md](AGENTS.md) | Instructions for AI coding agents working in this repo |
 | [docs/ai-use.md](docs/ai-use.md) | Every prompt used to build this site, in order |
-| [docs/image-credits.md](docs/image-credits.md) | Every photograph, its photographer, and its licence |
 
 ## License
 
