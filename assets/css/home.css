@@ -574,7 +574,6 @@
   transition: min-height var(--motion-room) var(--motion-ease);
 }
 
-
 .dollhouse:has(.room:target) .room:target .room-hotspots {
   display: flex;
 }
@@ -638,10 +637,10 @@
   background:
     linear-gradient(
       to top,
-      var(--room-floor-fill) 0 var(--room-floor),
+      var(--room-floor-fill) 0 calc(var(--room-floor) - 3px),
+      var(--room-floor-line) calc(var(--room-floor) - 3px),
       var(--room-floor-line) var(--room-floor),
-      var(--room-floor-line) calc(var(--room-floor) + 3px),
-      transparent calc(var(--room-floor) + 3px)
+      transparent var(--room-floor)
     ),
     radial-gradient(var(--toy-wall-print) 1px, transparent 1.2px) 0 0 / 16px 16px,
     var(--toy-wall);
@@ -1135,6 +1134,14 @@
     opacity: 0.6;
   }
 
+  /* An object personalization has ruled out is a drawing standing in a room upstairs, and there is
+     no room and no drawing down here — just a row of chips, where it would be a bordered box with
+     an icon in it and no name. It leaves the row, the same way it leaves the "Everything in this
+     house" list. */
+  .room-scene .hotspot--inactive {
+    display: none;
+  }
+
   /* Back to the flat line icons for the chip row: a colored drawing at 20px is a smudge, and the
      chip's own frame is doing the work the drawing does upstairs. */
   .room-scene .hotspot .icon {
@@ -1181,7 +1188,6 @@
   background: var(--color-bg);
   box-shadow: var(--shadow-raised);
 }
-
 
 .info-bar__heading {
   margin: 0 0 var(--space-2);

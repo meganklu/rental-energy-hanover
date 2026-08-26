@@ -2979,18 +2979,18 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
     transition: transform var(--motion-flip) var(--motion-ease-smooth);
   }
 
-  /* Zero-length, so this only ever moves *when* visibility changes and never fades it. The delay
-     sits on the face that is leaving, which the destination state is what selects: turning to the
-     back delays the front's disappearance and not the back's arrival, and turning home does the
-     reverse. */
-  body:not(:has(.reduce-motion-input:checked)) .flip-card--js .flip-card__back,
-  body:not(:has(.reduce-motion-input:checked)) .flip-card--flipped .flip-card__front {
+  /* Zero-length, so this only ever moves *when* visibility changes and never fades it. Every face
+     takes the delay by default, which is what a face that is leaving needs: it stays visible for
+     the length of the turn and goes when the turn does. The face that is arriving then takes the
+     delay back off, and "arriving" is whichever face the current state shows — written as two
+     selectors rather than four so neither direction of the turn can end up matching both. */
+  body:not(:has(.reduce-motion-input:checked)) .flip-card--js .flip-card__face {
     transition: visibility 0s linear var(--motion-flip);
   }
 
-  body:not(:has(.reduce-motion-input:checked)) .flip-card--js .flip-card__front,
+  body:not(:has(.reduce-motion-input:checked)) .flip-card--js:not(.flip-card--flipped) .flip-card__front,
   body:not(:has(.reduce-motion-input:checked)) .flip-card--flipped .flip-card__back {
-    transition: visibility 0s;
+    transition-delay: 0s;
   }
 
   body:not(:has(.reduce-motion-input:checked)) .flip-card__btn {
@@ -4239,6 +4239,10 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
 
   .page-hero__text {
     justify-self: start;
+    /* Only bites on a hero with no scene beside it, where the single column is the whole 1140px
+       shell and a display-size title would otherwise run the width of it. In the two-column case
+       the column is already narrower than this. */
+    max-width: 50rem;
   }
 
   .page-hero__scene {
@@ -4301,7 +4305,6 @@ body:has(.reduce-motion-input:checked) .flip-card__plain {
     }
   }
 }
-
 
 @keyframes page-hero-text {
   from { transform: translateY(1.25rem); }
