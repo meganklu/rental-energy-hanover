@@ -32,7 +32,7 @@ written as a page instead.
 | F3 | Flip-card myth busters | A wrong belief corrected by their own action, on the explainer pages | Low (code), Medium (copy) | **Must** |
 | F4 | Animated explainer diagrams | A mechanism they cannot see, shown moving. Where heat leaves, how a heat pump runs both ways | Low (code), High (illustration) | **Must** |
 | F5 | Progress through the house | A count of spots viewed, and a suggested order for someone who does not know where to start | Low | **Should** (part of F1) |
-| F6 | My list | Improvements they picked, sorted into buy / ask / do, printable and shareable | Medium | **Shipped 2026-08-25** |
+| F6 | My list | Improvements they picked, sorted into buy / ask / do, printable, shareable, and with a landlord email built from the ask list | Medium | **Shipped 2026-08-25**, extended 2026-08-26 |
 | F7 | Space heater cost-per-hour tool | The real hourly cost of the most expensive misconception in the topic inventory | Low (code), blocked on sourcing | **Won't (v1)** |
 | F8 | Bill estimator | An explanation of what is driving a specific bill | High | **Won't (v1)** |
 | F9 | Landlord request letter generator | Wording for an ask they are nervous about making | Medium | **Won't (v1)** |
@@ -83,6 +83,16 @@ Priority: **Must** / **Should** / **Could** / **Won't (v1)**
   the one who decides, since they press it. The doll house info bar gained the same add control, so
   every place the site states an improvement's cost, time and impact now also offers the action on
   it.
+
+  Revised 2026-08-26, twice. The buy and ask lists tick off now, which they should have from the
+  start: the do list had the only checkboxes on the site, and the two lists a reader actually walks
+  around holding were the two they could not cross anything off. And the ask section ends in a
+  generated email. It had said "send one email covering all of these" since it shipped, and then
+  offered no way to send one; the draft is built from whichever ask rows are showing, following the
+  six things `/learn/ask-your-landlord` says a good ask has in it. Nothing typed into it is stored,
+  which keeps the feature inside [project-brief.md](project-brief.md)'s non-goals, and the composing
+  logic is a module with its own tests rather than a string in a click handler. See
+  [DESIGN.md](../DESIGN.md) §3.8.
 - **F7 and F8** are blocked by sourcing rather than by effort.
   [content-strategy.md](content-strategy.md) §4 bars unsourced numbers, and the Liberty Utilities
   residential rate is not yet in [sources.md](sources.md). A cost-per-hour figure with no citation
