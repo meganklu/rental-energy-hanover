@@ -2866,7 +2866,7 @@ body:has(.motion-loop) .motion-fab__pause {
      measured to its top edge, and `--b` is how far above the floor it stands, measured to its feet.
      Centering on the vertical too was the first pass and it meant a ceiling light placed near the
      top of the wall hung off the top of the room by half its own height. */
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(var(--hotspot-scale, 1));
   padding: 0;
   border: 0;
   border-radius: 6px;
@@ -2957,15 +2957,60 @@ body:has(.motion-loop) .motion-fab__pause {
 
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:hover,
   body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot:focus-visible {
-    transform: translateX(-50%) scale(1.08);
+    --hotspot-scale: 1.08;
+  }
+
+  /* Hovering the piece whose info bar is already open has to grow it, not shrink it back to the
+     ordinary hover size. */
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:hover,
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected:focus-visible {
+    --hotspot-scale: 1.18;
   }
 }
 
-/* Selected: this piece's info bar is the one open. */
+/* Selected: this piece's info bar is the one open. Revised 2026-08-26 from a 2px accent outline to
+   a glow. The outline was a rectangle drawn around a thing that is not a rectangle — a lamp, a
+   showerhead, a bill on a fridge — so it read as a box that had appeared next to the object rather
+   than as the object being lit up. `drop-shadow` follows the drawn edge instead, which is the same
+   reason hover uses it.
+
+   Two shadows: a tight one to thicken the outline and a wide one to spread. Size is the second
+   signal and it is not a color: the piece holds a scale of its own while it is selected, above
+   hover's, so a reader who cannot separate the glow from the wall still sees which one grew. The
+   third is that the info bar under the house is open and names it. */
 .room-scene .hotspot--selected {
   box-shadow: none;
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: none;
+  z-index: 3;
+  filter: drop-shadow(0 0 2px var(--color-guide-glow))
+          drop-shadow(0 0 10px var(--color-guide-glow));
+  --hotspot-scale: 1.12;
+}
+
+/* A selected piece that stands on the floor grows from its feet, so it does not sink through the
+   floorboards on the way up. */
+.room-scene .hotspot--stands.hotspot--selected {
+  transform-origin: bottom center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body:not(:has(.reduce-motion-input:checked)) .room-scene .hotspot--selected {
+    animation: hotspot-glow var(--motion-loop) var(--motion-ease-smooth) infinite;
+  }
+}
+
+/* The glow breathes rather than sitting still, which is what separates "this one is open" from
+   "this one is drawn a bit brighter". Filter-only, so freezing it at any point still leaves a fully
+   drawn, fully legible piece (§7). */
+@keyframes hotspot-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px var(--color-guide-glow))
+            drop-shadow(0 0 10px var(--color-guide-glow));
+  }
+  50% {
+    filter: drop-shadow(0 0 3px var(--color-guide-glow))
+            drop-shadow(0 0 18px var(--color-guide-glow));
+  }
 }
 
 /* Seen already: the piece fades back rather than out. What is left in full color is what has not
@@ -2979,6 +3024,13 @@ body:has(.motion-loop) .motion-fab__pause {
   font-weight: 400;
 }
 
+/* Except the one that is open. Fading back is how a piece says "you have already read this"; the
+   piece whose info bar is on screen right now is the opposite of that, and dimming it the moment it
+   was pressed made the glow look like it was lighting something up on its way out. */
+.room-scene .hotspot--visited.hotspot--selected {
+  opacity: 1;
+}
+
 /* The guide, and why it is three signals. `:has()` keys off the flag dollhouse.js already places on
    whichever piece is next, so the pointer needs no new JavaScript at all. The tag's own words
    ("Start here", "Next") are the first signal, the arrowhead aimed down at the piece is the second,
@@ -2989,8 +3041,14 @@ body:has(.motion-loop) .motion-fab__pause {
   background: var(--color-room-plate);
 }
 
-/* The flag becomes a tag above the piece rather than a badge inside its name, so it does not push
-   the name onto a second line and so it reads as a pointer aimed at something. */
+/* The flag is a tag on the piece rather than a badge inside its name, so it does not push the name
+   onto a second line and so it reads as a pointer aimed at something.
+
+   Which side it goes on follows the name, revised 2026-08-26. A wall-hung piece carries its name
+   underneath, so the tag goes above and its arrowhead points down. A piece standing on the floor
+   carries its name above (there is no floor to put it on), so the tag goes below and the arrowhead
+   points up. Before this the tag was inside the name plate and measured against it, which on every
+   wall-hung piece landed the tag and its arrow across the drawing itself. */
 .room-scene .hotspot__badge-flag {
   position: absolute;
   bottom: calc(100% + 9px);
@@ -2998,6 +3056,11 @@ body:has(.motion-loop) .motion-fab__pause {
   transform: translateX(-50%);
   margin: 0;
   white-space: nowrap;
+}
+
+.room-scene .hotspot--stands .hotspot__badge-flag {
+  bottom: auto;
+  top: calc(100% + 9px);
 }
 
 .room-scene .hotspot__badge-flag::after {
@@ -3009,6 +3072,13 @@ body:has(.motion-loop) .motion-fab__pause {
   border: 5px solid transparent;
   border-top-color: var(--color-accent);
   border-bottom: 0;
+}
+
+.room-scene .hotspot--stands .hotspot__badge-flag::after {
+  top: auto;
+  bottom: 100%;
+  border-top: 0;
+  border-bottom: 5px solid var(--color-accent);
 }
 
 /* The pointer nods, so the eye finds it among seventeen pieces of furniture. Gated the way the

@@ -65,14 +65,18 @@ if (dollhouseEl && infoBar) {
     });
   }
 
+  // Appended to the hotspot rather than to its name, revised 2026-08-26. The tag positions itself
+  // against its nearest positioned ancestor, and inside `.hotspot__label` that ancestor was the
+  // name plate: on a wall-hung piece the plate hangs below the drawing, so "above the plate" put the
+  // tag on top of the drawing it was supposed to be pointing at. The hotspot is the link itself, so
+  // the tag is still inside it either way.
   function setFlag(hotspot, flag, text) {
-    const label = hotspot?.querySelector(".hotspot__label");
-    if (!label || label.querySelector(`.hotspot__badge-flag[data-flag="${flag}"]`)) return;
+    if (!hotspot || hotspot.querySelector(`.hotspot__badge-flag[data-flag="${flag}"]`)) return;
     const el = document.createElement("span");
     el.className = "hotspot__badge-flag";
     el.dataset.flag = flag;
     el.textContent = text;
-    label.appendChild(el);
+    hotspot.appendChild(el);
   }
 
   const clearFlag = (flag) =>

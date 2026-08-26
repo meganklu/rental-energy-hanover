@@ -598,10 +598,19 @@
     <circle cx="13" cy="27" r="2" style="fill: var(--toy-rose)"/>
   </symbol>
 
-  <symbol id="obj-rimjoist" viewBox="0 0 36 24" style="stroke: var(--toy-outline)">
-    <rect x="1" y="2" width="34" height="6" rx="1" style="fill: var(--toy-wood)"/>
-    <path d="M7 8 L7 17 M15 8 L15 17 M23 8 L23 17 M31 8 L31 17" style="fill: none"/>
-    <rect x="10" y="13" width="16" height="9" rx="1" style="fill: var(--toy-rose-soft)"/>
+  <!-- The seam at the top of a basement wall, where the framing for the floor above sits on the
+       foundation. Renamed from obj-rimjoist 2026-08-26 along with its label: the old drawing was a
+       beam over a pink box and read as furniture, and "rim joist" is a term docs/glossary.md
+       already lists under "terms we avoid". Wood above, foundation below, and two arrows of cold
+       air coming through the gap between them, which is the thing the reader is being sent to
+       look for. -->
+  <symbol id="obj-draft-gap" viewBox="0 0 36 24" style="stroke: var(--toy-outline)">
+    <rect x="1" y="1" width="34" height="7" rx="1" style="fill: var(--toy-wood)"/>
+    <path d="M9 1 L9 8 M18 1 L18 8 M27 1 L27 8" style="fill: none"/>
+    <rect x="1" y="15" width="34" height="8" rx="1" style="fill: var(--toy-slate-soft)"/>
+    <path d="M13 15 L13 23 M24 15 L24 23" style="fill: none"/>
+    <path d="M2 11.5 L14 11.5 M11 9 L14 11.5 L11 14" style="fill: none; stroke: var(--toy-sky)"/>
+    <path d="M34 11.5 L22 11.5 M25 9 L22 11.5 L25 14" style="fill: none; stroke: var(--toy-sky)"/>
   </symbol>
 
 </svg>

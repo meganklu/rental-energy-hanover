@@ -496,13 +496,29 @@ and the curtains go to the bedroom. That gives 3/3/2/3/3/3, and the bathroom kee
 is the smallest room drawn. The guided order is untouched, because it was never grouped by room.
 
 **Guidance needed no JavaScript.** `dollhouse.js` already flags the next unvisited object with "Start
-here" or "Next"; the branch only restyles that flag into a tag above the piece with an arrowhead
-pointing down at it, and `:has()` puts a glow on whichever piece is carrying it. Three signals for
+here" or "Next"; the branch only restyles that flag into a tag on the piece with an arrowhead
+pointing at it, and `:has()` puts a glow on whichever piece is carrying it. Three signals for
 one thing: the words, the pointer's shape, the glow. The tag nods once every five seconds so the eye
 finds it among seventeen pieces of furniture, gated off under reduced motion. The width gate on that
 animation is load-bearing rather than tidiness: the keyframes set `translateX(-50%)` on every frame,
 a running animation beats a declared `transform`, and below the gate the flag would sit pulled half
 its own width over the name it belongs to.
+
+**The tag goes opposite the name, fixed 2026-08-26.** It was written as "a tag above the piece", and
+it was not: `dollhouse.js` appended it inside `.hotspot__label`, so the tag measured itself against
+the name plate rather than against the drawing. A wall-hung piece carries its name underneath, which
+put "above the name" squarely on top of the piece, arrowhead and all. The flag is appended to the
+hotspot now, and the side follows the name: name below the drawing means tag above with the arrow
+pointing down, name above the drawing (anything standing on the floor, §3.2's "placed by its feet")
+means tag below with the arrow pointing up.
+
+**Two tokens were missing the whole time, fixed 2026-08-26.** `--color-room-plate` and
+`--color-guide-halo` were referenced in `components.css` from the day the house was furnished and
+never declared in `tokens.css`. Both declarations using them were therefore invalid at
+computed-value time and dropped: the names sat directly on the wallpaper wherever they fell, which
+is the exact problem the plate was added to solve, and the glow — the third of the three signals
+above — was never drawn at all. Both are declared now, and the glow the selected piece carries is a
+third token beside them.
 
 **Labels are checked by hit-testing, not by eye.** Fifteen points across each name's box are asked
 what is painted on top of them; anything that comes back other than the name itself is something
@@ -586,7 +602,7 @@ than a new body of content:
 | Water heater | Basement | Hot water, showers, laundry temperature |
 | Outlets and plugs | Living room | Phantom load |
 | Light fixture | Kitchen | LED swaps, keep the originals in a box |
-| Rim joist and attic hatch | Basement | Where the heat actually goes, and the programs page |
+| Where cold air gets in | Basement | Where the heat actually goes, and the programs page |
 | The bill on the fridge | Kitchen | Read your bill. Marked "Start here" |
 
 **Every Renter basics article is in the house, added 2026-08-21.** Two of the three explainers had
@@ -664,8 +680,15 @@ any other part of the site.
 
 **Interaction.** Tap a room box and it enlarges, filling the drawing area, with the rest of the
 house shown small alongside it. Tap a hotspot in the enlarged room to open an info bar under the
-drawing. The open hotspot itself gets a visible selected state (a highlighted ring), so it is clear
-which spot the info bar belongs to. The info bar holds the title, the permission and reversibility
+drawing. The open hotspot itself gets a visible selected state, so it is clear which spot the info
+bar belongs to. Revised 2026-08-26 from a 2px accent outline to a glow: the outline was a rectangle
+drawn around a thing that is not a rectangle — a lamp, a showerhead, a bill on a fridge — so it read
+as a box that had appeared beside the object rather than as the object lighting up. A `drop-shadow`
+follows the drawn edge instead, which is what hover already uses. Size is the second signal and it
+is not a color, so the piece also holds a scale of its own while it is selected, above hover's; the
+third is the info bar itself, open under the house and naming it. A selected piece does not take the
+visited fade, since fading back means "you have read this" and the one on screen is the opposite of
+that. The info bar holds the title, the permission and reversibility
 badges, cost, time and impact — the same facts shown on the improvement page itself, not a
 subset — one sentence, a "Learn more" link to the full improvement, and a "Close" control.
 Revised 2026-08-19: reversibility is worded identically everywhere it appears (improvement pages,
@@ -1349,6 +1372,9 @@ interactive work.
 | `--color-danger` | `#A32014` on `#FCEDEB` | Safety notes | ☑ 6.7:1 |
 | `--color-border` | `#C9D4C6` | Decorative hairlines and card edges only | ☑ decorative, 1.5:1 |
 | `--color-border-strong` | `#6F8272` | Form control borders, hotspot outlines, anything that must meet 3:1 | ☑ 4.1:1 on bg, 3.8:1 on surface |
+| `--color-room-plate` | `rgba(251, 244, 231, 0.94)` | The plate a doll house piece's name sits on, so a caption crossing from wallpaper onto floorboards keeps one contrast (declared 2026-08-26) | ☑ 15.9:1 with `--color-text` |
+| `--color-guide-halo` | `rgba(126, 218, 93, 0.55)` | The ring on the piece carrying "Start here" or "Next" (declared 2026-08-26) | Decorative, never carries text |
+| `--color-guide-glow` | `rgba(126, 218, 93, 0.9)` | The glow on the piece whose info bar is open (added 2026-08-26) | Decorative, never carries text |
 | `--color-mat` | `#D9BE8A` | Added 2026-08-19. The hero's welcome-mat background. Used nowhere else | ☑ 9.3:1 with `--color-text` |
 | `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
 | `--color-hero-ground` | `#94A0A7` | Added 2026-08-19. The hero section's own background, behind the mat. A bluestone grey, used nowhere else | ☑ 6.3:1 with `--color-text`, 7.9:1 with `--color-mat-border` |
@@ -1561,7 +1587,7 @@ to be better than.
 | Next spot control | Carries the guided order from one info bar to the next | default, focus-visible, last spot, removed once all spots are seen (revised 2026-08-19, was a relabeled state) |
 | Back to the house | Returns from an enlarged room to the full view | default, focus-visible |
 | Room prop (experiment, 2026-08-25) | Scenery inside a furnished room. Sixteen furniture symbols in the sprite, each in a viewBox of its own proportion, drawn with a non-scaling stroke. No name, no interactive state, `aria-hidden`, never focusable — the absence of all three is what says it is not the thing to press | standing on the floor (`--b`), hung on the wall (`--y`), hidden below 1000px |
-| Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker), hidden (does not apply to the student's situation — reversed 2026-08-20, was dimmed with a text reason, see §3.2), 44px hit area |
+| Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19; a glow and a scale rather than an outline, revised 2026-08-26), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker; never applied to the selected piece, revised 2026-08-26), hidden (does not apply to the student's situation — reversed 2026-08-20, was dimmed with a text reason, see §3.2), 44px hit area |
 | Info bar | Opens under the drawing with the short answer | closed, opening, open, empty, error, no JavaScript (becomes a link) |
 | Flip card | Flashcards for myths and definitions | front, back, focus-visible, reduced motion. Spec in §5.1 |
 | Carousel | Ordered walkthroughs and before-and-after pairs | first, middle, last, keyboard, no JavaScript. Spec in §5.1 |
