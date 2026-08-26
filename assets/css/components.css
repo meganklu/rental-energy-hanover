@@ -4128,8 +4128,12 @@ body:has(.motion-loop) .motion-fab__pause {
    opaque board, covered it. This reserves the overhang: 6% of the scene's height, and the scene is
    9/5 as tall as it is wide, so 0.108 of the door's width. Derived from the drawing rather than
    picked off the spacing scale, because it has to track whatever the door's width resolves to. */
+/* Hidden by default, revised 2026-08-26. The hint is an instruction for an animation, and outside
+   the gate below there is no animation: the door is shut, square on, and stays that way however far
+   the reader scrolls. Telling them to keep scrolling to open it was then a promise the page had
+   already decided not to keep. It is shown only inside the same gate the swing itself sits behind. */
 .door-hero__hint {
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: var(--space-2);
   margin: calc(var(--door-width, 0px) * 0.108) 0 0;
@@ -4163,6 +4167,10 @@ body:has(.motion-loop) .motion-fab__pause {
   @media (prefers-reduced-motion: no-preference) and (min-width: 600px) {
     body:not(:has(.reduce-motion-input:checked)) .door-scene {
       height: 300vh;
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .door-hero__hint {
+      display: inline-flex;
     }
 
     /* Three viewports of scroll for one viewport of view: the first two thirds swing the door, the

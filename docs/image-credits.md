@@ -39,7 +39,7 @@ and every `<img>` carries explicit `width` and `height` so nothing reflows as im
 | `door-open-snow.webp` | Josh Withers | [IA9KZceY-lg](https://unsplash.com/photos/IA9KZceY-lg) | 89 KB | `/improvements/door-sweeps-and-weatherstripping/` |
 | `electric-meter.webp` | Thomas Kelley | [xVptEZzgVfo](https://unsplash.com/photos/xVptEZzgVfo) | 63 KB | `/learn/read-your-bill/` |
 | `hand-cold-window.webp` | Clay LeConey | [6hmjdWkylj8](https://unsplash.com/photos/6hmjdWkylj8) | 57 KB | `/learn/find-your-drafts/` |
-| `hardware-store.webp` | Darien Attridge | [ciY4tc7539I](https://unsplash.com/photos/ciY4tc7539I) | 196 KB | `/improvements/`, `/where-to-get-it/` |
+| `hardware-store.webp` | Darien Attridge | [ciY4tc7539I](https://unsplash.com/photos/ciY4tc7539I) | 196 KB | `/where-to-get-it/` |
 | `heater-living-room.webp` | Qian Shawn | [wOBH1cXktKY](https://unsplash.com/photos/wOBH1cXktKY) | 93 KB | `/programs/` |
 | `keys-stairs.webp` | Jakub Żerdzicki | [V7Q94jc04wQ](https://unsplash.com/photos/V7Q94jc04wQ) | 26 KB | `/before-you-sign/` |
 | `laptop-writing.webp` | Kelly Sikkema | [kA50vHmCxbk](https://unsplash.com/photos/kA50vHmCxbk) | 48 KB | `/learn/ask-your-landlord/` |
