@@ -172,6 +172,7 @@ sitemap in [DESIGN.md](DESIGN.md) §2.
 
 ## Writing style for agent-authored copy
 
+- Use American English spelling and conventions.
 - Lead with the action, then the reason.
 - State cost and time in student terms ("$12, 20 minutes").
 - Talk about money and comfort first. Leave out guilt-based climate framing.

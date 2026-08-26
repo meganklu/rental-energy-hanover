@@ -383,9 +383,65 @@ I think it could be cool to have the items in the house layed out like an actual
 
 Use color for the doll house. Take inspiration from a Calico Critters toy house for the interior furniture. Make the entry/porch the height of the first floor only like it was before. Make the drawings more realistic and easy to understand what they are. Also, position them in a logical way that matches typical house layouts.
 
-## Claude Design
+### 2026-08-25 Doll House Objects
 
-I started to use Claude Design to visually edit the website. This is the initial prompt I gave with the code base attatched:
+Redistribute the objects in the doll house so that they are more evenly distributed between the rooms. Only move to areas that are logical. For example, the radiator can move to the bathroom. 
+
+### 2026-08-25 Doll House Objects Size
+
+Scale the size of the objects in the doll house appropriately. Also check that the labels are not blocked at all. Check that the proportions and design look correct when clicked on a specific room.
+
+### 2026-08-25 Claude Design Attempt
+
+I tried to use Claude Design to visually edit the website. This is the initial prompt I gave with the code base attatched:
 
 > I am currently refining the design elements of this website. Please show me the site so I can make comments on specific elements.
 
+I was unable to connect the codebase and edit in the way I wanted to using Claude Design, so I went back to writing descriptions of the changes I wanted to make.
+
+### 2026-08-26 Design Edits and To Do List Feature
+
+To do list:
+- Add checkboxes to the other sections of the to do list (shopping list and ask your landlord)
+- Draft an example email for the user to send to their landlord based on the improvements they've added to their list. Can this email be generated based on what they add?
+
+Improvements page:
+- When on reduced motion, the door does not open so don't include the label that says "Keep scrolling to open the door"
+- Remove "Where to get this stuff" from this page now that it is linked on all the individual improvement articles that have items to purchase and in the to do list
+
+Doll house section:
+- Change "Rim joist and attic hatch" to something that is easier to interpret and recognize in the design but is still relevent to checking for drafts
+- Some of the labels are beneath the icons so the arrow for "Next" is harder to see
+- For the selected element, add a glowing effect instead of the green border
+
+Improvement articles:
+- When there is nothing to purchase, remove this "Nothing to buy for this one. When something does need buying, Where to get it has the addresses and the bus routes."
+- When there is something to purchase edit the where to get it paragraph to just a link to the where to get it page
+
+About page:
+- Make the cards under "So this site starts on your side of the line" easier to read by adding a solid color or blur background
+- Use a picture of Hanover, New Hampshire such as the aerial picture from the Hanover town website https://www.hanovernh.org/
+
+General design choices:
+- I'm not sure that I like the current design of the story bars. I like having more animation and having them stick to the screen for a moment, but I don't like the current color background and how they are each the full height of the screen. I like when multiple story bars overall take up the full height, but not each individual one. For the story bars that are by themselves, see if there is another design element that would be more appropriate for that section
+- Break apart sections with different color backgrounds, spacing, and other design elements. For example, separate out the "Programs to look at" carousel with a different background. This will make the page look less text dense
+- Experiment with different creative ways to present the text. For example, the list under the "If your apartment is too cold" could be shown like the list for "Ways to close the gap" on the split incentives page of the heat pumps website https://meganklu.github.io/heat-pumps-hanover/split-incentives.html
+- Add more interactive web animation elements including, but not limited to:
+    - Real-time microinteractions
+        - Magnetic hover states
+        - Morphing SVG icons
+        - Live data ripples
+    -  Scroll-driven and narrative motion
+        - Multi-level parallax
+        - Horizontal layout switches
+        - Scroll reveals and masking
+    - Structural transitions and environments
+        - Creative page transitions (such as those seen in this article: https://qodeinteractive.com/magazine/examples-of-creative-page-transitions/#lama-lama)
+- There are also some design elements for inspiration in the heat pumps website: https://meganklu.github.io/heat-pumps-hanover/index.html
+- Here is additional visual storytelling inspiration
+- Check for consistency in vector designs. Match the vectors, including the door on the improvements page hero section, to the design style of the doll house section
+- Check for consistency with the style guide colors
+- Check for cards and other sections taking up the appropriate margins and width. For example, the text in the safety card in the article "Use a space heater safely" does not take up the full width of the card
+- All of the pages accessible from the nav bar should have a more interesting and interactive hero section, like the home page hero section and improvements page hero section
+
+Put major design changes in a new branch
