@@ -341,6 +341,109 @@
   padding: 0 var(--space-4) var(--space-4);
 }
 
+/* ---------- Next up, added 2026-08-26 ----------
+   A way out of the bottom of an article that is not the back button. Renter basics is seven
+   articles in a deliberate order — before you sign, then the lease, then your heat, then your bill,
+   then finding the draft, then asking, then moving out — and until now that order existed only in
+   the carousel on `/improvements`. A reader who came in from the doll house or from a search met one
+   article and then nothing.
+
+   It sits between the end of the article and its sources: the next thing to do comes before the
+   provenance of the thing just read.
+
+   Only Renter basics has one. The improvements are a filterable library rather than a sequence, so
+   "next" there would be an order nobody chose; those pages end with the "what to do next" links
+   their own content gives them.
+
+   The whole card is the target, using the same stretched-overlay trick the library cards use — the
+   title's link covers the card, so the summary and the arrow are part of the same press. */
+.next-up {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-4) var(--space-5);
+  margin-block: var(--space-9);
+  padding: var(--space-5) var(--space-6);
+  background: var(--color-bg);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.next-up__eyebrow {
+  grid-column: 1 / -1;
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.next-up__title {
+  margin: 0;
+  font-size: var(--text-h3);
+  line-height: 1.2;
+}
+
+.next-up__title a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.next-up__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.next-up__title a:hover,
+.next-up__title a:focus-visible {
+  text-decoration: underline;
+}
+
+.next-up__summary {
+  grid-column: 1;
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+/* The arrow spans both content rows on the right, so it sits against the middle of the title and
+   the summary together rather than against one of them. */
+.next-up__cue {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--target-min);
+  height: var(--target-min);
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+  flex-shrink: 0;
+}
+
+.next-up__cue .icon {
+  width: 1.4em;
+  height: 1.4em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body:not(:has(.reduce-motion-input:checked)) .next-up,
+  body:not(:has(.reduce-motion-input:checked)) .next-up__cue {
+    transition: background var(--motion-base) var(--motion-ease),
+      box-shadow var(--motion-base) var(--motion-ease);
+  }
+}
+
+.next-up:hover,
+.next-up:focus-within {
+  background: var(--color-surface);
+  box-shadow: var(--shadow-raised);
+}
+
 /* ---------- Sources block ---------- */
 /* A card since 2026-08-26, where it was a hairline rule and some smaller text. It is a different
    kind of thing from the article above it — provenance rather than advice, read by somebody

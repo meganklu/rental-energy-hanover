@@ -128,6 +128,22 @@ details {
   min-height: 0 !important;
 }
 
+/* The next-up card is a control on screen and a sentence on paper: it still tells a reader which
+   article follows this one, which is worth keeping, but the accent border and the filled arrow are
+   an invitation to press something. Added 2026-08-26. */
+.next-up {
+  border: 0 !important;
+  border-top: 1px solid #999 !important;
+  border-radius: 0 !important;
+  padding: var(--space-4) 0 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.next-up__cue {
+  display: none !important;
+}
+
 /* The story bars are dark full-bleed bands on screen, which on paper is two-thirds of a sheet of
    green ink around white text that most printers will render as gray on gray. Added 2026-08-26 with
    the rebuild: black on white, no breakout, no pinning, and the pair prints as two ordinary

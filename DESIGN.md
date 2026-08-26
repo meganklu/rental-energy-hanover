@@ -643,6 +643,26 @@ row of green pills sat on a drawing of a floor at exactly the width where there 
 standing on it. The room is a plain bordered white box again below the gate, which is what it was
 before the house was furnished and what the rows were designed to sit in.
 
+**The hover was crossing four pixels of nothing, fixed 2026-08-26.** The fourth and last cause. The
+name plate sat at `calc(100% + 4px)` from the link's box, so between the bottom of that box and the
+top of the plate were four pixels belonging to neither of them. Crossing them on the way from the
+object to its name dropped the hover and picked it back up, which is the plate flashing off and on.
+It only happened on the larger pieces: on a small one the invisible 44px press target is bigger than
+the drawing and happened to cover the strip, which is why it depended on which piece and on which
+direction the pointer came from. The gap is a transparent border on the plate now, so the two boxes
+touch and the four pixels belong to the plate. The guide tag has a nine-pixel gap of its own and is
+out of hit testing instead: it is a pointer rather than a target, nobody needs to hover it, and a tag
+overhanging a neighbouring room should not be able to take that room's hover either.
+
+**And the rule that made a ruled-out piece scenery had been deleted, fixed 2026-08-26.** By accident,
+when the hover rules that surrounded it were rewritten. The JavaScript half kept working — `href`
+off, `aria-hidden` on — so the piece was correctly out of the tab order and out of the accessibility
+tree, and a room with nothing in it for this reader still said so. But `pointer-events: none` went
+with the block, so a mouse could still open it: the bathroom could read "Nothing here for your
+situation" and the shower head in it would open anyway. Restored, and `dollhouse.js` now refuses the
+click as well. Two independent guards for one rule, because the CSS half failing silently is exactly
+what happened.
+
 **Labels are checked by hit-testing, not by eye.** Fifteen points across each name's box are asked
 what is painted on top of them; anything that comes back other than the name itself is something
 covering it. That plus the overflow and overlap checks is what the placement numbers are tuned
@@ -1371,6 +1391,21 @@ with the light `--color-surface-brand`. It is the site's dark green against its 
 between the fields, which is enough to separate two large adjacent areas without either of them
 leaving the palette.
 
+**The wedge at the bottom arrives at the same seam, 2026-08-26.** It was an SVG with two polygons
+meeting at the hard middle of its viewBox, so leaning on one side moved the seam through the whole
+colour field and then the wedge underneath stayed where it was and the two came apart at the join. A
+polygon's `points` attribute cannot read a custom property. Two boxes clipped to triangles can: each
+takes its share of the width from `--split-pos` and is clipped so its point falls on its own inner
+edge, which makes the two points one point. `--split-pos` moved up to `main` for it, since the wedge
+is a sibling of the field rather than a child of it and they need to inherit the same number.
+
+**The lean is off under reduced motion, 2026-08-26.** Half a page of colour sliding under fixed text,
+driven by a pointer rather than by a scroll, is exactly what that preference is about. Under either
+control the seam sits at 50% and stays there, and nothing is lost by it: both panels carry all of
+their text at 50/50, which is the same reason the effect was safe to put on hover in the first place.
+All three things that carry the seam — the field, the two panels and the wedge — take their
+transition from one rule, so a fourth cannot be added later that slides while the others hold still.
+
 **"How AI was used" lives on this page**, added 2026-08-24. It names the model, says what it wrote,
 and states the three things held back from it: facts, which come from named sources and are gated by
 `tools/check-content.mjs`; legal and safety content, which a person reviews; and the photographs,
@@ -1510,6 +1545,30 @@ the showing slides now rather than a list captured at load.
 
 "Programs that are not for you" stays outside the carousel and outside the filter. It is one entry,
 it exists to be ruled out, and a filter that can hide it defeats the point of writing it down.
+
+### 3.9a Reading on, added 2026-08-26
+
+Renter basics is seven articles in a deliberate order — before you sign, then the lease, then your
+heat, then your bill, then finding the draft, then asking, then moving out — and until now that
+order existed in exactly one place, the carousel on `/improvements`. A reader who arrived from the
+doll house, from a glossary term or from a search met one article and then the bottom of the page.
+
+Each of the seven now ends on the next one: a card naming it, its own one-line summary, and where it
+sits in the seven. The seventh hands over to the library, which is the point the sequence was
+building to — you have read what a rental costs and why, now pick something to change.
+
+Three decisions:
+
+- **It sits between the article and its sources.** The next thing to do comes before the provenance
+  of the thing just read. Sources stay last, where somebody checking will look for them.
+- **The position is stated.** "Next in Renter basics · 4 of 7" is the difference between a related
+  link and a sequence a reader can tell they are partway through.
+- **Only Renter basics has one.** The improvements are a filterable library rather than a sequence,
+  so a "next" there would be an order nobody chose. Those pages end on the links their own content
+  gives them, which is where a reader who wants a related improvement should be sent.
+
+The copy is the carousel's own, unchanged, so the two places that describe these seven articles
+cannot drift into describing them differently.
 
 ### 3.10a The glossary as a reference page, added 2026-08-26
 
@@ -1948,6 +2007,7 @@ to be better than.
 | Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19; a glow and a scale rather than an outline, revised 2026-08-26), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker; never applied to the selected piece, revised 2026-08-26), hidden (does not apply to the student's situation — reversed 2026-08-20, was dimmed with a text reason, see §3.2), 44px hit area |
 | Info bar | Opens under the drawing with the short answer | closed, opening, open, empty, error, no JavaScript (becomes a link) |
 | Flip card | Flashcards for myths and definitions | front, back, mid-turn, focus-visible, reduced motion, no script (both faces stacked). Spec in §5.1 |
+| Next up (added 2026-08-26) | The way out of the bottom of a Renter basics article: which of the seven comes next, and where the seventh hands over to the library | default, hover, focus-within, last-in-sequence, print |
 | Carousel | Ordered walkthroughs and before-and-after pairs | first, middle, last, keyboard, no JavaScript. Spec in §5.1 |
 | Animated diagram | Shows a mechanism the student cannot see, for example where heat leaves a room | static (first frame), playing, finished, replay, reduced motion, no JavaScript. Spec in §5.1 |
 | Sticky progress bar | Progress through the house, and position within a long page | at rest, condensed, unstuck on short viewports, no JavaScript. Fill capped at 100% regardless of the raw ratio (added 2026-08-20) |
