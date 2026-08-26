@@ -287,12 +287,12 @@ One action: flipping a card.
 The correction, 40 words or fewer, ending with a link to the improvement it argues for.
 
 **Logic / rules**
-None. Static content in `<details>` elements. No scoring, no tracking of right and wrong, no
+None. Static content, both faces in the markup. No scoring, no tracking of right and wrong, no
 sequence to complete.
 
 **Edge cases**
-- A student flips every card without reading. Acceptable. The content is also on the page as plain
-  question-and-answer text for anyone reading straight through.
+- A student flips every card without reading. Acceptable. Without the script the two faces are
+  stacked, which is the same content read straight through.
 - A card touches a safety-critical topic, for example space heaters. Per
   [content-strategy.md](content-strategy.md) §5 the safety framing appears before the instructions
   and never on the back of a card. Cards may correct a cost belief. They may not carry the safety
@@ -302,22 +302,25 @@ sequence to complete.
 None. There is no state to fail.
 
 **Accessibility requirements**
-Native `<details>` and `<summary>`, so the control is a real disclosure with `aria-expanded`
-handled by the browser. Click, Enter and Space all work. Never hover-only. Both faces exist in the
-DOM at all times. Under reduced motion the card swaps without rotating.
+The control is a real `<button>` carrying `aria-expanded` and pointing at the answer's id, so click,
+Enter and Space all work. Never hover-only. Both faces exist in the DOM at all times, and the face
+turned away is `visibility: hidden` so its link leaves the tab order and its text leaves the
+accessibility tree. Focus follows the turn onto the button on the arriving face. Under reduced
+motion the card swaps without rotating.
 
 **Does it work without JavaScript / on a slow connection?**
-Yes, entirely. There is no JavaScript in this feature at all.
+Yes. Without the script the two faces are stacked in normal flow — the question, then the answer —
+and the two flip buttons are not shown. The script does not add content, only the turn.
 
 **Data persistence**
 None.
 
 **Acceptance criteria**
-- [ ] Every card opens and closes by keyboard, with no script running
-- [ ] Both faces are readable by a screen reader without flipping
+- [ ] Every card turns and turns back by keyboard, and focus lands on the face that arrives
+- [ ] With the script blocked, both faces are on the page and readable
+- [ ] The face turned away is out of the tab order
 - [ ] No card carries safety, permission, cost, or source information on its back
-- [ ] The same content appears as plain question-and-answer text for print and straight reading
-- [ ] Reduced motion removes the rotation and keeps the function
+- [ ] Reduced motion removes the rotation, keeps the function, and shows the written-out version
 
 **How we'll know it works**
 Ask a participant the myth question before they see the page, then again after. A changed answer is

@@ -351,24 +351,35 @@
           is heating the back of your couch.
         </p>
 
-        <details class="flip-card">
-          <summary>
+        <div class="flip-card">
+          <div class="flip-card__inner">
             <div class="flip-card__face flip-card__front">
-              <p>True or false: your heat type does not really change what you should do about your bill.</p>
+              <p class="flip-card__tag">Quick check</p>
+              <p class="flip-card__q">True or false: your heat type does not really change what you should do about your bill.</p>
+              <button type="button" class="flip-card__btn" data-flip="back">
+                <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-flip"/></svg>
+                Show the answer
+              </button>
             </div>
-          </summary>
-          <div class="flip-card__face flip-card__back">
-            <p>
-              False. Electric baseboard bills straight to you and is controlled room by room, so
-              almost everything on this site applies. A radiator on a building-wide boiler may not
-              even have a thermostat you can reach, and there your best moves are sealing drafts
-              and asking your landlord.
-            </p>
-            <a href="../../start/">Set your heat type</a>
+            <div class="flip-card__face flip-card__back">
+              <p class="flip-card__tag">The answer</p>
+              <p class="flip-card__verdict">False</p>
+              <p>
+                Electric baseboard bills straight to you and is controlled room by room, so
+                almost everything on this site applies. A radiator on a building-wide boiler may not
+                even have a thermostat you can reach, and there your best moves are sealing drafts
+                and asking your landlord.
+              </p>
+              <p><a href="../../start/">Set your heat type</a></p>
+              <button type="button" class="flip-card__btn" data-flip="front">
+                <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#icon-flip"/></svg>
+                Flip back
+              </button>
+            </div>
           </div>
-        </details>
+        </div>
 
-        <p class="text-small">
+        <p class="text-small flip-card__plain">
           <strong>Read as text:</strong> True or false, does your heat type change what you should
           do about your bill? False. It changes it a great deal. Electric baseboard is billed to
           you and controlled room by room, so nearly everything here applies. A radiator on a
@@ -495,6 +506,7 @@
 <script type="module" src="../../assets/js/todo.js"></script>
 <script type="module" src="../../assets/js/magnetic.js"></script>
 <!-- /shell:footer -->
+<script type="module" src="../../assets/js/flip-card.js"></script>
 
 <script type="application/json" class="content-meta">
 {

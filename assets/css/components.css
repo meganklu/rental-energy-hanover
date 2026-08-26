@@ -4061,66 +4061,234 @@ body:has(.motion-loop) .motion-fab__pause {
   align-items: center;
 }
 
-/* ---------- Flip card ---------- */
+/* ---------- Flip card, rebuilt 2026-08-26 ----------
+   A question on one side and its answer on the other, in the middle of a Renter basics article. It
+   was a `<details>` whose open state swapped `display: none` between two boxes, which meant three
+   things were wrong with it at once. There was no flip: one box vanished and another appeared. It
+   sat against the left edge of a reading column with a 24rem cap, so it read as a stray callout
+   rather than as a card. And it could not be turned back, because the summary that would have
+   closed it was the front face, and the front face was the thing `display: none` had just removed.
+
+   It is a card with two faces in the same grid cell now, turned by a class on the container.
+
+   **Why it is not a `<details>` any more.** The turn has to animate, and both faces have to be laid
+   out for that: an element a browser has not rendered cannot rotate into view. A closed `<details>`
+   does not render its content, by definition and by every engine's own stylesheet, so the two
+   requirements are the same requirement in opposite directions. The markup carries both faces in
+   normal flow, one under the other, which is a complete and readable question and answer with no
+   script at all; `assets/js/flip-card.js` adds `.flip-card--js` and everything below keyed to that
+   class turns it into a card. That is the same progressive-enhancement shape as the rest of the
+   site (AGENTS.md), and it is the reason the buttons are hidden until the script arrives — a button
+   with nothing behind it is worse than no button.
+
+   **The face turned away is `visibility: hidden`,** which is what keeps its link and its button out
+   of the tab order and its text out of the accessibility tree. `backface-visibility` alone hides a
+   face from the eye and from nothing else. The delay is on whichever face is going away, so it
+   stays visible for the length of the turn and disappears behind the card rather than in front of
+   it; the arriving face takes no delay, and its own backface hides it until it is past square. */
 .flip-card {
-  border: none;
-  margin: 0;
-  perspective: 1000px;
-  max-width: 24rem;
+  /* Centered, and wider than the 24rem it used to cap at. A card is an object on the page rather
+     than a paragraph of it, so it sits in the middle of the column with air either side. */
+  max-width: 34rem;
+  margin-inline: auto;
+  perspective: 1200px;
 }
 
-.flip-card > summary {
-  list-style: none;
-  cursor: pointer;
-  display: block;
+.flip-card__inner {
+  display: grid;
+  gap: var(--space-5);
 }
 
-.flip-card > summary::-webkit-details-marker {
-  display: none;
-}
-
-.flip-card__face {
-  padding: var(--space-5);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  min-height: 9rem;
-  display: flex;
-  align-items: center;
-}
-
-.flip-card__front {
-  transition: transform var(--motion-flip) var(--motion-ease),
-    box-shadow var(--motion-base) var(--motion-ease);
+.flip-card--js .flip-card__inner {
+  gap: 0;
   transform-style: preserve-3d;
 }
 
-.flip-card > summary:hover .flip-card__front {
-  box-shadow: var(--shadow-raised);
+.flip-card--js .flip-card__face {
+  /* Both faces in one cell, so the card is as tall as the taller of the two and neither is clipped
+     when it comes round. Absolute positioning was the other option and it sizes the card off the
+     front face alone. */
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
 }
 
-.flip-card[open] .flip-card__front {
-  display: none;
-}
-
-.flip-card__back {
-  display: none;
-  border-color: var(--color-accent);
-}
-
-.flip-card[open] .flip-card__back {
+.flip-card__face {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  min-height: 13rem;
+}
+
+/* Front: the light side, with a heavy brand rule along the top edge — the same mark the key point
+   uses down its left, so a reader who has met one recognises the other. */
+.flip-card__front {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 5px solid var(--color-surface-brand);
+  justify-content: center;
+}
+
+/* Back: the dark side, which is most of what makes the turn read as a turn. Two faces of the same
+   near-white green would leave the reader to work out from the words alone that anything happened. */
+.flip-card__back {
+  background: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+  border: 1px solid var(--color-surface-dark);
+  visibility: hidden;
+}
+
+.flip-card--js .flip-card__back {
+  transform: rotateY(180deg);
+}
+
+.flip-card--flipped .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card--flipped .flip-card__front {
+  visibility: hidden;
+}
+
+.flip-card--flipped .flip-card__back {
+  visibility: visible;
+}
+
+/* Without the script both faces are in flow and both have to be readable, so the back keeps its
+   text color and gives up only the state that belongs to a card that turns. */
+.flip-card:not(.flip-card--js) .flip-card__back {
+  visibility: visible;
+}
+
+.flip-card:not(.flip-card--js) .flip-card__btn {
+  display: none;
+}
+
+/* The label above the question. Small spaced capitals, the site's eyebrow, so the card announces
+   what it is before the reader has read the question. */
+.flip-card__tag {
+  font-family: var(--font-display);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.flip-card__back .flip-card__tag {
+  color: var(--color-brand);
+}
+
+/* The question is the largest thing on the front and the only thing competing for the reader's
+   attention there, so it takes the size a key point's heading does rather than body size. */
+.flip-card__q {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+/* The answer in one word, before the paragraph that explains it. A reader who takes only the word
+   has still got the answer, which is the whole point of putting a question on a card. */
+.flip-card__verdict {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  line-height: 1;
+  color: var(--color-brand);
+}
+
+.flip-card__back p {
+  max-width: none;
 }
 
 .flip-card__back a {
+  color: var(--color-brand);
   font-weight: 600;
 }
 
+.flip-card__back a:hover,
+.flip-card__back a:focus-visible {
+  color: var(--color-text-on-dark);
+}
+
+/* The control, on both faces. Marked up as a button rather than as the whole face being clickable:
+   the back face carries a link of its own, and a card that is entirely one big button is a card
+   whose link cannot be reached with a pointer. */
+.flip-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: auto;
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-accent);
+  background: var(--color-bg);
+  color: var(--color-accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.flip-card__back .flip-card__btn {
+  border-color: var(--color-brand);
+  background: transparent;
+  color: var(--color-brand);
+}
+
+.flip-card__btn:hover {
+  background: var(--color-accent);
+  color: var(--color-text-on-dark);
+}
+
+.flip-card__back .flip-card__btn:hover {
+  background: var(--color-brand);
+  color: var(--color-surface-dark);
+}
+
+/* The written-out version of the card. Hidden by default and shown only where motion is turned
+   down, per the 2026-08-26 request. The card itself is fully operable in both states — under
+   reduced motion the turn is an instant swap rather than no swap — so this is a reader's preference
+   for having the whole exchange in running prose rather than a fallback for a card that stopped
+   working. */
+.flip-card__plain {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card__plain {
+    display: block;
+  }
+}
+
+body:has(.reduce-motion-input:checked) .flip-card__plain {
+  display: block;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  body:not(:has(.reduce-motion-input:checked)) .flip-card:not([open]) > summary:hover .flip-card__front {
-    transform: translateY(-2px);
+  body:not(:has(.reduce-motion-input:checked)) .flip-card--js .flip-card__inner {
+    transition: transform var(--motion-flip) var(--motion-ease-smooth);
+  }
+
+  /* Zero-length, so this only ever moves *when* visibility changes and never fades it. The delay
+     sits on the face that is leaving, which the destination state is what selects: turning to the
+     back delays the front's disappearance and not the back's arrival, and turning home does the
+     reverse. */
+  body:not(:has(.reduce-motion-input:checked)) .flip-card--js .flip-card__back,
+  body:not(:has(.reduce-motion-input:checked)) .flip-card--flipped .flip-card__front {
+    transition: visibility 0s linear var(--motion-flip);
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .flip-card--js .flip-card__front,
+  body:not(:has(.reduce-motion-input:checked)) .flip-card--flipped .flip-card__back {
+    transition: visibility 0s;
+  }
+
+  body:not(:has(.reduce-motion-input:checked)) .flip-card__btn {
+    transition: background var(--motion-base) var(--motion-ease),
+      color var(--motion-base) var(--motion-ease);
   }
 }
 

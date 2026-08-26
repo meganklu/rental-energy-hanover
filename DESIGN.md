@@ -201,7 +201,7 @@ student can send a filtered list to a roommate. Rooms serialize as fragments (`/
 | Situation selector `/start` | Collect the four inputs that change what we recommend | Answer, then "Show what I can do" | Every question has "I am not sure", which widens results rather than blocking. All four questions on one screen in v1. One question per screen arrives with the mobile layouts in the next version. A plain form, so it submits without JavaScript. Revised 2026-08-19: this is now also the one and only situation form on the site — the improvements library filters against the same four answers rather than keeping a second, separate filter form. Reached directly at `/start`, or as a dialog opened by the "Personalize your recommendations" button (§3.3) from any page, with the same markup either way |
 | Improvements library `/improvements` | Let a student scan everything and narrow it to their situation | Open an improvement | The one screen in the site that is a card grid, because it is the complete index and the direct route for a student who already knows what they want. Default sort: enablers first, then impact, then lowest cost. Empty state never dead-ends |
 | Improvement detail `/improvements/:slug` | Get this done today | Follow the steps | Revised 2026-08-20: the page runs the full page-shell width rather than being capped at the 40rem content measure top to bottom. Title, summary, badges and facts sit in two columns above 900px, a custom SVG illustration of the improvement beside them (below 900px the illustration drops below the heading block and above "What you need"). A safety note, where the item has one, is pulled out of that two-column block into its own full-width band directly beneath it — safety does not share space with the illustration, revised again 2026-08-20 after the first pass put it in the text column. What you need, steps, where to get it (folded into "what you need" rather than a trailing paragraph), why this works and savings (now full-width story bars, §5.1), sources. Visible prose under 200 words still applies to the steps and what-you-need column, which keeps the 40rem measure |
-| Explainer `/learn/:slug` | Correct one wrong idea, fast | Flip the cards, then go do the improvement | Built as flip cards and an animated diagram rather than paragraphs. Every explainer carries one diagram that shows the mechanism, for example where heat leaves a room. See §5.1 |
+| Explainer `/learn/:slug` | Correct one wrong idea, fast | Flip the cards, then go do the improvement | Built as flip cards (rebuilt 2026-08-26, §5.1) and an animated diagram rather than paragraphs. Every explainer carries one diagram that shows the mechanism, for example where heat leaves a room. See §5.1 |
 | Checklist `/checklist` | Take a list away and act on it over a week | Print, or copy as text to send to roommates | **v2**, cut from v1 per [docs/features.md](docs/features.md) §3. State is local to the browser. Nothing is submitted anywhere |
 | Rights `/your-rights` | Find out whether 58°F is legal and who to call | Reach a real help resource | Legal disclaimer at the top, never collapsed. No advice on a specific dispute |
 | Programs `/programs` | Find out whether a renter can use this | Go to the program's own page | Any program with `state` other than NH is labeled as another state's program or is not rendered |
@@ -1790,7 +1790,7 @@ to be better than.
 | Room prop (experiment, 2026-08-25) | Scenery inside a furnished room. Sixteen furniture symbols in the sprite, each in a viewBox of its own proportion, drawn with a non-scaling stroke. No name, no interactive state, `aria-hidden`, never focusable — the absence of all three is what says it is not the thing to press | standing on the floor (`--b`), hung on the wall (`--y`), hidden below 1000px |
 | Hotspot | The tappable thing in a room | default, hover, focus-visible, selected (its info bar is the one open, added 2026-08-19; a glow and a scale rather than an outline, revised 2026-08-26), visited (reduced opacity, revised 2026-08-19, was accent fill plus flag marker; never applied to the selected piece, revised 2026-08-26), hidden (does not apply to the student's situation — reversed 2026-08-20, was dimmed with a text reason, see §3.2), 44px hit area |
 | Info bar | Opens under the drawing with the short answer | closed, opening, open, empty, error, no JavaScript (becomes a link) |
-| Flip card | Flashcards for myths and definitions | front, back, focus-visible, reduced motion. Spec in §5.1 |
+| Flip card | Flashcards for myths and definitions | front, back, mid-turn, focus-visible, reduced motion, no script (both faces stacked). Spec in §5.1 |
 | Carousel | Ordered walkthroughs and before-and-after pairs | first, middle, last, keyboard, no JavaScript. Spec in §5.1 |
 | Animated diagram | Shows a mechanism the student cannot see, for example where heat leaves a room | static (first frame), playing, finished, replay, reduced motion, no JavaScript. Spec in §5.1 |
 | Sticky progress bar | Progress through the house, and position within a long page | at rest, condensed, unstuck on short viewports, no JavaScript. Fill capped at 100% regardless of the raw ratio (added 2026-08-20) |
@@ -1920,16 +1920,50 @@ JavaScript adding only what CSS cannot do.
 **Flip card (flashcard).** For myth and correction, and for term and meaning. "Turning the heat
 down and back up costs more than leaving it steady" flips to the correction.
 
-- Built as `<details>` with a `<summary>`, so open and close are native, keyboard operable and
-  announced. CSS does the flip on `[open]`. No JavaScript.
-- The trigger is click, Enter or Space. Never hover alone. Hover adds a small lift and nothing
-  more, so a keyboard user loses nothing now and a touch user loses nothing in v2.
-- Both faces exist in the DOM at all times. Nothing is injected on flip.
-- Back face is 40 words or fewer, and ends with a link to the improvement it argues for.
+- Both faces exist in the DOM at all times, in normal flow, one under the other. Nothing is
+  injected on flip. With no script that stack is the whole card: a question, then its answer.
+- `assets/js/flip-card.js` adds a class and everything keyed to it turns the stack into two faces of
+  one card in the same grid cell. The two buttons — "Show the answer" and "Flip back" — appear only
+  once that has happened, since a button with nothing behind it is worse than no button.
+- The trigger is a button, so click, Enter and Space all work. Never hover alone.
+- Back face is 40 words or fewer, opens with the answer in one word, and ends with a link to the
+  improvement it argues for.
 - Never carries safety, permission, cost, or source information. Those are always visible.
-- Under `prefers-reduced-motion: reduce` the card swaps faces with no rotation.
-- Cards are also listed as plain question-and-answer text on the explainer page for print and for
-  screen reader users who prefer to read straight through.
+- Under either reduced-motion control the card swaps faces with no rotation, and the written-out
+  question and answer appears under it.
+
+**Rebuilt 2026-08-26, and the `<details>` had to go.** It was a `<details>` whose open state swapped
+`display: none` between two boxes, and three things were wrong with it at once. There was no flip:
+one box vanished and another appeared. It sat against the left edge of a reading column under a
+24rem cap, so it read as a stray callout rather than as a card. And it could not be turned back,
+because the summary that would have closed it was the front face, and the front face was the thing
+`display: none` had just removed.
+
+The first two are fixable inside `<details>`. The third is not, and neither is the animation. A turn
+has to have both faces laid out to turn between, and a closed `<details>` does not render its
+content — by definition, and in every engine's own stylesheet. The two requirements are the same
+requirement pointing opposite ways. So the element is a `<div>`, the control is a `<button>` on each
+face, and the no-script path is the two faces stacked, which is a shape this site uses everywhere
+else: the markup is the content and the script narrows it.
+
+**The face turned away is `visibility: hidden`.** That is what keeps its link and its button out of
+the tab order and its text out of the accessibility tree. `backface-visibility` hides a face from
+the eye and from nothing else, which on a card whose back carries a link would leave a tab stop
+sitting on something nobody can see. The transition delay sits on whichever face is leaving, so it
+stays visible for the length of the turn and disappears behind the card rather than in front of it.
+Focus follows the turn onto the button on the arriving face, which is visible from the first frame.
+
+**The two faces are two colors.** Light front with a heavy brand rule along its top edge, the same
+mark the key point carries down its left; dark back, with the one-word answer at heading size above
+the paragraph that explains it. Two faces in the same near-white green would leave a reader to work
+out from the words alone that anything had happened.
+
+**"Read as text" is shown only under reduced motion, 2026-08-26.** It used to sit under every card,
+always, which meant the answer was printed six inches below the question the card was asking — and a
+card whose answer is already on the page is not a card. The card is fully operable under reduced
+motion, where the turn is an instant swap rather than no swap, so the paragraph is a reader's
+preference for having the whole exchange in running prose rather than a fallback for something that
+stopped working. The path that does not depend on it is the no-script stack above.
 
 **Carousel.** For ordered sequences (what to do in October, then November) and before-and-after
 pairs of the same window.
