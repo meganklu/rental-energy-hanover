@@ -1244,8 +1244,28 @@ structural one and prose was the wrong shape for it: in a rental the person who 
 efficiency improvement is not the person who would save from it, so the improvement often does not
 happen. Two parties, two ledgers, one building.
 
-**The treatment.** One color field runs behind everything from the page title down to a converging
-arrow: the tenant's side in the site's own dark green, the owner's in a deep slate that is
+**It opens on a drawn hero now, 2026-08-26.** `/about` was the one page reachable from the nav that
+did not look like the others: the split color field started at the top of the page and the title sat
+on it, so a reader arriving from `/your-rights` or `/programs` met a different site. It takes the
+same hero as the other three (§3.10) — the band, the title and lede on the left, a drawn scene on
+the right, held while the reader scrolls — and the split starts underneath it.
+
+The scene is the page's own sentence with the words taken out: one building, a line down the middle
+of it, a bill on one side of the line and a key on the other. Three beats through the hold. The roof
+settles onto the walls, which is the "one building" half. The seam then draws down from the peak
+through the middle of what it has just made one building, which is the "two sets of incentives"
+half. Then the bill rises on the tenant's side and the key comes in from the owner's. The seam is
+the only green line in the drawing and the only thing in it that is a mark rather than an object,
+and it is dashed rather than solid because a lease is a boundary both sides live either side of, not
+a wall.
+
+Moving the title off the field also removed the reason `.split-hero` existed — a two-column block
+laid deliberately across the seam so the title sat on one side and the sentence naming the problem
+on the other. The field now starts where the two sides start, which is a plainer answer to the same
+problem: nothing crosses the join except the elements that were always designed to.
+
+**The treatment.** One color field runs behind everything from the two sides down to a converging
+arrow (from the page title down, until the hero moved the title off it 2026-08-26): the tenant's side in the site's own dark green, the owner's in a deep slate that is
 deliberately not another green, because two sides of one lease have to read as two places. Hovering
 or focusing either side widens that side's share of the whole field rather than just its own panel,
 so the emphasis reads as the lease tilting. The pattern is adapted from `split-incentives.html` on
@@ -1268,17 +1288,12 @@ are the same line and move as one.
 
 **The color, decided the same day.** The owner's side opened as a deep slate blue on the reasoning
 that two sides of one lease should read as two distinct places. It read as a different website. The
-constraint that decides this is that the page title, the lede, the float card and the three approach
-cards all cross the seam, and one element cannot take two text colors depending on which half it
-sits over. Both halves therefore have to carry white text, which rules out pairing the dark green
+constraint that decides this is that the float card and the three approach cards cross the seam (and
+the page title and lede did too, until the hero moved them off the field 2026-08-26), and one
+element cannot take two text colors depending on which half it sits over. Both halves therefore have to carry white text, which rules out pairing the dark green
 with the light `--color-surface-brand`. It is the site's dark green against its mid green, 2.3:1
 between the fields, which is enough to separate two large adjacent areas without either of them
 leaving the palette.
-
-**The opening block is laid across the seam on purpose.** Title on the tenant's side, the sentence
-that names the problem on the owner's. Centering it instead put the smaller type across the join,
-where one text color has to work on two fields at once and the eyebrow stopped being readable on
-one of them.
 
 **"How AI was used" lives on this page**, added 2026-08-24. It names the model, says what it wrote,
 and states the three things held back from it: facts, which come from named sources and are gated by
@@ -1433,11 +1448,13 @@ the site's greens for anything that is a mark on it.
 | `/your-rights` | A wall thermometer with the state minimum marked on it | The column starts as a bead in the neck and rises, and the 65°F line slides in to meet it |
 | `/programs` | Three application forms, one per permission state, in that state's badge color | They are turned one at a time, front sheet first, each lifting off the stack into its place in the fan; a tick lands last on the one a renter can sign |
 | `/checklist` | A clipboard with four lines | The four lines cross themselves off one after another |
+| `/about` | One house with a line down the middle, a bill on one side and a key on the other | The roof settles onto the walls, the seam draws down from the peak, and the two objects arrive on their own sides |
 
 **Every scene is `aria-hidden`, and nothing in one is the only place its content appears.** The
 65°F is written out in the first key point on that page, the three permission states are on every
-program in the list, and the checkboxes on the clipboard are a drawing of the real ones below it.
-That is what makes it safe for the scenes to be the part of the page that moves.
+program in the list, the checkboxes on the clipboard are a drawing of the real ones below it, and
+the bill and the key are the two sides the About page then spends a screen each on. That is what
+makes it safe for the scenes to be the part of the page that moves.
 
 **Every scene's resting state is its finished state.** Motion is scroll-driven and gated the site's
 three ways (§7), and a timeline that never advances leaves a thermometer reading 65, three fanned

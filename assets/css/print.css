@@ -116,6 +116,18 @@ details {
   display: none !important;
 }
 
+/* The hold is two viewports of scroll wrapped around one screen of hero, which on paper is a page
+   and a bit of white space above the first heading. Added 2026-08-26 with the hold: the track
+   collapses to its content and the hero stops sticking. */
+.page-hero-hold {
+  height: auto !important;
+}
+
+.page-hero-hold > .page-hero {
+  position: static !important;
+  min-height: 0 !important;
+}
+
 /* The story bars are dark full-bleed bands on screen, which on paper is two-thirds of a sheet of
    green ink around white text that most printers will render as gray on gray. Added 2026-08-26 with
    the rebuild: black on white, no breakout, no pinning, and the pair prints as two ordinary

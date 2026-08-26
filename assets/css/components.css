@@ -5015,41 +5015,11 @@ body:has(.motion-loop) .motion-fab__pause {
   color: var(--color-text-on-dark);
 }
 
-/* Beats `.page-head .lede` further down this file, which sets the muted body color and would
+/* Beats `.page-hero .lede` further down this file, which sets the muted body color and would
    otherwise win on equal specificity by being declared later. On a dark field that rule renders
    the lede in near-invisible gray-green. */
-.split-continuum .page-head .lede,
 .split-continuum .lede {
   color: rgba(255, 255, 255, 0.92);
-}
-
-/* The opening block is laid out across the seam on purpose: the title sits on the tenant's side,
-   the sentence that names the problem on the owner's. Centering it instead put both across the
-   join, where a single text color has to work on two different fields at once and the smaller
-   type stopped being readable on one of them. */
-.split-hero {
-  display: grid;
-  gap: var(--space-5);
-  text-align: left;
-  margin-bottom: var(--space-7);
-}
-
-@media (min-width: 900px) {
-  .split-hero {
-    grid-template-columns: 1.05fr 1fr;
-    gap: var(--space-8);
-    align-items: end;
-  }
-}
-
-.split-hero h1 {
-  margin: 0;
-}
-
-.split-hero .lede {
-  margin: 0;
-  max-width: var(--measure);
-  font-size: var(--text-h4);
 }
 
 /* The eyebrow above the page title. Small, spaced capitals, so it reads as a label on the section
@@ -5416,6 +5386,8 @@ body:has(.motion-loop) .motion-fab__pause {
    state is its finished state, so all four of those leave a complete drawing. */
 .page-hero-hold {
   position: relative;
+  /* The length of the pinned stretch, in the one place every scene below reads it from. */
+  --hold: 100vh;
 }
 
 @supports (animation-timeline: scroll()) {
@@ -5450,10 +5422,6 @@ body:has(.motion-loop) .motion-fab__pause {
   }
 }
 
-/* The length of the pinned stretch, in the one place the scenes below all read it from. */
-.page-hero-hold {
-  --hold: 100vh;
-}
 
 @keyframes page-hero-text {
   from { transform: translateY(1.25rem); }
@@ -5681,6 +5649,120 @@ body:has(.motion-loop) .motion-fab__pause {
 @keyframes forms-tick-draw {
   from { stroke-dashoffset: 60; }
   to { stroke-dashoffset: 0; }
+}
+
+/* ---------- Hero scene: one house and one seam, /about ---------- */
+/* Drawn in the doll house's pen (§3.2): flat shapes, one outline weight, the toy palette for the
+   building and the two objects, and the site's green for the line down the middle, which is the one
+   thing in the drawing that is a mark rather than an object. The bill and the key are the page's
+   own two sentences: the tenant pays to heat it, the owner holds what can be changed. */
+.onehouse {
+  stroke: var(--toy-outline);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.onehouse__ground {
+  stroke: var(--color-border-strong);
+  stroke-width: 2;
+}
+
+.onehouse__roof-slab { fill: var(--color-accent); }
+.onehouse__wall { fill: var(--toy-wall); }
+.onehouse__window { fill: var(--toy-sky-soft); stroke-width: 2; }
+.onehouse__mullion { stroke-width: 2; }
+
+.onehouse__note { fill: var(--toy-white); }
+.onehouse__coin { fill: var(--toy-butter); stroke-width: 2; }
+.onehouse__note-rule { stroke: var(--color-border-strong); stroke-width: 2; }
+
+.onehouse__bow { fill: var(--toy-butter); }
+.onehouse__bow-eye { fill: var(--toy-wall); stroke-width: 2; }
+
+/* The one green line, and the only thing in the drawing that is not a physical object. Dashed
+   rather than solid: a lease is a boundary that both sides live either side of, not a wall. */
+.onehouse__seam {
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-dasharray: 11 9;
+}
+
+/* Every group that moves is measured against its own bounds, which is what makes a percentage
+   origin mean anything on an SVG shape. */
+.onehouse__roof,
+.onehouse__seam,
+.onehouse__bill,
+.onehouse__key {
+  transform-box: fill-box;
+}
+
+/* The seam grows downward from the peak, so the dashes stay dashes. Drawing it with a dash offset
+   would have slid the pattern along a line that was already its full length, which reads as a
+   marquee rather than as a line being drawn. */
+.onehouse__seam {
+  transform-origin: top center;
+}
+
+.onehouse__roof {
+  transform-origin: bottom center;
+}
+
+/* Three beats across the hold: the roof settles onto the walls, the line comes down through the
+   middle of what it has just made one building, and the two objects arrive on their own sides of
+   it. Ranges overlap, so each beat starts as the one before it lands. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 800px) and (min-height: 640px) {
+    body:not(:has(.reduce-motion-input:checked)) .onehouse__roof,
+    body:not(:has(.reduce-motion-input:checked)) .onehouse__seam,
+    body:not(:has(.reduce-motion-input:checked)) .onehouse__bill,
+    body:not(:has(.reduce-motion-input:checked)) .onehouse__key {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .onehouse__roof {
+      animation-name: onehouse-roof;
+      animation-range: 0 calc(var(--hold) * 0.26);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .onehouse__seam {
+      animation-name: onehouse-seam;
+      animation-range: calc(var(--hold) * 0.22) calc(var(--hold) * 0.62);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .onehouse__bill {
+      animation-name: onehouse-bill;
+      animation-range: calc(var(--hold) * 0.56) calc(var(--hold) * 0.8);
+    }
+
+    body:not(:has(.reduce-motion-input:checked)) .onehouse__key {
+      animation-name: onehouse-key;
+      animation-range: calc(var(--hold) * 0.7) calc(var(--hold) * 0.96);
+    }
+  }
+}
+
+@keyframes onehouse-roof {
+  from { transform: translateY(-26px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes onehouse-seam {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes onehouse-bill {
+  from { transform: translateY(40px); }
+  to { transform: translateY(0); }
+}
+
+@keyframes onehouse-key {
+  from { transform: translateX(52px); }
+  to { transform: translateX(0); }
 }
 
 /* ---------- Hero scene: the clipboard, /checklist ---------- */

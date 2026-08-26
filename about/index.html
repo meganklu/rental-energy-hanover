@@ -50,21 +50,66 @@
 
 <main id="main">
 
-  <div class="split-continuum">
-    <div class="split-continuum__bg" aria-hidden="true"><span></span><span></span></div>
+  <!-- One house, one seam, added 2026-08-26. /about opened straight onto the split color field,
+       which made it the one page reachable from the nav that did not look like the others. It opens
+       on a drawn scene now, in the same shape and the same pen as the other three (DESIGN.md §3.10
+       and §3.2), and the split starts below it.
 
-    <section class="section page-shell">
-      <div class="split-hero">
-        <div>
-          <h1>One building, two sets of incentives</h1>
+       The drawing is the page's own sentence: one building, a line down the middle of it, a bill on
+       one side of the line and a key on the other. Through the hold the roof settles onto the
+       walls, the seam draws down from the peak, and the two objects arrive on their own sides.
+       Decorative and aria-hidden; both sides are written out in full below. -->
+  <div class="page-hero-hold">
+    <section class="page-hero page-hero--about full-bleed" aria-labelledby="about-h">
+      <div class="page-hero__inner page-shell">
+        <div class="page-hero__text">
+          <h1 id="about-h">One building, two sets of incentives</h1>
+          <p class="lede">
+            Almost every guide to a warmer, cheaper home is written for the person who owns it. In a
+            rental, the person who pays to heat the place and the person who can change it are two
+            different people. That gap is the reason this site is here.
+          </p>
         </div>
-        <p class="lede">
-          Almost every guide to a warmer, cheaper home is written for the person who owns it. In a
-          rental, the person who pays to heat the place and the person who can change it are two
-          different people. That gap is the reason this site is here.
-        </p>
+
+        <div class="page-hero__scene" aria-hidden="true">
+          <svg class="onehouse" viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+            <path class="onehouse__ground" d="M14 272 H246"/>
+
+            <g class="onehouse__roof">
+              <path class="onehouse__roof-slab" d="M22 128 L130 42 L238 128 Z"/>
+            </g>
+
+            <rect class="onehouse__wall" x="46" y="126" width="168" height="146" rx="4"/>
+
+            <rect class="onehouse__window" x="66" y="146" width="44" height="32" rx="3"/>
+            <path class="onehouse__mullion" d="M88 146 V178"/>
+            <rect class="onehouse__window" x="150" y="146" width="44" height="32" rx="3"/>
+            <path class="onehouse__mullion" d="M172 146 V178"/>
+
+            <!-- What the tenant pays. -->
+            <g class="onehouse__bill">
+              <rect class="onehouse__note" x="60" y="200" width="56" height="36" rx="4"/>
+              <circle class="onehouse__coin" cx="88" cy="218" r="9"/>
+              <path class="onehouse__note-rule" d="M68 208 h8 M100 228 h8"/>
+            </g>
+
+            <!-- What the owner holds. -->
+            <g class="onehouse__key">
+              <circle class="onehouse__bow" cx="158" cy="218" r="14"/>
+              <circle class="onehouse__bow-eye" cx="158" cy="218" r="5"/>
+              <path class="onehouse__bit" d="M172 218 H202 M190 218 V228 M202 218 V226"/>
+            </g>
+
+            <!-- The line down the middle, drawn last so it sits over everything it divides. -->
+            <path class="onehouse__seam" d="M130 42 V272"/>
+          </svg>
+        </div>
       </div>
     </section>
+  </div>
+
+  <div class="split-continuum">
+    <div class="split-continuum__bg" aria-hidden="true"><span></span><span></span></div>
 
     <section class="split-sides" aria-label="The two sides of a rental">
       <div class="split-side split-side--tenant">
