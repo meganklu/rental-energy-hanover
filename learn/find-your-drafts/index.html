@@ -69,40 +69,11 @@
           </p>
         </div>
 
-        <figure class="improvement-intro__media diagram-figure" id="draft-diagram">
-          <svg viewBox="0 0 400 190" role="img" aria-labelledby="draft-diagram-title draft-diagram-desc">
-            <title id="draft-diagram-title">Air moving through the gap under a closed door</title>
-            <desc id="draft-diagram-desc">A side view of a door with a small gap above the floor. Arrows show outdoor air entering low through the gap while indoor warm air escapes above it.</desc>
-            <line x1="20" y1="175" x2="380" y2="175" stroke="var(--color-border-strong)" stroke-width="2"/>
-            <rect x="150" y="20" width="100" height="150" fill="var(--color-surface)" stroke="var(--color-border-strong)" stroke-width="2"/>
-            <rect x="150" y="170" width="100" height="6" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-dasharray="3 3"/>
-            <text x="200" y="15" text-anchor="middle" font-size="11" fill="var(--color-text-muted)">Door</text>
-
-            <g class="diagram-anim motion-loop flow-out" stroke="var(--color-warning-text)" stroke-width="2" fill="none">
-              <path d="M160 165 h20" marker-end="url(#arrowOut)"/>
-              <path d="M220 165 h20" marker-end="url(#arrowOut)"/>
-            </g>
-            <g class="diagram-anim motion-loop flow-in" stroke="var(--color-info-text)" stroke-width="2" fill="none">
-              <path d="M180 172 h-20" marker-end="url(#arrowIn)"/>
-              <path d="M240 172 h-20" marker-end="url(#arrowIn)"/>
-            </g>
-
-            <defs>
-              <marker id="arrowOut" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                <path d="M0,0 L6,3 L0,6 Z" fill="var(--color-warning-text)"/>
-              </marker>
-              <marker id="arrowIn" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                <path d="M6,0 L0,3 L6,6 Z" fill="var(--color-info-text)"/>
-              </marker>
-            </defs>
-
-            <text x="270" y="163" font-size="11" fill="var(--color-warning-text)">Warm air out</text>
-            <text x="60" y="182" font-size="11" fill="var(--color-info-text)">Cold air in</text>
-          </svg>
-          <figcaption>
-            Warm indoor air and cold outdoor air trade places through the same small gap at the
-            bottom of an unsealed door, all day, in both directions at once.
-          </figcaption>
+        <figure class="improvement-intro__media">
+          <img class="photo" src="../../assets/img/photos/hand-cold-window.webp"
+               alt="A hand in a sweater sleeve held against a cold window covered in condensation."
+               width="1000" height="750" loading="lazy" decoding="async">
+          <figcaption class="photo-credit">Photo by <a href="https://unsplash.com/photos/6hmjdWkylj8">Clay LeConey</a> on Unsplash</figcaption>
         </figure>
       </div>
 
@@ -146,13 +117,6 @@
           draft? False. A draft can just make a spot feel cold with no obvious breeze, especially at
           a window or door edge. Feel for a temperature change, not only for moving air.
         </p>
-
-        <figure class="prose-figure">
-          <img class="photo" src="../../assets/img/photos/hand-cold-window.webp"
-               alt="A hand in a sweater sleeve held against a cold window covered in condensation."
-               width="1000" height="750" loading="lazy" decoding="async">
-          <figcaption class="photo-credit">Photo by <a href="https://unsplash.com/photos/6hmjdWkylj8">Clay LeConey</a> on Unsplash</figcaption>
-        </figure>
 
       </div>
 
@@ -267,7 +231,6 @@
 <!-- /shell:footer -->
 <script type="module" src="../../assets/js/flip-card.js"></script>
 
-<script type="module" src="../../assets/js/diagram.js"></script>
 
 <script type="application/json" class="content-meta">
 {

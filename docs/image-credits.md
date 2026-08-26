@@ -72,13 +72,14 @@ and every `<img>` carries explicit `width` and `height` so nothing reflows as im
 
 ## Diagrams kept as drawings
 
-Three figures stayed hand-drawn, because a photograph cannot show a mechanism. All are SVG written
-for this site, in this site's design tokens.
+Two figures stayed hand-drawn, because a photograph cannot show a mechanism. Both are SVG written
+for this site, in this site's design tokens. A third, the draft figure, was removed 2026-08-26: the
+page it opened is a walkthrough of running a hand along an edge, and the photograph that was already
+further down the page shows that. See [DESIGN.md](../DESIGN.md) §3.6.
 
 | Figure | Page | Why it is not a photograph |
 |---|---|---|
 | Heat pump and furnace cutaways | `/learn/heating-systems/` | Refrigerant carrying heat against a temperature gradient, and a burner venting exhaust, are both invisible in a photograph. Adapted from the same team's earlier heat pump site (S25) |
-| Draft figure | `/learn/find-your-drafts/` | Air moves both directions through the same gap, which is the whole point and is not visible |
 | Bill figure | `/learn/read-your-bill/` | It highlights which figure on a bill is the one that moves |
 
 ## Icons

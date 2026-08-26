@@ -1244,13 +1244,21 @@ wrong way round for the one image on the page.
 
 **Every improvement page and the heating-systems intro now lead with a photograph** of the real
 object. The rule for what stays drawn is whether the image teaches a mechanism or names an object.
-A photograph cannot show refrigerant carrying heat the wrong way down a temperature gradient, air
-moving both directions through the same gap, or which figure on a bill is the one that moves. Those
-three stayed: the heat pump and furnace cutaways on `/learn/heating-systems` (§3.5), the draft
-figure on `/learn/find-your-drafts`, and the bill figure on `/learn/read-your-bill`. Everything that
-was drawing a noun became a photograph.
+A photograph cannot show refrigerant carrying heat the wrong way down a temperature gradient, or
+which figure on a bill is the one that moves. Those stayed: the heat pump and furnace cutaways on
+`/learn/heating-systems` (§3.5) and the bill figure on `/learn/read-your-bill`. Everything that was
+drawing a noun became a photograph.
 
-**Consequences worth noting.** `.motion-loop` now appears on three pages instead of eleven, so the
+**The draft figure went too, 2026-08-26.** It was the third of the three, on the same reasoning: air
+moves both ways through the same gap and a camera cannot see that. The reasoning was right about
+what the drawing showed and wrong about what the page needed it for. This page is a walkthrough of
+running a hand along an edge, its opening figure sits beside the sentence "you can find one with
+nothing but your hand", and a diagram of arrows through a doorway is a diagram of the phenomenon
+rather than of the thing the reader is about to do. The photograph of a hand held against a cold
+window was already on the page, further down, doing exactly that job. It leads now, and the drawing
+and its animation are gone rather than moved.
+
+**Consequences worth noting.** `.motion-loop` now appears on two pages instead of eleven, so the
 floating Pause button (§7) correctly stops appearing on pages with nothing to pause. The
 `.improvement-illustration` rules and the five `illo-*` keyframes went with the drawings.
 

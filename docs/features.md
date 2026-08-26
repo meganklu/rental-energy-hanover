@@ -417,7 +417,7 @@ feature and a defect. Check them honestly.
 | F2 | The "utilities included" explanation copy | ☐ |
 | F3 | Myth and correction pairs for topics 4, 7 and 11, through content review | ☐ |
 | F4 | The `/learn/heating-systems` diagram set, adapted 2026-08-21 from the team's own earlier heat pump site (S25) into this site's tokens, icon pen and `--motion-state` motion plumbing. Carries a season toggle scoped to the diagram, which is what shows a heat pump running both directions | ☑ |
-| F4 | One diagram concept per explainer, drawn | ☑ Three drawn (read-your-bill, find-your-drafts, heating-systems). Remaining explainers unwritten |
+| F4 | One diagram concept per explainer, drawn | ☑ Two drawn (read-your-bill, heating-systems). find-your-drafts leads with a photograph instead, 2026-08-26 — its walkthrough is a hand on an edge, not a mechanism. Remaining explainers unwritten |
 | F4 | Figure captions describing each mechanism in words | ☐ |
 | All | Sources in [sources.md](sources.md) for every number that appears | ◐ In progress |
 
