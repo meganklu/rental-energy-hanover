@@ -2338,6 +2338,12 @@ callouts, which made it read as more page rather than as a break in it. Two dark
 for the reason the About page's two halves are two darks (§3.7): a seam between two fields of the
 same color is not a seam.
 
+The ground under the pair is the last bar's color, fixed 2026-08-26. It was the first bar's. That is
+right for the gap the second bar climbs through, where the ground is the color arriving, and wrong
+below the second bar, where the stack reserves a dwell so the pair does not release the moment the
+last bar lands. The dwell was a stripe of the first bar's darker green sitting under the second one,
+which read as the first bar showing through from behind rather than as the section ending.
+
 **The key point.** What a story bar becomes when it is alone. Nine pages carried a single bar inside
 a stack, which meant a full-bleed band, a display-size heading and a screen of height for two
 sentences, with nothing to stack against and so none of the arrival the treatment exists for. A band

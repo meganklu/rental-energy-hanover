@@ -602,9 +602,20 @@
    there is a gap between the two, and against the page's own white that gap read as a hole punched
    between two dark bands rather than as one band arriving. On the stack's own dark it reads as more
    of the same section. The stack is what breaks out to the window now; the bars keep `full-bleed`
-   for the case where one is used outside a stack, where it resolves to zero either way. */
+   for the case where one is used outside a stack, where it resolves to zero either way.
+
+   The ground takes the last bar's color, fixed 2026-08-26. It was the first bar's, which is the
+   right color for the gap above the second bar and the wrong one below it: the stack reserves a
+   dwell at the bottom so the pair does not release the moment the last bar lands, and that dwell
+   was a stripe of the first bar's darker green sitting under the second bar, reading as the first
+   one showing through from behind. Below the last bar the ground should be that bar continuing,
+   and above it, the color the next bar is arriving in. Both are the same rule. */
 .story-stack {
   background: var(--color-surface-dark);
+}
+
+.story-stack:has(> .story-bar:last-of-type.story-bar--reverse) {
+  background: var(--color-surface-dark-2);
 }
 
 .story-stack > .story-bar + .story-bar {
