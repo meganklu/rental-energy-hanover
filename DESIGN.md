@@ -1390,6 +1390,9 @@ interactive work.
 | `--color-room-plate` | `rgba(251, 244, 231, 0.94)` | The plate a doll house piece's name sits on, so a caption crossing from wallpaper onto floorboards keeps one contrast (declared 2026-08-26) | ☑ 15.9:1 with `--color-text` |
 | `--color-guide-halo` | `rgba(126, 218, 93, 0.55)` | The ring on the piece carrying "Start here" or "Next" (declared 2026-08-26) | Decorative, never carries text |
 | `--color-guide-glow` | `rgba(126, 218, 93, 0.9)` | The glow on the piece whose info bar is open (added 2026-08-26) | Decorative, never carries text |
+| `--color-approach-card` | `rgba(6, 48, 31, 0.72)` | The three approach cards on `/about`, where `backdrop-filter` is unavailable (added 2026-08-26) | ☑ 11.6:1 with white |
+| `--color-approach-card-blur` | `rgba(6, 48, 31, 0.45)` | The same three, blurred (added 2026-08-26) | ☑ 9.2:1 with white |
+| `--color-surface-dark-2` | `#0B573A` | The second of a pair of story bars, so the seam between them is visible (added 2026-08-26) | ☑ 8.6:1 with white, 1.7:1 against `--color-surface-dark` |
 | `--color-mat` | `#D9BE8A` | Added 2026-08-19. The hero's welcome-mat background. Used nowhere else | ☑ 9.3:1 with `--color-text` |
 | `--color-mat-border` | `#000000` | Added 2026-08-19. The hero mat's literal black border. Used nowhere else | ☑ 11.7:1 on `--color-mat` |
 | `--color-hero-ground` | `#94A0A7` | Added 2026-08-19. The hero section's own background, behind the mat. A bluestone grey, used nowhere else | ☑ 6.3:1 with `--color-text`, 7.9:1 with `--color-mat-border` |

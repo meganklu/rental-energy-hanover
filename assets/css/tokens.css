@@ -53,6 +53,14 @@
      --color-accent was the first try and separated the fields by only 1.8:1, which read as a
      rendering artifact rather than a boundary; this is 2.3:1 between the halves. Contrast with
      white: 14.5:1 on the tenant side, 6.3:1 on the owner side. */
+  /* The three approach cards on that page, added 2026-08-26. --color-surface-dark at two opacities,
+     written out rather than mixed so the file keeps one way of stating a color. The blurred value
+     is used where `backdrop-filter` exists and the opaque one where it does not. White measures
+     9.2:1 and 11.6:1 on them, both over the lighter half of the field. Never carry text themselves;
+     the text sits on them. */
+  --color-approach-card: rgba(6, 48, 31, 0.72);
+  --color-approach-card-blur: rgba(6, 48, 31, 0.45);
+
   --color-split-tenant: var(--color-surface-dark);
   --color-split-owner: #0A6E4B;
 

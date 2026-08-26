@@ -3781,6 +3781,10 @@ body:has(.motion-loop) .motion-fab__pause {
   height: 10px;
   background: var(--color-border);
   border-radius: var(--radius-pill);
+  /* The row is pinned over the drawing it is measuring, so it takes the site's one sticky shadow
+     (DESIGN.md §4). Added 2026-08-26: the token had been declared and never used, and a pinned bar
+     lying flat on the doll house was the reason it existed. */
+  box-shadow: var(--shadow-sticky);
   cursor: default;
 }
 
@@ -5055,12 +5059,12 @@ body:has(.motion-loop) .motion-fab__pause {
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--radius-md);
   padding: var(--space-5);
-  background: rgba(6, 48, 31, 0.72);
+  background: var(--color-approach-card);
 }
 
 @supports (backdrop-filter: blur(10px)) {
   .split-approach li {
-    background: rgba(6, 48, 31, 0.45);
+    background: var(--color-approach-card-blur);
     backdrop-filter: blur(10px);
   }
 }
