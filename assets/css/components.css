@@ -4515,21 +4515,28 @@ body:has(.motion-loop) .motion-fab__pause {
    door, so it stays put while the door swings. Three layers stand in for a moulded architrave: the
    flat casing board itself, a bead line inset from its edge, and a pediment capping the head. All
    decorative, all on the frame, none of it on the leaf that moves. */
+/* Redrawn in the doll house's pen 2026-08-26. This door and the door in the entry room of the doll
+   house are the same object at two sizes, and they were drawn in two different styles: the toy was
+   flat shapes in a warm brown outline, the hero was a dark green slab with a gray architrave and no
+   outline at all. The hero takes the toy's palette and its one outline color now — casing in white,
+   slab in wood, arched glass in pale sky, panels a lighter wood, a butter-yellow handle — so the
+   two read as the same drawing rather than as two illustrators. See DESIGN.md §3.4. */
 .door-hero__frame {
   position: absolute;
   inset: -6% -7%;
-  border-radius: 2px;
-  background: var(--color-bg);
-  box-shadow: 0 0 0 2px var(--color-border-strong), var(--shadow-raised);
+  border-radius: 3px;
+  background: var(--toy-white);
+  box-shadow: 0 0 0 2.5px var(--toy-outline), var(--shadow-raised);
 }
 
 /* The bead: a second line inside the casing, which is what separates a moulding from a border. */
 .door-hero__frame::before {
   content: "";
   position: absolute;
-  inset: 6px;
-  border: 1px solid var(--color-border);
-  border-radius: 1px;
+  inset: 7px;
+  border: 1.5px solid var(--toy-outline);
+  border-radius: 2px;
+  opacity: 0.5;
 }
 
 /* The pediment over the head of the frame: a wider cap with its own shadow line under it. */
@@ -4541,9 +4548,9 @@ body:has(.motion-loop) .motion-fab__pause {
   bottom: calc(100% - 2px);
   height: 5%;
   min-height: 12px;
-  border-radius: 2px 2px 0 0;
-  background: var(--color-bg);
-  box-shadow: 0 0 0 2px var(--color-border-strong), 0 4px 6px rgba(20, 32, 26, 0.18);
+  border-radius: 3px 3px 0 0;
+  background: var(--toy-white);
+  box-shadow: 0 0 0 2.5px var(--toy-outline), 0 4px 6px rgba(20, 32, 26, 0.18);
 }
 
 .door-hero__opening {
@@ -4565,10 +4572,12 @@ body:has(.motion-loop) .motion-fab__pause {
   position: absolute;
   inset: 0;
   border-radius: var(--radius-sm);
-  background: var(--color-surface-dark);
+  background: var(--toy-wood);
   transform-origin: left center;
   transform-style: preserve-3d;
-  box-shadow: var(--shadow-raised);
+  /* The slab gets the same outline every other shape in this pen has. Without it the wood met the
+     white casing on an unmarked edge, which is the one place the drawing still read as CSS. */
+  box-shadow: 0 0 0 2.5px var(--toy-outline), var(--shadow-raised);
 }
 
 .door-hero__face {
@@ -4579,13 +4588,16 @@ body:has(.motion-loop) .motion-fab__pause {
 }
 
 .door-face__glass path {
-  fill: var(--color-door-glass);
+  fill: var(--toy-sky-soft);
+  stroke: var(--toy-outline);
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
 }
 
 .door-face__grille path,
 .door-face__grille line {
   fill: none;
-  stroke: var(--color-bg);
+  stroke: var(--toy-outline);
   stroke-width: 2;
   stroke-linecap: round;
   vector-effect: non-scaling-stroke;
@@ -4594,9 +4606,9 @@ body:has(.motion-loop) .motion-fab__pause {
 /* The panels read as recessed through a single lighter fill and a hairline edge, which is as much
    as a flat drawing at this size can carry without looking like drop shadows. */
 .door-face__panel rect {
-  fill: var(--color-accent);
-  stroke: rgba(255, 255, 255, 0.28);
-  stroke-width: 1.5;
+  fill: var(--toy-wood-light);
+  stroke: var(--toy-outline);
+  stroke-width: 2.5;
   vector-effect: non-scaling-stroke;
 }
 
@@ -4618,11 +4630,11 @@ body:has(.motion-loop) .motion-fab__pause {
   font-size: clamp(0.95rem, 0.55rem + 1.5vw, 1.4rem);
   line-height: 1.1;
   letter-spacing: 0.02em;
-  color: var(--color-surface-dark);
-  background: linear-gradient(var(--color-bg), var(--color-surface));
-  border: 1px solid var(--color-border-strong);
-  border-radius: 3px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  color: var(--color-text);
+  background: var(--toy-cream);
+  border: 2px solid var(--toy-outline);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.22);
 }
 
 /* The two screws holding the plate on. */
@@ -4635,7 +4647,7 @@ body:has(.motion-loop) .motion-fab__pause {
   height: 4px;
   margin-top: -2px;
   border-radius: 50%;
-  background: var(--color-border-strong);
+  background: var(--toy-outline);
 }
 
 .door-hero__title::before { left: 6px; }
@@ -4647,11 +4659,11 @@ body:has(.motion-loop) .motion-fab__pause {
   position: absolute;
   right: 5%;
   top: 65%;
-  width: 9px;
+  width: 10px;
   height: 26px;
-  border-radius: 2px;
-  background: var(--color-door-handle);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+  border-radius: 3px;
+  background: var(--toy-butter);
+  box-shadow: 0 0 0 2px var(--toy-outline);
   transform: translateY(-50%);
 }
 
@@ -4661,11 +4673,11 @@ body:has(.motion-loop) .motion-fab__pause {
   right: 100%;
   top: 50%;
   width: 16px;
-  height: 6px;
-  margin-top: -3px;
-  border-radius: 3px 0 0 3px;
-  background: var(--color-door-handle);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+  height: 7px;
+  margin-top: -3.5px;
+  border-radius: 4px 0 0 4px;
+  background: var(--toy-butter);
+  box-shadow: 0 0 0 2px var(--toy-outline);
 }
 
 /* The casing is painted outside the door's layout box (`.door-hero__frame`, `inset: -6% -7%`) and

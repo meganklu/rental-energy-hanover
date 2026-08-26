@@ -56,12 +56,6 @@
   --color-split-tenant: var(--color-surface-dark);
   --color-split-owner: #0A6E4B;
 
-  /* The /improvements door only. Added 2026-08-25, see DESIGN.md §3.4. The slab and its panels are
-     the site's greens; these two are the parts of a real front door that are not painted with it.
-     Neither ever carries text. */
-  --color-door-glass: #CBE2EF;
-  --color-door-handle: #7A5230;
-
   /* The furnished doll house only. Added 2026-08-25, see DESIGN.md §3.2. The palette is taken from
      the Calico Critters houses in docs/ai-use.md: cream walls throughout, warm mid-brown floors,
      heavier beams where one story sits on the next, and light natural wood furniture carrying soft
